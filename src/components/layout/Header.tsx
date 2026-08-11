@@ -108,7 +108,7 @@ export function Header() {
 
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-200 py-[2vh] px-[2vw] space-y-[1.2vh] animate-fade-in shadow-xl rounded-b-xl">
+          <div className="lg:hidden absolute top-full left-0 right-0 w-full bg-white border-b border-slate-200 py-[2vh] px-[3vw] space-y-[1.2vh] animate-fade-in shadow-xl rounded-b-xl z-[9999]">
             <Link
               href="/"
               onClick={() => setIsMobileMenuOpen(false)}

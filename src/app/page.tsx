@@ -544,7 +544,7 @@ export default function HomePage() {
           </div>
 
           {/* Right Column: Content (Flex 1 with Top-Right Badge) */}
-          <div className="flex-1 w-full relative pt-10 sm:pt-12 text-left space-y-5 lg:space-y-6">
+          <div className="flex-1 w-full relative text-left space-y-5 lg:space-y-6">
             
             {/* Top Badge: OUR STORY (Positioned Absolute Top Right - Shifted slightly left) */}
             <div className="absolute top-0 right-6 sm:right-10 lg:right-12 flex flex-col items-end gap-1">

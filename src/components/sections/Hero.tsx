@@ -327,7 +327,7 @@ export function Hero() {
             </div>
           ))}
         </div>
-        <div className="absolute z-20 bottom-[13vh] md:bottom-[15vh] left-[4vw] flex items-center gap-[2vw] md:gap-[0.8vw] bg-black/40 backdrop-blur-md px-[4vw] sm:px-[2.5vw] md:px-[1.2vw] py-[1.2vh] rounded-full border border-white/20 text-white shadow-xl flex-shrink-0">
+        <div className="absolute z-20 bottom-[38vh] md:bottom-[35vh] right-[1vw] flex items-center gap-[2vw] md:gap-[0.8vw] bg-black/40 backdrop-blur-md px-[4vw] sm:px-[2.5vw] md:px-[1.2vw] py-[1.2vh] rounded-full border border-white/20 text-white shadow-xl flex-shrink-0">
           <button
             onClick={() => moveSlider("prev")}
             className="p-[1vw] sm:p-[0.5vw] md:p-[0.3vw] rounded-full hover:bg-white/20 transition-colors"

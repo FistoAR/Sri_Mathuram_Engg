@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
-import { Inter, Outfit } from 'next/font/google';
+import { Inter, Outfit, Montserrat } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -16,6 +16,12 @@ const inter = Inter({
 const outfit = Outfit({
   subsets: ['latin'],
   variable: '--font-outfit',
+  display: 'swap',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
   display: 'swap',
 });
 
@@ -44,7 +50,7 @@ export default function RootLayout({
   const orgSchema = generateOrganizationSchema();
 
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${montserrat.variable} scroll-smooth`}>
       <head />
       <body className="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
         <Script
