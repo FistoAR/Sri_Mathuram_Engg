@@ -29,7 +29,7 @@
   }
   
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-orange-500 selection:text-white;
+    @apply bg-slate-50 text-slate-900 antialiased selection:bg-orange-500 selection:text-white;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -39,6 +39,11 @@
   p {
     @apply text-slate-700;
   }
+}
+
+.montserrat-page,
+.montserrat-page * {
+  font-family: var(--font-montserrat), sans-serif !important;
 }
 
 .glass-panel {
