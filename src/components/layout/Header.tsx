@@ -21,16 +21,24 @@ export function Header() {
       <div className="px-[3vw]">
         <div className="flex items-center justify-between h-[8vh] min-h-[60px]">
           
-          {/* Logo using /images/logo.png */}
-          <Link href="/" className="flex items-center gap-[0.8vw] group focus:outline-none">
-            <div className="relative h-[6vh] sm:h-[10vh] w-[140px] sm:w-[15vw] mt-[0.5vh] overflow-hidden">
+          {/* Logo using logo.webp and text */}
+          <Link href="/" className="flex items-center gap-3 group focus:outline-none">
+            <div className="relative h-[5vh] w-[5vh] min-h-[36px] min-w-[36px] overflow-hidden flex-shrink-0">
               <Image
-                src="/images/logo.png"
+                src="/images/logo.webp"
                 alt="Sri Mathurams Medical Engineering Logo"
                 fill
                 priority
-                className="object-contain object-left"
+                className="object-contain"
               />
+            </div>
+            <div className="flex flex-col justify-center leading-none">
+              <span className="text-slate-900 text-sm sm:text-base font-black tracking-wide font-montserrat uppercase">
+                SRI MATHURAMS
+              </span>
+              <span className="text-[#E86D24] text-[8.5px] sm:text-[9.5px] font-black tracking-widest font-montserrat uppercase mt-0.5 sm:mt-1">
+                MEDICAL ENGINEERING
+              </span>
             </div>
           </Link>
 

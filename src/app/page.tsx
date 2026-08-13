@@ -1,3 +1,6 @@
+'use client';
+
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
@@ -20,10 +23,55 @@ import {
   Factory,
   Sparkles,
   Building2,
+  Bed,
+  ShoppingBag,
+  Activity,
 } from "lucide-react";
 import { FadeIn } from "@/components/ui/FadeIn";
 
 export default function HomePage() {
+  // Define categories for left and right sidebar lists
+  const leftCategories = [
+    { name: "Dressing Trolleys", iconIndex: 0, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" },
+    { name: "Over Bed Tables", iconIndex: 1, img: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp" },
+    { name: "Bedside Lockers", iconIndex: 2, img: "/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp" },
+    { name: "Wheelchairs", iconIndex: 3, img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp" },
+    { name: "Attender Cots", iconIndex: 4, img: "/images/Product Assets/Beds/Attender-Cot-Bed.webp" },
+    { name: "Examination Couches", iconIndex: 5, img: "/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp" },
+    { name: "Stainless Steel Furniture", iconIndex: 0, img: "/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp" },
+    { name: "Ward Furniture", iconIndex: 1, img: "/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp" },
+    { name: "Custom Hospital Furniture", iconIndex: 2, img: "/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp" },
+    { name: "ICU Beds (Manual)", iconIndex: 3, img: "/images/Product Assets/ICU CotBed/ICU-Cot.webp" }
+  ];
+
+  const rightCategories = [
+    { name: "ICU Beds", iconIndex: 0, img: "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp" },
+    { name: "Fowler Cots", iconIndex: 1, img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp" },
+    { name: "Semi Fowler Cots", iconIndex: 2, img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp" },
+    { name: "Plain Cots", iconIndex: 3, img: "/images/Product Assets/Beds/Plain-Examination-Bed.webp" },
+    { name: "Labour Cots", iconIndex: 4, img: "/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp" },
+    { name: "Stretcher Trolleys", iconIndex: 5, img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp" },
+    { name: "Transfer Trolleys", iconIndex: 0, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" },
+    { name: "Crash Carts", iconIndex: 1, img: "/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp" },
+    { name: "Instrument Trolleys", iconIndex: 2, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" },
+    { name: "Drug Trolleys", iconIndex: 3, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" }
+  ];
+
+  const [activeCategory, setActiveCategory] = useState("ICU Beds");
+
+  // Get active image based on active category
+  const activeItem = [...leftCategories, ...rightCategories].find(c => c.name === activeCategory);
+  const activeProductImage = activeItem ? activeItem.img : "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp";
+
+  // Helper to load webp icon dynamically
+  const getIconSrc = (idx: number, active: boolean) => {
+    const folder = active ? 'openIcons' : 'closeIcons';
+    if (idx === 0) {
+      return `/images/Home Page/HowWeBuild/${folder}/Group.webp`;
+    }
+    return `/images/Home Page/HowWeBuild/${folder}/Group (${idx}).webp`;
+  };
+
   // Select 1 representative product per category to keep home page clean & curated
   const categoryHighlights = CATEGORIES.map((cat) => {
     const matchedProduct =
@@ -419,7 +467,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. FEATURED PRODUCT CATEGORIES SECTION */}
-      <section className="w-full px-[3vw] py-[6vh] bg-white">
+      <section className="w-full px-[4vw] py-16 bg-[#FAFBFC] relative">
         <div className="mx-[2vw] space-y-[4vh]">
           {/* Top Sub-tagline Badge - Left Aligned with orange icon & accent line */}
           <FadeIn
@@ -427,25 +475,16 @@ export default function HomePage() {
             delay={0.1}
             className="flex flex-col items-start gap-1.5"
           >
-            <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl  font-bold tracking-wider text-[#0B2545] uppercase">
-              {/* Medical Trolley / Furniture Custom Orange Icon */}
-              <div className="w-8 h-8 flex items-center justify-center text-orange-500 flex-shrink-0">
-                <svg
-                  className="w-8 h-8 stroke-[1.8]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 7h18M5 7v10m14-10v10M7 17a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm10 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3zM4 11h16M9 4v3m3-3v3"
-                  />
-                </svg>
-              </div>
-              <span>
-                COMPLETE HOSPITAL FURNITURE & MEDICAL EQUIPMENT SOLUTIONS
+            <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
+              <span className="relative w-8 h-8 flex-shrink-0">
+                <Image
+                  src="/images/AboutAs/aboutAs.webp"
+                  alt="Products Icon"
+                  fill
+                  className="object-contain"
+                />
               </span>
+              <span>OUR PRODUCTS</span>
             </div>
             {/* Orange underline accent line */}
             <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
@@ -453,69 +492,118 @@ export default function HomePage() {
 
           {/* Header Title & Description */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-3">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#E86D24] tracking-tight uppercase">
-              PRODUCT CATEGORIES
+            <h2 className="text-4xl sm:text-5xl font-semibold text-[#E86D24] tracking-tight uppercase leading-tight font-montserrat">
+              Complete <br />
+              <span className="text-[#0B2545]">Hospital Furniture Solutions</span>
             </h2>
-            <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
-              <span className="font-bold text-slate-900">We offer</span> a
-              comprehensive range of{" "}
-              <span className="font-bold text-slate-900">
-                healthcare equipment
-              </span>{" "}
-              manufactured to meet industry standards and support{" "}
-              <span className="font-bold text-slate-900">
-                efficient patient care
-              </span>{" "}
-              across every healthcare environment.
+            <p className="text-slate-600 text-base sm:text-md max-w-4xl mx-auto leading-relaxed font-medium">
+              We manufacture a comprehensive range of hospital furniture designed for modern healthcare facilities, combining durability, safety, functionality, and ergonomic design.
             </p>
           </FadeIn>
 
-          {/* 5 Horizontal Category Cards (1 Image per Category) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
-            {categoryHighlights
-              .slice(0, 5)
-              .map(({ category, product }, idx) => (
-                <FadeIn
-                  key={category.id}
-                  direction="up"
-                  delay={0.1 * idx}
-                  className="bg-white rounded-2xl p-3 border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
-                >
-                  {/* 1 Product Image */}
-                  <div className="relative aspect-square w-full rounded-xl bg-slate-50/50 overflow-hidden flex items-center justify-center p-3 border border-slate-100">
-                    <Image
-                      src={product.image}
-                      alt={category.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 20vw"
-                      className="object-contain p-2 group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+          {/* Interactive Grid Showcase */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8">
+            
+            {/* Left Column: 10 Categories */}
+            <div className="lg:col-span-3 space-y-3 order-2 lg:order-1">
+              {leftCategories.map((cat) => {
+                const isActive = activeCategory === cat.name;
+                return (
+                  <button
+                    key={cat.name}
+                    onClick={() => setActiveCategory(cat.name)}
+                    className={`w-full flex items-center justify-end gap-3 text-right group transition-all duration-300 py-1 px-3 rounded-2xl ${
+                      isActive 
+                        ? 'text-[#E86D24] font-bold' 
+                        : 'text-slate-700 hover:text-[#0B3B60] font-semibold'
+                    }`}
+                  >
+                    <span className="text-xs sm:text-[13px] font-montserrat tracking-wide">{cat.name}</span>
+                    <div className="relative w-9 h-9 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+                      <Image
+                        src={getIconSrc(cat.iconIndex, isActive)}
+                        alt=""
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
 
-                  {/* Bottom Row: Category Name & View Button */}
-                  <div className="flex items-center justify-between gap-2 pt-3 px-1">
-                    <h3 className="text-xs md:text-sm font-bold text-slate-800 line-clamp-1">
-                      {category.name}
-                    </h3>
-                    <Link href="/products">
-                      <button className="bg-[#0B3B60] hover:bg-[#0B2545] text-white text-[11px] font-semibold px-3 py-1 rounded-lg transition-colors flex-shrink-0">
-                        View
+            {/* Center Column: Interactive Image Frame */}
+            <div className="lg:col-span-6 flex flex-col items-center justify-center order-1 lg:order-2">
+              {/* Outer container with relative positioning and padding for borders */}
+              <div className="relative w-full aspect-[4/3] max-w-xl">
+                {/* Top-Left Blue Border Bracket (Offset outside the container) */}
+                <div className="absolute -top-3 -left-3 w-[45%] h-[45%] border-t-[5px] border-l-[5px] border-[#0B3B60] rounded-tl-[2.8rem] pointer-events-none z-0" />
+                
+                {/* Bottom-Right Orange Border Bracket (Offset outside the container) */}
+                <div className="absolute -bottom-3 -right-3 w-[45%] h-[45%] border-b-[5px] border-r-[5px] border-[#E86D24] rounded-br-[2.8rem] pointer-events-none z-0" />
+
+                {/* Main White Frame Container */}
+                <div className="relative w-full h-full rounded-[2.5rem] bg-white shadow-2xl border border-slate-100 p-3 z-10">
+                  {/* Inner Image with custom rounded corners matching mockup */}
+                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-slate-50/60 border border-slate-100">
+                    <Image
+                      src={activeProductImage}
+                      alt={activeCategory}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-contain p-6 transition-all duration-500 transform hover:scale-103"
+                    />
+                    
+                    {/* View Details Button overlay */}
+                    <Link href="/products" className="absolute bottom-6 right-6 z-20">
+                      <button className="bg-[#E86D24] hover:bg-[#d65e1c] text-white font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2">
+                        <span>View</span>
+                        <ArrowRight className="w-4.5 h-4.5" />
                       </button>
                     </Link>
                   </div>
-                </FadeIn>
-              ))}
-          </div>
+                </div>
 
-          {/* Bottom Explore Button */}
-          <FadeIn direction="up" delay={0.3} className="text-center pt-2">
-            <Link href="/products">
-              <button className="bg-[#0B3B60] hover:bg-[#0B2545] text-white font-bold text-sm px-6 py-3 rounded-xl uppercase shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2">
-                <span>EXPLORE COMPLETE PRODUCT RANGE</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </Link>
-          </FadeIn>
+                {/* Explore Range Button attached to the bottom left of the container */}
+                <Link href="/products" className="absolute -bottom-6 left-6 z-20">
+                  <button className="bg-[#0B3B60] hover:bg-[#051c30] text-white font-extrabold text-[10px] sm:text-xs px-6 py-3 rounded-b-2xl shadow-md transition-all flex items-center gap-2 tracking-wider">
+                    <span>EXPLORE COMPLETE PRODUCT RANGE</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column: 10 Categories */}
+            <div className="lg:col-span-3 space-y-3 order-3">
+              {rightCategories.map((cat) => {
+                const isActive = activeCategory === cat.name;
+                return (
+                  <button
+                    key={cat.name}
+                    onClick={() => setActiveCategory(cat.name)}
+                    className={`w-full flex items-center justify-start gap-3 text-left group transition-all duration-300 py-1 px-3 rounded-2xl ${
+                      isActive 
+                        ? 'text-[#E86D24] font-bold' 
+                        : 'text-slate-700 hover:text-[#0B3B60] font-semibold'
+                    }`}
+                  >
+                    <div className="relative w-9 h-9 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+                      <Image
+                        src={getIconSrc(cat.iconIndex, isActive)}
+                        alt=""
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <span className="text-xs sm:text-[13px] font-semibold font-montserrat tracking-wide">{cat.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+          </div>
         </div>
       </section>
 

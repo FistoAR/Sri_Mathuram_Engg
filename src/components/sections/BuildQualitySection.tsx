@@ -181,10 +181,10 @@ export function BuildQualitySection() {
                     {/* Card Footer Content when Expanded / Collapsed */}
                     {isExpanded ? (
                       <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 flex items-end gap-3.5 text-white z-10">
-                        {/* Opened Card Icon (closeIcons folder) */}
+                        {/* Opened Card Icon (openIcons folder) */}
                         <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0">
                           <Image
-                            src={idx === 0 ? "/images/Home Page/HowWeBuild/closeIcons/Group.webp" : `/images/Home Page/HowWeBuild/closeIcons/Group (${idx}).webp`}
+                            src={idx === 0 ? "/images/Home Page/HowWeBuild/openIcons/Group.webp" : `/images/Home Page/HowWeBuild/openIcons/Group (${idx}).webp`}
                             alt={step.title}
                             fill
                             className="object-contain"
@@ -197,10 +197,10 @@ export function BuildQualitySection() {
                       </div>
                     ) : (
                       <div className="absolute bottom-5 inset-x-0 flex flex-col items-center justify-center text-white z-10">
-                        {/* Collapsed Card Icon (openIcons folder) */}
+                        {/* Collapsed Card Icon (closeIcons folder) */}
                         <div className="relative w-10 h-10 sm:w-11 sm:h-11">
                           <Image
-                            src={idx === 0 ? "/images/Home Page/HowWeBuild/openIcons/Group.webp" : `/images/Home Page/HowWeBuild/openIcons/Group (${idx}).webp`}
+                            src={idx === 0 ? "/images/Home Page/HowWeBuild/closeIcons/Group.webp" : `/images/Home Page/HowWeBuild/closeIcons/Group (${idx}).webp`}
                             alt={step.title}
                             fill
                             className="object-contain"

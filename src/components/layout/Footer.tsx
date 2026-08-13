@@ -10,20 +10,30 @@ export function Footer() {
       <div className="w-full px-[4vw]">
         
         {/* 5 Vertical Dividers Grid Layout - Full Width */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-10">
           
           {/* Column 1: Brand Logo, Description & Social Icons */}
-          <div className="space-y-4 lg:pr-8 lg:border-r border-slate-800/80">
+          <div className="col-span-12 md:col-span-6 lg:col-span-3 space-y-4 lg:pr-8 lg:border-r border-slate-800/80">
             {/* Logo */}
             <Link href="/" className="inline-block">
-              <div className="relative h-20 w-72 overflow-hidden">
-                <Image
-                  src="/images/logo.png"
-                  alt="Sri Mathurams Medical Engineering Logo"
-                  fill
-                  priority
-                  className="object-contain object-left"
-                />
+              <div className="flex items-center gap-3">
+                <div className="relative h-14 w-14 overflow-hidden flex-shrink-0">
+                  <Image
+                    src="/images/logo.webp"
+                    alt="Sri Mathurams Medical Engineering Logo"
+                    fill
+                    priority
+                    className="object-contain"
+                  />
+                </div>
+                <div className="flex flex-col justify-center leading-none">
+                  <span className="text-white text-[19px] font-black tracking-wide font-montserrat uppercase">
+                    SRI MATHURAMS
+                  </span>
+                  <span className="text-[#E86D24] text-[11.5px] font-black tracking-widest font-montserrat uppercase mt-1">
+                    MEDICAL ENGINEERING
+                  </span>
+                </div>
               </div>
             </Link>
 
@@ -50,44 +60,44 @@ export function Footer() {
           </div>
 
           {/* Column 2: QUICK LINKS */}
-          <div className="space-y-4 lg:px-8 lg:border-r border-slate-800/80">
+          <div className="col-span-12 md:col-span-6 lg:col-span-2 space-y-4 lg:px-8 lg:border-r border-slate-800/80">
             <h3 className="text-xs font-black text-white uppercase tracking-wider">
               QUICK LINKS
             </h3>
             <ul className="space-y-2.5 text-xs sm:text-[13px] font-medium text-slate-400">
               <li>
-                <Link href="/" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                <Link href="/" className="hover:text-white transition-colors flex items-center gap-2">
+                  <span className="text-slate-500 font-semibold">&gt;</span>
                   <span>Home</span>
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                <Link href="/about" className="hover:text-white transition-colors flex items-center gap-2">
+                  <span className="text-slate-500 font-semibold">&gt;</span>
                   <span>About Us</span>
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                <Link href="/products" className="hover:text-white transition-colors flex items-center gap-2">
+                  <span className="text-slate-500 font-semibold">&gt;</span>
                   <span>Products</span>
                 </Link>
               </li>
               <li>
-                <Link href="/#clients" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                <Link href="/#clients" className="hover:text-white transition-colors flex items-center gap-2">
+                  <span className="text-slate-500 font-semibold">&gt;</span>
                   <span>Our Clients</span>
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-2">
+                  <span className="text-slate-500 font-semibold">&gt;</span>
                   <span>Enquiry</span>
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1.5">
-                  <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-2">
+                  <span className="text-slate-500 font-semibold">&gt;</span>
                   <span>Contact Us</span>
                 </Link>
               </li>
@@ -95,7 +105,7 @@ export function Footer() {
           </div>
 
           {/* Column 3: PRODUCT CATEGORIES */}
-          <div className="space-y-4 lg:px-8 lg:border-r border-slate-800/80">
+          <div className="col-span-12 md:col-span-4 lg:col-span-2 space-y-4 lg:px-8 lg:border-r border-slate-800/80">
             <h3 className="text-xs font-black text-white uppercase tracking-wider">
               PRODUCT CATEGORIES
             </h3>
@@ -110,14 +120,14 @@ export function Footer() {
           </div>
 
           {/* Column 4: CONTACT INFORMATION */}
-          <div className="space-y-4 lg:px-8 lg:border-r border-slate-800/80">
+          <div className="col-span-12 md:col-span-4 lg:col-span-3 space-y-4 lg:px-8 lg:border-r border-slate-800/80">
             <h3 className="text-xs font-black text-white uppercase tracking-wider">
               CONTACT INFORMATION
             </h3>
             <ul className="space-y-3 text-xs sm:text-[13px] font-medium text-slate-400">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-                <span className="leading-snug">No. 123/1A, Industrial Estate, Peelamedu, Coimbatore - 641004, Tamil Nadu, India.</span>
+                <span className="leading-snug">No. 123/1A, Industrial Estate, Guindy, Chennai - 600032, Tamil Nadu, India.</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-slate-400 shrink-0" />
@@ -135,7 +145,7 @@ export function Footer() {
           </div>
 
           {/* Column 5: BUSINESS HOURS */}
-          <div className="space-y-4 lg:pl-8">
+          <div className="col-span-12 md:col-span-4 lg:col-span-2 space-y-4 lg:pl-8">
             <h3 className="text-xs font-black text-white uppercase tracking-wider">
               BUSINESS HOURS
             </h3>
