@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useCallback, useRef } from "react";
+import React, { useState, useMemo, useEffect, useCallback, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -14,6 +14,18 @@ import {
 import { PRODUCTS, CATEGORIES } from "@/lib/data";
 
 export default function ProductsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-500 font-semibold">Loading Layout...</div>}>
+      <ProductsLayoutContent>{children}</ProductsLayoutContent>
+    </Suspense>
+  );
+}
+
+function ProductsLayoutContent({
   children,
 }: {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductCard } from "@/components/ui/ProductCard";
@@ -20,6 +20,14 @@ import {
 import { useSearchParams } from "next/navigation";
 
 export default function ProductsPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-500 font-semibold">Loading Products...</div>}>
+      <ProductsPageContent />
+    </Suspense>
+  );
+}
+
+function ProductsPageContent() {
   // List of category names
   const categoryList = useMemo(() => {
     return ["All Products", ...CATEGORIES.map((cat) => cat.name)];
