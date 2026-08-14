@@ -9,9 +9,10 @@ import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 interface ProductCardProps {
   product: MedicalProduct;
   index?: number;
+  hideDetails?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, hideDetails = false }: ProductCardProps) {
   const { openInquiryModal } = useInquiryModal();
 
   return (
@@ -41,20 +42,22 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
 
       {/* Button Row */}
-      <div className="flex items-center gap-2 mt-4 pt-2.5 border-t border-slate-100">
-        <Link href={`/products/${product.slug}`} scroll={false} className="flex-1">
-          <button className="w-full text-center border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-xs transition-all hover:bg-slate-50">
-            View Details
+      {!hideDetails && (
+        <div className="flex items-center gap-2 mt-4 pt-2.5 border-t border-slate-100">
+          <Link href={`/products/${product.slug}`} scroll={false} className="flex-1">
+            <button className="w-full text-center border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-xs transition-all hover:bg-slate-50">
+              View Details
+            </button>
+          </Link>
+          <button
+            onClick={() => openInquiryModal(product)}
+            className="flex-1 bg-[#E87325] hover:bg-[#D0621B] text-white text-xs font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1 shadow-md shadow-orange-500/10 active:scale-95"
+          >
+            Send Enquiry
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
-        </Link>
-        <button
-          onClick={() => openInquiryModal(product)}
-          className="flex-1 bg-[#E87325] hover:bg-[#D0621B] text-white text-xs font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1 shadow-md shadow-orange-500/10 active:scale-95"
-        >
-          Send Enquiry
-          <ArrowRight className="w-3.5 h-3.5" />
-        </button>
-      </div>
+        </div>
+      )}
     </div>
   );
 }
