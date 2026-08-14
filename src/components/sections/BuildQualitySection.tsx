@@ -3,6 +3,21 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { PenTool, Hammer, Paintbrush, Settings, ClipboardCheck, Package } from "lucide-react";
+
+function getStepIcon(index: number, colorClass: string = "text-white") {
+  const sizeClass = `w-5 h-5 ${colorClass}`;
+  switch (index) {
+    case 0: return <PenTool className={sizeClass} />;
+    case 1: return <Hammer className={sizeClass} />;
+    case 2: return <Paintbrush className={sizeClass} />;
+    case 3: return <Settings className={sizeClass} />;
+    case 4: return <ClipboardCheck className={sizeClass} />;
+    case 5: return <Package className={sizeClass} />;
+    default: return <Settings className={sizeClass} />;
+  }
+}
+
 
 interface StepItem {
   id: string;
@@ -73,64 +88,49 @@ export function BuildQualitySection() {
     return () => clearInterval(timer);
   }, [isHovered]);
 
-  // Scroll pinning & step switching handler
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current || isHovered) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionHeight = sectionRef.current.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      // Check scroll progress inside the section
-      if (rect.top <= 0 && rect.bottom >= windowHeight) {
-        const scrolledRatio = Math.abs(rect.top) / (sectionHeight - windowHeight);
-        const index = Math.min(
-          stepsData.length - 1,
-          Math.floor(scrolledRatio * stepsData.length)
-        );
-        setActiveStep(index);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHovered]);
-
   const currentStep = stepsData[activeStep];
 
   return (
-    <section ref={sectionRef} className="relative w-full h-[300vh] bg-[#f8fafc]">
-      {/* Sticky Inner Container pinned during scroll */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center px-[4vw] py-[4vh] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full bg-[#f8fafc] py-[8vh] sm:py-[8vh] px-[4vw] overflow-hidden">
+      {/* Inner Container */}
+      <div className="w-full flex  justify-center">
         
         {/* Blueprint background watermark */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#0b2545_1px,transparent_1px)] [background-size:24px_24px]" />
 
-        <div className="w-full mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-center">
+        <div className="w-full mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 ">
           
           {/* Left Column: Heading & Description */}
-          <div className="lg:col-span-4 xl:col-span-4 space-y-8 pr-0 lg:pr-2">
+          <div className="lg:col-span-4 xl:col-span-4  pr-0 lg:pr-2 space-y-8">
             
             {/* Top Tagline */}
             <FadeIn direction="up" delay={0.1}>
-              <div className="inline-flex items-center gap-1.5 text-lg font-bold tracking-widest text-slate-700 uppercase border-b-2 border-orange-500 pb-1">
-                <svg className="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                </svg>
-                <span>HOW WE BUILD QUALITY</span>
+              <div className="flex flex-col items-start gap-1.5 pb-2">
+                <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+                  <div className="relative w-7 h-7 flex-shrink-0">
+                    <Image
+                      src="/images/AboutAs/aboutAs.webp"
+                      alt="Build Quality Logo"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <span>HOW WE BUILD QUALITY</span>
+                </div>
+                <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
               </div>
             </FadeIn>
 
             {/* Main Title */}
             <FadeIn direction="up" delay={0.15}>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B2545] leading-[1.15] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B2545] leading-[1.15] tracking-widest" style={{lineHeight: "1.25"}}>
                 Precision Manufacturing at Every Step
               </h2>
             </FadeIn>
 
             {/* Description */}
             <FadeIn direction="up" delay={0.2}>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal" style={{lineHeight:"1.8"}}>
                 Every product is manufactured through a carefully controlled process using advanced machinery, skilled craftsmanship, and rigorous quality standards. From concept to delivery, we ensure every piece meets the expectations of modern healthcare facilities.
               </p>
             </FadeIn>
@@ -138,7 +138,7 @@ export function BuildQualitySection() {
           </div>
 
           {/* Right Column: Dynamic Expandable Accordion & STEP watermark */}
-          <div className="lg:col-span-8 xl:col-span-8 relative flex flex-col justify-center">
+          <FadeIn direction="left" delay={0.2} className="lg:col-span-8 xl:col-span-8 relative flex flex-col justify-center w-full">
             
             {/* Top Right STEP-XX Watermark */}
             <div className="absolute -top-12 right-4 pointer-events-none select-none">
@@ -146,25 +146,26 @@ export function BuildQualitySection() {
                 {currentStep.stepNumber}
               </span>
             </div>
-
-            {/* Interactive Accordion Cards Flex Row */}
+ 
+            {/* Interactive Accordion Cards Flex Row (Desktop only) */}
             <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="flex items-center gap-3 w-full h-[450px] sm:h-[480px]"
+              className="hidden lg:flex items-center gap-3 w-full h-[450px]"
             >
               {stepsData.map((step, idx) => {
                 const isExpanded = idx === activeStep;
-
+ 
                 return (
                   <div
                     key={step.id}
                     onMouseEnter={() => setActiveStep(idx)}
-                    className={`relative h-full rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 ease-in-out shadow-lg ${
+                    className={`relative h-full rounded-3xl overflow-hidden cursor-pointer shadow-lg ${
                       isExpanded
-                        ? "flex-grow-[4] sm:flex-grow-[5] min-w-[280px]"
-                        : "flex-grow-[1] min-w-[55px] sm:min-w-[70px] opacity-80 hover:opacity-100"
+                        ? "flex-grow-[5] min-w-[280px]"
+                        : "flex-grow-[1] min-w-[70px] opacity-80 hover:opacity-100"
                     }`}
+                    style={{ transition: 'all 1000ms cubic-bezier(0.16, 1, 0.3, 1)' }}
                   >
                     {/* Background Image */}
                     <Image
@@ -172,23 +173,50 @@ export function BuildQualitySection() {
                       alt={step.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-700"
+                      className={`object-cover transition-transform duration-[1000ms] ${isExpanded ? 'scale-105' : 'scale-100'}`}
+                      style={{ transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
                     />
-
+ 
                     {/* Dark Bottom Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
-
+ 
                     {/* Card Footer Content when Expanded / Collapsed */}
                     {isExpanded ? (
                       <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 flex items-end gap-3.5 text-white z-10">
-                        {/* Opened Card Icon (openIcons folder) */}
-                        <div className="relative w-11 h-11 sm:w-12 sm:h-12 flex-shrink-0">
-                          <Image
-                            src={idx === 0 ? "/images/Home Page/HowWeBuild/openIcons/Group.webp" : `/images/Home Page/HowWeBuild/openIcons/Group (${idx}).webp`}
-                            alt={step.title}
-                            fill
-                            className="object-contain"
-                          />
+                        {/* Selected Circular SVG Icon */}
+                        <div className="relative w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                          <svg
+                            viewBox="0 0 100 100"
+                            className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                          >
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="44"
+                              fill="transparent"
+                              stroke="#FFFFFF"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                              strokeDasharray="45 276"
+                              strokeDashoffset={102}
+                              className="transition-all duration-[800ms] ease-in-out"
+                            />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="44"
+                              fill="transparent"
+                              stroke="#E86D24"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                              strokeDasharray="205 276"
+                              strokeDashoffset={0}
+                              className="transition-all duration-[800ms] ease-in-out"
+                            />
+                          </svg>
+                          <div className="relative w-[34px] h-[34px] rounded-full flex items-center justify-center transition-all duration-500 z-10 bg-[#E86D24]">
+                            {getStepIcon(idx)}
+                          </div>
                         </div>
                         <div className="space-y-1 max-w-[85%]">
                           <h3 className="text-base sm:text-xl font-bold leading-tight text-white drop-shadow-md">{step.title}</h3>
@@ -197,14 +225,40 @@ export function BuildQualitySection() {
                       </div>
                     ) : (
                       <div className="absolute bottom-5 inset-x-0 flex flex-col items-center justify-center text-white z-10">
-                        {/* Collapsed Card Icon (closeIcons folder) */}
-                        <div className="relative w-10 h-10 sm:w-11 sm:h-11">
-                          <Image
-                            src={idx === 0 ? "/images/Home Page/HowWeBuild/closeIcons/Group.webp" : `/images/Home Page/HowWeBuild/closeIcons/Group (${idx}).webp`}
-                            alt={step.title}
-                            fill
-                            className="object-contain"
-                          />
+                        {/* Unselected Circular SVG Icon */}
+                        <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                          <svg
+                            viewBox="0 0 100 100"
+                            className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                          >
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="44"
+                              fill="transparent"
+                              stroke="#FFFFFF"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                              strokeDasharray="205 276"
+                              strokeDashoffset={0}
+                              className="transition-all duration-[800ms] ease-in-out "
+                            />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="44"
+                              fill="transparent"
+                              stroke="#E86D24"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                              strokeDasharray="45 276"
+                              strokeDashoffset={102}
+                              className="transition-all duration-[800ms] ease-in-out"
+                            />
+                          </svg>
+                          <div className="relative w-[28px] h-[28px] rounded-full flex items-center justify-center transition-all duration-500 z-10 bg-white">
+                            {getStepIcon(idx, "text-[#0B3B60]")}
+                          </div>
                         </div>
                       </div>
                     )}
@@ -213,7 +267,79 @@ export function BuildQualitySection() {
               })}
             </div>
 
-          </div>
+            {/* Mobile/Tablet Vertical Stacked Steps (visible only on mobile/tablet) */}
+            <div className="lg:hidden flex flex-col gap-5 w-full mt-4">
+              {stepsData.map((step, idx) => {
+                return (
+                  <FadeIn
+                    key={step.id}
+                    direction="up"
+                    delay={0.05 * idx}
+                    className="w-full"
+                  >
+                    <div
+                      className="relative w-full rounded-3xl overflow-hidden shadow-lg bg-white border border-slate-100/80 p-5 flex flex-col sm:flex-row gap-5 items-center"
+                    >
+                      {/* Content Section */}
+                      <div className="flex-1 flex gap-4 items-start w-full">
+                        {/* Step Icon with circular arc indicator */}
+                        <div className="relative w-12 h-12 flex-shrink-0 flex items-center justify-center">
+                          <svg
+                            viewBox="0 0 100 100"
+                            className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                          >
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="44"
+                              fill="transparent"
+                              stroke="#0B3B60"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                              strokeDasharray="205 276"
+                              strokeDashoffset={0}
+                            />
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="44"
+                              fill="transparent"
+                              stroke="#E86D24"
+                              strokeWidth="8"
+                              strokeLinecap="round"
+                              strokeDasharray="45 276"
+                              strokeDashoffset={102}
+                            />
+                          </svg>
+                          <div className="relative w-[34px] h-[34px] rounded-full flex items-center justify-center bg-[#E86D24]">
+                            {getStepIcon(idx)}
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-mono font-black text-[#E86D24] uppercase tracking-wider">{step.stepNumber}</span>
+                            <h3 className="text-base font-extrabold text-[#0B2545]">{step.title}</h3>
+                          </div>
+                          <p className="text-xs text-slate-500 font-semibold leading-relaxed">{step.description}</p>
+                        </div>
+                      </div>
+
+                      {/* Step Image */}
+                      <div className="relative w-full sm:w-[180px] h-[120px] rounded-2xl overflow-hidden bg-slate-50 flex-shrink-0 shadow-inner">
+                        <Image
+                          src={step.image}
+                          alt={step.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 180px"
+                          className="object-cover"
+                        />
+                      </div>
+                    </div>
+                  </FadeIn>
+                );
+              })}
+            </div>
+          </FadeIn>
 
         </div>
       </div>

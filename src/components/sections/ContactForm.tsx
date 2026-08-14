@@ -97,10 +97,10 @@ export function ContactForm() {
   return (
     <div className="w-full space-y-6 font-montserrat">
       <div className="space-y-2">
-        <h2 className="text-2xl sm:text-[1.8vw] font-bold text-navy-950 leading-none uppercase">
+        <h2 className="sc-child text-2xl sm:text-[1.8vw] font-bold text-navy-950 leading-none uppercase" style={{"--i":2} as React.CSSProperties}>
           SEND US YOUR REQUIREMENT
         </h2>
-        <p className="text-slate-500 font-medium text-xs sm:text-[0.9vw] leading-relaxed">
+        <p className="sc-child text-slate-500 font-medium text-xs sm:text-[0.9vw] leading-relaxed" style={{"--i":3} as React.CSSProperties}>
           Looking for a specific hospital product or planning a larger requirement? Share your details with us and our team will assist you.
         </p>
       </div>
@@ -121,7 +121,7 @@ export function ContactForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Name */}
-        <div>
+        <div className="sc-child" style={{"--i":4} as React.CSSProperties}>
           <input
             type="text"
             name="name"
@@ -134,7 +134,7 @@ export function ContactForm() {
         </div>
 
         {/* Hospital & City */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":5} as React.CSSProperties}>
           <input
             type="text"
             name="hospital"
@@ -161,7 +161,7 @@ export function ContactForm() {
         </div>
 
         {/* Phone & Email */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":6} as React.CSSProperties}>
           <input
             type="tel"
             name="phone"
@@ -183,7 +183,7 @@ export function ContactForm() {
         </div>
 
         {/* Product & Quantity */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":7} as React.CSSProperties}>
           <select
             name="product"
             value={formData.product}
@@ -208,7 +208,7 @@ export function ContactForm() {
         </div>
 
         {/* Message */}
-        <div>
+        <div className="sc-child" style={{"--i":8} as React.CSSProperties}>
           <textarea
             name="message"
             required
@@ -224,7 +224,8 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="w-full flex items-center justify-center gap-2 bg-[#104272] hover:bg-[#15548F] text-white font-semibold text-md py-4 px-6 rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
+          className="sc-child w-full flex items-center justify-center gap-2 bg-[#104272] hover:bg-[#15548F] text-white font-semibold text-md py-4 px-6 rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
+          style={{"--i":9} as React.CSSProperties}
         >
           {status === 'loading' ? (
             <>

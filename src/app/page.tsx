@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -19,7 +19,7 @@ import {
   Instagram,
   Linkedin,
   Youtube,
-  Users,
+  Users2,
   Factory,
   Sparkles,
   Building2,
@@ -28,49 +28,187 @@ import {
   Activity,
 } from "lucide-react";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 
 export default function HomePage() {
+  const { openInquiryModal } = useInquiryModal();
   // Define categories for left and right sidebar lists
   const leftCategories = [
-    { name: "Dressing Trolleys", iconIndex: 0, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" },
-    { name: "Over Bed Tables", iconIndex: 1, img: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp" },
-    { name: "Bedside Lockers", iconIndex: 2, img: "/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp" },
-    { name: "Wheelchairs", iconIndex: 3, img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp" },
-    { name: "Attender Cots", iconIndex: 4, img: "/images/Product Assets/Beds/Attender-Cot-Bed.webp" },
-    { name: "Examination Couches", iconIndex: 5, img: "/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp" },
-    { name: "Stainless Steel Furniture", iconIndex: 0, img: "/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp" },
-    { name: "Ward Furniture", iconIndex: 1, img: "/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp" },
-    { name: "Custom Hospital Furniture", iconIndex: 2, img: "/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp" },
-    { name: "ICU Beds (Manual)", iconIndex: 3, img: "/images/Product Assets/ICU CotBed/ICU-Cot.webp" }
+    {
+      name: "Dressing Trolleys",
+      iconIndex: 0,
+      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+    },
+    {
+      name: "Over Bed Tables",
+      iconIndex: 1,
+      img: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+    },
+    {
+      name: "Bedside Lockers",
+      iconIndex: 2,
+      img: "/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp",
+    },
+    {
+      name: "Wheelchairs",
+      iconIndex: 3,
+      img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp",
+    },
+    {
+      name: "Attender Cots",
+      iconIndex: 4,
+      img: "/images/Product Assets/Beds/Attender-Cot-Bed.webp",
+    },
+    {
+      name: "Examination Couches",
+      iconIndex: 5,
+      img: "/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp",
+    },
+    {
+      name: "Stainless Steel Furniture",
+      iconIndex: 0,
+      img: "/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp",
+    },
+    {
+      name: "Ward Furniture",
+      iconIndex: 1,
+      img: "/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp",
+    },
+    {
+      name: "Custom Hospital Furniture",
+      iconIndex: 2,
+      img: "/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp",
+    },
+    {
+      name: "ICU Beds (Manual)",
+      iconIndex: 3,
+      img: "/images/Product Assets/ICU CotBed/ICU-Cot.webp",
+    },
   ];
 
   const rightCategories = [
-    { name: "ICU Beds", iconIndex: 0, img: "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp" },
-    { name: "Fowler Cots", iconIndex: 1, img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp" },
-    { name: "Semi Fowler Cots", iconIndex: 2, img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp" },
-    { name: "Plain Cots", iconIndex: 3, img: "/images/Product Assets/Beds/Plain-Examination-Bed.webp" },
-    { name: "Labour Cots", iconIndex: 4, img: "/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp" },
-    { name: "Stretcher Trolleys", iconIndex: 5, img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp" },
-    { name: "Transfer Trolleys", iconIndex: 0, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" },
-    { name: "Crash Carts", iconIndex: 1, img: "/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp" },
-    { name: "Instrument Trolleys", iconIndex: 2, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" },
-    { name: "Drug Trolleys", iconIndex: 3, img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp" }
+    {
+      name: "ICU Beds",
+      iconIndex: 0,
+      img: "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp",
+    },
+    {
+      name: "Fowler Cots",
+      iconIndex: 1,
+      img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp",
+    },
+    {
+      name: "Semi Fowler Cots",
+      iconIndex: 2,
+      img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp",
+    },
+    {
+      name: "Plain Cots",
+      iconIndex: 3,
+      img: "/images/Product Assets/Beds/Plain-Examination-Bed.webp",
+    },
+    {
+      name: "Labour Cots",
+      iconIndex: 4,
+      img: "/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp",
+    },
+    {
+      name: "Stretcher Trolleys",
+      iconIndex: 5,
+      img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp",
+    },
+    {
+      name: "Transfer Trolleys",
+      iconIndex: 0,
+      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+    },
+    {
+      name: "Crash Carts",
+      iconIndex: 1,
+      img: "/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp",
+    },
+    {
+      name: "Instrument Trolleys",
+      iconIndex: 2,
+      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+    },
+    {
+      name: "Drug Trolleys",
+      iconIndex: 3,
+      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+    },
   ];
 
   const [activeCategory, setActiveCategory] = useState("ICU Beds");
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
-  // Get active image based on active category
-  const activeItem = [...leftCategories, ...rightCategories].find(c => c.name === activeCategory);
-  const activeProductImage = activeItem ? activeItem.img : "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp";
-
-  // Helper to load webp icon dynamically
-  const getIconSrc = (idx: number, active: boolean) => {
-    const folder = active ? 'openIcons' : 'closeIcons';
-    if (idx === 0) {
-      return `/images/Home Page/HowWeBuild/${folder}/Group.webp`;
+  // Get dynamic category icon mapping
+  const getCategoryIcon = (name: string) => {
+    switch (name) {
+      case "Dressing Trolleys":
+        return "/images/Home Page/ourProducts/dressing trolly 1.webp";
+      case "Over Bed Tables":
+        return "/images/Home Page/ourProducts/over bed trolly 1.webp";
+      case "Bedside Lockers":
+        return "/images/Home Page/ourProducts/bed side 1.webp";
+      case "Wheelchairs":
+        return "/images/Home Page/ourProducts/weel schair 1.webp";
+      case "Attender Cots":
+        return "/images/Home Page/ourProducts/Attender Cots 1.webp";
+      case "Examination Couches":
+        return "/images/Home Page/ourProducts/image 47_layerstyle.webp";
+      case "Stainless Steel Furniture":
+        return "/images/Home Page/ourProducts/silver 1.webp";
+      case "Ward Furniture":
+        return "/images/Home Page/ourProducts/ward 1.webp";
+      case "Custom Hospital Furniture":
+        return "/images/Home Page/ourProducts/custome 1.webp";
+      case "ICU Beds (Manual)":
+        return "/images/Home Page/ourProducts/icu 1.webp";
+      case "ICU Beds":
+        return "/images/Home Page/ourProducts/icu 1.webp";
+      case "Fowler Cots":
+        return "/images/Home Page/ourProducts/flower 1.webp";
+      case "Semi Fowler Cots":
+        return "/images/Home Page/ourProducts/semi flower 1.webp";
+      case "Plain Cots":
+        return "/images/Home Page/ourProducts/silver 1.webp";
+      case "Labour Cots":
+        return "/images/Home Page/ourProducts/labour 1.webp";
+      case "Stretcher Trolleys":
+        return "/images/Home Page/ourProducts/strecture trolly 1.webp";
+      case "Transfer Trolleys":
+        return "/images/Home Page/ourProducts/transfer trolly 1.webp";
+      case "Crash Carts":
+        return "/images/Home Page/ourProducts/srash cart 1.webp";
+      case "Instrument Trolleys":
+        return "/images/Home Page/ourProducts/instrument trolly 1.webp";
+      case "Drug Trolleys":
+        return "/images/Home Page/ourProducts/drug troly 1.webp";
+      default:
+        return "/images/Home Page/ourProducts/icu 1.webp";
     }
-    return `/images/Home Page/HowWeBuild/${folder}/Group (${idx}).webp`;
   };
+
+  // Get active image based on active category, taking deterministic random from HowWeBuild folder
+  const getCenterImageForCategory = (name: string) => {
+    const frames = [
+      "/images/Home Page/HowWeBuild/Frame.webp",
+      "/images/Home Page/HowWeBuild/Frame (1).webp",
+      "/images/Home Page/HowWeBuild/Frame (2).webp",
+      "/images/Home Page/HowWeBuild/Frame (3).webp",
+      "/images/Home Page/HowWeBuild/Frame (4).webp",
+      "/images/Home Page/HowWeBuild/Frame (5).webp",
+    ];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const idx = Math.abs(hash) % frames.length;
+    return frames[idx];
+  };
+
+  const activeProductImage = getCenterImageForCategory(activeCategory);
 
   // Select 1 representative product per category to keep home page clean & curated
   const categoryHighlights = CATEGORIES.map((cat) => {
@@ -88,10 +226,28 @@ export default function HomePage() {
 
         {/* STATS BANNER (Overlaps 50% Hero Image & 50% Section Below) */}
         <div className="w-full px-4 sm:px-6 lg:px-8 relative z-30 -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-24">
+          <style>{`
+            html:not(.preloader-done) .home-stat-item {
+              opacity: 0;
+              pointer-events: none;
+            }
+            html.preloader-done .home-stat-item {
+              animation: statSlideIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+            html.preloader-done .home-stat-item:nth-child(1) { animation-delay: 0.5s; }
+            html.preloader-done .home-stat-item:nth-child(2) { animation-delay: 0.65s; }
+            html.preloader-done .home-stat-item:nth-child(3) { animation-delay: 0.8s; }
+            html.preloader-done .home-stat-item:nth-child(4) { animation-delay: 0.95s; }
+
+            @keyframes statSlideIn {
+              from { opacity: 0; transform: translateX(60px) scale(0.95); filter: blur(4px); }
+              to { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+            }
+          `}</style>
           <FadeIn direction="up" delay={0.1} className="px-[6vw]">
             <div className="w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#E86D24] via-[#EE7D22] to-[#FF9B00] shadow-2xl py-4 sm:py-5 px-6 sm:px-8 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-center text-white border border-white/30 backdrop-blur-md">
               {/* Stat 1 */}
-              <div className="flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
+              <div className="home-stat-item flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
                 <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/yearOfExperience.webp"
@@ -113,7 +269,7 @@ export default function HomePage() {
               </div>
 
               {/* Stat 2 */}
-              <div className="flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
+              <div className="home-stat-item flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
                 <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/projectCompleted.webp"
@@ -135,7 +291,7 @@ export default function HomePage() {
               </div>
 
               {/* Stat 3 */}
-              <div className="flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
+              <div className="home-stat-item flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
                 <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/ProductManufature.webp"
@@ -157,7 +313,7 @@ export default function HomePage() {
               </div>
 
               {/* Stat 4 */}
-              <div className="flex items-center gap-3 sm:gap-4">
+              <div className="home-stat-item flex items-center gap-3 sm:gap-4">
                 <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/bedsDelivered.webp"
@@ -229,34 +385,37 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          {/* Interactive Interlocking Diamond Cards Layout */}
-          <div className="py-4 px-2 max-w-7xl mx-auto flex justify-center items-center overflow-x-auto">
-            <div className="relative w-[1040px] h-[430px] min-w-[1040px] my-4">
+          {/* Interactive Interlocking Diamond Cards Layout (Desktop Only) */}
+          <div className="hidden lg:flex justify-center items-center py-4 px-2 max-w-7xl mx-auto overflow-x-auto">
+            <style>{`
+              .why-card-container .why-card {
+                transform: rotate(45deg) scale(1);
+                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+              }
+              .why-card-container .why-card:hover {
+                transform: rotate(45deg) scale(1.15) !important;
+              }
+            `}</style>
+            <div className="why-card-container relative w-[1180px] h-[430px] min-w-[1180px] my-4">
               {/* Card 1: Superior Manufacturing Quality (Lower Row 1) */}
-              <div className="absolute left-[0px] top-[150px] z-10">
-                <FadeIn direction="up" delay={0.2}>
-                  <div className="w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] rotate-45  flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
+              <div className="absolute left-[0px] top-[150px] z-10 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={0.15}>
+                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-orange-500 mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6 3h12l4 6-10 12L2 9l4-6z"
-                          />
-                        </svg>
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/material-symbols-light_diamond-outline-rounded.webp"
+                          alt="Superior Manufacturing Quality"
+                          fill
+                          className="object-contain"
+                        />
                       </div>
                       <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
                         Superior
                         <br />
                         Manufacturing Quality
                       </h3>
-                      <p className="text-[9px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
                         Manufactured using high-grade materials to ensure
                         durability, safety, and long-lasting performance.
                       </p>
@@ -265,197 +424,185 @@ export default function HomePage() {
                 </FadeIn>
               </div>
 
-              {/* Card 2: Advanced Manufacturing Facility (Upper Row 1 - Orange) */}
-              <div className="absolute left-[137px] top-[13px] z-20">
-                <FadeIn direction="up" delay={0.25}>
-                  <div className="w-[185px] h-[185px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] rotate-45 shadow-2xl flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
+              {/* Card 2: Excellent value for money (Upper Row 1 - Orange) */}
+              <div className="absolute left-[137px] top-[13px] z-20 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={0.3}>
+                  <div className="why-card w-[185px] h-[185px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-white mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5"
-                          />
-                        </svg>
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/Simplification.webp"
+                          alt="Excellent value for money"
+                          fill
+                          className="object-contain filter brightness-0 invert"
+                        />
                       </div>
                       <h3 className="text-[11.5px] font-bold text-white leading-tight">
-                        Advanced
+                        Excellent value for
                         <br />
-                        Manufacturing Facility
+                        money
                       </h3>
-                      <p className="text-[9px] text-white/90 leading-snug font-medium">
-                        Equipped with modern machinery and efficient production
-                        processes for consistent product quality.
+                      <p className="text-[10px] text-white/90 leading-snug font-medium">
+                        Durable products designed to deliver long-term value
+                        without unnecessary cost.
                       </p>
                     </div>
                   </div>
                 </FadeIn>
               </div>
 
-              {/* Card 3: Certified Quality Standards (Lower Row 2) */}
-              <div className="absolute left-[276px] top-[150px] z-10">
-                <FadeIn direction="up" delay={0.3}>
-                  <div className="w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] rotate-45  flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
+              {/* Card 3: Reliable after-sales service (Lower Row 2) */}
+              <div className="absolute left-[274px] top-[150px] z-10 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={0.45}>
+                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-orange-500 mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                          />
-                        </svg>
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/image 19.webp"
+                          alt="Reliable after-sales service"
+                          fill
+                          className="object-contain"
+                        />
                       </div>
                       <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
-                        Certified Quality
+                        Reliable after-
                         <br />
-                        Standards
+                        sales service
                       </h3>
-                      <p className="text-[9px] text-slate-500 leading-snug font-medium">
-                        Every product undergoes stringent quality inspections to
-                        meet industry standards and customer expectations.
+                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                        Our team remains available to assist with product and
+                        service requirements.
                       </p>
                     </div>
                   </div>
                 </FadeIn>
               </div>
 
-              {/* Card 4: Timely Delivery (Upper Row 2) */}
-              <div className="absolute left-[415px] top-[13px] z-20">
-                <FadeIn direction="up" delay={0.35}>
-                  <div className="w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] rotate-45  flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
+              {/* Card 4: Customized product solutions (Upper Row 2) */}
+              <div className="absolute left-[411px] top-[13px] z-20 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={0.6}>
+                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-orange-500 mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0C.677 5.572.25 6.052.25 6.62v9.88"
-                          />
-                        </svg>
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/Simplification (1).webp"
+                          alt="Customized product solutions"
+                          fill
+                          className="object-contain"
+                        />
                       </div>
                       <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                        Customized product
+                        <br />
+                        solutions
+                      </h3>
+                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                        Product configurations can be adapted to meet specific
+                        healthcare requirements.
+                      </p>
+                    </div>
+                  </div>
+                </FadeIn>
+              </div>
+
+              {/* Card 5: Timely Delivery (Lower Row 3 - Navy Blue) */}
+              <div className="absolute left-[548px] top-[150px] z-20 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={0.75}>
+                  <div className="why-card w-[185px] h-[185px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
+                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/Simplification (2).webp"
+                          alt="Timely Delivery"
+                          fill
+                          className="object-contain filter brightness-0 invert"
+                        />
+                      </div>
+                      <h3 className="text-[11.5px] font-bold text-white leading-tight">
                         Timely Delivery
                       </h3>
-                      <p className="text-[9px] text-slate-500 leading-snug font-medium">
-                        Reliable production planning and logistics ensure
-                        on-time delivery across Tamil Nadu.
+                      <p className="text-[10px] text-slate-200 leading-snug font-medium">
+                        Efficient production and coordination help us meet
+                        project timelines.
                       </p>
                     </div>
                   </div>
                 </FadeIn>
               </div>
 
-              {/* Card 5: Dedicated Customer Support (Lower Row 3 - Navy) */}
-              <div className="absolute left-[555px] top-[152px] z-20">
-                <FadeIn direction="up" delay={0.4}>
-                  <div className="w-[185px] h-[185px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] rotate-45 shadow-2xl flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
+              {/* Card 6: Strong technical support (Upper Row 3) */}
+              <div className="absolute left-[685px] top-[13px] z-10 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={0.9}>
+                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-white mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                          />
-                        </svg>
-                      </div>
-                      <h3 className="text-[11.5px] font-bold text-white leading-tight">
-                        Dedicated Customer
-                        <br />
-                        Support
-                      </h3>
-                      <p className="text-[9px] text-slate-200 leading-snug font-medium">
-                        Our experienced team provides prompt assistance before,
-                        during, and after every purchase.
-                      </p>
-                    </div>
-                  </div>
-                </FadeIn>
-              </div>
-
-              {/* Card 6: 25+ Years of Industry Experience (Upper Row 3) */}
-              <div className="absolute left-[698px] top-[16px] z-10">
-                <FadeIn direction="up" delay={0.45}>
-                  <div className="w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] rotate-45  flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-orange-500 mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.504-1.125-1.125-1.125h-6.75A1.125 1.125 0 019 15.375V18.75m9 0h-9"
-                          />
-                        </svg>
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/Simplification (3).webp"
+                          alt="Strong technical support"
+                          fill
+                          className="object-contain"
+                        />
                       </div>
                       <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
-                        25+ Years of Industry
+                        Strong technical
                         <br />
-                        Experience
+                        support
                       </h3>
-                      <p className="text-[9px] text-slate-500 leading-snug font-medium">
-                        Over two decades of manufacturing expertise trusted by
-                        hospitals, clinics, laboratories, and healthcare
-                        institutions.
+                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                        Our team provides practical guidance for product
+                        selection and requirements.
                       </p>
                     </div>
                   </div>
                 </FadeIn>
               </div>
 
-              {/* Card 7: 3000+ Product Manufactured Every Year (Lower Row 4) */}
-              <div className="absolute left-[838px] top-[154px] z-10">
-                <FadeIn direction="up" delay={0.5}>
-                  <div className="w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] rotate-45  flex items-center justify-center p-3 text-center transition-transform hover:scale-105">
+              {/* Card 7: Long-Lasting Products (Lower Row 4) */}
+              <div className="absolute left-[822px] top-[150px] z-10 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={1.05}>
+                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="text-orange-500 mb-0.5">
-                        <svg
-                          className="w-7 h-7 stroke-[1.5]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
-                          />
-                        </svg>
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/Simplification (4).webp"
+                          alt="Long-Lasting Products"
+                          fill
+                          className="object-contain"
+                        />
                       </div>
                       <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
-                        3000+ Product
-                        <br />
-                        Manufactured Every Year
+                        Long-Lasting Products
                       </h3>
-                      <p className="text-[9px] text-slate-500 leading-snug font-medium">
-                        Ensuring consistent quality, reliable supply, and timely
-                        delivery for healthcare institutions across India.
+                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                        Robust construction helps products withstand demanding
+                        hospital environments.
+                      </p>
+                    </div>
+                  </div>
+                </FadeIn>
+              </div>
+
+              {/* Card 8: Transparent and customer-focused service (Upper Row 4) */}
+              <div className="absolute left-[959px] top-[13px] z-20 hover:z-50">
+                <FadeIn direction="down" duration={1.2} delay={1.2}>
+                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                        <Image
+                          src="/images/Home Page/whySectionIcons/Simplification (5).webp"
+                          alt="Transparent and customer-focused service"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                        Transparent and
+                        <br />
+                        customer-focused service
+                      </h3>
+                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                        We focus on building transparent, dependable
+                        relationships that last.
                       </p>
                     </div>
                   </div>
@@ -463,87 +610,533 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Tablet Grid Layout (Two by Two, Rotated Diamond Shapes) */}
+          <div className="hidden sm:grid lg:hidden grid-cols-2 gap-x-12 gap-y-24 justify-items-center justify-center py-16 w-full max-w-4xl mx-auto px-4">
+            {/* Card 1 */}
+            <FadeIn direction="up" delay={0.1}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/material-symbols-light_diamond-outline-rounded.webp"
+                      alt="Superior Manufacturing Quality"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Superior
+                    <br />
+                    Manufacturing Quality
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Manufactured using high-grade materials to ensure durability, safety, and performance.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 2 */}
+            <FadeIn direction="up" delay={0.15}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-xl hover:shadow-2xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification.webp"
+                      alt="Excellent value for money"
+                      fill
+                      className="object-contain filter brightness-0 invert"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                    Excellent value for
+                    <br />
+                    money
+                  </h3>
+                  <p className="text-[9.5px] text-white/90 leading-snug font-medium">
+                    Durable products designed to deliver long-term value without unnecessary cost.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 3 */}
+            <FadeIn direction="up" delay={0.2}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/image 19.webp"
+                      alt="Reliable after-sales service"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Reliable after-
+                    <br />
+                    sales service
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Our team remains available to assist with product and service requirements.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 4 */}
+            <FadeIn direction="up" delay={0.25}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (1).webp"
+                      alt="Customized product solutions"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Customized product
+                    <br />
+                    solutions
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Product configurations can be adapted to meet specific healthcare requirements.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 5 */}
+            <FadeIn direction="up" delay={0.3}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-xl hover:shadow-2xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (2).webp"
+                      alt="Timely Delivery"
+                      fill
+                      className="object-contain filter brightness-0 invert"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                    Timely Delivery
+                  </h3>
+                  <p className="text-[9.5px] text-slate-200 leading-snug font-medium">
+                    Efficient production and coordination help us meet project timelines.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 6 */}
+            <FadeIn direction="up" delay={0.35}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (3).webp"
+                      alt="Strong technical support"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Strong technical
+                    <br />
+                    support
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Our team provides practical guidance for product selection and requirements.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 7 */}
+            <FadeIn direction="up" delay={0.4}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (4).webp"
+                      alt="Long-Lasting Products"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Long-Lasting Products
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Robust construction helps products withstand demanding hospital environments.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 8 */}
+            <FadeIn direction="up" delay={0.45}>
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (5).webp"
+                      alt="Transparent and customer-focused service"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Transparent &
+                    <br />
+                    Customer Service
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    We focus on building transparent, dependable relationships that last.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+
+          {/* Mobile Overlapping Layout (Stacked with Negative Margins and Staggered Animations) */}
+          <div className="flex flex-col items-center py-12 space-y-[25px] sm:hidden w-full px-4">
+            {/* Card 1 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-10">
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/material-symbols-light_diamond-outline-rounded.webp"
+                      alt="Superior Manufacturing Quality"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Superior
+                    <br />
+                    Manufacturing Quality
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Manufactured using high-grade materials to ensure durability, safety, and performance.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 2 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-20">
+              <div className="w-[190px] h-[190px] rotate-45 bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-xl hover:shadow-2xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification.webp"
+                      alt="Excellent value for money"
+                      fill
+                      className="object-contain filter brightness-0 invert"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                    Excellent value for
+                    <br />
+                    money
+                  </h3>
+                  <p className="text-[9.5px] text-white/90 leading-snug font-medium">
+                    Durable products designed to deliver long-term value without unnecessary cost.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 3 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-30">
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/image 19.webp"
+                      alt="Reliable after-sales service"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Reliable after-
+                    <br />
+                    sales service
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Our team remains available to assist with product and service requirements.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 4 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-40">
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (1).webp"
+                      alt="Customized product solutions"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Customized product
+                    <br />
+                    solutions
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Product configurations can be adapted to meet specific healthcare requirements.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 5 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-50">
+              <div className="w-[190px] h-[190px] rotate-45 bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-xl hover:shadow-2xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (2).webp"
+                      alt="Timely Delivery"
+                      fill
+                      className="object-contain filter brightness-0 invert"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                    Timely Delivery
+                  </h3>
+                  <p className="text-[9.5px] text-slate-200 leading-snug font-medium">
+                    Efficient production and coordination help us meet project timelines.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 6 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-[60]">
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (3).webp"
+                      alt="Strong technical support"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Strong technical
+                    <br />
+                    support
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Our team provides practical guidance for product selection and requirements.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 7 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-[70]">
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (4).webp"
+                      alt="Long-Lasting Products"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Long-Lasting Products
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    Robust construction helps products withstand demanding hospital environments.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 8 */}
+            <FadeIn direction="up" delay={0.05} className="relative z-[80]">
+              <div className="w-[190px] h-[190px] rotate-45 bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-xl transition-all">
+                <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="relative w-10 h-10 mb-1 flex-shrink-0">
+                    <Image
+                      src="/images/Home Page/whySectionIcons/Simplification (5).webp"
+                      alt="Transparent and customer-focused service"
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                    Transparent &
+                    <br />
+                    Customer Service
+                  </h3>
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                    We focus on building transparent, dependable relationships that last.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
       {/* 3. FEATURED PRODUCT CATEGORIES SECTION */}
       <section className="w-full px-[4vw] py-16 bg-[#FAFBFC] relative">
         <div className="mx-[2vw] space-y-[4vh]">
-          {/* Top Sub-tagline Badge - Left Aligned with orange icon & accent line */}
-          <FadeIn
-            direction="up"
-            delay={0.1}
-            className="flex flex-col items-start gap-1.5"
-          >
-            <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
-              <span className="relative w-8 h-8 flex-shrink-0">
-                <Image
-                  src="/images/AboutAs/aboutAs.webp"
-                  alt="Products Icon"
-                  fill
-                  className="object-contain"
-                />
-              </span>
-              <span>OUR PRODUCTS</span>
-            </div>
-            {/* Orange underline accent line */}
-            <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
-          </FadeIn>
+          {/* Top Sub-tagline Badge - Left Aligned with orange icon, accent line, and mobile hamburger */}
+          <div className="flex items-center justify-between w-full">
+            <FadeIn
+              direction="up"
+              delay={0.1}
+              className="flex flex-col items-start gap-1.5"
+            >
+              <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
+                <span className="relative w-8 h-8 flex-shrink-0">
+                  <Image
+                    src="/images/AboutAs/aboutAs.webp"
+                    alt="Products Icon"
+                    fill
+                    className="object-contain"
+                  />
+                </span>
+                <span>OUR PRODUCTS</span>
+              </div>
+              {/* Orange underline accent line */}
+              <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
+            </FadeIn>
+
+            {/* Hamburger Button for Mobile Categories Panel */}
+            <button
+              onClick={() => setIsSidePanelOpen(true)}
+              className="lg:hidden p-2.5 rounded-xl bg-white shadow-md border border-slate-100 text-[#0B3B60] hover:text-[#E86D24] transition-all flex items-center justify-center"
+              aria-label="Toggle Categories Menu"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu">
+                <line x1="4" x2="20" y1="12" y2="12" />
+                <line x1="4" x2="20" y1="6" y2="6" />
+                <line x1="4" x2="20" y1="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+
 
           {/* Header Title & Description */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-3">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-[#E86D24] tracking-tight uppercase leading-tight font-montserrat">
-              Complete <br />
-              <span className="text-[#0B2545]">Hospital Furniture Solutions</span>
+            <h2 className="text-3xl sm:text-5xl font-semibold text-[#E86D24] tracking-wider leading-tight">
+              Complete Hospital <br className="hidden sm:inline" /> Furniture Solutions
             </h2>
             <p className="text-slate-600 text-base sm:text-md max-w-4xl mx-auto leading-relaxed font-medium">
-              We manufacture a comprehensive range of hospital furniture designed for modern healthcare facilities, combining durability, safety, functionality, and ergonomic design.
+              We manufacture a comprehensive range of hospital furniture
+              designed for modern healthcare facilities, combining durability,
+              safety, functionality, and ergonomic design.
             </p>
           </FadeIn>
 
-          {/* Interactive Grid Showcase */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8">
-            
+          {/* Interactive Flex Showcase */}
+          <div className="flex flex-col lg:flex-row gap-8 items-center pt-8 justify-between">
             {/* Left Column: 10 Categories */}
-            <div className="lg:col-span-3 space-y-3 order-2 lg:order-1">
-              {leftCategories.map((cat) => {
+            <div className="hidden lg:block w-full lg:w-[30%] order-2 lg:order-1 flex-shrink-0">
+              {leftCategories.map((cat, idx) => {
                 const isActive = activeCategory === cat.name;
                 return (
-                  <button
+                  <FadeIn
                     key={cat.name}
-                    onClick={() => setActiveCategory(cat.name)}
-                    className={`w-full flex items-center justify-end gap-3 text-right group transition-all duration-300 py-1 px-3 rounded-2xl ${
-                      isActive 
-                        ? 'text-[#E86D24] font-bold' 
-                        : 'text-slate-700 hover:text-[#0B3B60] font-semibold'
+                    direction="right"
+                    delay={0.05 * idx}
+                    className="w-full"
+                  >
+                    <button
+                      onClick={() => setActiveCategory(cat.name)}
+                    className={`w-full flex items-center justify-end gap-4 text-right group transition-all duration-300 py-2 px-3 rounded-2xl ${
+                      isActive
+                        ? "text-[#E86D24] font-bold "
+                        : "text-slate-700 hover:text-[#0B3B60] font-semibold"
                     }`}
                   >
-                    <span className="text-xs sm:text-[13px] font-montserrat tracking-wide">{cat.name}</span>
-                    <div className="relative w-9 h-9 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
-                      <Image
-                        src={getIconSrc(cat.iconIndex, isActive)}
-                        alt=""
-                        fill
-                        className="object-contain"
-                      />
+                    <span className="text-sm sm:text-[15px] font-montserrat tracking-wide">
+                      {cat.name}
+                    </span>
+                    <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <svg
+                        viewBox="0 0 100 100"
+                        className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                      >
+                        {/* Blue base segment */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="44"
+                          fill="transparent"
+                          stroke="#0B3B60"
+                          strokeWidth="8"
+                          strokeLinecap="round"
+                          strokeDasharray={isActive ? "45 276" : "205 276"}
+                          strokeDashoffset={isActive ? 102 : 0}
+                          className="transition-all duration-[800ms] ease-in-out"
+                        />
+                        {/* Orange overlay segment */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="44"
+                          fill="transparent"
+                          stroke="#E86D24"
+                          strokeWidth="8"
+                          strokeLinecap="round"
+                          strokeDasharray={isActive ? "205 276" : "45 276"}
+                          strokeDashoffset={isActive ? 0 : 102}
+                          className="transition-all duration-[800ms] ease-in-out"
+                        />
+                      </svg>
+                      <div
+                        className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
+                          isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
+                        }`}
+                      >
+                        <div className="relative w-[20px] h-[20px]">
+                          <Image
+                            src={getCategoryIcon(cat.name)}
+                            alt=""
+                            fill
+                            className="object-contain filter brightness-0 invert"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </button>
+                    </button>
+                  </FadeIn>
                 );
               })}
             </div>
 
             {/* Center Column: Interactive Image Frame */}
-            <div className="lg:col-span-6 flex flex-col items-center justify-center order-1 lg:order-2">
+            <FadeIn direction="up" delay={0.2} className="w-full lg:w-[40%] flex flex-col items-center justify-center order-1 lg:order-2 flex-shrink-0">
               {/* Outer container with relative positioning and padding for borders */}
-              <div className="relative w-full aspect-[4/3] max-w-xl">
+              <div className="relative w-full h-[60vh] aspect-[4/3] max-w-lg">
                 {/* Top-Left Blue Border Bracket (Offset outside the container) */}
                 <div className="absolute -top-3 -left-3 w-[45%] h-[45%] border-t-[5px] border-l-[5px] border-[#0B3B60] rounded-tl-[2.8rem] pointer-events-none z-0" />
-                
+
                 {/* Bottom-Right Orange Border Bracket (Offset outside the container) */}
                 <div className="absolute -bottom-3 -right-3 w-[45%] h-[45%] border-b-[5px] border-r-[5px] border-[#E86D24] rounded-br-[2.8rem] pointer-events-none z-0" />
 
                 {/* Main White Frame Container */}
-                <div className="relative w-full h-full rounded-[2.5rem] bg-white shadow-2xl border border-slate-100 p-3 z-10">
+                <div className="relative w-full h-full rounded-[2.5rem] bg-white shadow-2xl border border-slate-100 p-2 z-10">
                   {/* Inner Image with custom rounded corners matching mockup */}
                   <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-slate-50/60 border border-slate-100">
                     <Image
@@ -552,11 +1145,14 @@ export default function HomePage() {
                       fill
                       priority
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-contain p-6 transition-all duration-500 transform hover:scale-103"
+                      className="object-cover transition-all duration-500 transform hover:scale-103"
                     />
-                    
+
                     {/* View Details Button overlay */}
-                    <Link href="/products" className="absolute bottom-6 right-6 z-20">
+                    <Link
+                      href="/products"
+                      className="absolute bottom-6 right-6 z-20"
+                    >
                       <button className="bg-[#E86D24] hover:bg-[#d65e1c] text-white font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2">
                         <span>View</span>
                         <ArrowRight className="w-4.5 h-4.5" />
@@ -566,43 +1162,92 @@ export default function HomePage() {
                 </div>
 
                 {/* Explore Range Button attached to the bottom left of the container */}
-                <Link href="/products" className="absolute -bottom-6 left-6 z-20">
-                  <button className="bg-[#0B3B60] hover:bg-[#051c30] text-white font-extrabold text-[10px] sm:text-xs px-6 py-3 rounded-b-2xl shadow-md transition-all flex items-center gap-2 tracking-wider">
+                <Link
+                  href="/products"
+                  className="absolute -bottom-10 left-6 z-0"
+                >
+                  <button className="relative z-30 bg-[#0B3B60] hover:bg-[#051c30] text-white font-extrabold text-[10px] sm:text-xs px-6 pb-3 pt-4 rounded-b-2xl shadow-md transition-all flex items-center gap-2 tracking-wider">
                     <span>EXPLORE COMPLETE PRODUCT RANGE</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </Link>
               </div>
-            </div>
+            </FadeIn>
 
             {/* Right Column: 10 Categories */}
-            <div className="lg:col-span-3 space-y-3 order-3">
-              {rightCategories.map((cat) => {
+            <div className="hidden lg:block w-full lg:w-[30%] order-3 flex-shrink-0">
+              {rightCategories.map((cat, idx) => {
                 const isActive = activeCategory === cat.name;
                 return (
-                  <button
+                  <FadeIn
                     key={cat.name}
-                    onClick={() => setActiveCategory(cat.name)}
-                    className={`w-full flex items-center justify-start gap-3 text-left group transition-all duration-300 py-1 px-3 rounded-2xl ${
-                      isActive 
-                        ? 'text-[#E86D24] font-bold' 
-                        : 'text-slate-700 hover:text-[#0B3B60] font-semibold'
+                    direction="left"
+                    delay={0.05 * idx}
+                    className="w-full"
+                  >
+                    <button
+                      onClick={() => setActiveCategory(cat.name)}
+                    className={`w-full flex items-center justify-start gap-4 text-left group transition-all duration-300 py-2 px-3 rounded-2xl ${
+                      isActive
+                        ? "text-[#E86D24] font-bold"
+                        : "text-slate-700 hover:text-[#0B3B60] font-semibold"
                     }`}
                   >
-                    <div className="relative w-9 h-9 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
-                      <Image
-                        src={getIconSrc(cat.iconIndex, isActive)}
-                        alt=""
-                        fill
-                        className="object-contain"
-                      />
+                    <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <svg
+                        viewBox="0 0 100 100"
+                        className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                      >
+                        {/* Blue base segment */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="44"
+                          fill="transparent"
+                          stroke="#0B3B60"
+                          strokeWidth="8"
+                          strokeLinecap="round"
+                          strokeDasharray={isActive ? "45 276" : "205 276"}
+                          strokeDashoffset={isActive ? 102 : 0}
+                          className="transition-all duration-[800ms] ease-in-out"
+                        />
+                        {/* Orange overlay segment */}
+                        <circle
+                          cx="50"
+                          cy="50"
+                          r="44"
+                          fill="transparent"
+                          stroke="#E86D24"
+                          strokeWidth="8"
+                          strokeLinecap="round"
+                          strokeDasharray={isActive ? "205 276" : "45 276"}
+                          strokeDashoffset={isActive ? 0 : 102}
+                          className="transition-all duration-[800ms] ease-in-out"
+                        />
+                      </svg>
+                      <div
+                        className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
+                          isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
+                        }`}
+                      >
+                        <div className="relative w-[20px] h-[20px]">
+                          <Image
+                            src={getCategoryIcon(cat.name)}
+                            alt=""
+                            fill
+                            className="object-contain filter brightness-0 invert"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-xs sm:text-[13px] font-semibold font-montserrat tracking-wide">{cat.name}</span>
-                  </button>
+                    <span className="text-sm sm:text-[15px] font-semibold font-montserrat tracking-wide">
+                      {cat.name}
+                    </span>
+                    </button>
+                  </FadeIn>
                 );
               })}
             </div>
-
           </div>
         </div>
       </section>
@@ -610,14 +1255,20 @@ export default function HomePage() {
       {/* 4. OUR STORY / ABOUT US SECTION */}
       <section className="w-full relative overflow-hidden bg-gradient-to-r from-slate-50 via-blue-50/40 to-slate-50">
         {/* Our Story Background Doodle */}
-        <div 
+        <div
           className="absolute inset-0 opacity-1 mix-blend-multiply pointer-events-none bg-cover bg-right-top z-0"
-          style={{ backgroundImage: `url('/images/Home Page/ourStoryDoodle.webp')` }}
+          style={{
+            backgroundImage: `url('/images/Home Page/ourStoryDoodle.webp')`,
+          }}
         />
-        <div className=" relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <div className=" relative z-10 flex flex-col lg:flex-row items-center lg:items-start px-6 sm:px-10 lg:px-0 ">
           {/* Left Column: Image Container (Flex 1) */}
           <div className="flex-1 w-full relative">
-            <FadeIn direction="right" delay={0.1} className="max-w-2xl mx-auto lg:mx-0">
+            <FadeIn
+              direction="right"
+              delay={0.1}
+              className="max-w-2xl mx-auto lg:mx-0"
+            >
               <div className="relative w-full overflow-hidden">
                 <Image
                   src="/images/Home Page/OurStory.webp"
@@ -632,22 +1283,26 @@ export default function HomePage() {
           </div>
 
           {/* Right Column: Content (Flex 1 with Top-Right Badge) */}
-          <div className="flex-1 w-full relative text-left space-y-5 lg:space-y-6">
-            
-            {/* Top Badge: OUR STORY (Positioned Absolute Top Right - Shifted slightly left) */}
-            <div className="absolute top-0 right-6 sm:right-10 lg:right-12 flex flex-col items-end gap-1">
-              <div className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wider text-[#0B2545] uppercase">
-                <svg className="w-4 h-4 text-orange-500 fill-orange-500" viewBox="0 0 24 24">
-                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                </svg>
+          <div className="flex-1 w-full relative text-left space-y-6 pt-6 lg:pt-20 lg:-ml-10">
+            {/* Top Badge: OUR STORY (Positioned Absolute Top Right on desktop, relative left-aligned on mobile) */}
+            <div className="lg:absolute lg:top-10 lg:right-12 flex flex-col items-start gap-1 mb-6 lg:mb-0">
+              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
+                <div className="relative w-7 h-7 flex-shrink-0">
+                  <Image
+                    src="/images/AboutAs/aboutAs.webp"
+                    alt="Our Story Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
                 <span>OUR STORY</span>
               </div>
-              <div className="w-14 h-[3px] bg-[#E86D24] rounded-full" />
+              <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
 
             {/* Title */}
             <FadeIn direction="up" delay={0.15}>
-              <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-[#0B2545] leading-[1.18] tracking-tight max-w-xl">
+              <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-semibold text-[#0B2545] tracking-widest max-w-2xl" style={{ lineHeight: '1.35' }}>
                 Building Healthcare Infrastructure Since 1997
               </h2>
             </FadeIn>
@@ -656,9 +1311,9 @@ export default function HomePage() {
             <FadeIn
               direction="up"
               delay={0.2}
-              className="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed font-normal max-w-xl"
+              className="space-y-4 text-slate-600 text-base sm:text-md leading-relaxed font-normal max-w-xl"
             >
-              <p>
+              <p style={{ lineHeight: '1.8' }}>
                 For over{" "}
                 <strong className="text-slate-900 font-semibold">
                   29 years
@@ -682,9 +1337,13 @@ export default function HomePage() {
             </FadeIn>
 
             {/* CTA Button */}
-            <FadeIn direction="up" delay={0.25} className="pt-2 flex justify-start">
+            <FadeIn
+              direction="up"
+              delay={0.25}
+              className="pt-2 flex justify-start"
+            >
               <Link href="/about">
-                <button className="bg-[#0B3B60] hover:bg-[#062454] text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 group">
+                <button className="bg-[#0B3B60] hover:bg-[#062454] text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-lg uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 group">
                   <span>READ OUR STORY</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -695,7 +1354,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. TRUST & CERTIFICATIONS SECTION */}
-      <section className="w-full px-[3vw] py-[8vh] relative overflow-hidden bg-slate-50/70 border-t border-b border-slate-200/80">
+      <section className="w-full px-[3vw] py-[8vh] relative overflow-hidden bg-slate-50 ">
         {/* Soft background medical/hexagonal pattern */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#0b2545_1px,transparent_1px)] [background-size:20px_20px]" />
 
@@ -704,11 +1363,21 @@ export default function HomePage() {
           <FadeIn
             direction="up"
             delay={0.1}
-            className="flex items-center justify-center"
+            className="flex flex-col items-center justify-center"
           >
-            <div className="inline-flex items-center gap-1.5 text-lg font-bold tracking-widest text-slate-700 uppercase border-b-2 border-orange-500 pb-1">
-              <Award className="w-4 h-4 text-orange-500" />
-              <span>TRUST & CERTIFICATIONS</span>
+            <div className="flex flex-col items-start gap-1.5">
+              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+                <div className="relative w-7 h-7 flex-shrink-0">
+                  <Image
+                    src="/images/AboutAs/aboutAs.webp"
+                    alt="Trust & Certifications Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <span>TRUST & CERTIFICATIONS</span>
+              </div>
+              <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
           </FadeIn>
 
@@ -717,7 +1386,7 @@ export default function HomePage() {
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0B2545] tracking-tight">
               Certified Quality. Trusted by Thousands.
             </h2>
-            <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-medium">
+            <p className="text-sm md:text-base text-slate-600 max-w-xl mx-auto font-medium">
               Our certifications reflect our commitment to quality, safety, and
               excellence in every product we manufacture.
             </p>
@@ -725,7 +1394,6 @@ export default function HomePage() {
 
           {/* 7 Certification Cards Row */}
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 pt-4">
-            
             {/* Cert 1: ISO 9001 */}
             <FadeIn
               direction="up"
@@ -741,10 +1409,10 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   ISO 9001
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
                   Quality Management
                 </span>
               </div>
@@ -765,10 +1433,10 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   ISO 13485
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
                   Medical Quality
                 </span>
               </div>
@@ -789,10 +1457,10 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   ZED
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
                   Zero Defect
                 </span>
               </div>
@@ -813,10 +1481,10 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   MSME
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
                   Registered
                 </span>
               </div>
@@ -837,10 +1505,10 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   NSIC
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
                   Registered
                 </span>
               </div>
@@ -861,10 +1529,10 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   MAKE IN INDIA
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
                   Proudly Indian
                 </span>
               </div>
@@ -876,7 +1544,7 @@ export default function HomePage() {
               delay={0.4}
               className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
             >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+              <div className="relative w-18 h-18 sm:w-24 sm:h-24 flex items-center justify-center">
                 <Image
                   src="/images/Home Page/certificates/assocham.webp"
                   alt="ASSOCHAM Member Certificate"
@@ -885,15 +1553,14 @@ export default function HomePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-black text-[#0B2545] block">
+                <span className="text-md font-black text-[#0B2545] block">
                   ASSOCHAM
                 </span>
-                <span className="text-[10px] text-slate-500 font-medium leading-tight block mt-0.5">
+                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-1">
                   Member
                 </span>
               </div>
             </FadeIn>
-
           </div>
         </div>
       </section>
@@ -908,17 +1575,20 @@ export default function HomePage() {
           <FadeIn
             direction="up"
             delay={0.1}
-            className="flex items-center justify-center"
+            className="flex flex-col items-center justify-center"
           >
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold tracking-widest text-slate-700 uppercase border-b-2 border-orange-500 pb-1">
-              <Users className="w-4 h-4 text-orange-500" />
-              <span>OUR CLIENTS</span>
+            <div className="flex flex-col items-start gap-1.5 pb-2">
+              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+                <Users2 className="w-6 h-6 text-orange-500 flex-shrink-0" />
+                <span>OUR CLIENTS</span>
+              </div>
+              <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
           </FadeIn>
 
           {/* Section Title & Subtitle */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0B2545] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#092b54] tracking-tight">
               Trusted by Healthcare Institutions Across Tamil Nadu
             </h2>
             <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-medium">
@@ -950,12 +1620,12 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="space-y-1">
-                <h3 className="text-xs font-bold text-[#0B2545] uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
                   GOVERNMENT
                   <br />
                   HOSPITALS
                 </h3>
-                <div className="w-4 h-0.5 bg-slate-300 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
+                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
               </div>
             </FadeIn>
 
@@ -971,12 +1641,12 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="space-y-1">
-                <h3 className="text-xs font-bold text-[#0B2545] uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
                   PRIVATE
                   <br />
                   HOSPITALS
                 </h3>
-                <div className="w-4 h-0.5 bg-slate-300 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
+                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
               </div>
             </FadeIn>
 
@@ -1001,12 +1671,12 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="space-y-1">
-                <h3 className="text-xs font-bold text-[#0B2545] uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
                   MEDICAL
                   <br />
                   COLLEGES
                 </h3>
-                <div className="w-4 h-0.5 bg-slate-300 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
+                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
               </div>
             </FadeIn>
 
@@ -1022,10 +1692,10 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="space-y-1">
-                <h3 className="text-xs font-bold text-[#0B2545] uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
                   CLINICS
                 </h3>
-                <div className="w-4 h-0.5 bg-slate-300 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
+                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
               </div>
             </FadeIn>
 
@@ -1050,12 +1720,12 @@ export default function HomePage() {
                 </svg>
               </div>
               <div className="space-y-1">
-                <h3 className="text-xs font-bold text-[#0B2545] uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
                   HEALTHCARE
                   <br />
                   INSTITUTIONS
                 </h3>
-                <div className="w-4 h-0.5 bg-slate-300 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
+                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
               </div>
             </FadeIn>
           </div>
@@ -1068,10 +1738,10 @@ export default function HomePage() {
               delay={0.1}
               className="flex items-center justify-center gap-2 p-2 opacity-85 hover:opacity-100 transition-opacity"
             >
-              <div className="w-8 h-8 rounded-full border-2 border-[#0B2545] flex items-center justify-center text-[10px] font-black text-[#0B2545]">
+              <div className="w-10 h-10 rounded-full border-2 border-[#0B2545] flex items-center justify-center text-[10px] font-black text-[#0B2545]">
                 KMC
               </div>
-              <span className="text-[10px] font-black text-[#0B2545] leading-tight">
+              <span className="text-[12px] font-black text-[#0B2545] leading-tight">
                 GOVERNMENT KILPAUK
                 <br />
                 MEDICAL COLLEGE
@@ -1086,10 +1756,10 @@ export default function HomePage() {
             >
               <div className="flex items-center gap-1">
                 <span className="text-lg font-black text-amber-500">A</span>
-                <span className="text-sm font-black text-[#0B2545] tracking-tight">
+                <span className="text-base font-black text-[#0B2545] tracking-tight">
                   Apollo
                 </span>
-                <span className="text-[9px] font-bold text-slate-500 block">
+                <span className="text-[11px] font-bold text-slate-500 block">
                   Hospitals
                 </span>
               </div>
@@ -1162,109 +1832,159 @@ export default function HomePage() {
       </section>
 
       {/* 8. CALL TO ACTION BANNER */}
-      <section className="relative rounded-[2rem] overflow-hidden bg-[#102F4E] shadow-xl mx-[3vw] mt-8 mb-6 border border-slate-700/40 min-h-[300px] lg:h-[340px] flex items-center">
-        {/* Background Operation Theatre Image */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=2000&q=90"
-            alt="Operation Theatre Hospital Furniture"
-            fill
-            sizes="100vw"
-            className="object-cover object-right filter brightness-75 contrast-125"
-          />
-          {/* Dark Navy Overlay Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0F2D4A] via-[#0F2D4A]/95 to-transparent w-full lg:w-[75%]" />
-        </div>
+      <section className="w-full px-[3vw] py-16 !mt-0">
+        <div className="relative rounded-3xl overflow-hidden bg-[#102F4E] shadow-xl border border-slate-700/40 min-h-[280px] flex items-center">
+          {/* Background Hospital Beds Image */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=2000&q=90"
+              alt="Operation Theatre Hospital Furniture"
+              fill
+              sizes="100vw"
+              className="object-cover object-right filter brightness-50 contrast-125"
+            />
+            {/* Dark Navy Overlay Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F2D4A] via-[#0F2D4A]/95 to-transparent w-full lg:w-[75%]" />
+          </div>
 
-        <div className="relative z-10 w-full px-8 lg:px-12 py-8 lg:py-10 flex flex-col justify-center">
-          {/* Left Text Content */}
-          <div className="space-y-4 max-w-xl text-left">
-            {/* Top Sub-tagline */}
-            <FadeIn direction="up" delay={0.1}>
-              <div className="inline-flex items-center gap-2 text-[11px] font-bold tracking-wider text-white uppercase border-b-2 border-[#E86D24] pb-1">
-                <svg
-                  className="w-3.5 h-3.5 text-[#E86D24]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                  />
-                </svg>
-                <span>COMPLETE SOLUTION FOR EVERY HEALTHCARE NEEDS</span>
+          <FadeIn
+            className="relative z-10 w-full px-8 md:px-12 py-10 flex flex-col justify-center"
+            direction="up"
+            delay={0.1}
+            duration={0.8}
+          >
+            {/* Tagline */}
+            <div className="relative inline-flex items-center gap-3 pb-2.5 max-w-full">
+              <svg
+                className="w-8 h-8 sm:w-[34px] sm:h-[34px] lg:w-5 lg:h-5 text-[#E86D24] flex-shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                />
+              </svg>
+              <div className="flex flex-col lg:flex-row lg:items-center gap-0.5 lg:gap-2 text-xs sm:text-sm lg:text-[13px] font-bold text-white uppercase tracking-wider leading-tight">
+                <span>COMPLETE SOLUTION</span>
+                <span>FOR EVERY HEALTHCARE NEEDS</span>
               </div>
-            </FadeIn>
+              <span className="absolute left-0 bottom-0 w-16 h-[3px] bg-[#E86D24] rounded-full" />
+            </div>
 
-            {/* Main Headline */}
-            <FadeIn direction="up" delay={0.15}>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] font-bold text-white leading-tight tracking-tight whitespace-nowrap">
-                Looking for Complete
-                <br />
-                Hospital Furniture Solutions?
-              </h2>
-            </FadeIn>
+            {/* Main Title */}
+            <h2 className="text-2xl md:text-4xl font-semibold text-white leading-tight mt-4 ">
+              Looking for Complete Hospital <br className="hidden sm:inline" /> Furniture Solutions?
+            </h2>
 
             {/* Description */}
-            <FadeIn direction="up" delay={0.2}>
-              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed max-w-lg">
-                We manufacture reliable and durable hospital furniture{" "}
-                <span className="font-bold text-white">
-                  tailored to your healthcare requirements.
-                </span>
-              </p>
-            </FadeIn>
+            <p className="text-slate-200 text-md sm:text-md mt-3 font-medium">
+              We manufacture reliable and durable hospital furniture <br />
+              <span className="font-bold text-white">
+                tailored to your healthcare requirements.
+              </span>
+            </p>
 
             {/* Buttons Row */}
-            <FadeIn
-              direction="up"
-              delay={0.25}
-              className="flex flex-wrap gap-3 pt-1"
-            >
-              <Link href="/contact">
-                <button className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2 tracking-wider">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  <span>REQUEST A QUOTE</span>
-                </button>
-              </Link>
+            <div className="flex flex-wrap gap-4 pt-6">
+               <button
+                 onClick={() => openInquiryModal({
+                   name: "Complete Hospital Furniture Solutions Inquiry",
+                   category: "Hospital Furniture",
+                   image: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                   isGeneral: true
+                 })}
+                 className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+               >
+                 <span className="relative w-6 h-6 flex-shrink-0">
+                   <Image
+                     src="/images/ContactPage/quoat 1.webp"
+                     alt="Quote Icon"
+                     fill
+                     className="object-contain filter invert"
+                   />
+                 </span>
+                 Request a Quote
+               </button>
 
-              <Link href="/contact">
-                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/80 font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2 tracking-wider">
-                  <svg
-                    className="w-3.5 h-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2.5}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1.1 1.1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                  <span>CONTACT SALES</span>
+              <a href="tel:+919176212345">
+                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2">
+                  <Image
+                    src="/images/ContactPage/call.webp"
+                    alt="Call Icon"
+                    width={18}
+                    height={18}
+                    className="object-contain "
+                  />
+                  Contact Sales
                 </button>
-              </Link>
-            </FadeIn>
-          </div>
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
+      {/* Mobile Side Drawer for Categories */}
+      <div
+        className={`fixed inset-0 z-[100] transition-all duration-300 ${
+          isSidePanelOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Backdrop Overlay */}
+        <div
+          onClick={() => setIsSidePanelOpen(false)}
+          className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+        />
+        {/* Drawer Body (Slide from Right) */}
+        <div
+          className={`absolute right-0 top-0 bottom-0 w-[80%] max-w-[320px] bg-white shadow-2xl p-6 flex flex-col justify-between transition-transform duration-300 ease-out z-10 ${
+            isSidePanelOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+              <h3 className="text-lg font-bold text-[#0B2545]">Product Categories</h3>
+              <button
+                onClick={() => setIsSidePanelOpen(false)}
+                className="p-1 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x">
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </button>
+            </div>
+            {/* Scrollable Categories List */}
+            <div className="flex-1 overflow-y-auto py-4 pr-1 space-y-1.5 scrollbar-thin">
+              {[...leftCategories, ...rightCategories].map((cat) => {
+                const isActive = activeCategory === cat.name;
+                return (
+                  <button
+                    key={cat.name}
+                    onClick={() => {
+                      setActiveCategory(cat.name);
+                      setIsSidePanelOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between gap-3 text-left transition-all duration-300 py-2.5 px-4 rounded-xl text-sm font-semibold border ${
+                      isActive
+                        ? "text-[#E86D24] bg-orange-50/50 border-orange-100 font-bold"
+                        : "text-slate-700 hover:bg-slate-50 border-transparent hover:text-[#0B3B60]"
+                    }`}
+                  >
+                    <span>{cat.name}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-chevron-right transition-transform ${isActive ? "text-[#E86D24] translate-x-0.5" : "text-slate-400"}`}>
+                      <path d="m9 18 6-6-6-6" />
+                    </svg>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

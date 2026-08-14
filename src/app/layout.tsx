@@ -41,6 +41,7 @@ export const metadata: Metadata = {
 };
 
 import { InquiryModalProvider } from '@/components/ui/InquiryModalContext';
+import { Preloader } from '@/components/ui/Preloader';
 
 export default function RootLayout({
   children,
@@ -53,6 +54,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${outfit.variable} ${montserrat.variable} scroll-smooth`}>
       <head />
       <body className="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
+        <Preloader />
         <Script
           id="organization-jsonld"
           type="application/ld+json"
@@ -66,7 +68,7 @@ export default function RootLayout({
             Skip to main content
           </a>
           <Header />
-          <main id="main-content" className="flex-1 bg-slate-50">
+          <main id="main-content" className="flex-1 bg-slate-50 overflow-x-hidden">
             {children}
           </main>
           <Footer />

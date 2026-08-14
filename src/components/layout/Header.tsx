@@ -5,10 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ChevronRight, Menu, X } from 'lucide-react';
+import { useInquiryModal } from '@/components/ui/InquiryModalContext';
 
 export function Header() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { openInquiryModal } = useInquiryModal();
 
   const isActive = (path: string) => {
     if (path === '/') return pathname === '/';
@@ -23,7 +25,7 @@ export function Header() {
           
           {/* Logo using logo.webp and text */}
           <Link href="/" className="flex items-center gap-3 group focus:outline-none">
-            <div className="relative h-[5vh] w-[5vh] min-h-[36px] min-w-[36px] overflow-hidden flex-shrink-0">
+            <div className="relative h-[8vh] w-[8vh] min-h-[36px] min-w-[36px] overflow-hidden flex-shrink-0">
               <Image
                 src="/images/logo.webp"
                 alt="Sri Mathurams Medical Engineering Logo"
@@ -33,10 +35,10 @@ export function Header() {
               />
             </div>
             <div className="flex flex-col justify-center leading-none">
-              <span className="text-slate-900 text-sm sm:text-base font-black tracking-wide font-montserrat uppercase">
+              <span className="text-slate-900 text-sm sm:text-base font-black tracking-wide font-inter uppercase">
                 SRI MATHURAMS
               </span>
-              <span className="text-[#E86D24] text-[8.5px] sm:text-[9.5px] font-black tracking-widest font-montserrat uppercase mt-0.5 sm:mt-1">
+              <span className="text-[#E86D24] text-[8.5px] sm:text-[9.5px] font-black tracking-widest font-inter uppercase mt-0.5 sm:mt-1">
                 MEDICAL ENGINEERING
               </span>
             </div>
@@ -88,15 +90,21 @@ export function Header() {
 
           {/* Right Action Button & Mobile Hamburger Menu Button */}
           <div className="flex items-center gap-[10px]">
-            <Link href="/contact">
-              <button className="group relative inline-flex items-center gap-[6px] sm:gap-[0.5vw] bg-orange-500 text-white text-[11px] sm:text-[0.8vw] font-semibold px-[10px] sm:px-[1.2vw] py-[6px] sm:py-[1vh] rounded-lg sm:rounded-[0.6vw] shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-orange-500/35 hover:shadow-lg active:scale-95 transition-all duration-300 border border-orange-400 overflow-hidden shrink-0">
-                {/* Silver running shine beam effect */}
-                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-silver-shine" />
+            <button
+              onClick={() => openInquiryModal({
+                name: "General Inquiry / Custom Order",
+                category: "Hospital Furniture",
+                image: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                isGeneral: true
+              })}
+              className="group relative inline-flex items-center gap-[6px] sm:gap-[0.5vw] bg-orange-500 text-white text-[11px] sm:text-[0.8vw] font-semibold px-[10px] sm:px-[1.2vw] py-[6px] sm:py-[1vh] rounded-lg sm:rounded-[0.6vw] shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-orange-500/35 hover:shadow-lg active:scale-95 transition-all duration-300 border border-orange-400 overflow-hidden shrink-0"
+            >
+              {/* Silver running shine beam effect */}
+              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-silver-shine" />
 
-                <span className="relative z-10 whitespace-nowrap">Request a quote</span>
-                <ChevronRight className="relative z-10 w-[12px] h-[12px] sm:w-[1vw] sm:h-[1vw] bg-white/20 rounded-full p-[1px] group-hover:bg-white group-hover:text-orange-600 transition-all duration-300 animate-move-right-infinite" />
-              </button>
-            </Link>
+              <span className="relative z-10 whitespace-nowrap">Request a quote</span>
+              <ChevronRight className="relative z-10 w-[12px] h-[12px] sm:w-[1vw] sm:h-[1vw] bg-white/20 rounded-full p-[1px] group-hover:bg-white group-hover:text-orange-600 transition-all duration-300 animate-move-right-infinite" />
+            </button>
 
             {/* Mobile Hamburger Toggle Button (Right Side) */}
             <button
