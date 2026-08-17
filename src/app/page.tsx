@@ -43,13 +43,39 @@ function AnimatedCounter({
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
+  const [preloaderDone, setPreloaderDone] = useState(false);
 
   useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    if (document.documentElement.classList.contains("preloader-done")) {
+      setPreloaderDone(true);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (document.documentElement.classList.contains("preloader-done")) {
+        setPreloaderDone(true);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!preloaderDone) return;
+
     const timer = setTimeout(() => {
       setStarted(true);
     }, delay);
     return () => clearTimeout(timer);
-  }, [delay]);
+  }, [preloaderDone, delay]);
 
   useEffect(() => {
     if (!started) return;

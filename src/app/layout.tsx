@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     url: COMPANY_INFO.url,
     siteName: COMPANY_INFO.name,
   },
+  icons: {
+    icon: '/images/logo.webp',
+    shortcut: '/images/logo.webp',
+    apple: '/images/logo.webp',
+  },
 };
 
 import { InquiryModalProvider } from '@/components/ui/InquiryModalContext';
