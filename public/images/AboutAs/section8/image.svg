@@ -1,48 +1,6 @@
 <svg width="1920" height="988" viewBox="0 0 1920 988" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <style>
-@keyframes drawArc {
-  from { stroke-dashoffset: 2000; }
-  to { stroke-dashoffset: 0; }
-}
-@keyframes pulseOpacity {
-  0% { opacity: 0.35; }
-  50% { opacity: 1; }
-  100% { opacity: 0.35; }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Animating track lines (paths with stroke) */
-path[stroke] {
-  stroke-dasharray: 2000;
-  stroke-dashoffset: 2000;
-  animation: drawArc 3.5s cubic-bezier(0.25, 1, 0.5, 1) 0.5s forwards;
-}
-
-/* Animating vector text paths (paths with fill and no stroke) */
-path:not([stroke]) {
-  opacity: 0;
-  animation: fadeIn 1.5s ease-out 1.2s forwards;
-}
-
-/* Animating user profile images - opacity fade only to avoid SVG transform positioning issues */
-image {
-  opacity: 0;
-  animation: fadeIn 1.2s ease-out 0.8s forwards;
-}
-
-/* Animating workflow dots/circles - opacity fade only to avoid SVG transform positioning issues */
-circle {
-  opacity: 0;
-  animation: fadeIn 1s ease-out 1s forwards;
-}
-
-/* Glow animation for timeline dots - opacity pulse only, keeping them perfectly in place */
-circle:not([stroke]) {
-  animation: fadeIn 1s ease-out 1s forwards, pulseOpacity 3s ease-in-out infinite 2s;
-}
+/* Heavy path/stroke animations removed to prevent browser hanging and layout calculation overhead */
 </style>
 
 

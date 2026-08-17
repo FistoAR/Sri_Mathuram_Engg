@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
@@ -29,6 +29,70 @@ import {
 } from "lucide-react";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
+
+interface AnimatedCounterProps {
+  value: string;
+  duration?: number;
+  delay?: number;
+}
+
+function AnimatedCounter({
+  value,
+  duration = 1500,
+  delay = 0,
+}: AnimatedCounterProps) {
+  const [count, setCount] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setStarted(true);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+
+    const numericValue = parseInt(value.replace(/[^0-9]/g, ""), 10);
+    if (isNaN(numericValue)) {
+      return;
+    }
+
+    let start = 0;
+    const end = numericValue;
+    const startTime = performance.now();
+    let animationFrameId: number;
+
+    const updateCount = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3); // cubic ease-out
+
+      const currentCount = Math.floor(easeProgress * (end - start) + start);
+      setCount(currentCount);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(updateCount);
+      } else {
+        setCount(end);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(updateCount);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [started, value, duration]);
+
+  const displayVal = started ? count : 0;
+  const suffix = value.replace(/[0-9,]/g, "");
+
+  return (
+    <span>
+      {displayVal.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
 
 export default function HomePage() {
   const { openInquiryModal } = useInquiryModal();
@@ -257,8 +321,8 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl sm:text-2xl md:text-3xl font-black leading-none tracking-tight font-heading">
-                    29+
+                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                    <AnimatedCounter value="29+" delay={500} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
                     YEARS OF
@@ -279,8 +343,8 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl sm:text-2xl md:text-3xl font-black leading-none tracking-tight font-heading">
-                    4,000+
+                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                    <AnimatedCounter value="4,000+" delay={650} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
                     PROJECTS
@@ -301,8 +365,8 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl sm:text-2xl md:text-3xl font-black leading-none tracking-tight font-heading">
-                    30,000+
+                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                    <AnimatedCounter value="30,000+" delay={800} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
                     PRODUCTS
@@ -323,8 +387,8 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xl sm:text-2xl md:text-3xl font-black leading-none tracking-tight font-heading">
-                    1,000
+                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                    <AnimatedCounter value="1,000" delay={950} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
                     BEDS DELIVERED
@@ -386,7 +450,7 @@ export default function HomePage() {
           </FadeIn>
 
           {/* Interactive Interlocking Diamond Cards Layout (Desktop Only) */}
-          <div className="hidden lg:flex justify-center items-center py-4 px-2 max-w-7xl mx-auto overflow-x-auto">
+          <div className="hidden lg:flex justify-center items-center py-8 px-4 w-full mx-auto overflow-hidden">
             <style>{`
               .why-card-container .why-card {
                 transform: rotate(45deg) scale(1);
@@ -396,13 +460,13 @@ export default function HomePage() {
                 transform: rotate(45deg) scale(1.15) !important;
               }
             `}</style>
-            <div className="why-card-container relative w-[1180px] h-[430px] min-w-[1180px] my-4">
+            <div className="why-card-container relative w-[1320px] h-[460px] min-w-[1320px] my-4">
               {/* Card 1: Superior Manufacturing Quality (Lower Row 1) */}
-              <div className="absolute left-[0px] top-[150px] z-10 hover:z-50">
+              <div className="absolute left-[60px] top-[178px] z-10 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.15}>
-                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/material-symbols-light_diamond-outline-rounded.webp"
                           alt="Superior Manufacturing Quality"
@@ -410,12 +474,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
                         Superior
                         <br />
                         Manufacturing Quality
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
                         Manufactured using high-grade materials to ensure
                         durability, safety, and long-lasting performance.
                       </p>
@@ -425,11 +489,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 2: Excellent value for money (Upper Row 1 - Orange) */}
-              <div className="absolute left-[137px] top-[13px] z-20 hover:z-50">
+              <div className="absolute left-[200px] top-[33px] z-20 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.3}>
-                  <div className="why-card w-[185px] h-[185px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification.webp"
                           alt="Excellent value for money"
@@ -437,12 +501,12 @@ export default function HomePage() {
                           className="object-contain filter brightness-0 invert"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-white leading-tight">
                         Excellent value for
                         <br />
                         money
                       </h3>
-                      <p className="text-[10px] text-white/90 leading-snug font-medium">
+                      <p className="text-[11px] text-white/90 leading-snug font-medium">
                         Durable products designed to deliver long-term value
                         without unnecessary cost.
                       </p>
@@ -452,11 +516,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 3: Reliable after-sales service (Lower Row 2) */}
-              <div className="absolute left-[274px] top-[150px] z-10 hover:z-50">
+              <div className="absolute left-[340px] top-[178px] z-10 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.45}>
-                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/image 19.webp"
                           alt="Reliable after-sales service"
@@ -464,12 +528,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
                         Reliable after-
                         <br />
                         sales service
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
                         Our team remains available to assist with product and
                         service requirements.
                       </p>
@@ -479,11 +543,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 4: Customized product solutions (Upper Row 2) */}
-              <div className="absolute left-[411px] top-[13px] z-20 hover:z-50">
+              <div className="absolute left-[480px] top-[33px] z-20 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.6}>
-                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification (1).webp"
                           alt="Customized product solutions"
@@ -491,12 +555,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
                         Customized product
                         <br />
                         solutions
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
                         Product configurations can be adapted to meet specific
                         healthcare requirements.
                       </p>
@@ -506,11 +570,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 5: Timely Delivery (Lower Row 3 - Navy Blue) */}
-              <div className="absolute left-[548px] top-[150px] z-20 hover:z-50">
+              <div className="absolute left-[620px] top-[178px] z-20 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.75}>
-                  <div className="why-card w-[185px] h-[185px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification (2).webp"
                           alt="Timely Delivery"
@@ -518,10 +582,10 @@ export default function HomePage() {
                           className="object-contain filter brightness-0 invert"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-white leading-tight">
                         Timely Delivery
                       </h3>
-                      <p className="text-[10px] text-slate-200 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-200 leading-snug font-medium">
                         Efficient production and coordination help us meet
                         project timelines.
                       </p>
@@ -531,11 +595,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 6: Strong technical support (Upper Row 3) */}
-              <div className="absolute left-[685px] top-[13px] z-10 hover:z-50">
+              <div className="absolute left-[760px] top-[33px] z-10 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.9}>
-                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification (3).webp"
                           alt="Strong technical support"
@@ -543,12 +607,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
                         Strong technical
                         <br />
                         support
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
                         Our team provides practical guidance for product
                         selection and requirements.
                       </p>
@@ -558,11 +622,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 7: Long-Lasting Products (Lower Row 4) */}
-              <div className="absolute left-[822px] top-[150px] z-10 hover:z-50">
+              <div className="absolute left-[900px] top-[178px] z-10 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={1.05}>
-                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification (4).webp"
                           alt="Long-Lasting Products"
@@ -570,10 +634,10 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
                         Long-Lasting Products
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
                         Robust construction helps products withstand demanding
                         hospital environments.
                       </p>
@@ -583,11 +647,11 @@ export default function HomePage() {
               </div>
 
               {/* Card 8: Transparent and customer-focused service (Upper Row 4) */}
-              <div className="absolute left-[959px] top-[13px] z-20 hover:z-50">
+              <div className="absolute left-[1040px] top-[33px] z-20 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={1.2}>
-                  <div className="why-card w-[185px] h-[185px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
                     <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-11 h-11 mb-1.5 flex-shrink-0">
+                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification (5).webp"
                           alt="Transparent and customer-focused service"
@@ -595,12 +659,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
                         Transparent and
                         <br />
                         customer-focused service
                       </h3>
-                      <p className="text-[10px] text-slate-500 leading-snug font-medium">
+                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
                         We focus on building transparent, dependable
                         relationships that last.
                       </p>
@@ -631,7 +695,8 @@ export default function HomePage() {
                     Manufacturing Quality
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Manufactured using high-grade materials to ensure durability, safety, and performance.
+                    Manufactured using high-grade materials to ensure
+                    durability, safety, and performance.
                   </p>
                 </div>
               </div>
@@ -655,7 +720,8 @@ export default function HomePage() {
                     money
                   </h3>
                   <p className="text-[9.5px] text-white/90 leading-snug font-medium">
-                    Durable products designed to deliver long-term value without unnecessary cost.
+                    Durable products designed to deliver long-term value without
+                    unnecessary cost.
                   </p>
                 </div>
               </div>
@@ -679,7 +745,8 @@ export default function HomePage() {
                     sales service
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Our team remains available to assist with product and service requirements.
+                    Our team remains available to assist with product and
+                    service requirements.
                   </p>
                 </div>
               </div>
@@ -703,7 +770,8 @@ export default function HomePage() {
                     solutions
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Product configurations can be adapted to meet specific healthcare requirements.
+                    Product configurations can be adapted to meet specific
+                    healthcare requirements.
                   </p>
                 </div>
               </div>
@@ -725,7 +793,8 @@ export default function HomePage() {
                     Timely Delivery
                   </h3>
                   <p className="text-[9.5px] text-slate-200 leading-snug font-medium">
-                    Efficient production and coordination help us meet project timelines.
+                    Efficient production and coordination help us meet project
+                    timelines.
                   </p>
                 </div>
               </div>
@@ -749,7 +818,8 @@ export default function HomePage() {
                     support
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Our team provides practical guidance for product selection and requirements.
+                    Our team provides practical guidance for product selection
+                    and requirements.
                   </p>
                 </div>
               </div>
@@ -771,7 +841,8 @@ export default function HomePage() {
                     Long-Lasting Products
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Robust construction helps products withstand demanding hospital environments.
+                    Robust construction helps products withstand demanding
+                    hospital environments.
                   </p>
                 </div>
               </div>
@@ -795,7 +866,8 @@ export default function HomePage() {
                     Customer Service
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    We focus on building transparent, dependable relationships that last.
+                    We focus on building transparent, dependable relationships
+                    that last.
                   </p>
                 </div>
               </div>
@@ -822,7 +894,8 @@ export default function HomePage() {
                     Manufacturing Quality
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Manufactured using high-grade materials to ensure durability, safety, and performance.
+                    Manufactured using high-grade materials to ensure
+                    durability, safety, and performance.
                   </p>
                 </div>
               </div>
@@ -846,7 +919,8 @@ export default function HomePage() {
                     money
                   </h3>
                   <p className="text-[9.5px] text-white/90 leading-snug font-medium">
-                    Durable products designed to deliver long-term value without unnecessary cost.
+                    Durable products designed to deliver long-term value without
+                    unnecessary cost.
                   </p>
                 </div>
               </div>
@@ -870,7 +944,8 @@ export default function HomePage() {
                     sales service
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Our team remains available to assist with product and service requirements.
+                    Our team remains available to assist with product and
+                    service requirements.
                   </p>
                 </div>
               </div>
@@ -894,7 +969,8 @@ export default function HomePage() {
                     solutions
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Product configurations can be adapted to meet specific healthcare requirements.
+                    Product configurations can be adapted to meet specific
+                    healthcare requirements.
                   </p>
                 </div>
               </div>
@@ -916,7 +992,8 @@ export default function HomePage() {
                     Timely Delivery
                   </h3>
                   <p className="text-[9.5px] text-slate-200 leading-snug font-medium">
-                    Efficient production and coordination help us meet project timelines.
+                    Efficient production and coordination help us meet project
+                    timelines.
                   </p>
                 </div>
               </div>
@@ -940,7 +1017,8 @@ export default function HomePage() {
                     support
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Our team provides practical guidance for product selection and requirements.
+                    Our team provides practical guidance for product selection
+                    and requirements.
                   </p>
                 </div>
               </div>
@@ -962,7 +1040,8 @@ export default function HomePage() {
                     Long-Lasting Products
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    Robust construction helps products withstand demanding hospital environments.
+                    Robust construction helps products withstand demanding
+                    hospital environments.
                   </p>
                 </div>
               </div>
@@ -986,7 +1065,8 @@ export default function HomePage() {
                     Customer Service
                   </h3>
                   <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
-                    We focus on building transparent, dependable relationships that last.
+                    We focus on building transparent, dependable relationships
+                    that last.
                   </p>
                 </div>
               </div>
@@ -1026,7 +1106,18 @@ export default function HomePage() {
               className="lg:hidden p-2.5 rounded-xl bg-white shadow-md border border-slate-100 text-[#0B3B60] hover:text-[#E86D24] transition-all flex items-center justify-center"
               aria-label="Toggle Categories Menu"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-menu">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-menu"
+              >
                 <line x1="4" x2="20" y1="12" y2="12" />
                 <line x1="4" x2="20" y1="6" y2="6" />
                 <line x1="4" x2="20" y1="18" y2="18" />
@@ -1034,12 +1125,11 @@ export default function HomePage() {
             </button>
           </div>
 
-
-
           {/* Header Title & Description */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-3">
             <h2 className="text-3xl sm:text-5xl font-semibold text-[#E86D24] tracking-wider leading-tight">
-              Complete Hospital <br className="hidden sm:inline" /> Furniture Solutions
+              Complete Hospital <br className="hidden sm:inline" /> Furniture
+              Solutions
             </h2>
             <p className="text-slate-600 text-base sm:text-md max-w-4xl mx-auto leading-relaxed font-medium">
               We manufacture a comprehensive range of hospital furniture
@@ -1063,62 +1153,62 @@ export default function HomePage() {
                   >
                     <button
                       onClick={() => setActiveCategory(cat.name)}
-                    className={`w-full flex items-center justify-end gap-4 text-right group transition-all duration-300 py-2 px-3 rounded-2xl ${
-                      isActive
-                        ? "text-[#E86D24] font-bold "
-                        : "text-slate-700 hover:text-[#0B3B60] font-semibold"
-                    }`}
-                  >
-                    <span className="text-sm sm:text-[15px] font-montserrat tracking-wide">
-                      {cat.name}
-                    </span>
-                    <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg
-                        viewBox="0 0 100 100"
-                        className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
-                      >
-                        {/* Blue base segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="44"
-                          fill="transparent"
-                          stroke="#0B3B60"
-                          strokeWidth="8"
-                          strokeLinecap="round"
-                          strokeDasharray={isActive ? "45 276" : "205 276"}
-                          strokeDashoffset={isActive ? 102 : 0}
-                          className="transition-all duration-[800ms] ease-in-out"
-                        />
-                        {/* Orange overlay segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="44"
-                          fill="transparent"
-                          stroke="#E86D24"
-                          strokeWidth="8"
-                          strokeLinecap="round"
-                          strokeDasharray={isActive ? "205 276" : "45 276"}
-                          strokeDashoffset={isActive ? 0 : 102}
-                          className="transition-all duration-[800ms] ease-in-out"
-                        />
-                      </svg>
-                      <div
-                        className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
-                          isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
-                        }`}
-                      >
-                        <div className="relative w-[20px] h-[20px]">
-                          <Image
-                            src={getCategoryIcon(cat.name)}
-                            alt=""
-                            fill
-                            className="object-contain filter brightness-0 invert"
+                      className={`w-full flex items-center justify-end gap-4 text-right group transition-all duration-300 py-2 px-3 rounded-2xl ${
+                        isActive
+                          ? "text-[#E86D24] font-bold "
+                          : "text-slate-700 hover:text-[#0B3B60] font-semibold"
+                      }`}
+                    >
+                      <span className="text-sm sm:text-[15px] font-montserrat tracking-wide">
+                        {cat.name}
+                      </span>
+                      <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                        <svg
+                          viewBox="0 0 100 100"
+                          className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                        >
+                          {/* Blue base segment */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="44"
+                            fill="transparent"
+                            stroke="#0B3B60"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                            strokeDasharray={isActive ? "45 276" : "205 276"}
+                            strokeDashoffset={isActive ? 102 : 0}
+                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
                           />
+                          {/* Orange overlay segment */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="44"
+                            fill="transparent"
+                            stroke="#E86D24"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                            strokeDasharray={isActive ? "205 276" : "45 276"}
+                            strokeDashoffset={isActive ? 0 : 102}
+                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
+                          />
+                        </svg>
+                        <div
+                          className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
+                            isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
+                          }`}
+                        >
+                          <div className="relative w-[20px] h-[20px]">
+                            <Image
+                              src={getCategoryIcon(cat.name)}
+                              alt=""
+                              fill
+                              className="object-contain filter brightness-0 invert"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
                     </button>
                   </FadeIn>
                 );
@@ -1126,7 +1216,11 @@ export default function HomePage() {
             </div>
 
             {/* Center Column: Interactive Image Frame */}
-            <FadeIn direction="up" delay={0.2} className="w-full lg:w-[40%] flex flex-col items-center justify-center order-1 lg:order-2 flex-shrink-0">
+            <FadeIn
+              direction="up"
+              delay={0.2}
+              className="w-full lg:w-[40%] flex flex-col items-center justify-center order-1 lg:order-2 flex-shrink-0"
+            >
               {/* Outer container with relative positioning and padding for borders */}
               <div className="relative w-full h-[60vh] aspect-[4/3] max-w-lg">
                 {/* Top-Left Blue Border Bracket (Offset outside the container) */}
@@ -1187,62 +1281,62 @@ export default function HomePage() {
                   >
                     <button
                       onClick={() => setActiveCategory(cat.name)}
-                    className={`w-full flex items-center justify-start gap-4 text-left group transition-all duration-300 py-2 px-3 rounded-2xl ${
-                      isActive
-                        ? "text-[#E86D24] font-bold"
-                        : "text-slate-700 hover:text-[#0B3B60] font-semibold"
-                    }`}
-                  >
-                    <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg
-                        viewBox="0 0 100 100"
-                        className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
-                      >
-                        {/* Blue base segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="44"
-                          fill="transparent"
-                          stroke="#0B3B60"
-                          strokeWidth="8"
-                          strokeLinecap="round"
-                          strokeDasharray={isActive ? "45 276" : "205 276"}
-                          strokeDashoffset={isActive ? 102 : 0}
-                          className="transition-all duration-[800ms] ease-in-out"
-                        />
-                        {/* Orange overlay segment */}
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="44"
-                          fill="transparent"
-                          stroke="#E86D24"
-                          strokeWidth="8"
-                          strokeLinecap="round"
-                          strokeDasharray={isActive ? "205 276" : "45 276"}
-                          strokeDashoffset={isActive ? 0 : 102}
-                          className="transition-all duration-[800ms] ease-in-out"
-                        />
-                      </svg>
-                      <div
-                        className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
-                          isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
-                        }`}
-                      >
-                        <div className="relative w-[20px] h-[20px]">
-                          <Image
-                            src={getCategoryIcon(cat.name)}
-                            alt=""
-                            fill
-                            className="object-contain filter brightness-0 invert"
+                      className={`w-full flex items-center justify-start gap-4 text-left group transition-all duration-300 py-2 px-3 rounded-2xl ${
+                        isActive
+                          ? "text-[#E86D24] font-bold"
+                          : "text-slate-700 hover:text-[#0B3B60] font-semibold"
+                      }`}
+                    >
+                      <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                        <svg
+                          viewBox="0 0 100 100"
+                          className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
+                        >
+                          {/* Blue base segment */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="44"
+                            fill="transparent"
+                            stroke="#0B3B60"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                            strokeDasharray={isActive ? "45 276" : "205 276"}
+                            strokeDashoffset={isActive ? 102 : 0}
+                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
                           />
+                          {/* Orange overlay segment */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="44"
+                            fill="transparent"
+                            stroke="#E86D24"
+                            strokeWidth="8"
+                            strokeLinecap="round"
+                            strokeDasharray={isActive ? "205 276" : "45 276"}
+                            strokeDashoffset={isActive ? 0 : 102}
+                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
+                          />
+                        </svg>
+                        <div
+                          className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
+                            isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
+                          }`}
+                        >
+                          <div className="relative w-[20px] h-[20px]">
+                            <Image
+                              src={getCategoryIcon(cat.name)}
+                              alt=""
+                              fill
+                              className="object-contain filter brightness-0 invert"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <span className="text-sm sm:text-[15px] font-semibold font-montserrat tracking-wide">
-                      {cat.name}
-                    </span>
+                      <span className="text-sm sm:text-[15px] font-semibold font-montserrat tracking-wide">
+                        {cat.name}
+                      </span>
                     </button>
                   </FadeIn>
                 );
@@ -1302,7 +1396,10 @@ export default function HomePage() {
 
             {/* Title */}
             <FadeIn direction="up" delay={0.15}>
-              <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-semibold text-[#0B2545] tracking-widest max-w-2xl" style={{ lineHeight: '1.35' }}>
+              <h2
+                className="text-3xl sm:text-4xl lg:text-[3.5rem] font-semibold text-[#0B2545] tracking-widest max-w-2xl"
+                style={{ lineHeight: "1.35" }}
+              >
                 Building Healthcare Infrastructure Since 1997
               </h2>
             </FadeIn>
@@ -1313,7 +1410,7 @@ export default function HomePage() {
               delay={0.2}
               className="space-y-4 text-slate-600 text-base sm:text-md leading-relaxed font-normal max-w-xl"
             >
-              <p style={{ lineHeight: '1.8' }}>
+              <p style={{ lineHeight: "1.8" }}>
                 For over{" "}
                 <strong className="text-slate-900 font-semibold">
                   29 years
@@ -1877,7 +1974,8 @@ export default function HomePage() {
 
             {/* Main Title */}
             <h2 className="text-2xl md:text-4xl font-semibold text-white leading-tight mt-4 ">
-              Looking for Complete Hospital <br className="hidden sm:inline" /> Furniture Solutions?
+              Looking for Complete Hospital <br className="hidden sm:inline" />{" "}
+              Furniture Solutions?
             </h2>
 
             {/* Description */}
@@ -1890,25 +1988,28 @@ export default function HomePage() {
 
             {/* Buttons Row */}
             <div className="flex flex-wrap gap-4 pt-6">
-               <button
-                 onClick={() => openInquiryModal({
-                   name: "Complete Hospital Furniture Solutions Inquiry",
-                   category: "Hospital Furniture",
-                   image: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
-                   isGeneral: true
-                 })}
-                 className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
-               >
-                 <span className="relative w-6 h-6 flex-shrink-0">
-                   <Image
-                     src="/images/ContactPage/quoat 1.webp"
-                     alt="Quote Icon"
-                     fill
-                     className="object-contain filter invert"
-                   />
-                 </span>
-                 Request a Quote
-               </button>
+              <button
+                onClick={() =>
+                  openInquiryModal({
+                    name: "Complete Hospital Furniture Solutions Inquiry",
+                    category: "Hospital Furniture",
+                    image:
+                      "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                    isGeneral: true,
+                  })
+                }
+                className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
+              >
+                <span className="relative w-6 h-6 flex-shrink-0">
+                  <Image
+                    src="/images/ContactPage/quoat 1.webp"
+                    alt="Quote Icon"
+                    fill
+                    className="object-contain filter invert"
+                  />
+                </span>
+                Request a Quote
+              </button>
 
               <a href="tel:+919176212345">
                 <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2">
@@ -1929,7 +2030,9 @@ export default function HomePage() {
       {/* Mobile Side Drawer for Categories */}
       <div
         className={`fixed inset-0 z-[100] transition-all duration-300 ${
-          isSidePanelOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isSidePanelOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
         {/* Backdrop Overlay */}
@@ -1946,12 +2049,25 @@ export default function HomePage() {
           <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-              <h3 className="text-lg font-bold text-[#0B2545]">Product Categories</h3>
+              <h3 className="text-lg font-bold text-[#0B2545]">
+                Product Categories
+              </h3>
               <button
                 onClick={() => setIsSidePanelOpen(false)}
                 className="p-1 rounded-lg hover:bg-slate-50 text-slate-400 hover:text-slate-600 transition-colors"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-x"
+                >
                   <path d="M18 6 6 18" />
                   <path d="m6 6 12 12" />
                 </svg>
@@ -1975,7 +2091,18 @@ export default function HomePage() {
                     }`}
                   >
                     <span>{cat.name}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`lucide lucide-chevron-right transition-transform ${isActive ? "text-[#E86D24] translate-x-0.5" : "text-slate-400"}`}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`lucide lucide-chevron-right transition-transform ${isActive ? "text-[#E86D24] translate-x-0.5" : "text-slate-400"}`}
+                    >
                       <path d="m9 18 6-6-6-6" />
                     </svg>
                   </button>
