@@ -7,15 +7,15 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  tagline: string;
+  tagline?: string;
   category: string;
   description: string;
-  fullDescription: string;
+  fullDescription?: string;
   image: string;
-  gallery: string[];
-  specifications: ProductSpecification[];
-  features: string[];
-  applications: string[];
+  gallery?: string[];
+  specifications?: ProductSpecification[] | Record<string, string>;
+  features?: string[];
+  applications?: string[];
   featured?: boolean;
 }
 

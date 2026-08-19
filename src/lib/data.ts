@@ -3,7 +3,7 @@ import { Product, Category } from '@/types';
 export interface MedicalProduct extends Product {
   price?: string;
   moq?: string;
-  materialDetails: string;
+  materialDetails?: string;
   availableSizes?: string;
   relatedProductSlugs?: string[];
   tradeInfo?: {
@@ -19,6 +19,9 @@ export interface MedicalProduct extends Product {
   highlights?: string[];
   faqs?: Array<{ question: string; answer: string }>;
   regionalNotice?: string;
+  modelNumber?: string;
+  specifications?: Record<string, string>;
+  specificationVariants?: Array<{ name: string; specs: Record<string, string> }>;
 }
 
 export const COMPANY_INFO = {
@@ -45,2567 +48,544 @@ export const COMPANY_INFO = {
   established: 1997,
 };
 
+export const TIMELINE_EVENTS = [
+  { year: '1997', title: 'Company Established', description: 'Founded in Coimbatore to manufacture high quality hospital furniture.' },
+  { year: '2005', title: 'Factory Expansion', description: 'Expanded manufacturing capacity to 10,000 sq ft state-of-the-art facility.' },
+  { year: '2015', title: 'Electric ICU Beds', description: 'Launched motorized electric ICU bed production lines.' },
+  { year: '2024', title: 'Tamil Nadu Trust', description: 'Serving 500+ major hospitals & healthcare centers across Tamil Nadu.' },
+];
+
 export const CATEGORIES: Category[] = [
   {
-    id: 'hospital-beds',
-    slug: 'hospital-beds',
-    name: 'Hospital Beds',
-    description: 'ICU Beds, Electric ICU Beds, Semi-Fowler & Fowler beds designed for patient comfort & safety.',
+    id: 'ward-furniture',
+    slug: 'ward-furniture',
+    name: 'Ward Furniture',
+    description: 'Bedside lockers, overbed tables, attender cots, and ward hospital beds.',
     icon: 'Bed',
   },
   {
-    id: 'stretchers',
-    slug: 'stretchers',
-    name: 'Stretchers',
-    description: 'Emergency patient transfer stretchers, hydraulic recovery trolleys & folding stretchers.',
+    id: 'icu-critical-care',
+    slug: 'icu-critical-care',
+    name: 'ICU & Critical Care',
+    description: 'Manual and motorized ICU beds with remote control and safety side rails.',
     icon: 'Activity',
   },
   {
-    id: 'wheelchairs',
-    slug: 'wheelchairs',
-    name: 'Wheelchairs',
-    description: 'Heavy-duty chrome-plated & powder-coated folding wheelchairs for patient mobility.',
+    id: 'emergency-patient-transfer',
+    slug: 'emergency-patient-transfer',
+    name: 'Emergency & Patient Transfer',
+    description: 'Stretcher trolleys, wheelchairs, transfer trolleys and patient shifters.',
     icon: 'Accessibility',
+  },
+  {
+    id: 'labour-maternity',
+    slug: 'labour-maternity',
+    name: 'Labour & Maternity',
+    description: 'Baby cradles, remote & manual labor cots, and pediatric beds.',
+    icon: 'HeartPulse',
+  },
+  {
+    id: 'examination-consultation',
+    slug: 'examination-consultation',
+    name: 'Examination & Consultation',
+    description: 'Revolving stools, examination couches, gynec tables, and X-ray lobbies.',
+    icon: 'Sparkles',
   },
   {
     id: 'medical-trolleys',
     slug: 'medical-trolleys',
     name: 'Medical Trolleys',
-    description: 'Crash carts, dressing trolleys, medicine distribution carts & instrument trolleys.',
+    description: 'Instrument trolleys, Mayo trolleys, ECG carts, crash carts, and linen trolleys.',
     icon: 'ShoppingBag',
   },
   {
-    id: 'donor-chairs',
-    slug: 'donor-chairs',
-    name: 'Donor Chairs',
-    description: 'Ergonomic blood donor recliners with motorized tilt and armrest support.',
-    icon: 'HeartPulse',
-  },
-  {
-    id: 'surgical-sinks',
-    slug: 'surgical-sinks',
-    name: 'Surgical Sinks',
-    description: 'Hands-free sensor operated & knee-touch stainless steel OT scrub station sinks.',
-    icon: 'Sparkles',
-  },
-  {
-    id: 'iv-stands',
-    slug: 'iv-stands',
-    name: 'IV Stands',
-    description: 'Stainless steel heavy-base height adjustable IV poles with 4-hook tops.',
+    id: 'ot-equipment',
+    slug: 'ot-equipment',
+    name: 'OT Equipment',
+    description: 'Operation theater tables, lights, anesthesia machines, foggers, and autoclaves.',
     icon: 'PlusSquare',
   },
   {
-    id: 'hospital-furniture',
-    slug: 'hospital-furniture',
-    name: 'Hospital Furniture',
-    description: 'Bedside lockers, overbed tables, examination couches, stools & visitor seating.',
+    id: 'ss-furniture-ward-accessories',
+    slug: 'ss-furniture-ward-accessories',
+    name: 'Stainless Steel Furniture & Ward Accessories',
+    description: 'IV stands, foot steps, kick buckets, wash basins, and 3-fold screens.',
+    icon: 'Armchair',
+  },
+  {
+    id: 'accessories',
+    slug: 'accessories',
+    name: 'Accessories',
+    description: 'Hospital mattresses, pillows, side rails, castors, actuators, and control boxes.',
+    icon: 'Package',
+  },
+  {
+    id: 'general-furniture',
+    slug: 'general-furniture',
+    name: 'General Furniture',
+    description: 'Waiting area seater chairs, two-tier cots, and closed pharmacy trolleys.',
     icon: 'Armchair',
   },
 ];
 
 export const PRODUCTS: MedicalProduct[] = [
+  // --- 1. Ward Furniture ---
   {
-    "id": "prod-1",
-    "slug": "ot-surgical-scrub-sink",
-    "name": "OT Surgical Scrub Sink",
-    "tagline": "High quality medical OT Surgical Scrub Sink designed for clinical & hospital use.",
-    "category": "Surgical Sinks",
-    "description": "Premium hospital-grade OT Surgical Scrub Sink engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams OT Surgical Scrub Sink is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp",
-    "gallery": [
-      "/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
+    id: 'mf01-plain-bedside-locker',
+    slug: 'plain-bedside-locker',
+    modelNumber: 'MF01',
+    name: 'Plain Bedside Locker',
+    category: 'Ward Furniture',
+    description: 'Hospital bedside locker featuring a durable single cabin layout.',
+    image: '/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp',
+    features: ['Single Cabin Only', 'Heavy-Duty MS Sheet Construction', 'Pre-treated Powder Coated Finish'],
+    specifications: {
+      'Accessories': 'Removable Top Mat',
+      'Castors': '50 mm Swivel Wheels',
+      'Dimension': '400 × 400 × 800 mm',
+      'Foldable': 'No',
+      'Function': 'Bedside Patient Storage',
+      'Material': 'Powder Coated MS',
+      'No. of Fold': 'Single Section (No Fold)',
+      'Supply Ability': '200 Per Month',
+    },
+    price: '3,800 INR/Unit',
+    materialDetails: 'High-grade mild steel sheet pre-treated and epoxy powder coated.',
   },
   {
-    "id": "prod-2",
-    "slug": "blood-donor-chair",
-    "name": "Blood Donor Chair",
-    "tagline": "High quality medical Blood Donor Chair designed for clinical & hospital use.",
-    "category": "Donor Chairs",
-    "description": "Premium hospital-grade Blood Donor Chair engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Blood Donor Chair is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/DonerChair/Blood-Donor-Chair.webp",
-    "gallery": [
-      "/images/Product Assets/DonerChair/Blood-Donor-Chair.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
+    id: 'mf02-deluxe-bedside-locker',
+    slug: 'deluxe-bedside-locker',
+    modelNumber: 'MF02',
+    name: 'Deluxe Bedside Locker',
+    category: 'Ward Furniture',
+    description: 'Premium hospital bedside locker with top drawer and bottom storage cabin.',
+    image: '/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp',
+    features: ['Top Smooth Slide Drawer', 'Bottom Storage Cabin', 'Stainless Steel Top Rail'],
+    specifications: {
+      'Accessories': 'Drawer + Cabin + Rail',
+      'Castors': '50 mm Swivel Wheels',
+      'Dimension': '420 × 420 × 820 mm',
+      'Foldable': 'No',
+      'Function': 'Bedside Patient Storage',
+      'Material': 'MS with SS Accent',
+      'No. of Fold': 'Single Section (No Fold)',
+      'Supply Ability': '180 Per Month',
+    },
+    price: '4,500 INR/Unit',
+    materialDetails: 'Heavy-duty steel body with smooth telescopic drawer slides.',
   },
-  {
-    "id": "prod-3",
-    "slug": "iv-stand",
-    "name": "IV Stand",
-    "tagline": "High quality medical IV Stand designed for clinical & hospital use.",
-    "category": "IV Stands",
-    "description": "Premium hospital-grade IV Stand engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams IV Stand is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/IVStands/-IV-Stand.webp",
-    "gallery": [
-      "/images/Product Assets/IVStands/-IV-Stand.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
-  },
-  {
-    "id": "prod-4",
-    "slug": "foldable-stretcher",
-    "name": "Foldable Stretcher",
-    "tagline": "High quality medical Foldable Stretcher designed for clinical & hospital use.",
-    "category": "Stretchers",
-    "description": "Premium hospital-grade Foldable Stretcher engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Foldable Stretcher is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Stretchers/Foldable-Stretcher.webp",
-    "gallery": [
-      "/images/Product Assets/Stretchers/Foldable-Stretcher.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
-  },
-  {
-    "id": "prod-5",
-    "slug": "hi-lo-stretcher",
-    "name": "Hi Lo Stretcher",
-    "tagline": "High quality medical Hi Lo Stretcher designed for clinical & hospital use.",
-    "category": "Stretchers",
-    "description": "Premium hospital-grade Hi Lo Stretcher engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hi Lo Stretcher is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Stretchers/Hi-Lo-Stretcher.webp",
-    "gallery": [
-      "/images/Product Assets/Stretchers/Hi-Lo-Stretcher.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
-  },
-  {
-    "id": "prod-6",
-    "slug": "plain-stretcher",
-    "name": "Plain Stretcher",
-    "tagline": "High quality medical Plain Stretcher designed for clinical & hospital use.",
-    "category": "Stretchers",
-    "description": "Premium hospital-grade Plain Stretcher engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Plain Stretcher is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Stretchers/Plain-Stretcher.webp",
-    "gallery": [
-      "/images/Product Assets/Stretchers/Plain-Stretcher.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
-  },
-  {
-    "id": "prod-7",
-    "slug": "ss-portable-stretcher",
-    "name": "SS Portable Stretcher",
-    "tagline": "High quality medical SS Portable Stretcher designed for clinical & hospital use.",
-    "category": "Stretchers",
-    "description": "Premium hospital-grade SS Portable Stretcher engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams SS Portable Stretcher is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Stretchers/SS-Portable-Stretcher.webp",
-    "gallery": [
-      "/images/Product Assets/Stretchers/SS-Portable-Stretcher.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
-  },
-  {
-    "id": "prod-8",
-    "slug": "ecg-trolley",
-    "name": "ECG Trolley",
-    "tagline": "High quality medical ECG Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade ECG Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams ECG Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ECG Trolley/ECG-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/ECG Trolley/ECG-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": true
-  },
-  {
-    "id": "prod-9",
-    "slug": "hospital-mayos-trolley",
-    "name": "Hospital Mayos Trolley",
-    "tagline": "High quality medical Hospital Mayos Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Hospital Mayos Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Mayos Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ECG Trolley/Hospital-Mayos-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/ECG Trolley/Hospital-Mayos-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-10",
-    "slug": "laparoscopy-trolley",
-    "name": "Laparoscopy Trolley",
-    "tagline": "High quality medical Laparoscopy Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Laparoscopy Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Laparoscopy Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ECG Trolley/Laparoscopy-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/ECG Trolley/Laparoscopy-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-11",
-    "slug": "fowlers-cot-bed",
-    "name": "Fowlers Cot Bed",
-    "tagline": "High quality medical Fowlers Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Fowlers Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Fowlers Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ICU CotBed/-Fowlers-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/ICU CotBed/-Fowlers-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-12",
-    "slug": "hospital-nurse-bunker-two-tier-cot-bed",
-    "name": "Hospital Nurse Bunker Two Tier Cot Bed",
-    "tagline": "High quality medical Hospital Nurse Bunker Two Tier Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Hospital Nurse Bunker Two Tier Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Nurse Bunker Two Tier Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ICU CotBed/-Hospital-Nurse-Bunker-Two-Tier-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/ICU CotBed/-Hospital-Nurse-Bunker-Two-Tier-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-13",
-    "slug": "hospital-semi-fowler-cot-bed",
-    "name": "Hospital Semi Fowler Cot Bed",
-    "tagline": "High quality medical Hospital Semi Fowler Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Hospital Semi Fowler Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Semi Fowler Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ICU CotBed/-Hospital-Semi-Fowler-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/ICU CotBed/-Hospital-Semi-Fowler-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-14",
-    "slug": "remote-icu-cot",
-    "name": "Remote ICU Cot",
-    "tagline": "High quality medical Remote ICU Cot designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Remote ICU Cot engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Remote ICU Cot is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp",
-    "gallery": [
-      "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-15",
-    "slug": "ss-attender-cot-bed",
-    "name": "SS Attender Cot Bed",
-    "tagline": "High quality medical SS Attender Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade SS Attender Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams SS Attender Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ICU CotBed/-SS-Attender-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/ICU CotBed/-SS-Attender-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-16",
-    "slug": "icu-cot",
-    "name": "ICU Cot",
-    "tagline": "High quality medical ICU Cot designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade ICU Cot engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams ICU Cot is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/ICU CotBed/ICU-Cot.webp",
-    "gallery": [
-      "/images/Product Assets/ICU CotBed/ICU-Cot.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-17",
-    "slug": "hospital-blood-donor-chair",
-    "name": "Hospital Blood Donor Chair",
-    "tagline": "High quality medical Hospital Blood Donor Chair designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Blood Donor Chair engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Blood Donor Chair is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Blood-Donor-Chair.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Blood-Donor-Chair.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-18",
-    "slug": "hospital-foot-stool",
-    "name": "Hospital Foot Stool",
-    "tagline": "High quality medical Hospital Foot Stool designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Foot Stool engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Foot Stool is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-19",
-    "slug": "hospital-linen-trolley",
-    "name": "Hospital Linen Trolley",
-    "tagline": "High quality medical Hospital Linen Trolley designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Linen Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Linen Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Linen-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Linen-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-20",
-    "slug": "hospital-ot-surgical-scrub-sink",
-    "name": "Hospital OT Surgical Scrub Sink",
-    "tagline": "High quality medical Hospital OT Surgical Scrub Sink designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital OT Surgical Scrub Sink engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital OT Surgical Scrub Sink is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-OT-Surgical-Scrub-Sink.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-OT-Surgical-Scrub-Sink.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-21",
-    "slug": "hospital-over-bed-table",
-    "name": "Hospital Over Bed Table",
-    "tagline": "High quality medical Hospital Over Bed Table designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Over Bed Table engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Over Bed Table is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Over-Bed-Table.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Over-Bed-Table.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-22",
-    "slug": "hospital-patient-transfer-trolley",
-    "name": "Hospital Patient Transfer Trolley",
-    "tagline": "High quality medical Hospital Patient Transfer Trolley designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Patient Transfer Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Patient Transfer Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Patient-Transfer-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Patient-Transfer-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-23",
-    "slug": "hospital-revolving-stool",
-    "name": "Hospital Revolving Stool",
-    "tagline": "High quality medical Hospital Revolving Stool designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Revolving Stool engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Revolving Stool is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Revolving-Stool.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Revolving-Stool.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-24",
-    "slug": "hospital-wash-basin-stand",
-    "name": "Hospital Wash Basin Stand",
-    "tagline": "High quality medical Hospital Wash Basin Stand designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Wash Basin Stand engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Wash Basin Stand is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Hospital-Wash-Basin-Stand.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Hospital-Wash-Basin-Stand.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-25",
-    "slug": "nebulizer-trolley",
-    "name": "Nebulizer Trolley",
-    "tagline": "High quality medical Nebulizer Trolley designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Nebulizer Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Nebulizer Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Furnitures/Nebulizer-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/Furnitures/Nebulizer-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-26",
-    "slug": "fixed-wheel-chair",
-    "name": "Fixed Wheel Chair",
-    "tagline": "High quality medical Fixed Wheel Chair designed for clinical & hospital use.",
-    "category": "Wheelchairs",
-    "description": "Premium hospital-grade Fixed Wheel Chair engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Fixed Wheel Chair is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/WheelChair/Fixed-Wheel-Chair.webp",
-    "gallery": [
-      "/images/Product Assets/WheelChair/Fixed-Wheel-Chair.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-27",
-    "slug": "extra-10410435",
-    "name": "extra 10410435",
-    "tagline": "High quality medical extra 10410435 designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade extra 10410435 engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams extra 10410435 is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-28",
-    "slug": "extra-10410436",
-    "name": "extra 10410436",
-    "tagline": "High quality medical extra 10410436 designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade extra 10410436 engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams extra 10410436 is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-29",
-    "slug": "extra-10410437",
-    "name": "extra 10410437",
-    "tagline": "High quality medical extra 10410437 designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade extra 10410437 engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams extra 10410437 is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalBedsideLocker/extra-10410437.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalBedsideLocker/extra-10410437.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-30",
-    "slug": "gynec-deluxe-couch",
-    "name": "Gynec Deluxe Couch",
-    "tagline": "High quality medical Gynec Deluxe Couch designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Gynec Deluxe Couch engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Gynec Deluxe Couch is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalExaminationCouch/Gynec-Deluxe-Couch.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalExaminationCouch/Gynec-Deluxe-Couch.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-31",
-    "slug": "hospital-examination-couch",
-    "name": "Hospital Examination Couch",
-    "tagline": "High quality medical Hospital Examination Couch designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Examination Couch engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Examination Couch is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalExaminationCouch/Hospital-Examination-Couch.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalExaminationCouch/Hospital-Examination-Couch.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-32",
-    "slug": "medical-remote-examination-couch",
-    "name": "Medical Remote Examination Couch",
-    "tagline": "High quality medical Medical Remote Examination Couch designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Medical Remote Examination Couch engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Medical Remote Examination Couch is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalExaminationCouch/Medical-Remote-Examination-Couch.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalExaminationCouch/Medical-Remote-Examination-Couch.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-33",
-    "slug": "foot-stool",
-    "name": "Foot Stool",
-    "tagline": "High quality medical Foot Stool designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Foot Stool engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Foot Stool is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Hospital Stool and chair/Foot-Stool.webp",
-    "gallery": [
-      "/images/Product Assets/Hospital Stool and chair/Foot-Stool.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-34",
-    "slug": "hospital-pre-assembled-wash-basin-stand",
-    "name": "Hospital Pre Assembled Wash Basin Stand",
-    "tagline": "High quality medical Hospital Pre Assembled Wash Basin Stand designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Pre Assembled Wash Basin Stand engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Pre Assembled Wash Basin Stand is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Hospital Stool and chair/Hospital-Pre-Assembled-Wash-Basin-Stand.webp",
-    "gallery": [
-      "/images/Product Assets/Hospital Stool and chair/Hospital-Pre-Assembled-Wash-Basin-Stand.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-35",
-    "slug": "mild-steel-corrosion-free-iv-stand",
-    "name": "Mild Steel Corrosion free IV Stand",
-    "tagline": "High quality medical Mild Steel Corrosion free IV Stand designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Mild Steel Corrosion free IV Stand engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Mild Steel Corrosion free IV Stand is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Hospital Stool and chair/Mild-Steel-Corrosion-free-IV-Stand.webp",
-    "gallery": [
-      "/images/Product Assets/Hospital Stool and chair/Mild-Steel-Corrosion-free-IV-Stand.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-36",
-    "slug": "revolving-stool",
-    "name": "Revolving Stool",
-    "tagline": "High quality medical Revolving Stool designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Revolving Stool engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Revolving Stool is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Hospital Stool and chair/Revolving-Stool.webp",
-    "gallery": [
-      "/images/Product Assets/Hospital Stool and chair/Revolving-Stool.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-37",
-    "slug": "epoxy-powder-coated-hospital-linen-trolley",
-    "name": "Epoxy Powder Coated Hospital Linen Trolley",
-    "tagline": "High quality medical Epoxy Powder Coated Hospital Linen Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Epoxy Powder Coated Hospital Linen Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Epoxy Powder Coated Hospital Linen Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Epoxy-Powder-Coated-Hospital-Linen-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Epoxy-Powder-Coated-Hospital-Linen-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-38",
-    "slug": "epoxy-powder-coated-hospital-mayos-trolley",
-    "name": "Epoxy Powder Coated Hospital Mayos Trolley",
-    "tagline": "High quality medical Epoxy Powder Coated Hospital Mayos Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Epoxy Powder Coated Hospital Mayos Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Epoxy Powder Coated Hospital Mayos Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Epoxy-Powder-Coated-Hospital-Mayos-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Epoxy-Powder-Coated-Hospital-Mayos-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-39",
-    "slug": "hospital-crash-cart-trolley",
-    "name": "Hospital Crash Cart Trolley",
-    "tagline": "High quality medical Hospital Crash Cart Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Hospital Crash Cart Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Crash Cart Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-40",
-    "slug": "hospital-ecg-trolley",
-    "name": "Hospital ECG Trolley",
-    "tagline": "High quality medical Hospital ECG Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Hospital ECG Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital ECG Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Hospital-ECG-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Hospital-ECG-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-41",
-    "slug": "mild-steel-laparoscopy-trolley-for-hospital",
-    "name": "Mild Steel Laparoscopy Trolley for Hospital",
-    "tagline": "High quality medical Mild Steel Laparoscopy Trolley for Hospital designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Mild Steel Laparoscopy Trolley for Hospital engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Mild Steel Laparoscopy Trolley for Hospital is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Mild-Steel-Laparoscopy-Trolley-for-Hospital.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Mild-Steel-Laparoscopy-Trolley-for-Hospital.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-42",
-    "slug": "rust-proof-mild-steel-ecg-trolley",
-    "name": "Rust Proof Mild Steel ECG Trolley",
-    "tagline": "High quality medical Rust Proof Mild Steel ECG Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Rust Proof Mild Steel ECG Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Rust Proof Mild Steel ECG Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Rust-Proof-Mild-Steel-ECG-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Rust-Proof-Mild-Steel-ECG-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-43",
-    "slug": "theatre-drug-trolley",
-    "name": "Theatre Drug Trolley",
-    "tagline": "High quality medical Theatre Drug Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Theatre Drug Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Theatre Drug Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-44",
-    "slug": "three-fold-screen-trolley",
-    "name": "Three Fold Screen Trolley",
-    "tagline": "High quality medical Three Fold Screen Trolley designed for clinical & hospital use.",
-    "category": "Medical Trolleys",
-    "description": "Premium hospital-grade Three Fold Screen Trolley engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Three Fold Screen Trolley is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalTrolley/Three-Fold-Screen-Trolley.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalTrolley/Three-Fold-Screen-Trolley.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-45",
-    "slug": "robust-double-door-square-shaped-hospital-bedside-locker",
-    "name": "Robust Double Door Square Shaped Hospital Bedside Locker",
-    "tagline": "High quality medical Robust Double Door Square Shaped Hospital Bedside Locker designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Robust Double Door Square Shaped Hospital Bedside Locker engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Robust Double Door Square Shaped Hospital Bedside Locker is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalLocker/Robust-Double-Door-Square-Shaped-Hospital-Bedside-Locker.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalLocker/Robust-Double-Door-Square-Shaped-Hospital-Bedside-Locker.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-46",
-    "slug": "hospital-three-fold-screen",
-    "name": "Hospital Three Fold Screen",
-    "tagline": "High quality medical Hospital Three Fold Screen designed for clinical & hospital use.",
-    "category": "Hospital Furniture",
-    "description": "Premium hospital-grade Hospital Three Fold Screen engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Three Fold Screen is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/HospitalScreen/Hospital-Three-Fold-Screen.webp",
-    "gallery": [
-      "/images/Product Assets/HospitalScreen/Hospital-Three-Fold-Screen.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-47",
-    "slug": "attender-cot-bed",
-    "name": "Attender Cot Bed",
-    "tagline": "High quality medical Attender Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Attender Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Attender Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Attender-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Attender-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-48",
-    "slug": "gynec-couch-deluxe-bed",
-    "name": "Gynec Couch Deluxe Bed",
-    "tagline": "High quality medical Gynec Couch Deluxe Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Gynec Couch Deluxe Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Gynec Couch Deluxe Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Gynec-Couch-Deluxe-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Gynec-Couch-Deluxe-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-49",
-    "slug": "hospital-electric-bed",
-    "name": "Hospital Electric Bed",
-    "tagline": "High quality medical Hospital Electric Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Hospital Electric Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Electric Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Hospital-Electric-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Hospital-Electric-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-50",
-    "slug": "hospital-examination-couch-bed",
-    "name": "Hospital Examination Couch Bed",
-    "tagline": "High quality medical Hospital Examination Couch Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Hospital Examination Couch Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Examination Couch Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-51",
-    "slug": "hospital-fowler-cot-bed",
-    "name": "Hospital Fowler Cot Bed",
-    "tagline": "High quality medical Hospital Fowler Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Hospital Fowler Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Hospital Fowler Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-52",
-    "slug": "icu-cot-bed",
-    "name": "ICU Cot Bed",
-    "tagline": "High quality medical ICU Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade ICU Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams ICU Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/ICU-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/ICU-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-53",
-    "slug": "icu-cot-low-bed",
-    "name": "ICU Cot Low Bed",
-    "tagline": "High quality medical ICU Cot Low Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade ICU Cot Low Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams ICU Cot Low Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/ICU-Cot-Low-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/ICU-Cot-Low-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-54",
-    "slug": "labour-table-hydraulic-bed",
-    "name": "Labour Table Hydraulic Bed",
-    "tagline": "High quality medical Labour Table Hydraulic Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Labour Table Hydraulic Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Labour Table Hydraulic Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-55",
-    "slug": "over-bed-table",
-    "name": "Over Bed Table",
-    "tagline": "High quality medical Over Bed Table designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Over Bed Table engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Over Bed Table is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Over-Bed-Table.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Over-Bed-Table.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-56",
-    "slug": "plain-examination-bed",
-    "name": "Plain Examination Bed",
-    "tagline": "High quality medical Plain Examination Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Plain Examination Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Plain Examination Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Plain-Examination-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Plain-Examination-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-57",
-    "slug": "remote-examination-bed",
-    "name": "Remote Examination Bed",
-    "tagline": "High quality medical Remote Examination Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Remote Examination Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Remote Examination Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Remote-Examination-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Remote-Examination-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-58",
-    "slug": "remote-gynec-table-bed",
-    "name": "Remote Gynec Table Bed",
-    "tagline": "High quality medical Remote Gynec Table Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Remote Gynec Table Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Remote Gynec Table Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Remote-Gynec-Table-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Remote-Gynec-Table-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-59",
-    "slug": "remote-icu-cot-low-bed",
-    "name": "Remote ICU Cot Low Bed",
-    "tagline": "High quality medical Remote ICU Cot Low Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Remote ICU Cot Low Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Remote ICU Cot Low Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Remote-ICU-Cot-Low-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Remote-ICU-Cot-Low-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-60",
-    "slug": "rmmote-icu-cot-bed",
-    "name": "Rmmote Icu Cot Bed",
-    "tagline": "High quality medical Rmmote Icu Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Rmmote Icu Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Rmmote Icu Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Rmmote-Icu-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Rmmote-Icu-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-61",
-    "slug": "semi-fowler-cot-bed",
-    "name": "Semi Fowler Cot Bed",
-    "tagline": "High quality medical Semi Fowler Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Semi Fowler Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Semi Fowler Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Semi-Fowler-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Semi-Fowler-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  },
-  {
-    "id": "prod-62",
-    "slug": "two-tier-cot-bed",
-    "name": "Two Tier Cot Bed",
-    "tagline": "High quality medical Two Tier Cot Bed designed for clinical & hospital use.",
-    "category": "Hospital Beds",
-    "description": "Premium hospital-grade Two Tier Cot Bed engineered for durability and patient care.",
-    "fullDescription": "Sri Mathurams Two Tier Cot Bed is manufactured with high grade steel, ergonomic design, and anti-bacterial coating.",
-    "image": "/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp",
-    "gallery": [
-      "/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp"
-    ],
-    "materialDetails": "High-Grade ERW Steel with Anti-Bacterial Epoxy Powder Coating.",
-    "availableSizes": "Standard Hospital Grade Specifications",
-    "specifications": [
-      {
-        "label": "Material",
-        "value": "Heavy Duty Steel / ABS"
-      },
-      {
-        "label": "Finish",
-        "value": "Anti-Corrosive Powder Coating"
-      },
-      {
-        "label": "Quality Standard",
-        "value": "ISO 9001 Certified"
-      }
-    ],
-    "features": [
-      "Heavy-duty durable construction",
-      "Easy to sanitize anti-bacterial finish",
-      "Smooth movement castors"
-    ],
-    "applications": [
-      "Hospitals",
-      "Clinics",
-      "Nursing Homes"
-    ],
-    "featured": false
-  }
-];
 
-export const TIMELINE_EVENTS = [
+  // --- 2. ICU & Critical Care ---
   {
-    year: '1997',
-    title: 'Company Foundation',
-    description: 'Established in Peelamedu, Coimbatore as a specialized hospital furniture workshop.'
+    id: 'mf24-icu-cot-manual',
+    slug: 'icu-cot-manual',
+    modelNumber: 'MF24',
+    name: 'ICU Cot Manual',
+    category: 'ICU & Critical Care',
+    description: 'Manual ICU hospital bed with durable ABS head/foot panels and tuck-away ABS side rails.',
+    image: '/images/Product Assets/ICU CotBed/ICU-Cot.webp',
+    features: ['ABS Head & Foot Arms', 'Collapsible ABS Side Rails', 'Smooth Crank Mechanism'],
+    specifications: {
+      'Accessories': 'IV Rod, ABS Side Rails',
+      'Castors': '125 mm Central Locking',
+      'Dimension': '2100 × 1000 × 600 mm',
+      'Foldable': '4-Section Back & Knee',
+      'Function': 'Critical ICU Care',
+      'Material': 'MS Frame & ABS Panels',
+      'No. of Fold': '4-Section Adjustable',
+      'Supply Ability': '100 Per Month',
+    },
+    price: '28,500 INR/Unit',
+    materialDetails: 'High-tensile MS rectangular tube frame with moulded ABS head/foot boards.',
   },
   {
-    year: '2005',
-    title: 'ISO 9001 Certification',
-    description: 'Achieved quality certification and expanded production facility to 10,000 sq. ft.'
+    id: 'mf27-icu-cot-3-function-manual',
+    slug: 'icu-cot-3-function-manual',
+    modelNumber: 'MF27',
+    name: 'ICU Cot 3 Function Manual',
+    category: 'ICU & Critical Care',
+    description: '3-function manual ICU bed featuring SS arms and SS collapsible side safety rails.',
+    image: '/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp',
+    features: ['Backrest & Knee-rest Adjustments', 'Hi-Lo Height Adjustment', 'SS Collapsible Side Rails'],
+    specifications: {
+      'Accessories': 'SS Collapsible Side Rails',
+      'Castors': '125 mm Heavy Duty Brake',
+      'Dimension': '2150 × 1020 × 550 mm',
+      'Foldable': '3-Function Adjustable',
+      'Function': 'ICU Patient Recovery',
+      'Material': 'Full Stainless Steel & MS',
+      'No. of Fold': '4-Section Adjustable',
+      'Supply Ability': '80 Per Month',
+    },
+    price: '34,000 INR/Unit',
+    materialDetails: 'Heavy duty stainless steel side rails with precision screw crank systems.',
+  },
+
+  // --- 3. Emergency & Patient Transfer ---
+  {
+    id: 'mf38-trolley-cum-cot',
+    slug: 'trolley-cum-cot',
+    modelNumber: 'MF38',
+    name: 'Trolley Cum Cot',
+    category: 'Emergency & Patient Transfer',
+    description: 'Multi-purpose patient transfer trolley cum cot equipped with SS safety side rails.',
+    image: '/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp',
+    features: ['Removable Top Stretcher', 'SS Safety Side Rails', 'IV Pole Mount Points'],
+    specifications: {
+      'Accessories': 'SS Rails, IV Stand',
+      'Castors': '150 mm Swivel Castors',
+      'Dimension': '1900 × 650 × 800 mm',
+      'Foldable': 'Head Rise Section',
+      'Function': 'Emergency Patient Transfer',
+      'Material': 'Powder Coated MS & SS',
+      'No. of Fold': '2-Section Backrest',
+      'Supply Ability': '120 Per Month',
+    },
+    price: '18,200 INR/Unit',
+    materialDetails: 'Tubular MS frame with full stainless steel side safety guards.',
   },
   {
-    year: '2014',
-    title: 'Automated Powder Coating Plant',
-    description: 'Integrated 7-tank anti-bacterial epoxy coating & tube bending machinery.'
+    id: 'mf43-stretcher-trolley-ms',
+    slug: 'stretcher-trolley-ms',
+    modelNumber: 'MF43',
+    name: 'Stretcher Trolley MS',
+    category: 'Emergency & Patient Transfer',
+    description: 'Heavy duty MS emergency stretcher trolley for casualty and ward transfers.',
+    image: '/images/Product Assets/Stretchers/Plain-Stretcher.webp',
+    features: ['Removable Stretcher Top', 'Pre-treated Epoxy Finish', 'Utility Storage Tray'],
+    specifications: {
+      'Accessories': 'Stretcher Canvas Top',
+      'Castors': '125 mm Rubber Wheels',
+      'Dimension': '1850 × 600 × 750 mm',
+      'Foldable': 'No',
+      'Function': 'Casualty Patient Transfer',
+      'Material': 'Mild Steel Tubular Frame',
+      'No. of Fold': 'Single Flat Section',
+      'Supply Ability': '150 Per Month',
+    },
+    price: '12,500 INR/Unit',
+    materialDetails: 'Epoxy powder coated mild steel construction with high density mattress top.',
+  },
+
+  // --- 4. Labour & Maternity ---
+  {
+    id: 'mf36-baby-cradle-ms',
+    slug: 'baby-cradle-ms',
+    modelNumber: 'MF36',
+    name: 'Baby Cradle MS',
+    category: 'Labour & Maternity',
+    description: 'Sturdy hospital newborn baby cradle with clear crib container and smooth motion wheels.',
+    image: '/images/Product Assets/Beds/Attender-Cot-Bed.webp',
+    features: ['Clear Acrylic Baby Basin', 'Trendelenburg Tilt Position', 'Quiet Swivel Castors'],
+    specifications: {
+      'Accessories': 'Clear Acrylic Crib Basin',
+      'Castors': '50 mm Silent Swivel',
+      'Dimension': '800 × 450 × 850 mm',
+      'Foldable': 'Tilt Angle Adjustable',
+      'Function': 'Newborn Neonatal Care',
+      'Material': 'MS Tubular & Acrylic',
+      'No. of Fold': 'Single Section Tilt',
+      'Supply Ability': '150 Per Month',
+    },
+    price: '6,800 INR/Unit',
+    materialDetails: 'Ergonomic MS stand with transparent tiltable baby basket.',
   },
   {
-    year: '2024',
-    title: 'Statewide Hospital Network',
-    description: 'Supplying 500+ hospital projects across all 38 districts of Tamil Nadu.'
-  }
+    id: 'mf70-ss-remote-labor-cot',
+    slug: 'ss-remote-labor-cot',
+    modelNumber: 'MF70',
+    name: 'SS Remote Labor Cot (V-Type)',
+    category: 'Labour & Maternity',
+    description: 'Motorized stainless steel obstetric labor delivery bed with V-type leg support.',
+    image: '/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp',
+    features: ['Motorized Remote Operation', 'V-Type Delivery Cutout', 'SS Lithotomy Crutches'],
+    specifications: {
+      'Accessories': 'SS Crutches, Fluid Tray',
+      'Castors': '125 mm Central Lock',
+      'Dimension': '1900 × 800 × 750 mm',
+      'Foldable': 'Multi-Section Delivery',
+      'Function': 'Obstetric Labor Delivery',
+      'Material': '304 Grade Stainless Steel',
+      'No. of Fold': '3-Section Motorized',
+      'Supply Ability': '40 Per Month',
+    },
+    price: '48,000 INR/Unit',
+    materialDetails: 'Full 304 grade stainless steel structure with fluid drain basin.',
+  },
+
+  // --- 5. Examination & Consultation ---
+  {
+    id: 'mf13-ss-revolving-stool-cushion',
+    slug: 'ss-revolving-stool-cushion',
+    modelNumber: 'MF13',
+    name: 'SS Revolving Stool Cushion',
+    category: 'Examination & Consultation',
+    description: 'Height-adjustable stainless steel revolving doctor examination stool with padded seat.',
+    image: '/images/Product Assets/Hospital Stool and chair/Revolving-Stool.webp',
+    features: ['Cushioned Top Seat', 'Screw Thread Height Adjustment', '5-Leg Heavy Base'],
+    specifications: {
+      'Accessories': 'High Density Cushion Seat',
+      'Castors': 'Rubber Leg Shoes / No',
+      'Dimension': '350 mm Dia × 500-650 mm',
+      'Foldable': 'Height Adjustable Screw',
+      'Function': 'Doctor Consultation Seat',
+      'Material': 'Stainless Steel & Upholstery',
+      'No. of Fold': 'Single Revolving Top',
+      'Supply Ability': '300 Per Month',
+    },
+    price: '2,200 INR/Unit',
+    materialDetails: 'Stainless steel tubular legs with high density foam cushioned seat.',
+  },
+  {
+    id: 'mf64-deluxe-examination-couch',
+    slug: 'deluxe-examination-couch',
+    modelNumber: 'MF64',
+    name: 'Deluxe Examination Couch',
+    category: 'Examination & Consultation',
+    description: 'Deluxe patient examination bed featuring integrated storage cabinets.',
+    image: '/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp',
+    features: ['Adjustable Headrest Section', 'Built-in Storage Cabinets', 'Padded Vinyl Top'],
+    specifications: {
+      'Accessories': 'Removable Foam Mattress',
+      'Castors': 'Fixed Rubber Feet',
+      'Dimension': '1830 × 610 × 810 mm',
+      'Foldable': 'Head Rise Ratchet',
+      'Function': 'Patient Examination & Scan',
+      'Material': 'CRCA Steel Cabinet & Vinyl',
+      'No. of Fold': '2-Section Head Adjustable',
+      'Supply Ability': '90 Per Month',
+    },
+    price: '14,500 INR/Unit',
+    materialDetails: 'CRCA steel sheet body with high-density foam leatherette mattress.',
+  },
+
+  // --- 6. Medical Trolleys ---
+  {
+    id: 'mf10-instrument-trolley-24x18',
+    slug: 'instrument-trolley-24x18',
+    modelNumber: 'MF10',
+    name: 'Instrument Trolley 24 × 18',
+    category: 'Medical Trolleys',
+    description: 'Stainless steel two-tier surgical instrument trolley (24 x 18 inches).',
+    image: '/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp',
+    features: ['Double Stainless Steel Shelves', 'Guard Rails on Top Shelf', 'Quiet Swivel Castors'],
+    specifications: {
+      'Accessories': '3-Side Railing Shelves',
+      'Castors': '75 mm Silent Swivel Wheels',
+      'Dimension': '610 × 450 × 800 mm',
+      'Foldable': 'No',
+      'Function': 'Surgical Instrument Transport',
+      'Material': '304 Grade Stainless Steel',
+      'No. of Fold': 'Double Shelf Rigidity',
+      'Supply Ability': '250 Per Month',
+    },
+    price: '5,600 INR/Unit',
+    materialDetails: '304 stainless steel tubular frame and polished shelves.',
+  },
+  {
+    id: 'mf84-crash-cart-ms',
+    slug: 'crash-cart-ms',
+    modelNumber: 'MF84',
+    name: 'Crash Cart MS',
+    category: 'Medical Trolleys',
+    description: 'Emergency resuscitation crash cart with color-coded modular drawers.',
+    image: '/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp',
+    features: ['5 Modular Storage Drawers', 'IV Pole & Oxygen Cylinder Holder', 'Cardiac Board Attachment'],
+    specifications: {
+      'Accessories': 'IV Pole, Cardiac Board',
+      'Castors': '125 mm Brake Wheels',
+      'Dimension': '950 × 520 × 1000 mm',
+      'Foldable': 'No',
+      'Function': 'Emergency Resuscitation',
+      'Material': 'Epoxy Coated MS Body',
+      'No. of Fold': '5 Modular Drawers',
+      'Supply Ability': '60 Per Month',
+    },
+    price: '26,000 INR/Unit',
+    materialDetails: 'Heavy-duty steel chassis with ABS drawer compartments and central lock.',
+  },
+
+  // --- 7. OT Equipment ---
+  {
+    id: 'mf129-ot-table-ss',
+    slug: 'ot-table-ss',
+    modelNumber: 'MF129',
+    name: 'OT Table SS',
+    category: 'OT Equipment',
+    description: 'Hydraulic surgical operation theater table crafted from 304 grade stainless steel.',
+    image: '/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp',
+    features: ['Hydraulic Height Adjustment', 'Multi-Section Radio-Translucent Top', 'SS Heavy Base'],
+    specifications: {
+      'Accessories': 'Arm Boards, Lithotomy Legs',
+      'Castors': 'Floor Lock Mechanism',
+      'Dimension': '1950 × 550 × 750-1000 mm',
+      'Foldable': 'Multi-Section Positions',
+      'Function': 'Surgical OT Procedures',
+      'Material': '304 Grade Stainless Steel',
+      'No. of Fold': '5-Section Radiotranslucent',
+      'Supply Ability': '35 Per Month',
+    },
+    price: '78,000 INR/Unit',
+    materialDetails: 'Full 304 stainless steel enclosure with radiolucent table top for C-Arm.',
+  },
+  {
+    id: 'mf130-ot-light',
+    slug: 'ot-light',
+    modelNumber: 'MF130',
+    name: 'OT Light Ceiling LED',
+    category: 'OT Equipment',
+    description: 'Shadowless LED surgical ceiling light fixture for operation theaters.',
+    image: '/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp',
+    features: ['Shadowless LED Technology', 'Adjustable Color Temperature', 'Sterilizable Handle'],
+    specifications: {
+      'Accessories': 'Sterilizable Center Handle',
+      'Castors': 'Ceiling Mount Suspension',
+      'Dimension': '600 mm Dome Diameter',
+      'Foldable': '360° Articulating Arm',
+      'Function': 'Surgical Illumination',
+      'Material': 'Aluminum Dome & LED Array',
+      'No. of Fold': 'Flexible Swivel Joint',
+      'Supply Ability': '50 Per Month',
+    },
+    price: '65,000 INR/Unit',
+    materialDetails: 'High-intensity LED modules with slim aerodynamic aluminum lighthead.',
+  },
+
+  // --- 8. Stainless Steel Furniture & Ward Accessories ---
+  {
+    id: 'mf04-iv-stand-full-ss',
+    slug: 'iv-stand-full-ss',
+    modelNumber: 'MF04',
+    name: 'IV Stand Full SS',
+    category: 'Stainless Steel Furniture & Ward Accessories',
+    description: 'Telescopic height adjustable stainless steel IV drip stand with 5-star base.',
+    image: '/images/Product Assets/IVStands/-IV-Stand.webp',
+    features: ['Full Stainless Steel Body', '4-Hook Drip Top', 'Heavy 5-Star Base Wheels'],
+    specifications: {
+      'Accessories': '4 Stainless Steel Hooks',
+      'Castors': '50 mm Swivel Castors',
+      'Dimension': '450 mm Base × 1350-2200 mm',
+      'Foldable': 'Telescopic Lock System',
+      'Function': 'IV Fluid Infusion',
+      'Material': 'Full 304 Stainless Steel',
+      'No. of Fold': 'Height Adjustable Pole',
+      'Supply Ability': '400 Per Month',
+    },
+    price: '1,850 INR/Unit',
+    materialDetails: '304 grade stainless steel pipe with heavy weighted anti-tip base.',
+  },
+  {
+    id: 'mf55-double-foot-step-ms',
+    slug: 'double-foot-step-ms',
+    modelNumber: 'MF55',
+    name: 'Double Foot Step MS',
+    category: 'Stainless Steel Furniture & Ward Accessories',
+    description: 'Two-step patient bed entry step stool with anti-skid rubber mats.',
+    image: '/images/Product Assets/Hospital Stool and chair/Revolving-Stool.webp',
+    features: ['Two Tier Step Platform', 'Non-Slip Ribbed Rubber Tops', 'Rubber Leg Shoes'],
+    specifications: {
+      'Accessories': 'Anti-Skid Ribbed Mats',
+      'Castors': 'Rubber Leg Shoes',
+      'Dimension': '450 × 450 × 400 mm',
+      'Foldable': 'No',
+      'Function': 'Patient Bed Access Step',
+      'Material': 'Mild Steel & Ribbed Rubber',
+      'No. of Fold': 'Fixed Two Tier Step',
+      'Supply Ability': '350 Per Month',
+    },
+    price: '1,450 INR/Unit',
+    materialDetails: 'Tubular MS frame pre-treated with epoxy powder coating.',
+  },
+
+  // --- 9. Accessories ---
+  {
+    id: 'mf102-mattress-hospital',
+    slug: 'mattress-hospital',
+    modelNumber: 'MF102',
+    name: 'Hospital Mattress (4-Section)',
+    category: 'Accessories',
+    description: 'Waterproof 4-section foam mattress tailored for fowler and ICU hospital beds.',
+    image: '/images/Product Assets/Beds/Plain-Examination-Bed.webp',
+    features: ['4-Section Flexible Hinges', 'Waterproof Leatherette Cover', 'High Density PU Foam'],
+    specifications: {
+      'Accessories': 'Zipper Washable Rexine Cover',
+      'Castors': 'N/A',
+      'Dimension': '1980 × 900 × 100 mm',
+      'Foldable': '4-Section Hinge Fold',
+      'Function': 'Hospital Bed Cushioning',
+      'Material': 'PU Foam & Rexine Cover',
+      'No. of Fold': '4 Section Flexible',
+      'Supply Ability': '300 Per Month',
+    },
+    price: '3,200 INR/Unit',
+    materialDetails: '32-density polyurethane foam wrapped in washable zip cover.',
+  },
+  {
+    id: 'mf137-castors-5-inches',
+    slug: 'castors-5-inches',
+    modelNumber: 'MF137',
+    name: 'Hospital Castors 5 Inches',
+    category: 'Accessories',
+    description: 'Heavy duty silent polyurethane hospital bed wheels with total lock brakes.',
+    image: '/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp',
+    features: ['5 Inch Polyurethane Wheels', 'Swivel & Total Lock Brake', 'Non-Marking Tread'],
+    specifications: {
+      'Accessories': 'Threaded Stem & Brake Pedal',
+      'Castors': 'Swivel & Total Brake Lock',
+      'Dimension': '125 mm (5 Inch) Wheel',
+      'Foldable': '360° Swivel Bearing',
+      'Function': 'Hospital Furniture Mobility',
+      'Material': 'Polyurethane & Steel Stem',
+      'No. of Fold': 'Single Swivel Unit',
+      'Supply Ability': '1000 Per Month',
+    },
+    price: '650 INR/Unit',
+    materialDetails: 'Precision ball bearing swivel castor with chrome zinc plated housing.',
+  },
+
+  // --- 10. General Furniture ---
+  {
+    id: 'mf104-3-seater-chair',
+    slug: '3-seater-chair',
+    modelNumber: 'MF104',
+    name: '3 Seater Waiting Chair',
+    category: 'General Furniture',
+    description: 'Perforated metal 3-seater bench chair for hospital visitor waiting lobbies.',
+    image: '/images/Product Assets/Furnitures/Hospital-Revolving-Stool.webp',
+    features: ['Perforated Steel Back & Seat', 'Chrome Plated Armrests & Legs', 'Heavy Beam Support'],
+    specifications: {
+      'Accessories': 'Chrome Armrests & Legs',
+      'Castors': 'Adjustable Leveling Feet',
+      'Dimension': '1750 × 650 × 780 mm',
+      'Foldable': 'No',
+      'Function': 'Hospital Lobby Waiting',
+      'Material': 'Perforated CRCA & Chrome Steel',
+      'No. of Fold': 'Fixed 3-Seat Bench',
+      'Supply Ability': '100 Per Month',
+    },
+    price: '9,500 INR/Unit',
+    materialDetails: 'Cold rolled steel perforated seats with chrome plated side armrests.',
+  },
+  {
+    id: 'mf117-two-tier-cot-ms',
+    slug: 'two-tier-cot-ms',
+    modelNumber: 'MF117',
+    name: 'Two Tier Cot MS',
+    category: 'General Furniture',
+    description: 'Heavy-duty steel bunk bed cot designed for hospital attendant quarters and staff dorms.',
+    image: '/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp',
+    features: ['Double Level Bunk Layout', 'Integrated Safety Ladder', 'Sturdy Tubular Leg Supports'],
+    specifications: {
+      'Accessories': 'Safety Rail & Ladder',
+      'Castors': 'Rubber Leg Bush Shoes',
+      'Dimension': '1980 × 900 × 1650 mm',
+      'Foldable': 'No',
+      'Function': 'Staff / Attendant Dormitory',
+      'Material': 'Mild Steel Tubular Frame',
+      'No. of Fold': 'Double Level Bunk',
+      'Supply Ability': '75 Per Month',
+    },
+    price: '16,000 INR/Unit',
+    materialDetails: 'Heavy gauge steel pipes pre-treated and powder coated in silver gray.',
+  },
 ];

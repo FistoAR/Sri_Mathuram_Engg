@@ -79,16 +79,16 @@ export function ThumbnailSlider({ images, productName, onSelectImage }: Thumbnai
         <ChevronRight className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px] stroke-[2.5]" />
       </button>
 
-      {/* 3-Column Sliding Container - Hidden Scrollbar */}
+      {/* 3-Column Visible Thumbnail Slider Container */}
       <div
         ref={scrollContainerRef}
-        className="flex gap-[0.6vw] overflow-x-auto scroll-smooth py-[0.4vh] px-[2vw] items-center [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="flex gap-[0.6vw] overflow-x-auto scroll-smooth py-[0.2vh] px-[2.2vw] items-center [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {images.map((img, idx) => (
           <div
             key={idx}
             onClick={() => handleSelect(idx, img)}
-            className={`relative flex-shrink-0 w-1/3 aspect-video rounded-[0.6vw] overflow-hidden cursor-pointer transition-all duration-300 border-2 ${
+            className={`relative flex-shrink-0 w-[calc((100%-1.2vw)/3)] aspect-[16/11] rounded-[0.6vw] overflow-hidden cursor-pointer transition-all duration-300 border-2 ${
               selectedIndex === idx
                 ? 'border-orange-500 ring-2 ring-orange-500/20 shadow-md scale-102 bg-white'
                 : 'border-slate-200/80 hover:border-orange-300 bg-white/80'
@@ -98,7 +98,7 @@ export function ThumbnailSlider({ images, productName, onSelectImage }: Thumbnai
               src={img}
               alt={`${productName} Sample ${idx + 1}`}
               fill
-              sizes="33vw"
+              sizes="25vw"
               className="object-contain p-[0.4vw] hover:scale-105 transition-transform duration-300"
             />
           </div>

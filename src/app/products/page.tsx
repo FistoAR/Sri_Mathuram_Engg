@@ -1,179 +1,280 @@
-'use client';
+"use client";
 
-import React, { useState, useMemo } from 'react';
-import { ProductCard } from '@/components/ui/ProductCard';
-import { PRODUCTS, CATEGORIES } from '@/lib/data';
-import { Search, ChevronLeft, ChevronRight, LayoutGrid, ChevronDown } from 'lucide-react';
-import { FadeIn } from '@/components/ui/FadeIn';
+import React, { useState, useMemo, Suspense } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { ProductCard } from "@/components/ui/ProductCard";
+import { PRODUCTS, CATEGORIES } from "@/lib/data";
+import {
+  Search,
+  ChevronRight,
+  ChevronLeft,
+  Shield,
+  Activity,
+  Bed,
+  Menu,
+  ChevronsDown,
+  ChevronsUp,
+} from "lucide-react";
+
+import { useSearchParams } from "next/navigation";
 
 export default function ProductsPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-500 font-semibold">Loading Products...</div>}>
+      <ProductsPageContent />
+    </Suspense>
+  );
+}
 
-  // List of category names including "All Products"
+function ProductsPageContent() {
+  // List of category names
   const categoryList = useMemo(() => {
-    return ['All Products', ...CATEGORIES.map((cat) => cat.name)];
+    return ["All Products", ...CATEGORIES.map((cat) => cat.name)];
   }, []);
 
-  const currentCategory = categoryList[activeCategoryIndex];
+  // Pre-calculate count for each category
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      "All Products": PRODUCTS.length,
+    };
+    CATEGORIES.forEach((cat) => {
+      counts[cat.name] = PRODUCTS.filter((p) => p.category === cat.name).length;
+    });
+    return counts;
+  }, []);
 
-  // Filter products by search and active selected category
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState<number>(0);
+  const [isMobileCategoryOpen, setIsMobileCategoryOpen] = useState(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  const searchParams = useSearchParams();
+  const categoryQuery = searchParams.get("category");
+
+  React.useEffect(() => {
+    setIsMounted(true);
+    if (categoryQuery) {
+      const idx = categoryList.indexOf(categoryQuery);
+      if (idx !== -1) {
+        setActiveCategoryIndex(idx);
+      }
+    }
+    
+    // Sync sidebar state from localStorage
+    const saved = localStorage.getItem("sidebarExpanded");
+    if (saved !== null) {
+      setIsSidebarExpanded(saved === "true");
+    }
+  }, [categoryQuery, categoryList]);
+
+  React.useEffect(() => {
+    const handleSync = () => {
+      const saved = localStorage.getItem("sidebarExpanded");
+      if (saved !== null) {
+        setIsSidebarExpanded(saved === "true");
+      }
+    };
+    window.addEventListener("sidebarToggle", handleSync);
+    return () => window.removeEventListener("sidebarToggle", handleSync);
+  }, []);
+
+  const currentCategory = categoryList[activeCategoryIndex] || "All Products";
+
+  // Filter products by search term & active category selection
   const filteredProducts = useMemo(() => {
-    const term = searchTerm.toLowerCase().trim();
-    return PRODUCTS.filter((product) => {
-      const matchesSearch =
-        !term ||
-        product.name.toLowerCase().includes(term) ||
-        product.description.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term);
-      const matchesCategory =
-        currentCategory === 'All Products' || product.category === currentCategory;
-      return matchesSearch && matchesCategory;
-    });
-  }, [searchTerm, currentCategory]);
+    let list = PRODUCTS;
+    if (currentCategory !== "All Products") {
+      list = list.filter((p) => p.category === currentCategory);
+    }
 
-  // Derive unique categories present in results, sorted by product count descending (largest count first)
+    if (searchTerm.trim() !== "") {
+      const term = searchTerm.toLowerCase().trim();
+      list = list.filter(
+        (p) =>
+          p.name.toLowerCase().includes(term) ||
+          p.description.toLowerCase().includes(term),
+      );
+    }
+
+    return list;
+  }, [currentCategory, searchTerm]);
+
+  // Unique categories present in results, sorted by original layout ordering
   const groupedCategoryNames = useMemo(() => {
-    const countsMap: Record<string, number> = {};
-    filteredProducts.forEach((p) => {
-      countsMap[p.category] = (countsMap[p.category] || 0) + 1;
-    });
-    return Object.keys(countsMap).sort((a, b) => countsMap[b] - countsMap[a]);
+    return CATEGORIES.filter((cat) =>
+      filteredProducts.some((p) => p.category === cat.name)
+    ).map((cat) => cat.name);
   }, [filteredProducts]);
 
-  // Navigate to previous category
-  const prevCategory = () => {
-    setActiveCategoryIndex((prev) => (prev > 0 ? prev - 1 : categoryList.length - 1));
-  };
+  // Description for each category based on data
+  const currentCategoryDesc = useMemo(() => {
+    const cat = CATEGORIES.find((c) => c.name === currentCategory);
+    return (
+      cat?.description ||
+      "High-quality medical equipment designed for patient comfort, safety, and easy operation."
+    );
+  }, [currentCategory]);
 
-  // Navigate to next category
-  const nextCategory = () => {
-    setActiveCategoryIndex((prev) => (prev < categoryList.length - 1 ? prev + 1 : 0));
-  };
+  // Representative banner image for the category
+  const bannerImage = useMemo(() => {
+    const firstProduct = PRODUCTS.find((p) => p.category === currentCategory);
+    return (
+      firstProduct?.image || "/images/Product Assets/ICU CotBed/ICU-Cot.webp"
+    );
+  }, [currentCategory]);
+
+  const mainRef = React.useRef<HTMLDivElement>(null);
+  const productsStartRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      if (
+        currentCategory !== "All Products" &&
+        mainRef.current &&
+        productsStartRef.current
+      ) {
+        mainRef.current.scrollTo({
+          top: productsStartRef.current.offsetTop,
+          behavior: "smooth",
+        });
+      } else if (mainRef.current) {
+        mainRef.current.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [currentCategory]);
 
   return (
-    <div className="w-full px-[3vw] py-[2vh]  relative min-h-screen">
-      
-      {/* Top Section Header Row: Title on Left, Controls Panel on Right */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-[1.5vw] pb-[0.5vh]">
-        
-        {/* Left Side: Main Page Heading */}
-        <FadeIn direction="down" duration={0.4}>
-          <h1 className="text-[2vw] font-semibold text-slate-900">
-            Our Featured Products
-          </h1>
-        </FadeIn>
+    <main
+      ref={mainRef}
+      className={`flex-1 min-w-0 space-y-6 lg:h-[calc(100vh-140px)] lg:overflow-y-auto pr-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden relative transition-all duration-700 transform ${
+        isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+    >
 
-        {/* Right Side Panel: Search Bar + Category Selector */}
-        <div className="flex flex-col sm:flex-row items-center gap-[0.8vw] bg-white p-[0.6vw] rounded-[1vw] border border-slate-200 shadow-sm shrink-0">
-          
-          {/* Active Category Display Badge - Solid Orange Theme */}
-          <div className="flex items-center gap-[0.4vw] px-[0.8vw] py-[0.8vh] rounded-[0.6vw] bg-slate-900/80 backdrop-blur-md text-white text-[0.8vw] font-bold shrink-0 shadow-md">
-            <LayoutGrid className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px] text-white" />
-            <span>{currentCategory}</span>
-            <span className="bg-white/20 text-white px-[0.4vw] py-[0.1vh] rounded-full text-[0.65vw]">
-              {filteredProducts.length}
-            </span>
-          </div>
-
-          {/* Search Input */}
-          <div className="relative w-full sm:w-[15vw]">
-            <Search className="absolute left-[0.8vw] top-1/2 -translate-y-1/2 w-[1vw] h-[1vw] min-w-[14px] min-h-[14px] text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-[2.2vw] pr-[1vw] py-[0.8vh] bg-slate-50 rounded-[0.6vw] text-[0.85vw] border border-slate-200 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-400 transition-all font-medium text-slate-800 placeholder-slate-400"
-            />
-          </div>
-
-          {/* Category Dropdown Select */}
-          <div className="relative w-full sm:w-[13vw]">
-            <select
-              value={activeCategoryIndex}
-              onChange={(e) => setActiveCategoryIndex(Number(e.target.value))}
-              className="w-full appearance-none bg-slate-50 border border-slate-200 text-slate-800 text-[0.85vw] font-bold py-[0.8vh] pl-[0.8vw] pr-[2vw] rounded-[0.6vw] focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all cursor-pointer shadow-sm hover:bg-slate-100/80"
-            >
-              {categoryList.map((catName, idx) => (
-                <option key={catName} value={idx} className="font-medium text-slate-900 py-[0.4vh]">
-                  {catName}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-[0.8vw] top-1/2 -translate-y-1/2 w-[1vw] h-[1vw] min-w-[14px] min-h-[14px] text-slate-500 pointer-events-none" />
-          </div>
-
-        </div>
-
+      {/* Category Banner Card */}
+      <div className="hidden lg:block relative rounded-2xl overflow-hidden border border-slate-200/90 w-full shadow-2xs">
+        <Image
+          src="/images/Product Assets/rightsideBanner.webp"
+          alt="Product Banner"
+          width={1200}
+          height={160}
+          sizes="100vw"
+          className="w-full h-auto object-cover"
+          priority
+        />
       </div>
 
-      {/* Product Section Container */}
-      <div className="relative pt-[2vh]">
-        
-        {/* Sticky Floating Navigation Buttons (Positioned outside layout flow) */}
-        <button
-          onClick={prevCategory}
-          className="fixed left-[1vw] top-1/2 -translate-y-1/2 z-50 w-[2.8vw] h-[2.8vw] min-w-[36px] min-h-[36px] rounded-full bg-orange-500 text-white shadow-xl shadow-orange-500/25 hover:bg-orange-600 hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none flex items-center justify-center"
-          title={`Previous Category (${categoryList[(activeCategoryIndex - 1 + categoryList.length) % categoryList.length]})`}
-          aria-label="Previous Category"
-        >
-          <ChevronLeft className="w-[1.4vw] h-[1.4vw] min-w-[18px] min-h-[18px] stroke-[2.5]" />
-        </button>
-
-        <button
-          onClick={nextCategory}
-          className="fixed right-[1vw] top-1/2 -translate-y-1/2 z-50 w-[2.8vw] h-[2.8vw] min-w-[36px] min-h-[36px] rounded-full bg-orange-500 text-white shadow-xl shadow-orange-500/25 hover:bg-orange-600 hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none flex items-center justify-center"
-          title={`Next Category (${categoryList[(activeCategoryIndex + 1) % categoryList.length]})`}
-          aria-label="Next Category"
-        >
-          <ChevronRight className="w-[1.4vw] h-[1.4vw] min-w-[18px] min-h-[18px] stroke-[2.5]" />
-        </button>
-
-        {/* Grid View Container Grouped Category-Wise */}
+      {/* Products Grid */}
+      <div ref={productsStartRef} className="min-h-[calc(100vh-140px)] pb-12 space-y-8">
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-[6vh] bg-slate-50 rounded-[1vw] border border-slate-200 my-[2vh]">
-            <p className="text-slate-500 font-medium text-[0.9vw]">
-              No products match your search {searchTerm ? `"${searchTerm}"` : ''} in {currentCategory}.
-            </p>
-          </div>
+           <div className="text-center py-16 bg-slate-50 rounded-2xl border border-slate-200/60">
+             <p className="text-slate-500 font-bold text-sm">
+               No products found in this category matching "{searchTerm}".
+             </p>
+           </div>
+        ) : currentCategory === "All Products" ? (
+          // Grouped by Category layout
+          groupedCategoryNames.map((catName) => {
+            const catProducts = filteredProducts.filter((p) => p.category === catName);
+            return (
+              <div key={catName} className="space-y-4">
+                <div className="flex items-center gap-2 border-b border-slate-200/60 pb-2 pt-2">
+                  <h2 className="text-sm font-extrabold text-[#0B3C83] tracking-wide uppercase font-montserrat">
+                    {catName}
+                  </h2>
+                  <span className="bg-[#0B3C83]/10 text-[#0B3C83] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                    {catProducts.length}
+                  </span>
+                </div>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transition-all duration-300 ${
+                  isSidebarExpanded ? "lg:grid-cols-3" : "lg:grid-cols-4"
+                }`}>
+                  {catProducts.map((product) => (
+                    <ScrollReveal key={product.id}>
+                      <ProductCard product={product} />
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
+            );
+          })
         ) : (
-          <div key={currentCategory + searchTerm} className="space-y-[4vh] transition-all duration-500 animate-fadeIn">
-            {groupedCategoryNames.map((catName) => {
-              const catProducts = filteredProducts.filter((p) => p.category === catName);
-              if (catProducts.length === 0) return null;
-
-              // Only show category title headers when in "All Products" mode or actively searching
-              const showCategoryTitle = currentCategory === 'All Products' || Boolean(searchTerm.trim());
-
-              return (
-                <section key={catName} className="space-y-[1.5vh]">
-                  {/* Category Title Header (Only for All Products or when searching) */}
-                  {showCategoryTitle && (
-                    <div className="flex items-center gap-[0.6vw] w-full">
-                      <h2 className="text-[1.5vw] font-medium text-slate-800">
-                        {catName}
-                      </h2>
-                      <span className="bg-slate-900/80 backdrop-blur-md text-white text-[0.75vw] font-bold px-[0.45vw] py-[0.5vh] rounded-full">
-                        {catProducts.length} 
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Products Grid for this Category */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[1.5vw]">
-                    {catProducts.map((product, idx) => (
-                      <ProductCard key={product.id} product={product} index={idx} />
-                    ))}
-                  </div>
-                </section>
-              );
-            })}
+          // Single Category Direct Grid layout
+          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transition-all duration-300 ${
+            isSidebarExpanded ? "lg:grid-cols-3" : "lg:grid-cols-4"
+          }`}>
+            {filteredProducts.map((product) => (
+              <ScrollReveal key={product.id}>
+                <ProductCard product={product} />
+              </ScrollReveal>
+            ))}
           </div>
         )}
-
       </div>
 
+      {/* Mobile/Tablet Category Banner Card at Bottom */}
+      <div className="lg:hidden relative rounded-2xl overflow-hidden border border-slate-200/90 w-full aspect-[3.2/1] shadow-2xs mt-8">
+        <Image
+          src="/images/Product Assets/rightsideBanner.webp"
+          alt="Product Banner"
+          fill
+          sizes="100vw"
+          className="object-fill"
+          priority
+        />
+      </div>
+    </main>
+  );
+}
+
+function ScrollReveal({ children }: { children: React.ReactNode }) {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [shouldAnimate, setShouldAnimate] = React.useState(true);
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const rect = entry.boundingClientRect;
+          // If the element enters from the top edge of the viewport, show it instantly
+          if (rect.top < 150) {
+            setShouldAnimate(false);
+          }
+          setIsVisible(true);
+        }
+      },
+      {
+        threshold: 0.05,
+        rootMargin: "0px 0px -40px 0px",
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`${
+        shouldAnimate ? "transition-all duration-700 ease-out transform" : ""
+      } ${
+        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+      }`}
+    >
+      {children}
     </div>
   );
 }

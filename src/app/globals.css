@@ -6,6 +6,7 @@
   :root {
     --font-inter: 'Inter', sans-serif;
     --font-outfit: 'Inter', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
   }
   
   html.lenis, html.lenis body {
@@ -29,8 +30,9 @@
   }
   
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased selection:bg-orange-500 selection:text-white;
+    @apply bg-slate-50 text-slate-900 antialiased selection:bg-orange-500 selection:text-white;
   }
+
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading text-slate-950;
@@ -39,6 +41,10 @@
   p {
     @apply text-slate-700;
   }
+}
+
+.montserrat-page {
+  font-family: var(--font-montserrat);
 }
 
 .glass-panel {
@@ -85,4 +91,82 @@
 
 .animate-move-right-infinite {
   animation: moveRightInfinite 1.4s infinite ease-in-out;
+}
+
+/* Thin Custom Scrollbar for Sidebar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+/* Card Top-Left & Bottom-Left Curved Orange Accent Border Matching Mockup Image Exactly */
+.card-orange-accent-border {
+  position: relative;
+}
+.card-orange-accent-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 78%;
+  height: 85%;
+  border-top: 3px solid #FF6B2C;
+  border-left: 3px solid #FF6B2C;
+  border-top-left-radius: 1.4vw;
+  border-bottom-left-radius: 1.4vw;
+  pointer-events-none: none;
+  z-index: 10;
+}
+.card-orange-accent-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 78%;
+  height: 3px;
+  background-color: #FF6B2C;
+  border-bottom-left-radius: 1.4vw;
+  pointer-events-none: none;
+  z-index: 10;
+}
+
+/* Preloader hide layout elements until loaded to prevent visual flashes */
+html:not(.preloader-done) #main-content,
+html:not(.preloader-done) footer,
+html:not(.preloader-done) header {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+html.preloader-done #main-content,
+html.preloader-done header {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 0.6s ease-in-out;
+}
+html.preloader-done footer {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 0.6s ease-in-out;
+}
+/* Delay footer fade-in during active first-load preloading sequence */
+html.preloader-active.preloader-done footer {
+  transition-delay: 5s !important;
 }

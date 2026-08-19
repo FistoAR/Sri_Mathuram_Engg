@@ -100,7 +100,9 @@ export function generateOrganizationSchema() {
   };
 }
 
-export function generateProductSchema(product: Product) {
+import { MedicalProduct } from './data';
+
+export function generateProductSchema(product: Product | MedicalProduct) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',

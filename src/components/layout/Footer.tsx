@@ -1,120 +1,183 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, MapPin, Globe, Clock } from 'lucide-react';
 
 export function Footer() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const currentYear = new Date().getFullYear();
 
+  if (!mounted) return null;
+
   return (
-    <footer className="w-full bg-slate-950 text-slate-400 border-t border-slate-800/80 pt-[4vh] pb-[2.5vh]">
-      <div className="w-full px-[3vw]">
-        {/* Full width 5-column grid layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-[2.5vw] mb-[4vh] items-start">
-          
-          {/* Column 1: Brand & Logo (3 cols) */}
-          <div className="lg:col-span-3 space-y-[1.5vh]">
-            <Link href="/" className="inline-block focus:outline-none">
-              <div className="relative h-[8vh] w-[14vw] min-w-[160px] overflow-hidden bg-white/95 rounded-[0.6vw] p-[0.4vw]">
-                <Image
-                  src="/images/logo.png"
-                  alt="Sri Mathurams Medical Engineering Logo"
-                  fill
-                  priority
-                  className="object-contain object-left p-[0.3vw]"
-                />
+    <footer
+      className="ft-root w-full bg-[#091523] text-slate-300 border-t border-slate-800/80 pt-12 pb-7"
+      ref={(el: HTMLElement | null) => {
+        if (!el) return;
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting && entry.boundingClientRect.top > 0) {
+              el.classList.remove('ft-visible');
+              void el.offsetHeight;
+              el.classList.add('ft-visible');
+            } else if (entry.boundingClientRect.top > window.innerHeight) {
+              el.classList.remove('ft-visible');
+            }
+          },
+          { threshold: 0.05 }
+        );
+        observer.observe(el);
+      }}
+    >
+      <div className="w-full px-[4vw]">
+
+        {/* 5 Vertical Dividers Grid Layout - Full Width */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 pb-10">
+
+          {/* Column 1: Brand Logo, Description & Social Icons */}
+          <div className="ft-col col-span-12 md:col-span-6 lg:col-span-3 space-y-4 lg:pr-8 lg:border-r border-slate-800/80" style={{ "--ft-i": 0 } as React.CSSProperties}>
+            <Link href="/" className="inline-block">
+              <div className="flex items-center gap-3">
+                <div className="relative h-16 w-16 overflow-hidden flex-shrink-0">
+                  <Image src="/images/logo.webp" alt="Sri Mathurams Medical Engineering Logo" fill priority className="object-contain" />
+                </div>
+                <div className="flex flex-col justify-center leading-none">
+                  <span className="text-white text-[19px] font-black tracking-wide font-inter uppercase">SRI MATHURAMS</span>
+                  <span className="text-[#E86D24] text-[11.5px] font-black tracking-widest font-inter uppercase mt-1">MEDICAL ENGINEERING</span>
+                </div>
               </div>
             </Link>
-            <p className="text-[0.85vw] text-slate-400 leading-relaxed font-medium">
-              Sri Mathurams Medical Engineering is a premier manufacturer of hospital furniture and medical equipment operating from Coimbatore since 1997.
+            <p className="text-xs sm:text-[13px] text-slate-400 leading-relaxed font-normal">
+              Manufacturing high-quality, durable, and reliable hospital furniture for healthcare facilities across India.
             </p>
-            <div className="flex items-center space-x-[0.6vw] pt-[0.5vh]">
-              <a href="#" aria-label="Facebook" className="p-[0.5vw] bg-slate-900 hover:bg-orange-500 text-slate-300 hover:text-white rounded-full transition-colors border border-slate-800">
-                <Facebook className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px]" />
-              </a>
-              <a href="#" aria-label="Instagram" className="p-[0.5vw] bg-slate-900 hover:bg-orange-500 text-slate-300 hover:text-white rounded-full transition-colors border border-slate-800">
-                <Instagram className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px]" />
-              </a>
-              <a href="#" aria-label="LinkedIn" className="p-[0.5vw] bg-slate-900 hover:bg-orange-500 text-slate-300 hover:text-white rounded-full transition-colors border border-slate-800">
-                <Linkedin className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px]" />
-              </a>
-              <a href="#" aria-label="YouTube" className="p-[0.5vw] bg-slate-900 hover:bg-orange-500 text-slate-300 hover:text-white rounded-full transition-colors border border-slate-800">
-                <Youtube className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px]" />
-              </a>
+            <div className="flex items-center space-x-2.5 pt-1">
+              <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800/80"><Facebook className="w-4 h-4" /></a>
+              <a href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800/80"><Linkedin className="w-4 h-4" /></a>
+              <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800/80"><Instagram className="w-4 h-4" /></a>
+              <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-800/80"><Youtube className="w-4 h-4" /></a>
             </div>
           </div>
 
-          {/* Column 2: Quick Links (2 cols) */}
-          <div className="lg:col-span-2 space-y-[1.2vh]">
-            <h3 className="text-[0.9vw] font-bold text-white uppercase tracking-wider border-b border-orange-500/40 pb-[0.6vh] inline-block">
-              QUICK LINKS
-            </h3>
-            <ul className="space-y-[0.8vh] text-[0.85vw] font-medium">
-              <li><Link href="/" className="hover:text-orange-400 transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-orange-400 transition-colors">About Us</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Products Catalog</Link></li>
-              <li><Link href="/contact" className="hover:text-orange-400 transition-colors">Contact Us</Link></li>
+          {/* Column 2: QUICK LINKS */}
+          <div className="ft-col col-span-12 md:col-span-6 lg:col-span-2 space-y-4 lg:px-8 lg:border-r border-slate-800/80" style={{ "--ft-i": 1 } as React.CSSProperties}>
+            <h3 className="text-xs font-black text-white uppercase tracking-wider">QUICK LINKS</h3>
+            <ul className="space-y-2.5 text-xs sm:text-[13px] font-medium text-slate-400">
+              {[
+                { href: "/", label: "Home" },
+                { href: "/about", label: "About Us" },
+                { href: "/products", label: "Products" },
+                { href: "/#clients", label: "Our Clients" },
+                { href: "/contact", label: "Enquiry" },
+                { href: "/contact", label: "Contact Us" },
+              ].map((link, i) => (
+                <li key={i}>
+                  <Link href={link.href} className="hover:text-white transition-colors flex items-center gap-2">
+                    <span className="text-slate-500 font-semibold">&gt;</span>
+                    <span>{link.label}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: Medical Products (3 cols) */}
-          <div className="lg:col-span-3 space-y-[1.2vh]">
-            <h3 className="text-[0.9vw] font-bold text-white uppercase tracking-wider border-b border-orange-500/40 pb-[0.6vh] inline-block">
-              PRODUCTS
-            </h3>
-            <ul className="grid grid-cols-2 gap-x-[1vw] gap-y-[0.8vh] text-[0.85vw] font-medium">
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Hospital Beds</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">ICU Cots</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Stretchers</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Medical Trolleys</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Wheelchairs</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Donor Chairs</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">Surgical Sinks</Link></li>
-              <li><Link href="/products" className="hover:text-orange-400 transition-colors">IV Stands</Link></li>
+          {/* Column 3: PRODUCT CATEGORIES */}
+          <div className="ft-col col-span-12 md:col-span-4 lg:col-span-2 space-y-4 lg:px-8 lg:border-r border-slate-800/80" style={{ "--ft-i": 2 } as React.CSSProperties}>
+            <h3 className="text-xs font-black text-white uppercase tracking-wider">PRODUCT CATEGORIES</h3>
+            <ul className="space-y-2.5 text-xs sm:text-[13px] font-medium text-slate-400">
+              {["Hospital Beds", "Patient Trolleys", "Hospital Furniture", "Stainless Steel Products", "Emergency Equipment", "Accessories"].map((cat, i) => (
+                <li key={i}><Link href="/products" className="hover:text-white transition-colors">{cat}</Link></li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 4: Contact Info & Address (4 cols) */}
-          <div className="lg:col-span-4 space-y-[1.2vh]">
-            <h3 className="text-[0.9vw] font-bold text-white uppercase tracking-wider border-b border-orange-500/40 pb-[0.6vh] inline-block">
-              CONTACT INFO
-            </h3>
-            <ul className="space-y-[1vh] text-[0.85vw] font-medium">
-              <li className="flex items-center gap-[0.6vw]">
-                <div className="w-[1.8vw] h-[1.8vw] min-w-[24px] min-h-[24px] rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-orange-400 shrink-0">
-                  <Phone className="w-[0.9vw] h-[0.9vw] min-w-[12px] min-h-[12px]" />
-                </div>
-                <a href="tel:+919842212345" className="hover:text-orange-400 transition-colors">+91 98422 12345 / +91 422 2571234</a>
+          {/* Column 4: CONTACT INFORMATION */}
+          <div className="ft-col col-span-12 md:col-span-4 lg:col-span-3 space-y-4 lg:px-8 lg:border-r border-slate-800/80" style={{ "--ft-i": 3 } as React.CSSProperties}>
+            <h3 className="text-xs font-black text-white uppercase tracking-wider">CONTACT INFORMATION</h3>
+            <ul className="space-y-3 text-xs sm:text-[13px] font-medium text-slate-400">
+              <li className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                <span className="leading-snug">No. 123/1A, Industrial Estate, Guindy, Chennai - 600032, Tamil Nadu, India.</span>
               </li>
-              <li className="flex items-center gap-[0.6vw]">
-                <div className="w-[1.8vw] h-[1.8vw] min-w-[24px] min-h-[24px] rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-orange-400 shrink-0">
-                  <Mail className="w-[0.9vw] h-[0.9vw] min-w-[12px] min-h-[12px]" />
-                </div>
-                <a href="mailto:info@srimathuramsmedical.com" className="hover:text-orange-400 transition-colors">info@srimathuramsmedical.com</a>
+              <li className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                <a href="tel:+919176212345" className="hover:text-white transition-colors">+91 91762 12345</a>
               </li>
-              <li className="flex items-start gap-[0.6vw]">
-                <div className="w-[1.8vw] h-[1.8vw] min-w-[24px] min-h-[24px] rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-orange-400 shrink-0 mt-[0.2vh]">
-                  <MapPin className="w-[0.9vw] h-[0.9vw] min-w-[12px] min-h-[12px]" />
-                </div>
-                <span>Peelamedu, Coimbatore - 641 004, Tamil Nadu, India</span>
+              <li className="flex items-center gap-2.5">
+                <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                <a href="mailto:info@srimathurams.com" className="hover:text-white transition-colors">info@srimathurams.com</a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Globe className="w-4 h-4 text-slate-400 shrink-0" />
+                <a href="https://www.srimathurams.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.srimathurams.com</a>
               </li>
             </ul>
+          </div>
+
+          {/* Column 5: BUSINESS HOURS */}
+          <div className="ft-col col-span-12 md:col-span-4 lg:col-span-2 space-y-4 lg:pl-8" style={{ "--ft-i": 4 } as React.CSSProperties}>
+            <h3 className="text-xs font-black text-white uppercase tracking-wider">BUSINESS HOURS</h3>
+            <div className="space-y-3 text-xs sm:text-[13px] font-medium">
+              <div className="flex items-start gap-2.5">
+                <Clock className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <p className="text-slate-200 font-bold">Monday - Saturday</p>
+                  <p className="text-slate-400">9.00 AM - 6.00 PM</p>
+                </div>
+              </div>
+              <div className="pl-6 space-y-0.5">
+                <p className="text-slate-200 font-bold">Sunday</p>
+                <p className="text-slate-400">Closed</p>
+              </div>
+              <p className="text-xs sm:text-[13px] font-bold text-[#E86D24] pt-1.5 leading-snug">
+                We are always ready to support your needs.
+              </p>
+            </div>
           </div>
 
         </div>
 
-        {/* Bottom copyright & links bar */}
-        <div className="pt-[2vh] border-t border-slate-800/80 flex flex-col sm:flex-row justify-between items-center text-[0.8vw] text-slate-400 gap-[1vw] font-medium">
+        {/* Bottom Bar */}
+        <div className="ft-bottom pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-3 font-medium">
           <p>© {currentYear} Sri Mathurams Medical Engineering. All Rights Reserved.</p>
-          <div className="flex items-center space-x-[1vw]">
-            <Link href="/products" className="hover:text-orange-400 transition-colors">Products</Link>
-            <span>•</span>
-            <Link href="/about" className="hover:text-orange-400 transition-colors">About Us</Link>
-            <span>•</span>
-            <Link href="/contact" className="hover:text-orange-400 transition-colors">Contact Us</Link>
-          </div>
+          <p className="flex items-center gap-1.5">
+            <span>Designed with</span>
+            <span className="text-red-500 text-sm">❤️</span>
+            <span>for Healthcare</span>
+          </p>
         </div>
 
       </div>
+
+      <style>{`
+        /* Each footer column fades up with stagger */
+        .ft-col {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        .ft-visible .ft-col {
+          animation: ftColIn 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+          animation-delay: calc(var(--ft-i, 0) * 0.1s + 0.05s);
+        }
+        @keyframes ftColIn {
+          from { opacity: 0; transform: translateY(28px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Bottom bar fades in last */
+        .ft-bottom {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        .ft-visible .ft-bottom {
+          animation: ftColIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.55s forwards;
+        }
+      `}</style>
     </footer>
   );
 }

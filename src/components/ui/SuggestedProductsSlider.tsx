@@ -75,8 +75,8 @@ export function SuggestedProductsSlider({ products }: SuggestedProductsSliderPro
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {displayProducts.map((p, idx) => (
-          <div key={`${p.id}-${idx}`} className="w-[calc(20%-0.8vw)] min-w-[210px] flex-shrink-0">
-            <ProductCard product={p} index={idx} />
+          <div key={`${p.id}-${idx}`} className="w-[calc(25%-0.8vw)] min-w-[270px] flex-shrink-0">
+            <ProductCard product={p} index={idx} hideDetails={true} />
           </div>
         ))}
       </div>

@@ -1,61 +1,63 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
-import { Product } from '@/types';
-import { FadeIn } from '@/components/ui/FadeIn';
+"use client";
+
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { MedicalProduct } from "@/lib/data";
+import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 
 interface ProductCardProps {
-  product: Product;
+  product: MedicalProduct;
   index?: number;
+  hideDetails?: boolean;
 }
 
-export function ProductCard({ product, index = 0 }: ProductCardProps) {
+export function ProductCard({ product, hideDetails = false }: ProductCardProps) {
+  const { openInquiryModal } = useInquiryModal();
+
   return (
-    <FadeIn direction="up" delay={(index % 4) * 0.08} duration={0.4}>
-      <Link 
-        href={`/products/${product.slug}`}
-        className="block h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500/50 rounded-[1vw]"
-      >
-        <article className="bg-white rounded-[1vw] border border-slate-200/80 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden group h-full">
-          <div>
-            {/* Image banner - White Background */}
-            <div className="relative aspect-[4/3] w-full bg-white p-[1.2vw] overflow-hidden flex items-center justify-center border-b border-slate-100">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-contain p-[1vw] group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between p-3 h-full group relative font-montserrat">
+      {/* Top Content Area - Clickable Card Link */}
+      <Link href={`/products/${product.slug}`} scroll={false} className="space-y-3 flex-1 block group/link cursor-pointer">
+        {/* Product Image Frame */}
+        <div className="relative aspect-[16/10] w-full bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-contain p-3 group-hover:scale-105 group-hover/link:scale-105 transition-transform duration-500"
+          />
+        </div>
 
-            {/* Card Content - Soft Grey Background */}
-            <div className="p-[1.2vw] space-y-[0.8vh] bg-slate-50/80">
-              {/* Header */}
-              <div className="flex items-start justify-between gap-[0.5vw]">
-                <h3 className="text-[1.1vw] font-bold text-slate-900 group-hover:text-orange-600 transition-colors line-clamp-1">
-                  {product.name}
-                </h3>
-              </div>
-
-              {/* Description */}
-              <p className="text-slate-600 text-[0.8vw] font-medium leading-relaxed line-clamp-2">
-                {product.description}
-              </p>
-            </div>
-          </div>
-
-          {/* Card Action Button - Soft Grey Background */}
-          <div className="px-[1.2vw] pb-[1.2vw] pt-[0.4vh] bg-slate-50/80">
-            <span
-              className="w-fit inline-flex items-center justify-center gap-[0.4vw] px-[1vw] py-[0.8vh] rounded-[0.6vw] border-2 border-orange-500/60 bg-orange-50/50 text-orange-600 text-[0.8vw] font-bold group-hover:bg-orange-500 group-hover:text-white group-hover:border-orange-500 transition-all duration-300 group-hover:shadow-md"
-            >
-              View Details
-              <ArrowRight className="w-[0.9vw] h-[0.9vw] min-w-[12px] min-h-[12px] group-hover:translate-x-1 transition-transform" />
-            </span>
-          </div>
-        </article>
+        {/* Text details */}
+        <div className="space-y-1.5">
+          <h3 className="text-base font-bold text-slate-900 group-hover:text-[#0B3C83] group-hover/link:text-[#0B3C83] transition-colors leading-tight line-clamp-1">
+            {product.name}
+          </h3>
+          <p className="text-slate-500 text-xs font-medium leading-relaxed line-clamp-2">
+            {product.description}
+          </p>
+        </div>
       </Link>
-    </FadeIn>
+
+      {/* Button Row */}
+      {!hideDetails && (
+        <div className="flex items-center gap-2 mt-4 pt-2.5 border-t border-slate-100">
+          <Link href={`/products/${product.slug}`} scroll={false} className="flex-1">
+            <button className="w-full text-center border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-xs transition-all hover:bg-slate-50">
+              View Details
+            </button>
+          </Link>
+          <button
+            onClick={() => openInquiryModal(product)}
+            className="flex-1 bg-[#E87325] hover:bg-[#D0621B] text-white text-xs font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1 shadow-md shadow-orange-500/10 active:scale-95"
+          >
+            Send Enquiry
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

@@ -1,30 +1,50 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
-import { ContactFormData } from '@/types';
+import { FileText, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+
+interface ContactFormState {
+  name: string;
+  hospital: string;
+  city: string;
+  phone: string;
+  email: string;
+  product: string;
+  quantity: string;
+  message: string;
+}
 
 export function ContactForm() {
-  const [formData, setFormData] = useState<ContactFormData>({
+  const [formData, setFormData] = useState<ContactFormState>({
     name: '',
-    email: '',
+    hospital: '',
+    city: '',
     phone: '',
-    company: '',
+    email: '',
     product: '',
+    quantity: '',
     message: '',
   });
 
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone || !formData.email || !formData.message) {
+    if (
+      !formData.name ||
+      !formData.hospital ||
+      !formData.city ||
+      !formData.phone ||
+      !formData.email ||
+      !formData.message
+    ) {
       setStatus('error');
       setErrorMessage('Please fill out all required fields.');
       return;
@@ -32,134 +52,194 @@ export function ContactForm() {
 
     setStatus('loading');
 
+    // Simulate form submission
     setTimeout(() => {
       setStatus('success');
       setFormData({
         name: '',
-        email: '',
+        hospital: '',
+        city: '',
         phone: '',
-        company: '',
+        email: '',
         product: '',
+        quantity: '',
         message: '',
       });
-    }, 1200);
+    }, 1500);
   };
 
+  const cities = [
+    'Chennai',
+    'Coimbatore',
+    'Madurai',
+    'Trichy',
+    'Salem',
+    'Tiruppur',
+    'Erode',
+    'Vellore',
+    'Tirunelveli',
+    'Thoothukudi',
+    'Other',
+  ];
+
+  const products = [
+    'ICU Beds & Critical Care',
+    'Ward Furniture',
+    'Emergency & Patient Transfer',
+    'Labour & Maternity',
+    'OT Equipment',
+    'SS Furniture & Ward Accessories',
+    'Medical Trolleys & Carts',
+    'Examination & Consultation',
+    'Custom/Other Requirement',
+  ];
+
   return (
-    <form onSubmit={handleSubmit} className="glass-panel p-[1.8vw] rounded-[1.2vw] space-y-[2vh]">
-      <h2 className="text-[1.4vw] font-semibold text-navy-950">Send Message / Request Quote</h2>
-      <p className="text-[0.85vw] text-slate-600">
-        Fill in your requirements below. Our medical sales team in Coimbatore will get in touch with you shortly.
-      </p>
+    <div className="w-full space-y-6 font-montserrat">
+      <div className="space-y-2">
+        <h2 className="sc-child text-2xl sm:text-[1.8vw] font-bold text-navy-950 leading-none uppercase" style={{"--i":2} as React.CSSProperties}>
+          SEND US YOUR REQUIREMENT
+        </h2>
+        <p className="sc-child text-slate-500 font-medium text-xs sm:text-[0.9vw] leading-relaxed" style={{"--i":3} as React.CSSProperties}>
+          Looking for a specific hospital product or planning a larger requirement? Share your details with us and our team will assist you.
+        </p>
+      </div>
 
       {status === 'success' && (
-        <div className="p-[0.8vw] rounded-[0.6vw] bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-[0.6vw] text-[0.85vw] font-medium">
-          <CheckCircle2 className="w-[1.2vw] h-[1.2vw] min-w-[16px] min-h-[16px] text-emerald-600 flex-shrink-0" />
-          <span>Thank you! Your message has been sent successfully. We will get back to you shortly.</span>
+        <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center gap-3 text-sm font-medium">
+          <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+          <span>Thank you! Your enquiry has been submitted successfully. We will get back to you shortly.</span>
         </div>
       )}
 
       {status === 'error' && (
-        <div className="p-[0.8vw] rounded-[0.6vw] bg-rose-50 border border-rose-200 text-rose-800 flex items-center gap-[0.6vw] text-[0.85vw] font-medium">
-          <AlertCircle className="w-[1.2vw] h-[1.2vw] min-w-[16px] min-h-[16px] text-rose-600 flex-shrink-0" />
+        <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-center gap-3 text-sm font-medium">
+          <AlertCircle className="w-5 h-5 text-rose-600 flex-shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
-      <div className="space-y-[1.5vh]">
-        <div>
-          <label htmlFor="name" className="block text-[0.75vw] font-semibold text-slate-700 uppercase mb-[0.5vh]">
-            Name *
-          </label>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Name */}
+        <div className="sc-child" style={{"--i":4} as React.CSSProperties}>
           <input
             type="text"
-            id="name"
             name="name"
             required
             value={formData.name}
             onChange={handleChange}
-            placeholder="Your Name"
-            className="w-full px-[0.8vw] py-[1vh] rounded-[0.6vw] bg-slate-50 border border-slate-300 text-slate-900 text-[0.85vw] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+            placeholder="Your Name *"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all"
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[1vw]">
-          <div>
-            <label htmlFor="phone" className="block text-[0.75vw] font-semibold text-slate-700 uppercase mb-[0.5vh]">
-              Phone Number *
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              required
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+91 98422 12345"
-              className="w-full px-[0.8vw] py-[1vh] rounded-[0.6vw] bg-slate-50 border border-slate-300 text-slate-900 text-[0.85vw] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-[0.75vw] font-semibold text-slate-700 uppercase mb-[0.5vh]">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="name@hospital.com"
-              className="w-full px-[0.8vw] py-[1vh] rounded-[0.6vw] bg-slate-50 border border-slate-300 text-slate-900 text-[0.85vw] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label htmlFor="product" className="block text-[0.75vw] font-semibold text-slate-700 uppercase mb-[0.5vh]">
-            Product / Category
-          </label>
-          <select
-            id="product"
-            name="product"
-            value={formData.product}
+        {/* Hospital & City */}
+        <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":5} as React.CSSProperties}>
+          <input
+            type="text"
+            name="hospital"
+            required
+            value={formData.hospital}
             onChange={handleChange}
-            className="w-full px-[0.8vw] py-[1vh] rounded-[0.6vw] bg-slate-50 border border-slate-300 text-slate-900 text-[0.85vw] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
+            placeholder="Hospital / Organization *"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all"
+          />
+          <select
+            name="city"
+            required
+            value={formData.city}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat"
           >
-            <option value="">Select Category</option>
-            <option value="Hospital Beds">Hospital Beds (ICU / Electric / Fowler)</option>
-            <option value="Stretchers">Stretchers & Patient Transfer</option>
-            <option value="Wheelchairs">Wheelchairs</option>
-            <option value="Medical Trolleys">Medical Trolleys & Crash Carts</option>
-            <option value="Donor Chairs">Blood Donor Recliner Chairs</option>
-            <option value="Surgical Sinks">Surgical Scrub Sinks</option>
-            <option value="IV Stands">IV Stands</option>
-            <option value="Hospital Furniture">Hospital Furniture (Lockers / Overbed Tables)</option>
+            <option value="" disabled hidden>City *</option>
+            {cities.map((city) => (
+              <option key={city} value={city} className="text-slate-900">
+                {city}
+              </option>
+            ))}
           </select>
         </div>
 
-        <div>
-          <label htmlFor="message" className="block text-[0.75vw] font-semibold text-slate-700 uppercase mb-[0.5vh]">
-            Message *
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            rows={4}
+        {/* Phone & Email */}
+        <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":6} as React.CSSProperties}>
+          <input
+            type="tel"
+            name="phone"
             required
-            value={formData.message}
+            value={formData.phone}
             onChange={handleChange}
-            placeholder="Specify required quantity, hospital location in Tamil Nadu, or custom specifications..."
-            className="w-full px-[0.8vw] py-[1vh] rounded-[0.6vw] bg-slate-50 border border-slate-300 text-slate-900 text-[0.85vw] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all resize-none"
+            placeholder="Phone Number *"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all"
+          />
+          <input
+            type="email"
+            name="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email Address *"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all"
           />
         </div>
-      </div>
 
-      <Button type="submit" variant="primary" size="lg" isLoading={status === 'loading'} className="w-full bg-navy-800 hover:bg-slate-900 text-white font-semibold text-[0.9vw] py-[1.2vh] rounded-[0.6vw] shadow-md">
-        Send Message <Send className="w-[1vw] h-[1vw] min-w-[14px] min-h-[14px] ml-[0.5vw] text-orange-400" />
-      </Button>
-    </form>
+        {/* Product & Quantity */}
+        <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":7} as React.CSSProperties}>
+          <select
+            name="product"
+            value={formData.product}
+            onChange={handleChange}
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat"
+          >
+            <option value="">Product / Requirement</option>
+            {products.map((prod) => (
+              <option key={prod} value={prod} className="text-slate-900">
+                {prod}
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+            placeholder="Quantity"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all"
+          />
+        </div>
+
+        {/* Message */}
+        <div className="sc-child" style={{"--i":8} as React.CSSProperties}>
+          <textarea
+            name="message"
+            required
+            rows={4}
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Tell us about your requirement, customization needs or project details. *"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all resize-none"
+          />
+        </div>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="sc-child w-full flex items-center justify-center gap-2 bg-[#104272] hover:bg-[#15548F] text-white font-semibold text-md py-4 px-6 rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
+          style={{"--i":9} as React.CSSProperties}
+        >
+          {status === 'loading' ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              <span>Submitting Enquiry...</span>
+            </>
+          ) : (
+            <>
+              <FileText className="w-5 h-5" />
+              <span>Submit Enquiry</span>
+            </>
+          )}
+        </button>
+      </form>
+    </div>
   );
 }
