@@ -123,14 +123,14 @@ export function BuildQualitySection() {
 
             {/* Main Title */}
             <FadeIn direction="up" delay={0.15}>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0B2545] leading-[1.15] tracking-widest" style={{lineHeight: "1.25"}}>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-[#0B2545] leading-[1.15] tracking-wide" style={{lineHeight: "1.25", fontFamily: "var(--font-outfit)"}}>
                 Precision Manufacturing at Every Step
               </h2>
             </FadeIn>
 
             {/* Description */}
             <FadeIn direction="up" delay={0.2}>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal" style={{lineHeight:"1.8"}}>
+              <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal" style={{lineHeight:"1.8"}}>
                 Every product is manufactured through a carefully controlled process using advanced machinery, skilled craftsmanship, and rigorous quality standards. From concept to delivery, we ensure every piece meets the expectations of modern healthcare facilities.
               </p>
             </FadeIn>

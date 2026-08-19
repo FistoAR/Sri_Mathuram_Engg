@@ -404,14 +404,14 @@ export function Hero() {
         {/* Dedicated Staggered Text Content Overlay */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-start pt-[2vh] h-full">
           <div className="w-full px-[5vw] md:px-[4vw] pb-[12vh] md:pb-[14vh] pt-[4vh]">
-            <div className="w-full lg:max-w-[45vw] space-y-[3vh] md:space-y-[4vh] pointer-events-auto">
+            <div className="w-full lg:max-w-[45vw] space-y-[3vh] md:space-y-[2vh] pointer-events-auto">
               {/* Line 1: Badge with Trusted Logo & Bottom Orange Accent Line */}
               <div
                 className={`hero-badge flex flex-col items-start gap-1.5 ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.1s" : "0s" }}
               >
-                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[2vw] md:text-[1.5vw] font-bold tracking-wider text-[#0B2545] uppercase">
-                  <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0">
+                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1vw] font-bold tracking-wider text-[#0B2545] uppercase">
+                  <div className="relative w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0">
                     <Image
                       src="/images/Home Page/trusted.webp"
                       alt="Trusted Logo"
@@ -422,7 +422,7 @@ export function Hero() {
                   <span>{activeItem.badge}</span>
                 </div>
                 {/* Orange underline accent line */}
-                <div className="w-14 sm:w-16 h-[3px] bg-[#E86D24] rounded-full" />
+                <div className="w-14 sm:w-16 h-[4px] bg-[#E86D24] rounded-full" />
               </div>
 
               {/* Line 2: Title */}

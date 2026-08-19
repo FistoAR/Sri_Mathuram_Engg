@@ -158,13 +158,14 @@ function ProductsPageContent() {
     >
 
       {/* Category Banner Card */}
-      <div className="hidden lg:block relative rounded-2xl overflow-hidden border border-slate-200/90 w-full lg:h-[160px] shadow-2xs">
+      <div className="hidden lg:block relative rounded-2xl overflow-hidden border border-slate-200/90 w-full shadow-2xs">
         <Image
           src="/images/Product Assets/rightsideBanner.webp"
           alt="Product Banner"
-          fill
-          sizes="75vw"
-          className="object-fill"
+          width={1200}
+          height={160}
+          sizes="100vw"
+          className="w-full h-auto object-cover"
           priority
         />
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
@@ -229,8 +229,44 @@ export default function HomePage() {
     },
   ];
 
-  const [activeCategory, setActiveCategory] = useState("ICU Beds");
+  const [activeCategory, setActiveCategory] = useState("Dressing Trolleys");
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [isImageHovered, setIsImageHovered] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 },
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isSectionVisible || isImageHovered) return;
+
+    const interval = setInterval(() => {
+      setActiveCategory((prev) => {
+        const allNames = [
+          ...leftCategories.map((c) => c.name),
+          ...rightCategories.map((c) => c.name),
+        ];
+        const currentIndex = allNames.indexOf(prev);
+        const nextIndex = (currentIndex + 1) % allNames.length;
+        return allNames[nextIndex];
+      });
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isSectionVisible, isImageHovered]);
 
   // Get dynamic category icon mapping
   const getCategoryIcon = (name: string) => {
@@ -335,10 +371,10 @@ export default function HomePage() {
             }
           `}</style>
           <FadeIn direction="up" delay={0.1} className="px-[6vw]">
-            <div className="w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#E86D24] via-[#EE7D22] to-[#FF9B00] shadow-2xl py-4 sm:py-5 px-6 sm:px-8 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-center text-white border border-white/30 backdrop-blur-md">
+            <div className="w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0B2545] via-[#134074] to-[#0B2545] shadow-2xl py-6 lg:py-5 px-8 sm:px-12 lg:px-16 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-6 border border-white/20 backdrop-blur-md">
               {/* Stat 1 */}
-              <div className="home-stat-item flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
-                <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-10 xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/yearOfExperience.webp"
                     alt="29+ Years of Experience"
@@ -347,10 +383,10 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="29+" delay={500} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
+                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
                     YEARS OF
                     <br />
                     EXPERIENCE
@@ -359,8 +395,8 @@ export default function HomePage() {
               </div>
 
               {/* Stat 2 */}
-              <div className="home-stat-item flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
-                <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-10 xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/projectCompleted.webp"
                     alt="4,000+ Projects Completed"
@@ -369,10 +405,10 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="4,000+" delay={650} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
+                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
                     PROJECTS
                     <br />
                     COMPLETED
@@ -381,8 +417,8 @@ export default function HomePage() {
               </div>
 
               {/* Stat 3 */}
-              <div className="home-stat-item flex items-center gap-3 sm:gap-4 lg:border-r border-white/20 pr-0 lg:pr-4">
-                <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-10 xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/ProductManufature.webp"
                     alt="30,000+ Products Manufactured"
@@ -391,10 +427,10 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="30,000+" delay={800} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
+                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
                     PRODUCTS
                     <br />
                     MANUFACTURED
@@ -403,8 +439,8 @@ export default function HomePage() {
               </div>
 
               {/* Stat 4 */}
-              <div className="home-stat-item flex items-center gap-3 sm:gap-4">
-                <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12 flex-shrink-0">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 w-[calc(50%-8px)] lg:w-auto">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/bedsDelivered.webp"
                     alt="1,000+ Beds Delivered"
@@ -413,10 +449,10 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-none tracking-tight font-heading mb-1">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="1,000" delay={950} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white/95 mt-1 leading-tight">
+                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
                     BEDS DELIVERED
                     <br />
                     IN A SINGLE MONTH
@@ -439,15 +475,11 @@ export default function HomePage() {
           }}
         />
 
-        <div className="mx-[2vw] relative z-10 space-y-[4vh]">
+        <div className="relative z-10 space-y-[4vh]">
           {/* Top Tagline Badge - Left Aligned with trusted icon & accent line */}
-          <FadeIn
-            direction="up"
-            delay={0.1}
-            className="flex flex-col items-start gap-1.5"
-          >
-            <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
-              <div className="relative w-7 h-7 flex-shrink-0">
+          <FadeIn direction="up" delay={0.1} className="flex flex-col  gap-1.5">
+            <div className="inline-flex items-center gap-4 text-[3.2vw] sm:text-[1.8vw] md:text-[1.2vw] font-bold tracking-wider text-[#0B2545] uppercase">
+              <div className="relative w-6 h-6 flex-shrink-0">
                 <Image
                   src="/images/Home Page/trusted.webp"
                   alt="Trusted Logo"
@@ -458,7 +490,7 @@ export default function HomePage() {
               <span>TRUSTED BY HEALTHCARE PROFESSIONALS SINCE 1997</span>
             </div>
             {/* Dark Navy accent line under badge */}
-            <div className="w-28 h-[4px] bg-[#0B2545] rounded-full" />
+            <div className="w-24 h-[4px] bg-[#E86D24] rounded-full" />
           </FadeIn>
 
           {/* Header Title & Subtitle */}
@@ -500,12 +532,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
                         Superior
                         <br />
                         Manufacturing Quality
                       </h3>
-                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
                         Manufactured using high-grade materials to ensure
                         durability, safety, and long-lasting performance.
                       </p>
@@ -517,8 +549,8 @@ export default function HomePage() {
               {/* Card 2: Excellent value for money (Upper Row 1 - Orange) */}
               <div className="absolute left-[200px] top-[33px] z-20 hover:z-50">
                 <FadeIn direction="down" duration={1.2} delay={0.3}>
-                  <div className="why-card w-[195px] h-[195px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
+                  <div className="why-card w-[195px] h-[195px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-lg hover:shadow-2xl">
+                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[165px]">
                       <div className="relative w-12 h-12 mb-1 flex-shrink-0">
                         <Image
                           src="/images/Home Page/whySectionIcons/Simplification.webp"
@@ -527,12 +559,12 @@ export default function HomePage() {
                           className="object-contain filter brightness-0 invert"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-white leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-white leading-tight uppercase">
                         Excellent value for
                         <br />
                         money
                       </h3>
-                      <p className="text-[11px] text-white/90 leading-snug font-medium">
+                      <p className="text-[10.5px] text-white/80 leading-snug font-normal">
                         Durable products designed to deliver long-term value
                         without unnecessary cost.
                       </p>
@@ -554,12 +586,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
                         Reliable after-
                         <br />
                         sales service
                       </h3>
-                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
                         Our team remains available to assist with product and
                         service requirements.
                       </p>
@@ -581,12 +613,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
                         Customized product
                         <br />
                         solutions
                       </h3>
-                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
                         Product configurations can be adapted to meet specific
                         healthcare requirements.
                       </p>
@@ -608,10 +640,10 @@ export default function HomePage() {
                           className="object-contain filter brightness-0 invert"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-white leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-white leading-tight uppercase">
                         Timely Delivery
                       </h3>
-                      <p className="text-[11px] text-slate-200 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-200/90 leading-snug font-normal">
                         Efficient production and coordination help us meet
                         project timelines.
                       </p>
@@ -633,12 +665,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
                         Strong technical
                         <br />
                         support
                       </h3>
-                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
                         Our team provides practical guidance for product
                         selection and requirements.
                       </p>
@@ -660,10 +692,10 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
                         Long-Lasting Products
                       </h3>
-                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
                         Robust construction helps products withstand demanding
                         hospital environments.
                       </p>
@@ -685,12 +717,12 @@ export default function HomePage() {
                           className="object-contain"
                         />
                       </div>
-                      <h3 className="text-[12.5px] font-bold text-[#0B2545] leading-tight">
+                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
                         Transparent and
                         <br />
                         customer-focused service
                       </h3>
-                      <p className="text-[11px] text-slate-700 leading-snug font-medium">
+                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
                         We focus on building transparent, dependable
                         relationships that last.
                       </p>
@@ -715,12 +747,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight uppercase">
                     Superior
                     <br />
                     Manufacturing Quality
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Manufactured using high-grade materials to ensure
                     durability, safety, and performance.
                   </p>
@@ -740,12 +772,12 @@ export default function HomePage() {
                       className="object-contain filter brightness-0 invert"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-white leading-tight">
                     Excellent value for
                     <br />
                     money
                   </h3>
-                  <p className="text-[9.5px] text-white/90 leading-snug font-medium">
+                  <p className="text-[9.5px] text-white/80 leading-snug font-normal">
                     Durable products designed to deliver long-term value without
                     unnecessary cost.
                   </p>
@@ -765,12 +797,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Reliable after-
                     <br />
                     sales service
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Our team remains available to assist with product and
                     service requirements.
                   </p>
@@ -790,12 +822,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Customized product
                     <br />
                     solutions
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Product configurations can be adapted to meet specific
                     healthcare requirements.
                   </p>
@@ -815,10 +847,10 @@ export default function HomePage() {
                       className="object-contain filter brightness-0 invert"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-white leading-tight">
                     Timely Delivery
                   </h3>
-                  <p className="text-[9.5px] text-slate-200 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-200/90 leading-snug font-normal">
                     Efficient production and coordination help us meet project
                     timelines.
                   </p>
@@ -838,12 +870,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Strong technical
                     <br />
                     support
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Our team provides practical guidance for product selection
                     and requirements.
                   </p>
@@ -863,10 +895,10 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Long-Lasting Products
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Robust construction helps products withstand demanding
                     hospital environments.
                   </p>
@@ -886,12 +918,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Transparent &
                     <br />
                     Customer Service
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     We focus on building transparent, dependable relationships
                     that last.
                   </p>
@@ -914,12 +946,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Superior
                     <br />
                     Manufacturing Quality
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Manufactured using high-grade materials to ensure
                     durability, safety, and performance.
                   </p>
@@ -939,12 +971,12 @@ export default function HomePage() {
                       className="object-contain filter brightness-0 invert"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-white leading-tight">
                     Excellent value for
                     <br />
                     money
                   </h3>
-                  <p className="text-[9.5px] text-white/90 leading-snug font-medium">
+                  <p className="text-[9.5px] text-white/80 leading-snug font-normal">
                     Durable products designed to deliver long-term value without
                     unnecessary cost.
                   </p>
@@ -964,12 +996,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Reliable after-
                     <br />
                     sales service
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Our team remains available to assist with product and
                     service requirements.
                   </p>
@@ -989,12 +1021,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Customized product
                     <br />
                     solutions
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Product configurations can be adapted to meet specific
                     healthcare requirements.
                   </p>
@@ -1014,10 +1046,10 @@ export default function HomePage() {
                       className="object-contain filter brightness-0 invert"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-white leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-white leading-tight">
                     Timely Delivery
                   </h3>
-                  <p className="text-[9.5px] text-slate-200 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-200/90 leading-snug font-normal">
                     Efficient production and coordination help us meet project
                     timelines.
                   </p>
@@ -1037,12 +1069,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Strong technical
                     <br />
                     support
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Our team provides practical guidance for product selection
                     and requirements.
                   </p>
@@ -1062,10 +1094,10 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Long-Lasting Products
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     Robust construction helps products withstand demanding
                     hospital environments.
                   </p>
@@ -1085,12 +1117,12 @@ export default function HomePage() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-[11.5px] font-bold text-[#0B2545] leading-tight">
+                  <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-tight">
                     Transparent &
                     <br />
                     Customer Service
                   </h3>
-                  <p className="text-[9.5px] text-slate-500 leading-snug font-medium">
+                  <p className="text-[9.5px] text-slate-500 leading-snug font-normal">
                     We focus on building transparent, dependable relationships
                     that last.
                   </p>
@@ -1102,7 +1134,10 @@ export default function HomePage() {
       </section>
 
       {/* 3. FEATURED PRODUCT CATEGORIES SECTION */}
-      <section className="w-full px-[4vw] py-16 bg-[#FAFBFC] relative">
+      <section
+        ref={sectionRef}
+        className="w-full px-[4vw] py-16 bg-[#FAFBFC] relative"
+      >
         <div className="mx-[2vw] space-y-[4vh]">
           {/* Top Sub-tagline Badge - Left Aligned with orange icon, accent line, and mobile hamburger */}
           <div className="flex items-center justify-between w-full">
@@ -1112,7 +1147,7 @@ export default function HomePage() {
               className="flex flex-col items-start gap-1.5"
             >
               <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
-                <span className="relative w-8 h-8 flex-shrink-0">
+                <span className="relative w-7 h-7 flex-shrink-0">
                   <Image
                     src="/images/AboutAs/aboutAs.webp"
                     alt="Products Icon"
@@ -1153,9 +1188,8 @@ export default function HomePage() {
 
           {/* Header Title & Description */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-3">
-            <h2 className="text-3xl sm:text-5xl font-semibold text-[#E86D24] tracking-wider leading-tight">
-              Complete Hospital <br className="hidden sm:inline" /> Furniture
-              Solutions
+            <h2 className="text-4xl sm:text-5xl font-normal text-[#E86D24] tracking-wider ">
+              Complete Hospital Furniture Solutions
             </h2>
             <p className="text-slate-600 text-base sm:text-md max-w-4xl mx-auto leading-relaxed font-medium">
               We manufacture a comprehensive range of hospital furniture
@@ -1204,7 +1238,11 @@ export default function HomePage() {
                             strokeLinecap="round"
                             strokeDasharray={isActive ? "45 276" : "205 276"}
                             strokeDashoffset={isActive ? 102 : 0}
-                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
+                            className={
+                              isActive
+                                ? "transition-all duration-[800ms] ease-in-out"
+                                : ""
+                            }
                           />
                           {/* Orange overlay segment */}
                           <circle
@@ -1217,7 +1255,11 @@ export default function HomePage() {
                             strokeLinecap="round"
                             strokeDasharray={isActive ? "205 276" : "45 276"}
                             strokeDashoffset={isActive ? 0 : 102}
-                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
+                            className={
+                              isActive
+                                ? "transition-all duration-[800ms] ease-in-out"
+                                : ""
+                            }
                           />
                         </svg>
                         <div
@@ -1248,7 +1290,11 @@ export default function HomePage() {
               className="w-full lg:w-[40%] flex flex-col items-center justify-center order-1 lg:order-2 flex-shrink-0"
             >
               {/* Outer container with relative positioning and padding for borders */}
-              <div className="relative w-full h-[60vh] aspect-[4/3] max-w-lg">
+              <div
+                onMouseEnter={() => setIsImageHovered(true)}
+                onMouseLeave={() => setIsImageHovered(false)}
+                className="relative w-full h-[60vh] aspect-[4/3] max-w-lg"
+              >
                 {/* Top-Left Blue Border Bracket (Offset outside the container) */}
                 <div className="absolute -top-3 -left-3 w-[45%] h-[45%] border-t-[5px] border-l-[5px] border-[#0B3B60] rounded-tl-[2.8rem] pointer-events-none z-0" />
 
@@ -1329,7 +1375,11 @@ export default function HomePage() {
                             strokeLinecap="round"
                             strokeDasharray={isActive ? "45 276" : "205 276"}
                             strokeDashoffset={isActive ? 102 : 0}
-                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
+                            className={
+                              isActive
+                                ? "transition-all duration-[800ms] ease-in-out"
+                                : ""
+                            }
                           />
                           {/* Orange overlay segment */}
                           <circle
@@ -1342,7 +1392,11 @@ export default function HomePage() {
                             strokeLinecap="round"
                             strokeDasharray={isActive ? "205 276" : "45 276"}
                             strokeDashoffset={isActive ? 0 : 102}
-                            className={isActive ? "transition-all duration-[800ms] ease-in-out" : ""}
+                            className={
+                              isActive
+                                ? "transition-all duration-[800ms] ease-in-out"
+                                : ""
+                            }
                           />
                         </svg>
                         <div
@@ -1423,8 +1477,8 @@ export default function HomePage() {
             {/* Title */}
             <FadeIn direction="up" delay={0.15}>
               <h2
-                className="text-3xl sm:text-4xl lg:text-[3.5rem] font-semibold text-[#0B2545] tracking-widest max-w-2xl"
-                style={{ lineHeight: "1.35" }}
+                className="text-3xl sm:text-4xl lg:text-[3.5rem] font-medium text-[#0B2545] tracking-wide max-w-2xl"
+                style={{ lineHeight: "1.35", fontFamily: "var(--font-outfit)" }}
               >
                 Building Healthcare Infrastructure Since 1997
               </h2>
@@ -1481,12 +1535,12 @@ export default function HomePage() {
         {/* Soft background medical/hexagonal pattern */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#0b2545_1px,transparent_1px)] [background-size:20px_20px]" />
 
-        <div className="max-w-7xl mx-auto relative z-10 space-y-[4vh]">
+        <div className=" relative z-10 space-y-[4vh]">
           {/* Top Tagline */}
           <FadeIn
             direction="up"
             delay={0.1}
-            className="flex flex-col items-center justify-center"
+            className="flex flex-col justify-center"
           >
             <div className="flex flex-col items-start gap-1.5">
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">

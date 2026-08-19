@@ -36,6 +36,32 @@ function ProductsLayoutContent({
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [sidebarWidth, setSidebarWidth] = useState(360);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const startResizing = useCallback((mouseDownEvent: React.MouseEvent) => {
+    mouseDownEvent.preventDefault();
+    setIsDragging(true);
+
+    const container = sidebarNavRef.current?.closest("aside");
+    const startOffset = container ? container.getBoundingClientRect().left : 0;
+
+    const handleMouseMove = (mouseMoveEvent: MouseEvent) => {
+      const newWidth = mouseMoveEvent.clientX - startOffset;
+      if (newWidth >= 220 && newWidth <= 600) {
+        setSidebarWidth(newWidth);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  }, []);
 
   // Scroll indicator states for sidebar
   const [canScrollDown, setCanScrollDown] = useState(false);
@@ -226,11 +252,16 @@ function ProductsLayoutContent({
         
         {/* Left Sidebar Category Panel */}
         <aside
-          className={`hidden lg:block sticky top-24 transition-all duration-500 z-40 transform ${
-            isSidebarExpanded ? "w-[20vw] min-w-[260px]" : "w-[80px] shrink-0"
+          className={`hidden lg:block sticky top-24 z-40 transform ${
+            isDragging ? "transition-none" : "transition-all duration-500"
+          } ${
+            isSidebarExpanded ? "" : "w-[80px] shrink-0"
           } ${
             isMounted ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
           }`}
+          style={{
+            width: isSidebarExpanded ? `${sidebarWidth}px` : "80px",
+          }}
         >
           <div className="bg-slate-50 border border-slate-200 rounded-2xl shadow-sm min-h-[82vh] max-h-[82vh] flex flex-col relative overflow-visible">
             {/* Border Arrow Button to Expand / Collapse */}
@@ -245,6 +276,18 @@ function ProductsLayoutContent({
                 <ChevronRight className="w-4 h-4 stroke-[2.5]" />
               )}
             </button>
+
+            {/* Vertically Centered Resizable Drag Handle */}
+            {isSidebarExpanded && (
+              <div
+                onMouseDown={startResizing}
+                className="hidden md:flex absolute -right-[7px] top-1/2 -translate-y-1/2 z-[100] w-[14px] h-[64px] rounded-full bg-white border border-slate-200 shadow-md items-center justify-center gap-[2.5px] text-slate-400 hover:text-[#E87325] hover:border-[#E87325] active:border-[#E87325] transition-all cursor-col-resize select-none active:bg-slate-100"
+                title="Drag to resize sidebar"
+              >
+                <div className="w-[1.5px] h-4 bg-current rounded-full" />
+                <div className="w-[1.5px] h-4 bg-current rounded-full" />
+              </div>
+            )}
 
             <div className="bg-[#0B3C83] text-white text-center font-bold py-2.5 text-base tracking-wide border-b border-[#092D62] truncate px-2 rounded-t-2xl flex items-center justify-center min-h-[44px] shrink-0">
               {isSidebarExpanded ? (
@@ -292,7 +335,7 @@ function ProductsLayoutContent({
                         </div>
                         {isSidebarExpanded && (
                           <div className="relative pb-1 min-w-0 flex-1">
-                            <span className="block truncate pr-1">{catName}</span>
+                            <span className="block pr-1">{catName}</span>
                             {isActive && (
                               <div className="absolute bottom-0 left-0 w-[3vw] h-[2px] bg-[#E87325]" />
                             )}
@@ -431,7 +474,7 @@ function ProductsLayoutContent({
                           className="object-contain"
                         />
                       </div>
-                      <span className="truncate flex-1 pr-1">{catName}</span>
+                      <span className="flex-1 pr-1">{catName}</span>
                     </div>
                     <span className={`text-[10px] font-black px-2 py-0.3 rounded-full shrink-0 ${
                       isActive ? "bg-[#E87325] text-white" : "bg-slate-200 text-slate-500"

@@ -6,6 +6,7 @@
   :root {
     --font-inter: 'Inter', sans-serif;
     --font-outfit: 'Inter', sans-serif;
+    --font-montserrat: 'Montserrat', sans-serif;
   }
   
   html.lenis, html.lenis body {
@@ -42,9 +43,8 @@
   }
 }
 
-.montserrat-page,
-.montserrat-page * {
-  font-family: var(--font-montserrat), sans-serif !important;
+.montserrat-page {
+  font-family: var(--font-montserrat);
 }
 
 .glass-panel {
