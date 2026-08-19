@@ -56,8 +56,41 @@ export default function RootLayout({
   const orgSchema = generateOrganizationSchema();
 
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${montserrat.variable} scroll-smooth`}>
-      <head />
+    <html lang="en" className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active scroll-smooth`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (window.sessionStorage && window.sessionStorage.getItem('hasSeenPreloader')) {
+                  document.documentElement.classList.add('preloader-done');
+                  document.documentElement.classList.remove('preloader-active');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              html:not(.preloader-done) #main-content,
+              html:not(.preloader-done) footer,
+              html:not(.preloader-done) header {
+                opacity: 0 !important;
+                visibility: hidden !important;
+              }
+              html:not(.preloader-done) footer {
+                display: none !important;
+              }
+              html.preloader-done .preloader-wrapper {
+                display: none !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+              }
+            `,
+          }}
+        />
+      </head>
       <body className="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
         <Preloader />
         <Script
@@ -73,7 +106,7 @@ export default function RootLayout({
             Skip to main content
           </a>
           <Header />
-          <main id="main-content" className="flex-1 bg-slate-50 overflow-x-hidden">
+          <main id="main-content" className="flex-1 bg-slate-50 overflow-x-hidden min-h-screen">
             {children}
           </main>
           <Footer />

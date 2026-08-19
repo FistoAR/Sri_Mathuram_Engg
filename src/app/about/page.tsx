@@ -9,6 +9,37 @@ import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 
 export default function AboutPage() {
   const { openInquiryModal } = useInquiryModal();
+  const canvasRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const nx = (x / rect.width) * 2 - 1;
+      const ny = (y / rect.height) * 2 - 1;
+
+      canvas.style.setProperty('--mx', nx.toFixed(3));
+      canvas.style.setProperty('--my', ny.toFixed(3));
+    };
+
+    const onMouseLeave = () => {
+      canvas.style.setProperty('--mx', '0');
+      canvas.style.setProperty('--my', '0');
+    };
+
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('mouseleave', onMouseLeave);
+    return () => {
+      canvas.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('mouseleave', onMouseLeave);
+    };
+  }, []);
+
   return (
     <div className="w-full bg-[#FAFBFC] min-h-screen montserrat-page  space-y-24">
       {/* 1. HERO BANNER */}
@@ -63,27 +94,39 @@ export default function AboutPage() {
 
           {/* Buttons — left from left, right from right */}
           <div className="flex flex-wrap items-center justify-center gap-4 pt-8 mt-2">
-            <Link href="#who-we-are" className="ab-btn-left">
-              <button className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-semibold text-base sm:text-sm px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2.5">
-                Explore Our Journey
-                <span className="relative w-5 h-5 flex-shrink-0">
+            <Link href="#who-we-are" className="ab-btn-left group">
+              <button className="relative overflow-hidden bg-[#E86D24] text-white font-semibold text-base sm:text-sm px-6 py-3.5 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 inline-flex items-center gap-2.5">
+                {/* Glossy Sweep Shine */}
+                <span className="absolute inset-0 w-[50%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-[150%] group-hover:animate-[abShine_0.75s_ease-in-out]" />
+                <span>Explore Our Journey</span>
+                <span className="relative w-5 h-5 flex-shrink-0 group-hover:translate-x-1.5 transition-transform duration-300">
                   <Image src="/images/AboutAs/arrow1.webp" alt="Arrow Right" fill className="object-contain" />
                 </span>
               </button>
             </Link>
-            <Link href="#capabilities" className="ab-btn-right">
-              <button className="bg-white hover:bg-slate-50 text-[#104272] font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2.5 border border-slate-100">
-                View Manufacturing Facility
-                <span className="relative w-5 h-5 flex-shrink-0">
-                  <Image src="/images/AboutAs/arrow2.webp" alt="Arrow Navigation" fill className="object-contain" />
+            <Link href="#capabilities" className="ab-btn-right group">
+              <button className="relative overflow-hidden bg-white text-[#104272] font-semibold text-sm sm:text-base px-6 py-3.5 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 inline-flex items-center gap-2.5 border border-[#104272]/20">
+                {/* Background sliding fill */}
+                <span className="absolute inset-0 bg-[#104272] transform scale-x-0 origin-left transition-transform duration-300 ease-out group-hover:scale-x-100" />
+                {/* Content Overlay */}
+                <span className="relative z-10 flex items-center gap-2.5 group-hover:text-white transition-colors duration-300">
+                  <span>View Manufacturing Facility</span>
+                  <span className="relative w-5 h-5 flex-shrink-0 group-hover:translate-x-1.5 transition-transform duration-300">
+                    <Image
+                      src="/images/AboutAs/arrow2.webp"
+                      alt="Arrow Navigation"
+                      fill
+                      className="object-contain group-hover:brightness-0 group-hover:invert transition-all duration-300"
+                    />
+                  </span>
                 </span>
               </button>
             </Link>
           </div>
         </div>
 
-        <style>{`
-          /* Label fades up */
+        <style dangerouslySetInnerHTML={{ __html: `
+/* Label fades up */
           .ab-label {
             opacity: 0;
             transform: translateY(-16px);
@@ -122,7 +165,13 @@ export default function AboutPage() {
           .ab-btn-right { opacity:0; transform:translateX( 40px); animation:abBtnR 0.55s cubic-bezier(.22,1,.36,1) 2.5s  forwards; }
           @keyframes abBtnL { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:none} }
           @keyframes abBtnR { from{opacity:0;transform:translateX( 40px)} to{opacity:1;transform:none} }
-        `}</style>
+
+          /* Button glossy shine sweep keyframes */
+          @keyframes abShine {
+            0% { transform: translateX(-150%) skewX(-12deg); }
+            100% { transform: translateX(250%) skewX(-12deg); }
+          }
+` }} />
       </section>
 
       {/* 2. WHO WE ARE / OUR COMPANY STORY SECTION */}
@@ -236,8 +285,8 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <style>{`
-              .section2-visible .section2-char {
+            <style dangerouslySetInnerHTML={{ __html: `
+.section2-visible .section2-char {
                 animation: s2CharIn 0.05s ease forwards;
               }
               .section2-visible .section2-line {
@@ -251,7 +300,7 @@ export default function AboutPage() {
                 from { opacity: 0; transform: translateY(12px); }
                 to   { opacity: 1; transform: translateY(0); }
               }
-            `}</style>
+` }} />
           </div>
         </div>
       </section>
@@ -302,67 +351,107 @@ export default function AboutPage() {
           </div>
 
           {/* Desktop Floating/Staggered Canvas */}
-          <div className="hidden lg:block relative w-full h-[520px] mx-auto">
+          <div className="hidden lg:block relative w-full h-[520px] mx-auto" ref={canvasRef}>
             {/* Card 1: Orange — flies in from LEFT */}
-            <div className="ms-card absolute left-[13%] top-[25%] w-[190px] h-[190px] bg-[#E86D24] text-white flex flex-col justify-center items-center rounded-[3.5rem] shadow-xl p-4 text-center z-10" style={{ "--tx": "-120px", "--ty": "0px", "--delay": "0s" } as React.CSSProperties}>
-              <div className="relative w-20 h-20 mb-3">
-                <Image src="/images/AboutAs/section3/infrastructure.webp" alt="Infrastructure" fill className="object-contain filter brightness-0 invert" />
+            <div className="ms-card absolute left-[13%] top-[25%] w-[190px] h-[190px] z-10" style={{ "--tx": "-120px", "--ty": "0px", "--delay": "0s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "-18px", "--sy": "-18px" } as React.CSSProperties}>
+                <div className="ms-float-1 w-full h-full bg-[#E86D24] text-white flex flex-col justify-center items-center rounded-[3.5rem] shadow-xl p-4 text-center">
+                  <div className="relative w-20 h-20 mb-3">
+                    <Image src="/images/AboutAs/section3/infrastructure.webp" alt="Infrastructure" fill className="object-contain filter brightness-0 invert" />
+                  </div>
+                  <span className="text-[11px] font-medium tracking-wider">ADVANCED MANUFACTURING INFRASTRUCTURE</span>
+                </div>
               </div>
-              <span className="text-[11px] font-medium tracking-wider">ADVANCED MANUFACTURING INFRASTRUCTURE</span>
             </div>
 
             {/* Card 2: Note card — flies in from TOP-LEFT */}
-            <div className="ms-card absolute left-[22%] -top-[5%] w-[190px] text-justify bg-white rounded-[1rem] p-4 shadow-lg border border-slate-100/60 z-30" style={{ "--tx": "-80px", "--ty": "-100px", "--delay": "0.12s" } as React.CSSProperties}>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xs">i</span>
+            <div className="ms-card absolute left-[22%] -top-[5%] w-[190px] h-[180px] z-30" style={{ "--tx": "-80px", "--ty": "-100px", "--delay": "0.12s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "14px", "--sy": "14px" } as React.CSSProperties}>
+                <div className="ms-float-2 w-full h-full text-justify bg-white rounded-[1rem] p-4 shadow-lg border border-slate-100/60 flex flex-col">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xs">i</span>
+                  </div>
+                  <p className="text-slate-600 text-xs font-medium leading-relaxed font-inter">
+                    Nearly three decades of experience in designing and manufacturing reliable hospital furniture, with a strong commitment to quality and customer satisfaction.
+                  </p>
+                </div>
               </div>
-              <p className="text-slate-600 text-xs font-medium leading-relaxed font-inter">
-                Nearly three decades of experience in designing and manufacturing reliable hospital furniture, with a strong commitment to quality and customer satisfaction.
-              </p>
             </div>
 
             {/* Card 3: 1,000 — flies in from BOTTOM-LEFT */}
-            <div className="ms-card absolute left-[25%] top-[55%] w-[190px] rounded-[3.5rem] p-6 py-[40px] shadow-lg border border-slate-100/60 text-center z-30" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)", "--tx": "-80px", "--ty": "100px", "--delay": "0.22s" } as React.CSSProperties}>
-              <span className="text-3xl font-bold text-gray-600 block">1,000</span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Hospital Beds Delivered in a Single Month</span>
+            <div className="ms-card absolute left-[25%] top-[55%] w-[190px] h-[190px] z-30" style={{ "--tx": "-80px", "--ty": "100px", "--delay": "0.22s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "-10px", "--sy": "-10px" } as React.CSSProperties}>
+                <div className="ms-float-3 w-full h-full rounded-[3.5rem] p-6 py-[40px] shadow-lg border border-slate-100/60 text-center flex flex-col justify-center items-center" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)" }}>
+                  <span className="text-3xl font-bold text-gray-600 block">1,000</span>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Hospital Beds Delivered in a Single Month</span>
+                </div>
+              </div>
             </div>
 
             {/* Card 4: 4,000+ — flies in from TOP */}
-            <div className="ms-card absolute left-[35%] top-[23%] w-[190px] rounded-[3.5rem] py-[50px] p-6 shadow-lg border border-slate-100/60 text-center z-20" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)", "--tx": "0px", "--ty": "-120px", "--delay": "0.32s" } as React.CSSProperties}>
-              <span className="text-3xl font-bold text-gray-600 block">4,000+</span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Healthcare Institutions Served</span>
+            <div className="ms-card absolute left-[35%] top-[23%] w-[190px] h-[210px] z-20" style={{ "--tx": "0px", "--ty": "-120px", "--delay": "0.32s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "22px", "--sy": "22px" } as React.CSSProperties}>
+                <div className="ms-float-4 w-full h-full rounded-[3.5rem] py-[50px] p-6 shadow-lg border border-slate-100/60 text-center flex flex-col justify-center items-center" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)" }}>
+                  <span className="text-3xl font-bold text-gray-600 block">4,000+</span>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Healthcare Institutions Served</span>
+                </div>
+              </div>
             </div>
 
             {/* Small blue dot — pops in from center */}
-            <div className="ms-card absolute left-[42%] top-[58%] w-6 h-6 bg-[#0353A4] rounded-lg shadow-sm z-20" style={{ "--tx": "0px", "--ty": "60px", "--delay": "0.38s" } as React.CSSProperties} />
+            <div className="ms-card absolute left-[42%] top-[58%] w-6 h-6 z-20" style={{ "--tx": "0px", "--ty": "60px", "--delay": "0.38s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "-30px", "--sy": "-30px" } as React.CSSProperties}>
+                <div className="ms-float-2 w-full h-full bg-[#0353A4] rounded-lg shadow-sm" />
+              </div>
+            </div>
 
             {/* Card 5: Gear — flies in from BOTTOM */}
-            <div className="ms-card absolute left-[53%] top-[43%] w-[120px] h-[120px] bg-white rounded-[2.5rem] shadow-lg border border-slate-100/60 flex items-center justify-center p-6 z-10" style={{ "--tx": "0px", "--ty": "100px", "--delay": "0.44s" } as React.CSSProperties}>
-              <div className="relative w-12 h-12">
-                <Image src="/images/AboutAs/section3/settings.webp" alt="Settings" fill className="object-contain" />
+            <div className="ms-card absolute left-[53%] top-[43%] w-[120px] h-[120px] z-10" style={{ "--tx": "0px", "--ty": "100px", "--delay": "0.44s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "10px", "--sy": "-10px" } as React.CSSProperties}>
+                <div className="ms-float-1 w-full h-full bg-white rounded-[2.5rem] shadow-lg border border-slate-100/60 flex items-center justify-center p-6">
+                  <div className="relative w-12 h-12">
+                    <Image src="/images/AboutAs/section3/settings.webp" alt="Settings" fill className="object-contain" />
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Card 6: Blue 29+ — flies in from RIGHT */}
-            <div className="ms-card absolute left-[59%] top-[18%] w-[210px] h-[210px] text-white flex flex-col justify-center items-center rounded-[4rem] shadow-xl p-6 text-center z-20" style={{ background: "linear-gradient(135deg, #0353A4 65%, rgba(9, 98, 194, 0.95)5%)", "--tx": "120px", "--ty": "-60px", "--delay": "0.18s" } as React.CSSProperties}>
-              <span className="text-5xl font-bold block">29+</span>
-              <span className="text-[11px] text-slate-200 font-semibold uppercase tracking-wider block mt-2 leading-snug">Years of Manufacturing Excellence</span>
+            <div className="ms-card absolute left-[59%] top-[18%] w-[210px] h-[210px] z-20" style={{ "--tx": "120px", "--ty": "-60px", "--delay": "0.18s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "-15px", "--sy": "15px" } as React.CSSProperties}>
+                <div className="ms-float-2 w-full h-full text-white flex flex-col justify-center items-center rounded-[4rem] shadow-xl p-6 text-center" style={{ background: "linear-gradient(135deg, #0353A4 65%, rgba(9, 98, 194, 0.95) 65%)" }}>
+                  <span className="text-5xl font-bold block">29+</span>
+                  <span className="text-[11px] text-slate-200 font-semibold uppercase tracking-wider block mt-2 leading-snug">Years of Manufacturing Excellence</span>
+                </div>
+              </div>
             </div>
 
             {/* Small orange dot — pops in from TOP-RIGHT */}
-            <div className="ms-card absolute left-[81%] top-[10%] w-6 h-6 bg-[#E86D24] rounded-lg shadow-sm z-20" style={{ "--tx": "60px", "--ty": "-60px", "--delay": "0.5s" } as React.CSSProperties} />
+            <div className="ms-card absolute left-[81%] top-[10%] w-6 h-6 z-20" style={{ "--tx": "60px", "--ty": "-60px", "--delay": "0.5s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "25px", "--sy": "-25px" } as React.CSSProperties}>
+                <div className="ms-float-4 w-full h-full bg-[#E86D24] rounded-lg shadow-sm" />
+              </div>
+            </div>
 
             {/* Card 7: Spanner — flies in from RIGHT */}
-            <div className="ms-card absolute left-[78%] top-[24%] w-[110px] h-[110px] bg-white rounded-[2.5rem] shadow-lg border border-slate-100/60 flex items-center justify-center p-6 z-20" style={{ "--tx": "100px", "--ty": "0px", "--delay": "0.28s" } as React.CSSProperties}>
-              <div className="relative w-14 h-14">
-                <Image src="/images/AboutAs/section3/spanner.webp" alt="Spanner" fill className="object-contain" />
+            <div className="ms-card absolute left-[78%] top-[24%] w-[110px] h-[110px] z-20" style={{ "--tx": "100px", "--ty": "0px", "--delay": "0.28s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "12px", "--sy": "12px" } as React.CSSProperties}>
+                <div className="ms-float-3 w-full h-full bg-white rounded-[2.5rem] shadow-lg border border-slate-100/60 flex items-center justify-center p-6">
+                  <div className="relative w-14 h-14">
+                    <Image src="/images/AboutAs/section3/spanner.webp" alt="Spanner" fill className="object-contain" />
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Card 8: 30,000+ — flies in from BOTTOM-RIGHT */}
-            <div className="ms-card absolute left-[73%] top-[58%] w-[190px] rounded-[3rem] p-6 py-[40px] shadow-lg border border-slate-100/60 text-center z-20" style={{ background: "linear-gradient(135deg, #ffffff 65%, #F4F6F8 65%)", "--tx": "100px", "--ty": "100px", "--delay": "0.36s" } as React.CSSProperties}>
-              <span className="text-3xl font-bold text-gray-600 block">30,000+</span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Products Manufactured Every Year</span>
+            <div className="ms-card absolute left-[73%] top-[58%] w-[190px] h-[190px] z-20" style={{ "--tx": "100px", "--ty": "100px", "--delay": "0.36s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "-20px", "--sy": "-20px" } as React.CSSProperties}>
+                <div className="ms-float-4 w-full h-full rounded-[3rem] p-6 py-[40px] shadow-lg border border-slate-100/60 text-center flex flex-col justify-center items-center" style={{ background: "linear-gradient(135deg, #ffffff 65%, #F4F6F8 65%)" }}>
+                  <span className="text-3xl font-bold text-gray-600 block">30,000+</span>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Products Manufactured Every Year</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -413,8 +502,8 @@ export default function AboutPage() {
             </h3>
           </div>
 
-          <style>{`
-            /* Cards start hidden and offset */
+          <style dangerouslySetInnerHTML={{ __html: `
+/* Cards start hidden and offset */
             .ms-card {
               opacity: 0;
               transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(0.88);
@@ -435,7 +524,55 @@ export default function AboutPage() {
                 transform: translate(0, 0) scale(1);
               }
             }
-          `}</style>
+
+            /* Parallax mouse movement tracking container */
+            .ms-parallax {
+              transform: translate(
+                calc(var(--mx, 0) * var(--sx, 0px)),
+                calc(var(--my, 0) * var(--sy, 0px))
+              );
+              transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+
+            /* Water-like slow drifting floating animations */
+            .ms-float-1 { animation: waterFloat1 7s ease-in-out infinite; }
+            .ms-float-2 { animation: waterFloat2 8.5s ease-in-out infinite; }
+            .ms-float-3 { animation: waterFloat3 6s ease-in-out infinite; }
+            .ms-float-4 { animation: waterFloat4 9.5s ease-in-out infinite; }
+
+            @keyframes waterFloat1 {
+              0%, 100% { transform: translate(0, 0) rotate(0deg); }
+              33% { transform: translate(-3px, -7px) rotate(0.8deg); }
+              66% { transform: translate(2px, -3px) rotate(-0.4deg); }
+            }
+            @keyframes waterFloat2 {
+              0%, 100% { transform: translate(0, 0) rotate(0deg); }
+              40% { transform: translate(3px, -5px) rotate(-0.8deg); }
+              80% { transform: translate(-2px, -8px) rotate(0.6deg); }
+            }
+            @keyframes waterFloat3 {
+              0%, 100% { transform: translate(0, 0) rotate(0deg); }
+              50% { transform: translate(-4px, -9px) rotate(1.2deg); }
+            }
+            @keyframes waterFloat4 {
+              0%, 100% { transform: translate(0, 0) rotate(0deg); }
+              30% { transform: translate(3px, -8px) rotate(-0.6deg); }
+              70% { transform: translate(-3px, -4px) rotate(0.4deg); }
+            }
+
+            /* Interactive card lifting and highlighting on cursor hover */
+            .ms-card:hover {
+              z-index: 50 !important;
+            }
+            .ms-card:hover [class^="ms-float-"] {
+              transform: scale(1.08) translateY(-14px) !important;
+              box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15), 0 12px 15px -5px rgba(0, 0, 0, 0.15) !important;
+              animation-play-state: paused !important; /* Pause natural floating drift on hover */
+            }
+            [class^="ms-float-"] {
+              transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+` }} />
         </div>
       </section>
 
@@ -568,8 +705,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <style>{`
-            /* ── Card entry animations ── */
+          <style dangerouslySetInnerHTML={{ __html: `
+/* ── Card entry animations ── */
             .vm-card {
               opacity: 0;
               transform: translate(var(--vm-tx, 0), var(--vm-ty, 0)) scale(0.92);
@@ -603,7 +740,7 @@ export default function AboutPage() {
               0%, 100% { width: 2rem; height: 2rem; opacity: 0.7; }
               50%       { width: 2.75rem; height: 2.75rem; opacity: 1; }
             }
-          `}</style>
+` }} />
         </div>
       </section>
 
@@ -700,7 +837,7 @@ export default function AboutPage() {
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="tl-row relative pl-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12"
+                  className="tl-row relative pl-20 pr-6 py-5 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 group border border-transparent rounded-2xl -mx-4 md:-mx-6 transition-all duration-300 hover:bg-white/95 hover:shadow-xl hover:border-orange-100/60"
                   style={{ "--tl-delay": `0s` } as React.CSSProperties}
                   ref={(el) => {
                     if (!el) return;
@@ -720,35 +857,35 @@ export default function AboutPage() {
                   }}
                 >
                   {/* Timeline icon circle */}
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white border-2 border-orange-200 flex items-center justify-center shadow-md z-10">
+                  <div className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-white border-2 border-orange-200 flex items-center justify-center shadow-md z-10 group-hover:border-[#E86D24] group-hover:scale-110 transition-all duration-300">
                     <span className="relative w-7 h-7">
                       <Image src={item.icon} alt={item.title} fill className="object-contain" />
                     </span>
                   </div>
 
                   {/* Left part: text content */}
-                  <div className="flex-1 space-y-1.5">
+                  <div className="flex-1 space-y-1.5 group-hover:translate-x-1.5 transition-transform duration-300">
                     <span className="text-[12.5px] font-semibold text-[#E86D24] uppercase tracking-wide">{item.subtitle}</span>
                     <h3 className="text-base sm:text-2xl font-semibold text-[#0B2545] font-montserrat">{item.title}</h3>
                     <p className="text-slate-600 text-[13px] lg:text-sm leading-relaxed font-medium font-inter text-justify">{item.desc}</p>
                   </div>
 
                   {/* Right part: image */}
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 overflow-hidden rounded-2xl shadow-md group-hover:shadow-xl transition-all duration-300">
                     <Image
                       src={item.img}
                       alt={item.title}
                       width={240}
                       height={150}
-                      className="w-auto h-20 md:h-28 lg:h-32 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 object-contain"
+                      className="w-auto h-20 md:h-28 lg:h-32 rounded-2xl group-hover:scale-105 transition-all duration-300 object-contain"
                     />
                   </div>
                 </div>
               ))}
             </div>
 
-            <style>{`
-              .tl-row {
+            <style dangerouslySetInnerHTML={{ __html: `
+.tl-row {
                 opacity: 0;
                 transform: translateY(30px);
                 transition: none;
@@ -760,7 +897,7 @@ export default function AboutPage() {
                 from { opacity: 0; transform: translateY(30px); }
                 to   { opacity: 1; transform: translateY(0); }
               }
-            `}</style>
+` }} />
           </div>
         </div>
       </section>
@@ -846,7 +983,7 @@ export default function AboutPage() {
 
             {/* Para 1 — index 1 */}
             <p
-              className="cap-item text-slate-600 text-sm leading-relaxed font-medium font-inter text-justify"
+              className="cap-item text-slate-600 text-md leading-relaxed font-medium font-inter text-justify"
               style={{ "--cap-i": 1 } as React.CSSProperties}
             >
               Our manufacturing facility brings multiple production processes together under one roof, allowing us to maintain better control over quality, precision, and production timelines.
@@ -854,7 +991,7 @@ export default function AboutPage() {
 
             {/* Para 2 — index 2 */}
             <p
-              className="cap-item text-slate-600 text-sm leading-relaxed font-medium font-inter text-justify"
+              className="cap-item text-slate-600 text-md leading-relaxed font-medium font-inter text-justify"
               style={{ "--cap-i": 2 } as React.CSSProperties}
             >
               From raw material processing to fabrication, finishing, assembly, and final inspection, every stage is carefully coordinated by our production and quality teams.
@@ -889,8 +1026,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <style>{`
-            /* Left image slides from LEFT */
+          <style dangerouslySetInnerHTML={{ __html: `
+/* Left image slides from LEFT */
             .cap-left {
               opacity: 0;
               transform: translateX(-60px);
@@ -919,7 +1056,7 @@ export default function AboutPage() {
               from { opacity: 0; transform: translateY(20px); }
               to   { opacity: 1; transform: translateY(0); }
             }
-          `}</style>
+` }} />
         </div>
       </section>
 
@@ -988,7 +1125,7 @@ export default function AboutPage() {
                 ].map((card, idx) => (
                   <div 
                     key={idx}
-                    className="group relative flex flex-col items-center bg-[#071321]/60 hover:bg-[#091a2e]/85 border border-[#162a42] hover:border-sky-500/30 rounded-3xl p-6 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-sky-950/20 h-full text-center"
+                    className="group relative flex flex-col items-center bg-[#0F2747] hover:bg-[#15355e] border border-[#224673] hover:border-orange-500/40 rounded-3xl p-6 transition-all duration-300 transform hover:-translate-y-1.5 shadow-xl hover:shadow-orange-950/10 h-full text-center"
                   >
                     {/* Quality Seal Icon Badge */}
                     <div className="relative w-10 h-10 mb-4 flex-shrink-0">
@@ -1135,8 +1272,8 @@ export default function AboutPage() {
             />
           </div>
 
-          <style>{`
-            /* Mobile cards + header animate in */
+          <style dangerouslySetInnerHTML={{ __html: `
+/* Mobile cards + header animate in */
             .op-header, .op-card {
               opacity: 0;
               transform: translateY(20px);
@@ -1163,7 +1300,7 @@ export default function AboutPage() {
               from { opacity: 0; transform: translateY(40px) scale(0.97); }
               to   { opacity: 1; transform: translateY(0) scale(1); }
             }
-          `}</style>
+` }} />
         </section>
       </div>
 
@@ -1266,8 +1403,8 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <style>{`
-            .cta-item {
+          <style dangerouslySetInnerHTML={{ __html: `
+.cta-item {
               opacity: 0;
               transform: translateY(18px);
             }
@@ -1279,7 +1416,7 @@ export default function AboutPage() {
               from { opacity: 0; transform: translateY(18px); }
               to   { opacity: 1; transform: translateY(0); }
             }
-          `}</style>
+` }} />
         </div>
       </section>
     </div>

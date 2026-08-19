@@ -266,7 +266,7 @@ export default function HomePage() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [isSectionVisible, isImageHovered]);
+  }, [isSectionVisible, isImageHovered, activeCategory]);
 
   // Get dynamic category icon mapping
   const getCategoryIcon = (name: string) => {
@@ -369,11 +369,34 @@ export default function HomePage() {
               from { opacity: 0; transform: translateX(60px) scale(0.95); filter: blur(4px); }
               to { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
             }
+
+            @media (min-width: 1024px) and (max-height: 720px) {
+              .home-stats-banner-container {
+                padding-top: 0.85rem !important;
+                padding-bottom: 0.85rem !important;
+                padding-left: 2rem !important;
+                padding-right: 2rem !important;
+              }
+              .home-stat-item {
+                gap: 0.75rem !important;
+              }
+              .home-stat-item .relative {
+                width: 2.25rem !important;
+                height: 2.25rem !important;
+              }
+              .home-stat-item span.font-black {
+                font-size: 2rem !important;
+              }
+              .home-stat-item span.text-[9px] {
+                font-size: 8px !important;
+                margin-top: 1px !important;
+              }
+            }
           `}</style>
           <FadeIn direction="up" delay={0.1} className="px-[6vw]">
-            <div className="w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0B2545] via-[#134074] to-[#0B2545] shadow-2xl py-6 lg:py-5 px-8 sm:px-12 lg:px-16 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-6 border border-white/20 backdrop-blur-md">
+            <div className="home-stats-banner-container w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0B2545] via-[#134074] to-[#0B2545] shadow-2xl py-6 lg:py-5 px-8 sm:px-12 lg:px-8 xl:px-12 2xl:px-16 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-6 border border-white/20 backdrop-blur-md">
               {/* Stat 1 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-10 xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/yearOfExperience.webp"
@@ -383,7 +406,7 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="29+" delay={500} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
@@ -395,7 +418,7 @@ export default function HomePage() {
               </div>
 
               {/* Stat 2 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-10 xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/projectCompleted.webp"
@@ -405,7 +428,7 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="4,000+" delay={650} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
@@ -417,7 +440,7 @@ export default function HomePage() {
               </div>
 
               {/* Stat 3 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-10 xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
                 <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
                   <Image
                     src="/images/Home Page/BannerIcons/ProductManufature.webp"
@@ -427,7 +450,7 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="30,000+" delay={800} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
@@ -449,7 +472,7 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
                     <AnimatedCounter value="1,000" delay={950} />
                   </span>
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
@@ -517,218 +540,252 @@ export default function HomePage() {
               .why-card-container .why-card:hover {
                 transform: rotate(45deg) scale(1.15) !important;
               }
+              @media (min-width: 1024px) and (max-width: 1140px) {
+                .why-card-scale-wrapper {
+                  transform: scale(0.72);
+                  transform-origin: center center;
+                  margin-top: -65px;
+                  margin-bottom: -65px;
+                }
+              }
+              @media (min-width: 1141px) and (max-width: 1279px) {
+                .why-card-scale-wrapper {
+                  transform: scale(0.80);
+                  transform-origin: center center;
+                  margin-top: -45px;
+                  margin-bottom: -45px;
+                }
+              }
+              @media (min-width: 1280px) and (max-width: 1379px) {
+                .why-card-scale-wrapper {
+                  transform: scale(0.90);
+                  transform-origin: center center;
+                  margin-top: -25px;
+                  margin-bottom: -25px;
+                }
+              }
+              @media (min-width: 1600px) {
+                .why-card-scale-wrapper {
+                  transform: scale(1.16);
+                  transform-origin: center center;
+                  margin-top: 35px;
+                  margin-bottom: 35px;
+                }
+              }
             `}</style>
-            <div className="why-card-container relative w-[1320px] h-[460px] min-w-[1320px] my-4">
-              {/* Card 1: Superior Manufacturing Quality (Lower Row 1) */}
-              <div className="absolute left-[60px] top-[178px] z-10 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={0.15}>
-                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/material-symbols-light_diamond-outline-rounded.webp"
-                          alt="Superior Manufacturing Quality"
-                          fill
-                          className="object-contain"
-                        />
+            <div className="why-card-scale-wrapper">
+              <div className="why-card-container relative w-[1320px] h-[460px] min-w-[1320px] my-4">
+                {/* Card 1: Superior Manufacturing Quality (Lower Row 1) */}
+                <div className="absolute left-[60px] top-[178px] z-10 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={0.15}>
+                    <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/material-symbols-light_diamond-outline-rounded.webp"
+                            alt="Superior Manufacturing Quality"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-normal uppercase">
+                          Superior
+                          <br />
+                          Manufacturing Quality
+                        </h3>
+                        <p className="text-[10px] text-slate-600 leading-normal font-normal">
+                          Manufactured using high-grade materials to ensure
+                          durability, safety, and long-lasting performance.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
-                        Superior
-                        <br />
-                        Manufacturing Quality
-                      </h3>
-                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
-                        Manufactured using high-grade materials to ensure
-                        durability, safety, and long-lasting performance.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 2: Excellent value for money (Upper Row 1 - Orange) */}
-              <div className="absolute left-[200px] top-[33px] z-20 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={0.3}>
-                  <div className="why-card w-[195px] h-[195px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-lg hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[165px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/Simplification.webp"
-                          alt="Excellent value for money"
-                          fill
-                          className="object-contain filter brightness-0 invert"
-                        />
+                {/* Card 2: Excellent value for money (Upper Row 1 - Orange) */}
+                <div className="absolute left-[200px] top-[33px] z-20 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={0.3}>
+                    <div className="why-card w-[195px] h-[195px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-lg hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/Simplification.webp"
+                            alt="Excellent value for money"
+                            fill
+                            className="object-contain filter brightness-0 invert"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-white leading-normal uppercase">
+                          Excellent value for
+                          <br />
+                          money
+                        </h3>
+                        <p className="text-[10px] text-white/90 leading-normal font-normal">
+                          Durable products designed to deliver long-term value
+                          without unnecessary cost.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-white leading-tight uppercase">
-                        Excellent value for
-                        <br />
-                        money
-                      </h3>
-                      <p className="text-[10.5px] text-white/80 leading-snug font-normal">
-                        Durable products designed to deliver long-term value
-                        without unnecessary cost.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 3: Reliable after-sales service (Lower Row 2) */}
-              <div className="absolute left-[340px] top-[178px] z-10 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={0.45}>
-                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/image 19.webp"
-                          alt="Reliable after-sales service"
-                          fill
-                          className="object-contain"
-                        />
+                {/* Card 3: Reliable after-sales service (Lower Row 2) */}
+                <div className="absolute left-[340px] top-[178px] z-10 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={0.45}>
+                    <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/image 19.webp"
+                            alt="Reliable after-sales service"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-normal uppercase">
+                          Reliable after-
+                          <br />
+                          sales service
+                        </h3>
+                        <p className="text-[10px] text-slate-600 leading-normal font-normal">
+                          Our team remains available to assist with product and
+                          service requirements.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
-                        Reliable after-
-                        <br />
-                        sales service
-                      </h3>
-                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
-                        Our team remains available to assist with product and
-                        service requirements.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 4: Customized product solutions (Upper Row 2) */}
-              <div className="absolute left-[480px] top-[33px] z-20 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={0.6}>
-                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/Simplification (1).webp"
-                          alt="Customized product solutions"
-                          fill
-                          className="object-contain"
-                        />
+                {/* Card 4: Customized product solutions (Upper Row 2) */}
+                <div className="absolute left-[480px] top-[33px] z-20 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={0.6}>
+                    <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/Simplification (1).webp"
+                            alt="Customized product solutions"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-normal uppercase">
+                          Customized product
+                          <br />
+                          solutions
+                        </h3>
+                        <p className="text-[10px] text-slate-600 leading-normal font-normal">
+                          Product configurations can be adapted to meet specific
+                          healthcare requirements.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
-                        Customized product
-                        <br />
-                        solutions
-                      </h3>
-                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
-                        Product configurations can be adapted to meet specific
-                        healthcare requirements.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 5: Timely Delivery (Lower Row 3 - Navy Blue) */}
-              <div className="absolute left-[620px] top-[178px] z-20 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={0.75}>
-                  <div className="why-card w-[195px] h-[195px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/Simplification (2).webp"
-                          alt="Timely Delivery"
-                          fill
-                          className="object-contain filter brightness-0 invert"
-                        />
+                {/* Card 5: Timely Delivery (Lower Row 3 - Navy Blue) */}
+                <div className="absolute left-[620px] top-[178px] z-20 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={0.75}>
+                    <div className="why-card w-[195px] h-[195px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/Simplification (2).webp"
+                            alt="Timely Delivery"
+                            fill
+                            className="object-contain filter brightness-0 invert"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-white leading-normal uppercase">
+                          Timely Delivery
+                        </h3>
+                        <p className="text-[10px] text-slate-200/90 leading-normal font-normal">
+                          Efficient production and coordination help us meet
+                          project timelines.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-white leading-tight uppercase">
-                        Timely Delivery
-                      </h3>
-                      <p className="text-[10.5px] text-slate-200/90 leading-snug font-normal">
-                        Efficient production and coordination help us meet
-                        project timelines.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 6: Strong technical support (Upper Row 3) */}
-              <div className="absolute left-[760px] top-[33px] z-10 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={0.9}>
-                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/Simplification (3).webp"
-                          alt="Strong technical support"
-                          fill
-                          className="object-contain"
-                        />
+                {/* Card 6: Strong technical support (Upper Row 3) */}
+                <div className="absolute left-[760px] top-[33px] z-10 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={0.9}>
+                    <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/Simplification (3).webp"
+                            alt="Strong technical support"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-normal uppercase">
+                          Strong technical
+                          <br />
+                          support
+                        </h3>
+                        <p className="text-[10px] text-slate-600 leading-normal font-normal">
+                          Our team provides practical guidance for product
+                          selection and requirements.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
-                        Strong technical
-                        <br />
-                        support
-                      </h3>
-                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
-                        Our team provides practical guidance for product
-                        selection and requirements.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 7: Long-Lasting Products (Lower Row 4) */}
-              <div className="absolute left-[900px] top-[178px] z-10 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={1.05}>
-                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/Simplification (4).webp"
-                          alt="Long-Lasting Products"
-                          fill
-                          className="object-contain"
-                        />
+                {/* Card 7: Long-Lasting Products (Lower Row 4) */}
+                <div className="absolute left-[900px] top-[178px] z-10 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={1.05}>
+                    <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/Simplification (4).webp"
+                            alt="Long-Lasting Products"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-normal uppercase">
+                          Long-Lasting Products
+                        </h3>
+                        <p className="text-[10px] text-slate-600 leading-normal font-normal">
+                          Robust construction helps products withstand demanding
+                          hospital environments.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
-                        Long-Lasting Products
-                      </h3>
-                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
-                        Robust construction helps products withstand demanding
-                        hospital environments.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
-              </div>
+                  </FadeIn>
+                </div>
 
-              {/* Card 8: Transparent and customer-focused service (Upper Row 4) */}
-              <div className="absolute left-[1040px] top-[33px] z-20 hover:z-50">
-                <FadeIn direction="down" duration={1.2} delay={1.2}>
-                  <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-3 text-center cursor-pointer shadow-md hover:shadow-2xl">
-                    <div className="-rotate-45 flex flex-col items-center justify-center space-y-1.5 max-w-[135px]">
-                      <div className="relative w-12 h-12 mb-1 flex-shrink-0">
-                        <Image
-                          src="/images/Home Page/whySectionIcons/Simplification (5).webp"
-                          alt="Transparent and customer-focused service"
-                          fill
-                          className="object-contain"
-                        />
+                {/* Card 8: Transparent and customer-focused service (Upper Row 4) */}
+                <div className="absolute left-[1040px] top-[33px] z-20 hover:z-50">
+                  <FadeIn direction="down" duration={1.2} delay={1.2}>
+                    <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
+                      <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
+                        <div className="relative w-10 h-10 mb-0.5 flex-shrink-0">
+                          <Image
+                            src="/images/Home Page/whySectionIcons/Simplification (5).webp"
+                            alt="Transparent and customer-focused service"
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                        <h3 className="text-[12px] font-extrabold text-[#0B2545] leading-normal uppercase">
+                          Transparent and
+                          <br />
+                          customer-focused service
+                        </h3>
+                        <p className="text-[10px] text-slate-600 leading-normal font-normal">
+                          We focus on building transparent, dependable
+                          relationships that last.
+                        </p>
                       </div>
-                      <h3 className="text-[13px] font-extrabold text-[#0B2545] leading-tight uppercase">
-                        Transparent and
-                        <br />
-                        customer-focused service
-                      </h3>
-                      <p className="text-[10.5px] text-slate-500 leading-snug font-normal">
-                        We focus on building transparent, dependable
-                        relationships that last.
-                      </p>
                     </div>
-                  </div>
-                </FadeIn>
+                  </FadeIn>
+                </div>
               </div>
             </div>
           </div>
@@ -1435,7 +1492,7 @@ export default function HomePage() {
             backgroundImage: `url('/images/Home Page/ourStoryDoodle.webp')`,
           }}
         />
-        <div className=" relative z-10 flex flex-col lg:flex-row items-center lg:items-start px-6 sm:px-10 lg:px-0 ">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-center px-6 sm:px-10 lg:px-[6vw] xl:px-[8vw] gap-10 lg:gap-16 xl:gap-20 py-12 lg:py-16">
           {/* Left Column: Image Container (Flex 1) */}
           <div className="flex-1 w-full relative">
             <FadeIn
@@ -1443,7 +1500,7 @@ export default function HomePage() {
               delay={0.1}
               className="max-w-2xl mx-auto lg:mx-0"
             >
-              <div className="relative w-full overflow-hidden">
+              <div className="relative w-full overflow-hidden rounded-2xl shadow-lg">
                 <Image
                   src="/images/Home Page/OurStory.webp"
                   alt="Sri Mathurams Medical Engineering Facility"
@@ -1457,9 +1514,9 @@ export default function HomePage() {
           </div>
 
           {/* Right Column: Content (Flex 1 with Top-Right Badge) */}
-          <div className="flex-1 w-full relative text-left space-y-6 pt-6 lg:pt-20 lg:-ml-10">
+          <div className="flex-1 w-full relative text-left space-y-6 lg:py-8">
             {/* Top Badge: OUR STORY (Positioned Absolute Top Right on desktop, relative left-aligned on mobile) */}
-            <div className="lg:absolute lg:top-10 lg:right-12 flex flex-col items-start gap-1 mb-6 lg:mb-0">
+            <div className="lg:absolute lg:top-0 lg:right-0 flex flex-col items-start gap-1 mb-6 lg:mb-0">
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
                 <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
@@ -1477,8 +1534,8 @@ export default function HomePage() {
             {/* Title */}
             <FadeIn direction="up" delay={0.15}>
               <h2
-                className="text-3xl sm:text-4xl lg:text-[3.5rem] font-medium text-[#0B2545] tracking-wide max-w-2xl"
-                style={{ lineHeight: "1.35", fontFamily: "var(--font-outfit)" }}
+                className="text-3xl sm:text-4xl lg:text-[3.2rem] font-medium text-[#0B2545] tracking-wide max-w-2xl pt-2 lg:pt-12"
+                style={{ lineHeight: "1.3", fontFamily: "var(--font-outfit)" }}
               >
                 Building Healthcare Infrastructure Since 1997
               </h2>

@@ -14,12 +14,33 @@ const IMAGES_TO_PRELOAD = [
 ];
 
 export function Preloader() {
+  const [mounted, setMounted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
   const [particles, setParticles] = useState<{ id: number; left: string; size: string; delay: string; duration: string; color: string }[]>([]);
 
   useEffect(() => {
+    setMounted(true);
+
+    let hasSeen = false;
+    try {
+      if (typeof window !== 'undefined' && window.sessionStorage) {
+        hasSeen = !!sessionStorage.getItem('hasSeenPreloader');
+      }
+    } catch (e) {
+      console.warn('sessionStorage is not accessible:', e);
+    }
+
+    if (hasSeen) {
+      setProgress(100);
+      setIsDone(true);
+      setShouldRender(false);
+      document.documentElement.classList.add('preloader-done');
+      document.documentElement.classList.remove('preloader-active');
+      return;
+    }
+
     // Generate particles client-side using direct rgba colors to prevent Tailwind purging
     const generatedParticles = Array.from({ length: 22 }).map((_, i) => ({
       id: i,
@@ -39,10 +60,9 @@ export function Preloader() {
     const totalImages = IMAGES_TO_PRELOAD.length;
     let imagesLoaded = false;
 
-    // Load images in background
+    // Load images in background with handlers bound BEFORE source to avoid cache misses
     IMAGES_TO_PRELOAD.forEach((src) => {
       const img = new window.Image();
-      img.src = src;
       const handleImageLoad = () => {
         loadedCount++;
         if (loadedCount === totalImages) {
@@ -51,6 +71,7 @@ export function Preloader() {
       };
       img.onload = handleImageLoad;
       img.onerror = handleImageLoad;
+      img.src = src;
     });
 
     // Smoothly increment progress
@@ -72,6 +93,13 @@ export function Preloader() {
 
       if (currentProgress >= 100) {
         clearInterval(progressInterval);
+        try {
+          if (typeof window !== 'undefined' && window.sessionStorage) {
+            sessionStorage.setItem('hasSeenPreloader', 'true');
+          }
+        } catch (e) {
+          console.warn('Failed to save preloader status to sessionStorage:', e);
+        }
         setTimeout(() => {
           setIsDone(true);
         }, 150);
@@ -97,6 +125,7 @@ export function Preloader() {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
       document.documentElement.classList.add('preloader-done');
+      document.documentElement.classList.remove('preloader-active');
       
       // Delay unmounting for fadeout animation
       const fadeTimeout = setTimeout(() => {
@@ -111,7 +140,7 @@ export function Preloader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white transition-opacity duration-500 ease-in-out ${
+      className={`preloader-wrapper fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white transition-opacity duration-500 ease-in-out ${
         isDone ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
@@ -186,7 +215,7 @@ export function Preloader() {
 
       {/* Active Running Background Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-[4]">
-        {particles.map((p) => (
+        {mounted && particles.map((p) => (
           <div
             key={p.id}
             className="absolute bottom-0 rounded-full"
@@ -234,8 +263,8 @@ export function Preloader() {
               r="66"
               className="stroke-orange-500 fill-none transition-all duration-300 ease-out"
               strokeWidth="3.5"
-              strokeDasharray={2 * Math.PI * 66}
-              strokeDashoffset={2 * Math.PI * 66 * (1 - progress / 100)}
+              strokeDasharray={(2 * Math.PI * 66).toFixed(2)}
+              strokeDashoffset={(2 * Math.PI * 66 * (1 - progress / 100)).toFixed(2)}
               strokeLinecap="round"
             />
           </svg>

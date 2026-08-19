@@ -352,6 +352,25 @@ export function Hero() {
           }
           @keyframes outFrame { to { width: 13vw; height: 18vh; bottom: 15vh; left: 52vw; right: auto; border-radius: 1.2vw; } }
         }
+        @media (min-width: 1024px) and (max-height: 720px) {
+          .thumbnail {
+            bottom: 18vh !important;
+          }
+          .slider.next .list .item:nth-child(1) img {
+            bottom: 18vh !important;
+            animation: showImageShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+          }
+          .slider.prev .list .item:nth-child(2) img {
+            animation: outFrameShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+          }
+          @keyframes showImageShortHeight {
+            from { bottom: 18vh; left: 52vw; right: auto; width: 13vw; height: 18vh; border-radius: 1.2vw; }
+            to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
+          }
+          @keyframes outFrameShortHeight {
+            to { width: 13vw; height: 18vh; bottom: 18vh; left: 52vw; right: auto; border-radius: 1.2vw; }
+          }
+        }
         .slider.next .nextPrevArrows button, .slider.prev .nextPrevArrows button { pointer-events: none; }
         
         .line-reveal {

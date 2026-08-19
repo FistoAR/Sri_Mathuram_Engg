@@ -147,3 +147,26 @@
   pointer-events-none: none;
   z-index: 10;
 }
+
+/* Preloader hide layout elements until loaded to prevent visual flashes */
+html:not(.preloader-done) #main-content,
+html:not(.preloader-done) footer,
+html:not(.preloader-done) header {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+html.preloader-done #main-content,
+html.preloader-done header {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 0.6s ease-in-out;
+}
+html.preloader-done footer {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: opacity 0.6s ease-in-out;
+}
+/* Delay footer fade-in during active first-load preloading sequence */
+html.preloader-active.preloader-done footer {
+  transition-delay: 5s !important;
+}

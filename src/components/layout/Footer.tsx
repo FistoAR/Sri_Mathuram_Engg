@@ -1,11 +1,19 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, MapPin, Globe, Clock } from 'lucide-react';
 
 export function Footer() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const currentYear = new Date().getFullYear();
+
+  if (!mounted) return null;
 
   return (
     <footer
