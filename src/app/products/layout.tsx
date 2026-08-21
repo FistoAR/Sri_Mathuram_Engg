@@ -311,6 +311,7 @@ function ProductsLayoutContent({
                 const isActive = activeCategory === catName;
                 const isExpanded = expandedCategory === catName;
                 const productsInCat = PRODUCTS.filter((p) => p.category === catName);
+                const categoryObj = CATEGORIES.find((c) => c.name === catName);
 
                 return (
                   <div key={catName} className="space-y-1">
@@ -325,13 +326,24 @@ function ProductsLayoutContent({
                       } ${isExpanded && catName !== "All Products" && isSidebarExpanded ? "rounded-b-none border-b-0" : ""}`}
                     >
                       <div className="flex items-center gap-6 min-w-0 flex-1">
-                        <div className="relative w-5 h-5 shrink-0">
-                          <Image
-                            src={isActive ? "/images/Product Assets/selected.webp" : "/images/Product Assets/unselected.webp"}
-                            alt="category icon"
-                            fill
-                            className="object-contain"
-                          />
+                        <div className="relative w-7 h-7 shrink-0">
+                          {catName === "All Products" ? (
+                            <Image
+                              src={isActive ? "/images/Product Assets/selected.webp" : "/images/Product Assets/unselected.webp"}
+                              alt="All Products icon"
+                              fill
+                              className="object-contain"
+                            />
+                          ) : (
+                            <Image
+                              src={categoryObj?.icon || "/images/Product Assets/unselected.webp"}
+                              alt={`${catName} icon`}
+                              fill
+                              className={`object-contain transition-all duration-300 ${
+                                isActive ? "brightness-100" : "opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+                              }`}
+                            />
+                          )}
                         </div>
                         {isSidebarExpanded && (
                           <div className="relative pb-1 min-w-0 flex-1">
@@ -373,18 +385,18 @@ function ProductsLayoutContent({
                               key={prod.id}
                               href={`/products/${prod.slug}`}
                               scroll={false}
-                              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold transition-all border text-left leading-normal ${
+                              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-bold transition-all border text-left leading-normal ${
                                 isProdActive
                                   ? "bg-[#FFF0E6] border-[#E87325] text-[#E87325] shadow-2xs"
                                   : "bg-slate-50 border-slate-200/60 text-slate-600 hover:text-[#0B3C83] hover:bg-[#0B3C83]/5 hover:border-[#0B3C83]/20"
                               }`}
                             >
-                              <span className={`w-5 h-5 shrink-0 rounded-full flex items-center justify-center text-[10px] font-black ${
+                              <span className={`w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-[11px] font-black ${
                                 isProdActive ? "bg-[#E87325] text-white" : "bg-slate-200 text-slate-500"
                               }`}>
                                 {idx + 1}
                               </span>
-                              <span className="truncate flex-1">{prod.name}</span>
+                              <span className="flex-1 whitespace-normal break-words">{prod.name}</span>
                             </Link>
                           );
                         })}

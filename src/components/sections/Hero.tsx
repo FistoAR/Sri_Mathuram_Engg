@@ -432,7 +432,7 @@ export function Hero() {
                 <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1vw] font-bold tracking-wider text-[#0B2545] uppercase">
                   <div className="relative w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0">
                     <Image
-                      src="/images/Home Page/trusted.webp"
+                      src="/images/Home Page/sectionIcons/trustedMedical.webp"
                       alt="Trusted Logo"
                       fill
                       className="object-contain"

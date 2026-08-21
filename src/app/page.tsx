@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
+import { TypewriterText } from "@/components/ui/TypewriterText";
 
 interface AnimatedCounterProps {
   value: string;
@@ -393,93 +394,93 @@ export default function HomePage() {
               }
             }
           `}</style>
-          <FadeIn direction="up" delay={0.1} className="px-[6vw]">
+          <FadeIn direction="up" delay={0.1} className="px-[4vw]">
             <div className="home-stats-banner-container w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0B2545] via-[#134074] to-[#0B2545] shadow-2xl py-6 lg:py-5 px-8 sm:px-12 lg:px-8 xl:px-12 2xl:px-16 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-6 border border-white/20 backdrop-blur-md">
               {/* Stat 1 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
-                  <Image
-                    src="/images/Home Page/BannerIcons/yearOfExperience.webp"
-                    alt="29+ Years of Experience"
-                    fill
-                    className="object-contain filter brightness-0 invert"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+                <div className="flex flex-col items-start text-left max-w-max">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
                     <AnimatedCounter value="29+" delay={500} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
-                    YEARS OF
-                    <br />
-                    EXPERIENCE
-                  </span>
+                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                    <div className="relative w-9 h-9 flex-shrink-0">
+                      <Image
+                        src="/images/Home Page/BannerIcons/yearOfExperience.webp"
+                        alt="29+ Years of Experience"
+                        fill
+                        className="object-contain filter brightness-0 invert"
+                      />
+                    </div>
+                    <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white leading-tight max-w-[100px] break-words">
+                      YEARS OF EXPERIENCE
+                    </span>
+                  </div>
                 </div>
               </div>
 
               {/* Stat 2 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
-                  <Image
-                    src="/images/Home Page/BannerIcons/projectCompleted.webp"
-                    alt="4,000+ Projects Completed"
-                    fill
-                    className="object-contain filter brightness-0 invert"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+                <div className="flex flex-col items-start text-left max-w-max">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
                     <AnimatedCounter value="4,000+" delay={650} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
-                    PROJECTS
-                    <br />
-                    COMPLETED
-                  </span>
+                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                    <div className="relative w-9 h-9 flex-shrink-0">
+                      <Image
+                        src="/images/Home Page/BannerIcons/projectCompleted.webp"
+                        alt="4,000+ Projects Completed"
+                        fill
+                        className="object-contain filter brightness-0 invert"
+                      />
+                    </div>
+                    <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white leading-tight max-w-[100px] break-words">
+                      PROJECTS COMPLETED
+                    </span>
+                  </div>
                 </div>
               </div>
 
               {/* Stat 3 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
-                  <Image
-                    src="/images/Home Page/BannerIcons/ProductManufature.webp"
-                    alt="30,000+ Products Manufactured"
-                    fill
-                    className="object-contain filter brightness-0 invert"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
+                <div className="flex flex-col items-start text-left max-w-max">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
                     <AnimatedCounter value="30,000+" delay={800} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
-                    PRODUCTS
-                    <br />
-                    MANUFACTURED
-                  </span>
+                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                    <div className="relative w-9 h-9 flex-shrink-0">
+                      <Image
+                        src="/images/Home Page/BannerIcons/ProductManufature.webp"
+                        alt="30,000+ Products Manufactured"
+                        fill
+                        className="object-contain filter brightness-0 invert"
+                      />
+                    </div>
+                    <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white leading-tight max-w-[115px] break-words">
+                      PRODUCTS MANUFACTURED
+                    </span>
+                  </div>
                 </div>
               </div>
 
               {/* Stat 4 */}
-              <div className="home-stat-item flex items-center justify-start gap-3 sm:gap-4 w-[calc(50%-8px)] lg:w-auto">
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex-shrink-0">
-                  <Image
-                    src="/images/Home Page/BannerIcons/bedsDelivered.webp"
-                    alt="1,000+ Beds Delivered"
-                    fill
-                    className="object-contain filter brightness-0 invert"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-1 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center w-[calc(50%-8px)] lg:w-auto">
+                <div className="flex flex-col items-start text-left max-w-max">
+                  <span className="text-3xl tracking-wide -ml-[0.4vw] sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
                     <AnimatedCounter value="1,000" delay={950} />
                   </span>
-                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-white mt-1 leading-tight">
-                    BEDS DELIVERED
-                    <br />
-                    IN A SINGLE MONTH
-                  </span>
+                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                    <div className="relative  w-9 h-9 flex-shrink-0">
+                      <Image
+                        src="/images/Home Page/BannerIcons/bedsDelivered.webp"
+                        alt="1,000+ Beds Delivered"
+                        fill
+                        className="object-contain filter brightness-0 invert"
+                      />
+                    </div>
+                    <span className="text-[9px] sm:text-xs font-medium tracking-wider text-white leading-tight max-w-[155px] break-words">
+                      BEDS DELIVERED IN A SINGLE MONTH
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -488,7 +489,7 @@ export default function HomePage() {
       </div>
 
       {/* 2. WHY SRI MATHURAMS SECTION */}
-      <section className="w-full px-[6vw] pt-[4vh] sm:pt-[8vh] pb-[6vh] relative overflow-visible bg-[#f7f5ef]">
+      <section className="w-full px-[4vw] pt-[4vh] sm:pt-[8vh] pb-[6vh] relative overflow-visible bg-[#f7f5ef]">
         {/* Doodle Background Pattern - Extended to cover behind stats banner */}
         <div
           className="absolute -top-32 inset-x-0 bottom-0 opacity-1 mix-blend-multiply pointer-events-none bg-repeat bg-center z-0"
@@ -501,16 +502,16 @@ export default function HomePage() {
         <div className="relative z-10 space-y-[4vh]">
           {/* Top Tagline Badge - Left Aligned with trusted icon & accent line */}
           <FadeIn direction="up" delay={0.1} className="flex flex-col  gap-1.5">
-            <div className="inline-flex items-center gap-4 text-[3.2vw] sm:text-[1.8vw] md:text-[1.2vw] font-bold tracking-wider text-[#0B2545] uppercase">
+            <div className="inline-flex items-center gap-4 text-lg sm:text-xl font-bold tracking-wide text-[#0B2545] uppercase">
               <div className="relative w-6 h-6 flex-shrink-0">
                 <Image
-                  src="/images/Home Page/trusted.webp"
+                  src="/images/Home Page/sectionIcons/trustedbyHealthCare.webp"
                   alt="Trusted Logo"
                   fill
                   className="object-contain"
                 />
               </div>
-              <span>TRUSTED BY HEALTHCARE PROFESSIONALS SINCE 1997</span>
+              <TypewriterText text="TRUSTED BY HEALTHCARE PROFESSIONALS SINCE 1997" />
             </div>
             {/* Dark Navy accent line under badge */}
             <div className="w-24 h-[4px] bg-[#E86D24] rounded-full" />
@@ -1195,7 +1196,7 @@ export default function HomePage() {
         ref={sectionRef}
         className="w-full px-[4vw] py-16 bg-[#FAFBFC] relative"
       >
-        <div className="mx-[2vw] space-y-[4vh]">
+        <div className="space-y-[4vh]">
           {/* Top Sub-tagline Badge - Left Aligned with orange icon, accent line, and mobile hamburger */}
           <div className="flex items-center justify-between w-full">
             <FadeIn
@@ -1206,13 +1207,13 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
                 <span className="relative w-7 h-7 flex-shrink-0">
                   <Image
-                    src="/images/AboutAs/aboutAs.webp"
+                    src="/images/Home Page/sectionIcons/ourProduct.webp"
                     alt="Products Icon"
                     fill
                     className="object-contain"
                   />
                 </span>
-                <span>OUR PRODUCTS</span>
+                <TypewriterText text="OUR PRODUCTS" />
               </div>
               {/* Orange underline accent line */}
               <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
@@ -1484,7 +1485,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. OUR STORY / ABOUT US SECTION */}
-      <section className="w-full relative overflow-hidden bg-gradient-to-r from-slate-50 via-blue-50/40 to-slate-50">
+      <section className="w-full relative overflow-hidden bg-white">
         {/* Our Story Background Doodle */}
         <div
           className="absolute inset-0 opacity-1 mix-blend-multiply pointer-events-none bg-cover bg-right-top z-0"
@@ -1492,15 +1493,31 @@ export default function HomePage() {
             backgroundImage: `url('/images/Home Page/ourStoryDoodle.webp')`,
           }}
         />
-        <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-center px-6 sm:px-10 lg:px-[6vw] xl:px-[8vw] gap-10 lg:gap-16 xl:gap-20 py-12 lg:py-16">
+        <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-center pl-0 pr-0 gap-10 lg:gap-16 xl:gap-20 py-0">
           {/* Left Column: Image Container (Flex 1) */}
-          <div className="flex-1 w-full relative">
+          <div className="flex-[45%] w-full relative">
+            {/* Top Badge: OUR STORY (Overlay on image top left) */}
+            <div className="absolute top-4 left-[4vw] lg:top-8 flex flex-col items-start gap-1 z-20">
+              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-wider text-white uppercase">
+                <div className="relative w-6 h-6 flex-shrink-0 filter brightness-0 invert">
+                  <Image
+                    src="/images/Home Page/sectionIcons/ourStory.webp"
+                    alt="Our Story Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <TypewriterText text="OUR STORY" />
+              </div>
+              <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
+            </div>
+
             <FadeIn
               direction="right"
               delay={0.1}
-              className="max-w-2xl mx-auto lg:mx-0"
+              className="w-full mx-auto lg:mx-0"
             >
-              <div className="relative w-full overflow-hidden rounded-2xl shadow-lg">
+              <div className="relative w-full overflow-hidden rounded-none shadow-none">
                 <Image
                   src="/images/Home Page/OurStory.webp"
                   alt="Sri Mathurams Medical Engineering Facility"
@@ -1513,29 +1530,13 @@ export default function HomePage() {
             </FadeIn>
           </div>
 
-          {/* Right Column: Content (Flex 1 with Top-Right Badge) */}
-          <div className="flex-1 w-full relative text-left space-y-6 lg:py-8">
-            {/* Top Badge: OUR STORY (Positioned Absolute Top Right on desktop, relative left-aligned on mobile) */}
-            <div className="lg:absolute lg:top-0 lg:right-0 flex flex-col items-start gap-1 mb-6 lg:mb-0">
-              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
-                <div className="relative w-7 h-7 flex-shrink-0">
-                  <Image
-                    src="/images/AboutAs/aboutAs.webp"
-                    alt="Our Story Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <span>OUR STORY</span>
-              </div>
-              <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
-            </div>
-
+          {/* Right Column: Content (Flex 1) */}
+          <div className="flex-[55%] w-[55%] relative text-left space-y-6 lg:pr-[4vw] py-12 lg:py-8">
             {/* Title */}
             <FadeIn direction="up" delay={0.15}>
               <h2
-                className="text-3xl sm:text-4xl lg:text-[3.2rem] font-medium text-[#0B2545] tracking-wide max-w-2xl pt-2 lg:pt-12"
-                style={{ lineHeight: "1.3", fontFamily: "var(--font-outfit)" }}
+                className="text-3xl sm:text-4xl lg:text-[3.9rem] font-bold text-[#0C3D6C] tracking-widest pt-2 lg:pt-12 font-montserrat"
+                style={{ lineHeight: "1.3" }}
               >
                 Building Healthcare Infrastructure Since 1997
               </h2>
@@ -1545,7 +1546,7 @@ export default function HomePage() {
             <FadeIn
               direction="up"
               delay={0.2}
-              className="space-y-4 text-slate-600 text-base sm:text-md leading-relaxed font-normal max-w-xl"
+              className="space-y-4 text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-xl font-inter"
             >
               <p style={{ lineHeight: "1.8" }}>
                 For over{" "}
@@ -1588,7 +1589,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. TRUST & CERTIFICATIONS SECTION */}
-      <section className="w-full px-[3vw] py-[8vh] relative overflow-hidden bg-slate-50 ">
+      <section className="w-full px-[4vw] py-[8vh] relative overflow-hidden bg-slate-50 ">
         {/* Soft background medical/hexagonal pattern */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#0b2545_1px,transparent_1px)] [background-size:20px_20px]" />
 
@@ -1603,13 +1604,13 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
                 <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
-                    src="/images/AboutAs/aboutAs.webp"
+                    src="/images/Home Page/sectionIcons/trustCertificate.webp"
                     alt="Trust & Certifications Logo"
                     fill
                     className="object-contain"
                   />
                 </div>
-                <span>TRUST & CERTIFICATIONS</span>
+                <TypewriterText text="TRUST & CERTIFICATIONS" />
               </div>
               <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
@@ -1803,18 +1804,25 @@ export default function HomePage() {
       <BuildQualitySection />
 
       {/* 7. OUR CLIENTS SECTION */}
-      <section className="w-full px-[3vw] py-[8vh] relative overflow-hidden bg-white border-t border-b border-slate-100">
-        <div className="max-w-6xl mx-auto space-y-[4vh]">
+      <section className="w-full px-[4vw] py-[8vh] relative overflow-hidden bg-white border-t border-b border-slate-100">
+        <div className="w-full mx-auto space-y-[4vh]">
           {/* Top Tagline */}
           <FadeIn
             direction="up"
             delay={0.1}
-            className="flex flex-col items-center justify-center"
+            className="flex flex-col items-start"
           >
             <div className="flex flex-col items-start gap-1.5 pb-2">
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
-                <Users2 className="w-6 h-6 text-orange-500 flex-shrink-0" />
-                <span>OUR CLIENTS</span>
+                <div className="relative w-7 h-7 flex-shrink-0">
+                  <Image
+                    src="/images/Home Page/sectionIcons/OurClients.webp"
+                    alt="Our Clients Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <TypewriterText text="OUR CLIENTS" />
               </div>
               <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
@@ -2066,7 +2074,7 @@ export default function HomePage() {
       </section>
 
       {/* 8. CALL TO ACTION BANNER */}
-      <section className="w-full px-[3vw] py-16 !mt-0">
+      <section className="w-full px-[4vw] py-16 !mt-0">
         <div className="relative rounded-3xl overflow-hidden bg-[#102F4E] shadow-xl border border-slate-700/40 min-h-[280px] flex items-center">
           {/* Background Hospital Beds Image */}
           <div className="absolute inset-0 z-0">

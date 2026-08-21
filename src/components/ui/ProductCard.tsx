@@ -32,7 +32,7 @@ export function ProductCard({ product, hideDetails = false }: ProductCardProps) 
 
         {/* Text details */}
         <div className="space-y-1.5">
-          <h3 className="text-base font-bold text-slate-900 group-hover:text-[#0B3C83] group-hover/link:text-[#0B3C83] transition-colors leading-tight line-clamp-1">
+          <h3 className="text-base font-bold text-slate-900 group-hover:text-[#0B3C83] group-hover/link:text-[#0B3C83] transition-colors leading-tight whitespace-normal break-words">
             {product.name}
           </h3>
           <p className="text-slate-500 text-xs font-medium leading-relaxed line-clamp-2">
@@ -43,18 +43,18 @@ export function ProductCard({ product, hideDetails = false }: ProductCardProps) 
 
       {/* Button Row */}
       {!hideDetails && (
-        <div className="flex items-center gap-2 mt-4 pt-2.5 border-t border-slate-100">
-          <Link href={`/products/${product.slug}`} scroll={false} className="flex-1">
-            <button className="w-full text-center border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-xs transition-all hover:bg-slate-50">
+        <div className="flex flex-col gap-2 mt-4 pt-2.5 border-t border-slate-100 w-full">
+          <Link href={`/products/${product.slug}`} scroll={false} className="w-full">
+            <button className="w-full text-center border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-xs transition-all hover:bg-slate-50 whitespace-nowrap">
               View Details
             </button>
           </Link>
           <button
             onClick={() => openInquiryModal(product)}
-            className="flex-1 bg-[#E87325] hover:bg-[#D0621B] text-white text-xs font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1 shadow-md shadow-orange-500/10 active:scale-95"
+            className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white text-xs font-bold py-2 px-3 rounded-lg transition-all flex items-center justify-center gap-1 shadow-md shadow-orange-500/10 active:scale-95 whitespace-nowrap"
           >
-            Send Enquiry
-            <ArrowRight className="w-3.5 h-3.5" />
+            <span>Send Enquiry</span>
+            <ArrowRight className="w-3.5 h-3.5 shrink-0" />
           </button>
         </div>
       )}

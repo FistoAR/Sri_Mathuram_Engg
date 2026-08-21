@@ -11,6 +11,13 @@ const IMAGES_TO_PRELOAD = [
   '/images/Home Page/BannerIcons/bedsDelivered.webp',
   '/images/Home Page/BannerIcons/projectCompleted.webp',
   '/images/Home Page/BannerIcons/yearOfExperience.webp',
+  '/images/Home Page/sectionIcons/trustedbyHealthCare.webp',
+  '/images/Home Page/sectionIcons/ourProduct.webp',
+  '/images/Home Page/sectionIcons/ourStory.webp',
+  '/images/Home Page/sectionIcons/trustCertificate.webp',
+  '/images/Home Page/sectionIcons/OurClients.webp',
+  '/images/Home Page/sectionIcons/howWeBuild.webp',
+  '/images/Home Page/sectionIcons/trustedMedical.webp',
 ];
 
 export function Preloader() {

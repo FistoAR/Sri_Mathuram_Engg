@@ -6,6 +6,7 @@ import Image from "next/image";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { Gem, ShieldCheck, Sparkles, Shield, Smile, Eye, Users, RefreshCw } from "lucide-react";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
+import { TypewriterText } from "@/components/ui/TypewriterText";
 
 export default function AboutPage() {
   const { openInquiryModal } = useInquiryModal();
@@ -59,10 +60,10 @@ export default function AboutPage() {
           <div className="flex justify-start mb-6 md:mb-12 ab-label">
             <div className="inline-flex items-center gap-4 text-white font-bold text-2xl uppercase">
               <span className="relative w-7 h-7 flex-shrink-0">
-                <Image src="/images/AboutAs/aboutAs.webp" alt="About Icon" fill className="object-contain" />
+                <Image src="/images/AboutAs/sectionIcons/aboutAs.webp" alt="About Icon" fill className="object-contain" />
               </span>
               <span className="relative pb-1">
-                ABOUT US
+                <TypewriterText text="ABOUT US" />
                 <span className="absolute left-0 bottom-0 w-1/2 h-[3.5px] bg-[#E86D24] rounded-full" />
               </span>
             </div>
@@ -177,12 +178,30 @@ export default function AboutPage() {
       {/* 2. WHO WE ARE / OUR COMPANY STORY SECTION */}
       <section
         id="who-we-are"
-        className="w-full relative z-20 bg-cover bg-center bg-no-repeat lg:h-[70vh] lg:min-h-[650px] lg:py-0 flex items-center !mt-0"
+        className="w-full relative z-20 bg-cover bg-center bg-no-repeat py-12 lg:py-16 flex flex-col justify-center !mt-0"
         style={{ backgroundImage: "url('/images/AboutAs/section2/aboutbg.webp')" }}
       >
+        {/* Tagline aligned to the top left of the section */}
+        <div className="w-full px-[4vw] mb-8 flex justify-start">
+          <div className="inline-flex  gap-2 text-[#0B2545] font-semibold text-lg uppercase">
+            <span className="relative w-8 h-8 flex-shrink-0">
+              <Image
+                src="/images/AboutAs/sectionIcons/ourCompanyStory.webp"
+                alt="Story Icon"
+                fill
+                className="object-contain"
+              />
+            </span>
+            <span className="relative pb-1">
+              <TypewriterText text="OUR COMPANY STORY" />
+              <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
+            </span>
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center justify-between w-full px-[4vw]">
           {/* Left Column: Image wrapper */}
-          <FadeIn className=" relative" direction="left" delay={0.1}>
+          <FadeIn className="relative w-full lg:max-w-[420px] lg:ml-8" direction="left" delay={0.1}>
             <div className="relative aspect-[3/4] w-full lg:h-[70vh] z-10">
               <Image
                 src="/images/AboutAs/section2/about.webp"
@@ -217,23 +236,6 @@ export default function AboutPage() {
             );
             observer.observe(el);
           }}>
-            {/* Tagline aligned to the right */}
-            <div className="flex justify-end">
-              <div className="inline-flex items-center gap-2 text-[#0B2545] font-semibold text-lg uppercase">
-                <span className="relative w-6 h-6 flex-shrink-0">
-                  <Image
-                    src="/images/AboutAs/aboutAs.webp"
-                    alt="Story Icon"
-                    fill
-                    className="object-contain"
-                  />
-                </span>
-                <span className="relative pb-1">
-                  OUR COMPANY STORY
-                  <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
-                </span>
-              </div>
-            </div>
 
             <div className="space-y-8">
               {/* Typing title — word-wrapped so characters never break mid-word */}
@@ -334,9 +336,9 @@ export default function AboutPage() {
           {/* Tagline aligned to the left */}
           <div className="flex justify-start mb-6">
             <div className="inline-flex items-center gap-4 text-[#0B2545] font-semibold text-xl uppercase">
-              <span className="relative w-7 h-7 flex-shrink-0">
+              <span className="relative w-8 h-8 flex-shrink-0">
                 <Image
-                  src="/images/AboutAs/aboutAs.webp"
+                  src="/images/AboutAs/sectionIcons/milestone.webp"
                   alt="Milestone Icon"
                   fill
                   className="object-contain"
@@ -344,7 +346,7 @@ export default function AboutPage() {
                 />
               </span>
               <span className="relative pb-1">
-                OUR MILESTONES
+                <TypewriterText text="OUR MILESTONES" />
                 <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
               </span>
             </div>
@@ -580,16 +582,16 @@ export default function AboutPage() {
       <section className="w-full px-[4vw] space-y-12 !mt-10">
         <div className="flex justify-start">
           <div className="inline-flex items-center gap-4 text-[#0B2545] font-bold text-xl uppercase tracking-wider">
-            <span className="relative w-7 h-7 flex-shrink-0">
+            <span className="relative w-8 h-8 flex-shrink-0">
               <Image
-                src="/images/AboutAs/aboutAs.webp"
+                src="/images/AboutAs/sectionIcons/ourVision.webp"
                 alt="Vision & Mission Icon"
                 fill
                 className="object-contain"
               />
             </span>
             <span className="relative pb-1">
-              OUR VISION & MISSION
+              <TypewriterText text="OUR VISION & MISSION" />
               <span className="absolute left-0 bottom-0 w-12 h-[3.5px] bg-[#E86D24] rounded-full" />
             </span>
           </div>
@@ -754,16 +756,16 @@ export default function AboutPage() {
           <FadeIn className="w-full lg:w-[40%] flex flex-col justify-start space-y-6" direction="left" delay={0.1}>
             <div className="space-y-4">
               <div className="inline-flex items-center gap-4 text-[#0B2545] font-bold text-xl uppercase tracking-wider">
-                <span className="relative w-7 h-7 flex-shrink-0">
+                <span className="relative w-8 h-8 flex-shrink-0">
                   <Image
-                    src="/images/AboutAs/aboutAs.webp"
+                    src="/images/AboutAs/sectionIcons/ourJurney.webp"
                     alt="Journey Icon"
                     fill
                     className="object-contain"
                   />
                 </span>
                 <span className="relative pb-1">
-                  OUR JOURNEY
+                  <TypewriterText text="OUR JOURNEY" />
                   <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
                 </span>
               </div>
@@ -864,9 +866,9 @@ export default function AboutPage() {
                   </div>
 
                   {/* Left part: text content */}
-                  <div className="flex-1 space-y-1.5 group-hover:translate-x-1.5 transition-transform duration-300">
+                  <div className="flex-1 ml-4 space-y-1.5 group-hover:translate-x-1.5 transition-transform duration-300">
                     <span className="text-[12.5px] font-semibold text-[#E86D24] uppercase tracking-wide">{item.subtitle}</span>
-                    <h3 className="text-base sm:text-2xl font-semibold text-[#0B2545] font-montserrat">{item.title}</h3>
+                    <h3 className="text-base sm:text-2xl font-semibold text-[#0C3D6C] font-montserrat">{item.title}</h3>
                     <p className="text-slate-600 text-[13px] lg:text-sm leading-relaxed font-medium font-inter text-justify">{item.desc}</p>
                   </div>
 
@@ -907,22 +909,22 @@ export default function AboutPage() {
         {/* Section Header */}
         <div className="flex justify-start">
           <div className="inline-flex items-center gap-4 text-[#0B2545] font-bold text-xl uppercase tracking-wider">
-            <span className="relative w-7 h-7 flex-shrink-0">
+            <span className="relative w-8 h-8 flex-shrink-0">
               <Image
-                src="/images/AboutAs/aboutAs.webp"
+                src="/images/AboutAs/sectionIcons/engineered.webp"
                 alt="Engineered Icon"
                 fill
                 className="object-contain"
               />
             </span>
             <span className="relative pb-1">
-              ENGINEERED UNDER ONE ROOF
+              <TypewriterText text="ENGINEERED UNDER ONE ROOF" />
               <span className="absolute left-0 bottom-0 w-12 h-[3.5px] bg-[#E86D24] rounded-full" />
             </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-stretch items-center">
           {/* Left Column: Welder Photo — slides from LEFT */}
           <div
             className="lg:col-span-5 cap-left"
@@ -955,7 +957,7 @@ export default function AboutPage() {
 
           {/* Right Column: Capabilities — each element animates separately */}
           <div
-            className="lg:col-span-7 space-y-6 cap-right"
+            className="lg:col-span-7 cap-right flex flex-col justify-between h-full py-1"
             ref={(el) => {
               if (!el) return;
               const observer = new IntersectionObserver(
@@ -975,10 +977,10 @@ export default function AboutPage() {
           >
             {/* Title — index 0 */}
             <h2
-              className="cap-item text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0B2545] leading-tight font-montserrat"
-              style={{ "--cap-i": 0 } as React.CSSProperties}
+              className="cap-item text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0C3D6C] font-montserrat"
+              style={{ lineHeight: "1.3", "--cap-i": 0 } as React.CSSProperties}
             >
-              Where Design <span className="text-[#E86D24]">Meets Manufacturing</span>
+              Where Design  <br /> <span className="text-[#E86D24]">Meets Manufacturing</span>
             </h2>
 
             {/* Para 1 — index 1 */}
@@ -1004,8 +1006,8 @@ export default function AboutPage() {
                 { title: "Advanced Welding", desc: "MIG, TIG, laser, and robotic welding processes for consistent and durable joints.", icon: "/images/AboutAs/section6/Icons/Simplification (1).svg" },
                 { title: "Surface Finishing", desc: "Grinding, buffing, electroplating, and in-house powder coating for reliable surface protection.", icon: "/images/AboutAs/section6/Icons/Simplification (2).svg" },
                 { title: "Assembly & Upholstery", desc: "Dedicated processes for product assembly, upholstery, finishing, and final preparation.", icon: "/images/AboutAs/section6/Icons/Simplification (3).svg" },
-                { title: "Packing & Dispatch", desc: "Systematic packing and handling to ensure products reach customers safely and ready for use.", icon: "/images/AboutAs/section6/Icons/Simplification (4).svg" },
-                { title: "Quality Inspection", desc: "Products undergo final quality checks to ensure they meet defined standards before packing, dispatch, and delivery.", icon: "/images/AboutAs/section6/Icons/Simplification (5).svg" },
+                { title: "Packing & Dispatch", desc: "Systematic wrapping and secure dispatch to ensure products reach healthcare facilities in perfect condition.", icon: "/images/AboutAs/section6/Icons/Simplification (4).svg" },
+                { title: "Quality Inspection", desc: "Rigorous testing and inspection to ensure every product complies with our strict quality benchmarks.", icon: "/images/AboutAs/section6/Icons/Simplification (5).svg" },
               ].map((cap, idx) => (
                 <div
                   key={idx}
@@ -1075,16 +1077,16 @@ export default function AboutPage() {
             {/* Header & Titles */}
             <FadeIn className="max-w-3xl space-y-6" direction="left" delay={0.1}>
               <div className="inline-flex items-center gap-4 text-white font-bold text-xl uppercase tracking-wider">
-                <span className="relative w-8 h-8 flex-shrink-0">
+                <span className="relative w-7 h-7 flex-shrink-0">
                   <Image
-                    src="/images/AboutAs/aboutAs.webp"
+                    src="/images/AboutAs/sectionIcons/howWeBuildQuality.webp"
                     alt="Quality Principles Icon"
                     fill
                     className="object-contain"
                   />
                 </span>
                 <span className="relative pb-1">
-                  HOW WE BUILD QUALITY
+                  <TypewriterText text="HOW WE BUILD QUALITY" />
                   <span className="absolute left-0 bottom-0 w-12 h-[3.5px] bg-[#E86D24] rounded-full" />
                 </span>
               </div>
@@ -1189,10 +1191,10 @@ export default function AboutPage() {
             <div className="op-header flex justify-between items-center" style={{ "--op-i": 0 } as React.CSSProperties}>
               <div className="inline-flex items-center gap-3 text-white font-bold text-lg uppercase tracking-wider">
                 <span className="relative w-6 h-6 flex-shrink-0">
-                  <Image src="/images/AboutAs/aboutAs.webp" alt="Our People Icon" fill className="object-contain" />
+                  <Image src="/images/AboutAs/sectionIcons/ourPeople.webp" alt="Our People Icon" fill className="object-contain" />
                 </span>
                 <span className="relative pb-1">
-                  OUR PEOPLE
+                  <TypewriterText text="OUR PEOPLE" />
                   <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
                 </span>
               </div>
@@ -1244,10 +1246,10 @@ export default function AboutPage() {
             <div className="op-header absolute top-0 left-0 z-10 w-full px-[4vw] pt-16 flex justify-between items-start">
               <div className="inline-flex items-center gap-4 text-white font-bold text-xl uppercase tracking-wider">
                 <span className="relative w-7 h-7 flex-shrink-0">
-                  <Image src="/images/AboutAs/aboutAs.webp" alt="Our People Icon" fill className="object-contain" />
+                  <Image src="/images/AboutAs/sectionIcons/ourPeople.webp" alt="Our People Icon" fill className="object-contain" />
                 </span>
                 <span className="relative pb-1">
-                  OUR PEOPLE
+                  <TypewriterText text="OUR PEOPLE" />
                   <span className="absolute left-0 bottom-0 w-1/2 h-[3.5px] bg-[#E86D24] rounded-full" />
                 </span>
               </div>
