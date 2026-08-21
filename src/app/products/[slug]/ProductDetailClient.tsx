@@ -38,6 +38,57 @@ export function ProductDetailClient({
   relatedProducts,
 }: ProductDetailClientProps) {
   const { openInquiryModal } = useInquiryModal();
+  const sliderRef = React.useRef<HTMLDivElement>(null);
+  const [isSliderHovered, setIsSliderHovered] = React.useState(false);
+  const [isTemporarilyPaused, setIsTemporarilyPaused] = React.useState(false);
+  const pauseTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const duplicatedProducts = React.useMemo(() => {
+    if (relatedProducts.length === 0) return [];
+    // Repeat the array to guarantee enough content for a seamless infinite loop
+    return [...relatedProducts, ...relatedProducts, ...relatedProducts];
+  }, [relatedProducts]);
+
+  React.useEffect(() => {
+    if (isSliderHovered || isTemporarilyPaused || !sliderRef.current || relatedProducts.length <= 1) return;
+
+    let animationFrameId: number;
+    const el = sliderRef.current;
+
+    const step = () => {
+      if (el) {
+        el.scrollLeft += 0.8; // Slow, ultra-smooth continuous motion
+        const originalWidth = el.scrollWidth / 3;
+        if (el.scrollLeft >= originalWidth) {
+          el.scrollLeft -= originalWidth;
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isSliderHovered, isTemporarilyPaused, relatedProducts]);
+
+  const handleScroll = (direction: "left" | "right") => {
+    if (sliderRef.current) {
+      // Temporarily pause auto-scroll marquee
+      setIsTemporarilyPaused(true);
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+      pauseTimeoutRef.current = setTimeout(() => {
+        setIsTemporarilyPaused(false);
+      }, 5000); // Resume auto-scroll after 5 seconds
+
+      const scrollAmount = 300;
+      sliderRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   // Handle Image Slider State
   const images = [
@@ -53,23 +104,10 @@ export function ProductDetailClient({
 
   // Dynamic specification variants based on category or fallback
   const variants = React.useMemo(() => {
-    if (
-      product.category.toLowerCase().includes("bed") ||
-      product.category.toLowerCase().includes("cot")
-    ) {
-      return ["Manual Crank", "ABS Side Rails", "SS Collapsible"];
+    if (product.specificationVariants && product.specificationVariants.length > 0) {
+      return product.specificationVariants.map((v) => v.name);
     }
-    if (
-      product.category.toLowerCase().includes("table") ||
-      product.category.toLowerCase().includes("ot")
-    ) {
-      return [
-        "Standard Manual",
-        "ABS Panel Premium",
-        "Stainless Steel Variant",
-      ];
-    }
-    return ["Standard Spec", "Premium Option", "Economy Option"];
+    return [];
   }, [product]);
 
   const [selectedVariant, setSelectedVariant] = useState(
@@ -118,22 +156,30 @@ export function ProductDetailClient({
         ];
 
   // Config options table
-  const configs = [
-    {
-      component: "Arms",
-      options: "ABS, Stainless Steel (SS), Mild Steel (MS)",
-    },
-    {
-      component: "Side Rails",
-      options: "ABS, Stainless Steel Collapsible, Aluminium",
-    },
-    {
-      component: "Colour",
-      options: "White, Blue, Green, Grey, Custom Colours",
-    },
-    { component: "Mattress", options: "Optional" },
-    { component: "Accessories", options: "As per customer requirement" },
-  ];
+  const configs = React.useMemo(() => {
+    if (product.detailedSpec && Object.keys(product.detailedSpec).length > 0) {
+      return Object.entries(product.detailedSpec).map(([key, val]) => ({
+        component: key,
+        options: val,
+      }));
+    }
+    return [
+      {
+        component: "Arms",
+        options: "ABS, Stainless Steel (SS), Mild Steel (MS)",
+      },
+      {
+        component: "Side Rails",
+        options: "ABS, Stainless Steel Collapsible, Aluminium",
+      },
+      {
+        component: "Colour",
+        options: "White, Blue, Green, Grey, Custom Colours",
+      },
+      { component: "Mattress", options: "Optional" },
+      { component: "Accessories", options: "As per customer requirement" },
+    ];
+  }, [product]);
 
   // Key features mapping
   const features =
@@ -248,34 +294,55 @@ export function ProductDetailClient({
             </div>
 
             {/* Variant Selector Pills */}
-            <div className="space-y-2">
-              <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
-                Specification Variant
-              </span>
-              <div className="flex flex-wrap gap-2.5">
-                {variants.map((variant) => {
-                  const isActive = selectedVariant === variant;
-                  return (
-                    <button
-                      key={variant}
-                      onClick={() => setSelectedVariant(variant)}
-                      className={`px-4 py-2.5 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 ${
-                        isActive
-                          ? "bg-white border-slate-800 text-slate-800 shadow-sm"
-                          : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
-                      }`}
-                    >
-                      <span>{variant}</span>
-                      <span
-                        className={`text-[11px] ${isActive ? "text-slate-600" : "text-slate-300"}`}
+            {variants.length > 0 && (
+              <div className="space-y-2">
+                <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
+                  Specification Variant
+                </span>
+                <div className="flex flex-wrap gap-2.5">
+                  {variants.map((variant) => {
+                    const isActive = selectedVariant === variant;
+                    return (
+                      <button
+                        key={variant}
+                        onClick={() => setSelectedVariant(variant)}
+                        className={`px-4 py-2.5 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 ${
+                          isActive
+                            ? "bg-white border-slate-800 text-slate-800 shadow-sm"
+                            : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
+                        }`}
                       >
-                        ⓘ
-                      </span>
-                    </button>
-                  );
-                })}
+                        <span>{variant}</span>
+                        <span
+                          className={`text-[11px] ${isActive ? "text-slate-600" : "text-slate-300"}`}
+                        >
+                          ⓘ
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Model Specifications */}
+            {product.modelSpecifications && product.modelSpecifications.length > 0 && (
+              <div className="space-y-2">
+                <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
+                  Model Specifications
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {product.modelSpecifications.map((spec, index) => (
+                    <span
+                      key={index}
+                      className="bg-[#092347]/5 text-[#092347] border border-[#092347]/10 px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-black tracking-wide"
+                    >
+                      {spec}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Product Overview Description */}
             <div className="space-y-3">
@@ -283,20 +350,20 @@ export function ProductDetailClient({
                 Product Overview
               </span>
               <div className="space-y-5 text-slate-600 text-base md:text-[15px] leading-relaxed max-w-2xl font-medium">
-                <p>
-                  The Mathurams {product.name} is engineered to provide superior
-                  patient care in intensive care units and high-dependency
-                  wards. Manufactured using premium mild steel with an epoxy
-                  powder-coated finish, it offers exceptional durability, smooth
-                  manual operation, and long-lasting performance in demanding
-                  healthcare environments.
-                </p>
-                <p>
-                  Its ergonomic design enables caregivers to adjust patient
-                  positions efficiently without electrical power, making it a
-                  reliable solution for government hospitals, private hospitals,
-                  and healthcare institutions.
-                </p>
+                {product.description ? (
+                  product.description.split('\n').filter(p => p.trim() !== "").map((para, idx) => (
+                    <p key={idx}>{para}</p>
+                  ))
+                ) : (
+                  <>
+                    <p>
+                      The Mathurams {product.name} is engineered to provide superior
+                      patient care. Manufactured using premium materials, it offers
+                      exceptional durability, smooth operation, and long-lasting performance
+                      in demanding healthcare environments.
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -359,84 +426,46 @@ export function ProductDetailClient({
         </FadeIn>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[
-            {
-              title: "Five Manual Adjustment Functions",
-              img: "/images/ProductDetails/image 86.webp",
-            },
-            {
-              title: "Backrest, Knee Rest & Height Adjustment",
-              img: "/images/ProductDetails/image 87.webp",
-            },
-            {
-              title: "Trendelenburg & Reverse Trendelenburg",
-              img: "/images/ProductDetails/image 88.webp",
-            },
-            {
-              title: "Heavy-Duty Mild Steel Frame",
-              img: "/images/ProductDetails/image 89.webp",
-            },
-            {
-              title: "Epoxy Powder Coated Finish",
-              img: "/images/ProductDetails/image 90.webp",
-            },
-            {
-              title: "ABS Head & Foot Panels",
-              img: "/images/ProductDetails/image 91.webp",
-            },
-            {
-              title: "ABS / SS Collapsible Side Rails (Optional)",
-              img: "/images/ProductDetails/image 92.webp",
-            },
-            {
-              title: "ABS / SS Collapsible Side Rails (Optional)",
-              img: "/images/ProductDetails/image 93.webp",
-            },
-            {
-              title: "ABS Head & Foot Panels",
-              img: "/images/ProductDetails/image 94.webp",
-            },
-            {
-              title: "Smooth Manual Crank Mechanism",
-              img: "/images/ProductDetails/image 95.webp",
-            },
-            {
-              title: "Four Heavy-Duty Castors with Brakes",
-              img: "/images/ProductDetails/image 96.webp",
-            },
-            {
-              title: "Durable, Easy-to-Clean Construction",
-              img: "/images/ProductDetails/image 97.webp",
-            },
-            {
-              title: "IV Pole & Urine Bag Holder Provision",
-              img: "/images/ProductDetails/image 98.webp",
-            },
-            {
-              title: "High Load Capacity Up to 250 kg",
-              img: "/images/ProductDetails/image 99.webp",
-            },
-          ].map((item, idx) => (
-            <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
-              <div
-                className="group/card flex items-center gap-3.5 bg-white p-3 md:p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 min-h-[84px] cursor-pointer"
-              >
-                <div className="relative w-12 h-10 shrink-0 overflow-hidden">
-                  <Image
-                    src={item.img}
-                    alt={item.title}
-                    fill
-                    className="object-contain transition-transform duration-300 group-hover/card:scale-110"
-                  />
+          {features.map((item, idx) => {
+            const featureIcons = [
+              "/images/ProductDetails/image 86.webp",
+              "/images/ProductDetails/image 87.webp",
+              "/images/ProductDetails/image 88.webp",
+              "/images/ProductDetails/image 89.webp",
+              "/images/ProductDetails/image 90.webp",
+              "/images/ProductDetails/image 91.webp",
+              "/images/ProductDetails/image 92.webp",
+              "/images/ProductDetails/image 93.webp",
+              "/images/ProductDetails/image 94.webp",
+              "/images/ProductDetails/image 95.webp",
+              "/images/ProductDetails/image 96.webp",
+              "/images/ProductDetails/image 97.webp",
+              "/images/ProductDetails/image 98.webp",
+              "/images/ProductDetails/image 99.webp"
+            ];
+            const iconSrc = featureIcons[idx % featureIcons.length];
+            return (
+              <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
+                <div
+                  className="group/card flex items-center gap-3.5 bg-white p-3.5 md:p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 min-h-[84px] cursor-pointer"
+                >
+                  <div className="relative w-12 h-10 shrink-0 overflow-hidden">
+                    <Image
+                      src={iconSrc}
+                      alt={item}
+                      fill
+                      className="object-contain transition-transform duration-300 group-hover/card:scale-110"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0 text-left">
+                    <p className="text-[#092347] text-xs md:text-sm font-bold leading-snug">
+                      {item}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-[#092347] text-sm font-medium leading-snug">
-                    {item.title}
-                  </p>
-                </div>
-              </div>
-            </FadeIn>
-          ))}
+              </FadeIn>
+            );
+          })}
         </div>
       </div>
 
@@ -545,73 +574,6 @@ export function ProductDetailClient({
         </FadeIn>
       </div>
 
-      {/* Standard Accessories Section */}
-      <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat pb-8">
-        <FadeIn direction="up" duration={0.6}>
-          <div className="space-y-2 text-left">
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-2">
-                <Settings className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
-                <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
-                  STANDARD ACCESSORIES
-                </span>
-              </div>
-              <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
-            </div>
-            <p className="text-slate-500 text-sm md:text-base font-semibold leading-relaxed max-w-2xl">
-              Essential accessories selected to enhance functionality,
-              convenience, and everyday usability.
-            </p>
-          </div>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {[
-            {
-              name: "IV Pole",
-              img: "/images/ProductDetails/StandardAccessories/IV pole.webp",
-            },
-            {
-              name: "Urine Bag Holder",
-              img: "/images/ProductDetails/StandardAccessories/Urine Bag Hanger.webp",
-            },
-            {
-              name: "ABS Head & Foot Panels",
-              img: "/images/ProductDetails/StandardAccessories/ABS Head.webp",
-            },
-            {
-              name: "Manual Crank Handles",
-              img: "/images/ProductDetails/StandardAccessories/manualHead.webp",
-            },
-            {
-              name: "Four Heavy-Duty Castors with Brakes",
-              img: "/images/ProductDetails/StandardAccessories/wheel.webp",
-            },
-          ].map((item, idx) => (
-            <FadeIn key={idx} direction="up" delay={idx * 0.05} duration={0.4}>
-              <div
-                className="group/accessory bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between cursor-pointer h-full"
-              >
-                <div className="relative aspect-square w-full bg-slate-50/50 overflow-hidden flex items-center justify-center p-4">
-                  <Image
-                    src={item.img}
-                    alt={item.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 20vw"
-                    className="object-contain p-2 transition-transform duration-500 group-hover/accessory:scale-105"
-                  />
-                </div>
-                <div className="py-4 px-3 text-center border-t border-slate-100 bg-white min-h-[64px] flex items-center justify-center">
-                  <span className="text-[#092347] font-normal text-lg md:text-[15px] leading-snug">
-                    {item.name}
-                  </span>
-                </div>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
-
       {/* Reliable Bottom Banner Section */}
       <FadeIn direction="up" duration={0.6} delay={0.25}>
         <div className="relative rounded-2xl bg-[#092347] overflow-hidden p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md mt-8 border border-blue-950/60 font-montserrat">
@@ -665,55 +627,83 @@ export function ProductDetailClient({
       {/* Related Products Section */}
       <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat pb-8">
         <FadeIn direction="up" duration={0.6}>
-          <div className="space-y-2 text-center">
-            <h2 className="text-[#E87325] text-2xl md:text-3xl font-black tracking-tight">
-              Related Products
-            </h2>
-            <p className="text-slate-500 text-sm font-semibold max-w-2xl mx-auto leading-relaxed">
-              <strong>Explore</strong> our most trusted hospital furniture and medical equipment, engineered for durability, safety, and reliable performance in <strong>modern healthcare environments</strong>.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-4">
+            <div className="space-y-2 text-left">
+              <h2 className="text-[#E87325] text-2xl md:text-3xl font-black tracking-tight">
+                Related Products
+              </h2>
+              <p className="text-slate-500 text-sm font-semibold leading-relaxed">
+                Explore premium hospital furniture and medical equipment under this category.
+              </p>
+            </div>
+            
+            {/* Carousel Navigation Buttons */}
+            {relatedProducts.length > 0 && (
+              <div className="flex items-center gap-2 self-start sm:self-auto shrink-0 pb-1">
+                <button
+                  onClick={() => handleScroll("left")}
+                  className="bg-white border border-slate-200 hover:border-[#E87325] text-slate-700 hover:text-[#E87325] w-9 h-9 rounded-full shadow-2xs hover:shadow-sm flex items-center justify-center transition-all active:scale-90"
+                  title="Scroll Left"
+                >
+                  <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+                </button>
+                <button
+                  onClick={() => handleScroll("right")}
+                  className="bg-white border border-slate-200 hover:border-[#E87325] text-slate-700 hover:text-[#E87325] w-9 h-9 rounded-full shadow-2xs hover:shadow-sm flex items-center justify-center transition-all active:scale-90"
+                  title="Scroll Right"
+                >
+                  <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                </button>
+              </div>
+            )}
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {relatedProducts.slice(0, 5).map((p, idx) => (
-            <FadeIn key={p.id} direction="up" delay={idx * 0.05} duration={0.4}>
-              <div className="group/related bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3.5 cursor-pointer h-full">
+        {/* Smooth Scrolling Carousel */}
+        <div
+          ref={sliderRef}
+          onMouseEnter={() => setIsSliderHovered(true)}
+          onMouseLeave={() => setIsSliderHovered(false)}
+          className="flex gap-6 overflow-x-auto py-2 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full"
+        >
+          {duplicatedProducts.map((p, idx) => (
+            <div key={`${p.id}-dup-${idx}`} className="w-[280px] shrink-0 h-full">
+              <div className="group/related bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3.5 cursor-pointer h-[400px]">
                 <div className="relative aspect-[1.3/1] w-full bg-slate-50/50 rounded-xl overflow-hidden mb-3.5">
                   <Image
                     src={p.image}
                     alt={p.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, 20vw"
+                    sizes="240px"
                     className="object-contain p-2 transition-transform duration-500 group-hover/related:scale-105"
                   />
                 </div>
                 <div className="space-y-1.5 flex-1 flex flex-col justify-between">
                   <div className="space-y-1">
-                    <h3 className="text-[#092347] font-black text-sm md:text-base leading-tight truncate">
+                    <h3 className="text-[#092347] font-black text-sm md:text-base leading-tight whitespace-normal break-words">
                       {p.name}
                     </h3>
                     <p className="text-slate-500 text-[11px] font-medium leading-normal line-clamp-3">
                       {p.description || "Designed for patient comfort, safety, and efficient caregiving with a durable and ergonomic structure."}
                     </p>
                   </div>
-                  <div className="flex gap-2 pt-3 border-t border-slate-100 mt-3.5">
-                    <Link href={`/products/${p.slug}`} scroll={false} className="flex-1">
-                      <button className="w-full border border-[#0B3C83] text-[#0B3C83] hover:bg-[#0B3C83]/5 rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center">
+                  <div className="flex flex-col gap-2 pt-3 border-t border-slate-100 mt-3.5 w-full">
+                    <Link href={`/products/${p.slug}`} scroll={false} className="w-full">
+                      <button className="w-full border border-[#0B3C83] text-[#0B3C83] hover:bg-[#0B3C83]/5 rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center whitespace-nowrap">
                         View Details
                       </button>
                     </Link>
                     <button
                       onClick={() => openInquiryModal(p)}
-                      className="flex-1 bg-[#E87325] hover:bg-[#D0621B] text-white rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center flex items-center justify-center gap-1 active:scale-95"
+                      className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center flex items-center justify-center gap-1 active:scale-95 whitespace-nowrap"
                     >
-                      Send Enquiry
-                      <ChevronRight className="w-3 h-3 text-white" />
+                      <span>Send Enquiry</span>
+                      <ChevronRight className="w-3 h-3 text-white shrink-0" />
                     </button>
                   </div>
                 </div>
               </div>
-            </FadeIn>
+            </div>
           ))}
         </div>
       </div>

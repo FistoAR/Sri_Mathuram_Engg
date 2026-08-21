@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { PenTool, Hammer, Paintbrush, Settings, ClipboardCheck, Package } from "lucide-react";
+import { TypewriterText } from "@/components/ui/TypewriterText";
 
 function getStepIcon(index: number, colorClass: string = "text-white") {
   const sizeClass = `w-5 h-5 ${colorClass}`;
@@ -98,54 +99,55 @@ export function BuildQualitySection() {
         {/* Blueprint background watermark */}
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#0b2545_1px,transparent_1px)] [background-size:24px_24px]" />
 
-        <div className="w-full mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 ">
-          
-          {/* Left Column: Heading & Description */}
-          <div className="lg:col-span-4 xl:col-span-4  pr-0 lg:pr-2 space-y-8">
-            
-            {/* Top Tagline */}
+        <div className="w-full mx-auto relative z-10 flex flex-col gap-6">
+          {/* Top Row: Tagline */}
+          <div className="flex items-end justify-between w-full pb-4">
+            {/* Tagline */}
             <FadeIn direction="up" delay={0.1}>
-              <div className="flex flex-col items-start gap-1.5 pb-2">
-                <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+              <div className="flex flex-col items-start gap-1.5">
+                <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
                   <div className="relative w-7 h-7 flex-shrink-0">
                     <Image
-                      src="/images/AboutAs/aboutAs.webp"
+                      src="/images/Home Page/sectionIcons/howWeBuild.webp"
                       alt="Build Quality Logo"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <span>HOW WE BUILD QUALITY</span>
+                  <TypewriterText text="HOW WE BUILD QUALITY" />
                 </div>
                 <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
               </div>
             </FadeIn>
-
-            {/* Main Title */}
-            <FadeIn direction="up" delay={0.15}>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-[#0B2545] leading-[1.15] tracking-wide" style={{lineHeight: "1.25", fontFamily: "var(--font-outfit)"}}>
-                Precision Manufacturing at Every Step
-              </h2>
-            </FadeIn>
-
-            {/* Description */}
-            <FadeIn direction="up" delay={0.2}>
-              <p className="text-sm sm:text-base text-slate-800 leading-relaxed font-normal" style={{lineHeight:"1.8"}}>
-                Every product is manufactured through a carefully controlled process using advanced machinery, skilled craftsmanship, and rigorous quality standards. From concept to delivery, we ensure every piece meets the expectations of modern healthcare facilities.
-              </p>
-            </FadeIn>
-
           </div>
 
-          {/* Right Column: Dynamic Expandable Accordion & STEP watermark */}
-          <FadeIn direction="left" delay={0.2} className="lg:col-span-8 xl:col-span-8 relative flex flex-col justify-center w-full">
-            
-            {/* Top Right STEP-XX Watermark */}
-            <div className="absolute -top-12 right-4 pointer-events-none select-none">
-              <span className="text-6xl sm:text-7xl font-black text-slate-300/40 tracking-wider font-mono">
-                {currentStep.stepNumber}
-              </span>
+          {/* Content Row: Title/Description on Left & Accordion on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 pt-2 items-center">
+            {/* Left Column: Heading & Description */}
+            <div className="lg:col-span-4 space-y-6 flex flex-col justify-start">
+              {/* Main Title */}
+              <FadeIn direction="up" delay={0.15}>
+                <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-extrabold text-[#0B2545] tracking-wider font-montserrat" style={{ lineHeight: "1.2" }}>
+                  Precision Manufacturing at Every Step
+                </h2>
+              </FadeIn>
+
+              {/* Description */}
+              <FadeIn direction="up" delay={0.2}>
+                <p className="text-md sm:text-lg text-slate-800 leading-relaxed font-normal" style={{lineHeight:"1.8"}}>
+                  Every product is manufactured through a carefully controlled process using advanced machinery, skilled craftsmanship, and rigorous quality standards. From concept to delivery, we ensure every piece meets the expectations of modern healthcare facilities.
+                </p>
+              </FadeIn>
             </div>
+
+            {/* Right Column: Dynamic Expandable Accordion */}
+            <FadeIn direction="left" delay={0.2} className="lg:col-span-8 relative flex flex-col justify-center w-full">
+              {/* Top Right STEP-XX Watermark (placed here to overlap behind the curved top of the image cards) */}
+              <div className="absolute -top-[72px] right-10 pointer-events-none select-none z-0">
+                <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-slate-500/20 tracking-wider font-mono">
+                  {currentStep.stepNumber}
+                </span>
+              </div>
  
             {/* Interactive Accordion Cards Flex Row (Desktop only) */}
             <div
@@ -340,9 +342,9 @@ export function BuildQualitySection() {
               })}
             </div>
           </FadeIn>
-
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

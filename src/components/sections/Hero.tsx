@@ -429,10 +429,10 @@ export function Hero() {
                 className={`hero-badge flex flex-col items-start gap-1.5 ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.1s" : "0s" }}
               >
-                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1vw] font-bold tracking-wider text-[#0B2545] uppercase">
+                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1vw] font-bold tracking-wider text-[#0C3D6C] uppercase">
                   <div className="relative w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0">
                     <Image
-                      src="/images/Home Page/trusted.webp"
+                      src="/images/Home Page/sectionIcons/trustedMedical.webp"
                       alt="Trusted Logo"
                       fill
                       className="object-contain"
@@ -452,7 +452,7 @@ export function Hero() {
                 <span className="text-orange-500 block">
                   {activeItem.titleOrange}
                 </span>
-                <span className="text-slate-900 block mt-[0.2vh]">
+                <span className="text-[#0B2545] block mt-[0.2vh]">
                   {activeItem.titleNavy}
                 </span>
               </h1>

@@ -21,7 +21,13 @@ import { useSearchParams } from "next/navigation";
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div className="p-8 text-center text-slate-500 font-semibold">Loading Products...</div>}>
+    <Suspense
+      fallback={
+        <div className="p-8 text-center text-slate-500 font-semibold">
+          Loading Products...
+        </div>
+      }
+    >
       <ProductsPageContent />
     </Suspense>
   );
@@ -61,7 +67,7 @@ function ProductsPageContent() {
         setActiveCategoryIndex(idx);
       }
     }
-    
+
     // Sync sidebar state from localStorage
     const saved = localStorage.getItem("sidebarExpanded");
     if (saved !== null) {
@@ -104,7 +110,7 @@ function ProductsPageContent() {
   // Unique categories present in results, sorted by original layout ordering
   const groupedCategoryNames = useMemo(() => {
     return CATEGORIES.filter((cat) =>
-      filteredProducts.some((p) => p.category === cat.name)
+      filteredProducts.some((p) => p.category === cat.name),
     ).map((cat) => cat.name);
   }, [filteredProducts]);
 
@@ -149,6 +155,12 @@ function ProductsPageContent() {
     return () => clearTimeout(timer);
   }, [currentCategory]);
 
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   return (
     <main
       ref={mainRef}
@@ -156,7 +168,6 @@ function ProductsPageContent() {
         isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
     >
-
       {/* Category Banner Card */}
       <div className="hidden lg:block relative rounded-2xl overflow-hidden border border-slate-200/90 w-full shadow-2xs">
         <Image
@@ -171,17 +182,22 @@ function ProductsPageContent() {
       </div>
 
       {/* Products Grid */}
-      <div ref={productsStartRef} className="min-h-[calc(100vh-140px)] pb-12 space-y-8">
+      <div
+        ref={productsStartRef}
+        className="min-h-[calc(100vh-140px)] pb-12 space-y-8"
+      >
         {filteredProducts.length === 0 ? (
-           <div className="text-center py-16 bg-slate-50 rounded-2xl border border-slate-200/60">
-             <p className="text-slate-500 font-bold text-sm">
-               No products found in this category matching "{searchTerm}".
-             </p>
-           </div>
+          <div className="text-center py-16 bg-slate-50 rounded-2xl border border-slate-200/60">
+            <p className="text-slate-500 font-bold text-sm">
+              No products found in this category matching "{searchTerm}".
+            </p>
+          </div>
         ) : currentCategory === "All Products" ? (
           // Grouped by Category layout
           groupedCategoryNames.map((catName) => {
-            const catProducts = filteredProducts.filter((p) => p.category === catName);
+            const catProducts = filteredProducts.filter(
+              (p) => p.category === catName,
+            );
             return (
               <div key={catName} className="space-y-4">
                 <div className="flex items-center gap-2 border-b border-slate-200/60 pb-2 pt-2">
@@ -192,9 +208,11 @@ function ProductsPageContent() {
                     {catProducts.length}
                   </span>
                 </div>
-                <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transition-all duration-300 ${
-                  isSidebarExpanded ? "lg:grid-cols-3" : "lg:grid-cols-4"
-                }`}>
+                <div
+                  className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transition-all duration-300 ${
+                    isSidebarExpanded ? "lg:grid-cols-3" : "lg:grid-cols-4"
+                  }`}
+                >
                   {catProducts.map((product) => (
                     <ScrollReveal key={product.id}>
                       <ProductCard product={product} />
@@ -206,9 +224,11 @@ function ProductsPageContent() {
           })
         ) : (
           // Single Category Direct Grid layout
-          <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transition-all duration-300 ${
-            isSidebarExpanded ? "lg:grid-cols-3" : "lg:grid-cols-4"
-          }`}>
+          <div
+            className={`grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 transition-all duration-300 ${
+              isSidebarExpanded ? "lg:grid-cols-3" : "lg:grid-cols-4"
+            }`}
+          >
             {filteredProducts.map((product) => (
               <ScrollReveal key={product.id}>
                 <ProductCard product={product} />
@@ -253,7 +273,7 @@ function ScrollReveal({ children }: { children: React.ReactNode }) {
       {
         threshold: 0.05,
         rootMargin: "0px 0px -40px 0px",
-      }
+      },
     );
 
     if (ref.current) {
@@ -271,7 +291,9 @@ function ScrollReveal({ children }: { children: React.ReactNode }) {
       className={`${
         shouldAnimate ? "transition-all duration-700 ease-out transform" : ""
       } ${
-        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+        isVisible
+          ? "opacity-100 translate-y-0 scale-100"
+          : "opacity-0 translate-y-8 scale-95"
       }`}
     >
       {children}
