@@ -117,6 +117,30 @@
   scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
 }
 
+/* Global Thin Orange Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f97316; /* Tailwind orange-500 */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ea580c; /* Tailwind orange-600 */
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #f97316 transparent;
+}
+
 /* Card Top-Left & Bottom-Left Curved Orange Accent Border Matching Mockup Image Exactly */
 .card-orange-accent-border {
   position: relative;
