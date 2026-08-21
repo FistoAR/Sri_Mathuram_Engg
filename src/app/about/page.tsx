@@ -178,8 +178,7 @@ export default function AboutPage() {
       {/* 2. WHO WE ARE / OUR COMPANY STORY SECTION */}
       <section
         id="who-we-are"
-        className="w-full relative z-20 bg-cover bg-center bg-no-repeat py-12 lg:py-16 flex flex-col justify-center !mt-0"
-        style={{ backgroundImage: "url('/images/AboutAs/section2/aboutbg.webp')" }}
+        className="w-full relative z-20 bg-white py-12 lg:py-16 flex flex-col justify-center !mt-0"
       >
         {/* Tagline aligned to the top left of the section */}
         <div className="w-full px-[4vw] mb-12 flex justify-start">

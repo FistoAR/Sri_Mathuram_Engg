@@ -215,15 +215,16 @@ export function ProductDetailClient({
         {/* Left Side: Product Gallery */}
         <FadeIn direction="left" duration={0.6} className="h-full">
           <div className="flex flex-col justify-between space-y-4 h-full min-w-0">
-          {/* Back to Products navigation link */}
           <div className="pt-1">
             <Link
               href={`/products?category=${encodeURIComponent(product.category)}`}
               scroll={false}
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-[#0B3C83] text-sm font-bold transition-all group"
+              className="w-8 h-8 rounded-full bg-[#E86D24] flex items-center justify-center shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-lg active:scale-95 transition-all duration-300 group relative overflow-hidden"
             >
-              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-              <span>Back to Products</span>
+              {/* Silver running shine beam effect */}
+              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-silver-shine" />
+              
+              <ChevronLeft className="relative z-10 w-5 h-5 text-white bg-white/20 group-hover:bg-white group-hover:text-[#E86D24] rounded-full p-[2px] transition-all duration-300 group-hover:-translate-x-0.5" />
             </Link>
           </div>
 
