@@ -105,7 +105,7 @@ export function BuildQualitySection() {
             {/* Tagline */}
             <FadeIn direction="up" delay={0.1}>
               <div className="flex flex-col items-start gap-1.5">
-                <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+                <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
                   <div className="relative w-7 h-7 flex-shrink-0">
                     <Image
                       src="/images/Home Page/sectionIcons/howWeBuild.webp"
@@ -127,7 +127,7 @@ export function BuildQualitySection() {
             <div className="lg:col-span-4 space-y-6 flex flex-col justify-start">
               {/* Main Title */}
               <FadeIn direction="up" delay={0.15}>
-                <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-bold text-[#0C3D6C] tracking-wider font-montserrat" style={{ lineHeight: "1.2" }}>
+                <h2 className="text-3xl sm:text-4xl lg:text-[3.5rem] font-extrabold text-[#0B2545] tracking-wider font-montserrat" style={{ lineHeight: "1.2" }}>
                   Precision Manufacturing at Every Step
                 </h2>
               </FadeIn>

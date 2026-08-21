@@ -182,8 +182,8 @@ export default function AboutPage() {
         style={{ backgroundImage: "url('/images/AboutAs/section2/aboutbg.webp')" }}
       >
         {/* Tagline aligned to the top left of the section */}
-        <div className="w-full px-[4vw] mb-8 flex justify-start">
-          <div className="inline-flex  gap-2 text-[#0B2545] font-semibold text-lg uppercase">
+        <div className="w-full px-[4vw] mb-12 flex justify-start">
+          <div className="inline-flex  gap-2 text-[#0C3D6C] font-semibold text-lg uppercase">
             <span className="relative w-8 h-8 flex-shrink-0">
               <Image
                 src="/images/AboutAs/sectionIcons/ourCompanyStory.webp"
@@ -193,7 +193,7 @@ export default function AboutPage() {
               />
             </span>
             <span className="relative pb-1">
-              <TypewriterText text="OUR COMPANY STORY" />
+              <TypewriterText text="OUR COMPANY STORY" speed={1} delay={1} step={3} />
               <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
             </span>
           </div>
@@ -239,7 +239,7 @@ export default function AboutPage() {
 
             <div className="space-y-8">
               {/* Typing title — word-wrapped so characters never break mid-word */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-[#0B2545] tracking-wider">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0B2545] tracking-wider">
                 {"Building Healthcare Infrastructure Since 1997".split(" ").map((word, wIdx, words) => {
                   const charOffset = words.slice(0, wIdx).join(" ").length + (wIdx > 0 ? 1 : 0);
                   return (
@@ -335,7 +335,7 @@ export default function AboutPage() {
         >
           {/* Tagline aligned to the left */}
           <div className="flex justify-start mb-6">
-            <div className="inline-flex items-center gap-4 text-[#0B2545] font-semibold text-xl uppercase">
+            <div className="inline-flex items-center gap-4 text-[#0C3D6C] font-semibold text-xl uppercase">
               <span className="relative w-8 h-8 flex-shrink-0">
                 <Image
                   src="/images/AboutAs/sectionIcons/milestone.webp"
@@ -581,7 +581,7 @@ export default function AboutPage() {
       {/* 4. OUR FOUNDATION SECTION */}
       <section className="w-full px-[4vw] space-y-12 !mt-10">
         <div className="flex justify-start">
-          <div className="inline-flex items-center gap-4 text-[#0B2545] font-bold text-xl uppercase tracking-wider">
+          <div className="inline-flex items-center gap-4 text-[#0C3D6C] font-bold text-xl uppercase tracking-wider">
             <span className="relative w-8 h-8 flex-shrink-0">
               <Image
                 src="/images/AboutAs/sectionIcons/ourVision.webp"
@@ -753,9 +753,9 @@ export default function AboutPage() {
       >
         <div className="flex flex-col lg:flex-row gap-12 items-stretch w-full h-full relative z-10">
           {/* Left Column: Heading */}
-          <FadeIn className="w-full lg:w-[40%] flex flex-col justify-start space-y-6" direction="left" delay={0.1}>
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-4 text-[#0B2545] font-bold text-xl uppercase tracking-wider">
+          <FadeIn className="w-full lg:w-[33%] flex flex-col justify-start space-y-6" direction="left" delay={0.1}>
+            <div className="space-y-12">
+              <div className="inline-flex items-center gap-4 text-[#0C3D6C] font-bold text-xl uppercase tracking-wider">
                 <span className="relative w-8 h-8 flex-shrink-0">
                   <Image
                     src="/images/AboutAs/sectionIcons/ourJurney.webp"
@@ -905,10 +905,10 @@ export default function AboutPage() {
       </section>
 
       {/* 6. WHERE DESIGN MEETS MANUFACTURING (CAPABILITIES) */}
-      <section id="capabilities" className="w-full px-[4vw] space-y-8 !mt-16">
+      <section id="capabilities" className="w-full px-[4vw] space-y-12 !mt-16">
         {/* Section Header */}
         <div className="flex justify-start">
-          <div className="inline-flex items-center gap-4 text-[#0B2545] font-bold text-xl uppercase tracking-wider">
+          <div className="inline-flex items-center gap-4 text-[#0C3D6C] font-bold text-xl uppercase tracking-wider">
             <span className="relative w-8 h-8 flex-shrink-0">
               <Image
                 src="/images/AboutAs/sectionIcons/engineered.webp"
@@ -924,7 +924,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-stretch items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:items-stretch items-center ">
           {/* Left Column: Welder Photo — slides from LEFT */}
           <div
             className="lg:col-span-5 cap-left"
@@ -977,7 +977,7 @@ export default function AboutPage() {
           >
             {/* Title — index 0 */}
             <h2
-              className="cap-item text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0C3D6C] font-montserrat"
+              className="cap-item text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0B2545] font-montserrat"
               style={{ lineHeight: "1.3", "--cap-i": 0 } as React.CSSProperties}
             >
               Where Design  <br /> <span className="text-[#E86D24]">Meets Manufacturing</span>
@@ -1069,11 +1069,9 @@ export default function AboutPage() {
           className="w-full relative px-[4vw] py-20 bg-cover bg-center bg-no-repeat overflow-hidden min-h-[85vh] flex flex-col justify-between bg-black !mt-0"
           style={{ backgroundImage: "url('/images/AboutAs/section7/bgImage.webp')" }}
         >
-          {/* Dark overlays to blend image horizontally and vertically into Section 8 theme */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-black/85 z-0" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 via-85% to-black z-0" />
+          
 
-          <div className="relative z-10 w-full space-y-16">
+          <div className="relative z-10 w-full space-y-28">
             {/* Header & Titles */}
             <FadeIn className="max-w-3xl space-y-6" direction="left" delay={0.1}>
               <div className="inline-flex items-center gap-4 text-white font-bold text-xl uppercase tracking-wider">
@@ -1090,78 +1088,131 @@ export default function AboutPage() {
                   <span className="absolute left-0 bottom-0 w-12 h-[3.5px] bg-[#E86D24] rounded-full" />
                 </span>
               </div>
-              <h2 className="text-4xl sm:text-5xl font-semibold text-white leading-tight font-montserrat">
+              <h2 className="text-4xl sm:text-5xl font-extrabold text-white leading-[0.9] tracking-wider font-montserrat">
                 The Principles Behind Mathurams
               </h2>
-              <div className="text-white text-md md:text-lg leading-relaxed mx-auto space-y-2 font-medium max-w-7xl">
-                <p className="text-slate-300 font-inter text-sm sm:text-base leading-relaxed text-left max-w-2xl">
-                  Built on a foundation of precision engineering, state-of-the-art technology, and rigorous quality control. We adhere to the highest international standards in every component we manufacture.
+              <div className="text-white text-md md:text-lg leading-relaxed space-y-4 font-medium max-w-md">
+                <p className="text-slate-300 font-inter text-base sm:text-lg leading-relaxed text-left max-w-2xl">
+                  Our values guide every decision we make, from how we design and manufacture our products to how we work with our customers and partners.
+                </p>
+                <p className="text-slate-300 font-inter text-base sm:text-lg leading-relaxed text-left max-w-2xl">
+                  They shape our commitment to quality, reliability, innovation, and continuous improvement, while building lasting relationships through trust, transparency, and accountability.
                 </p>
               </div>
             </FadeIn>
 
-            {/* Principles Cards Grid (4 Columns) */}
-            <FadeIn className="w-full" direction="up" delay={0.2}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Principles Cards Grid (6 Columns on Desktop) */}
+            <div className="w-full">
+              <div 
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4"
+                ref={(el) => {
+                  if (!el) return;
+                  const observer = new IntersectionObserver(
+                    ([entry]) => {
+                      if (entry.isIntersecting && entry.boundingClientRect.top > 0) {
+                        el.classList.remove('pr-visible');
+                        void el.offsetHeight;
+                        el.classList.add('pr-visible');
+                      } else if (entry.boundingClientRect.top > window.innerHeight) {
+                        el.classList.remove('pr-visible');
+                      }
+                    },
+                    { threshold: 0.1 }
+                  );
+                  observer.observe(el);
+                }}
+              >
                 {[
                   {
-                    title: "Advanced Technology",
-                    desc: "Leveraging state-of-the-art CNC machinery and automated systems to deliver unmatched manufacturing accuracy and components.",
+                    title: "Quality",
+                    desc: "We believe dependable healthcare products begin with uncompromising manufacturing standards.",
                     img: "/images/AboutAs/section7/Cards/Rectangle.webp"
                   },
                   {
-                    title: "Quality Materials",
-                    desc: "Sourcing only premium-grade metals, polymers, and raw materials, verified through strict testing before entering production.",
+                    title: "Reliability",
+                    desc: "Our products are designed for environments where consistent performance matters.",
                     img: "/images/AboutAs/section7/Cards/Rectangle 74 (1).webp"
                   },
                   {
-                    title: "Expert Craftsmanship",
-                    desc: "Our highly trained engineers and artisans bring decades of collective experience, supervising every stage of production.",
+                    title: "Integrity",
+                    desc: "We believe long-term relationships are built through transparency and accountability.",
                     img: "/images/AboutAs/section7/Cards/Rectangle 74 (2).webp"
                   },
                   {
-                    title: "Rigorous Inspection",
-                    desc: "Every single component undergoes strict multi-point checks and coordinate measurements to ensure flawless performance.",
+                    title: "Innovation",
+                    desc: "We continuously explore better technologies, processes, and product solutions.",
                     img: "/images/AboutAs/section7/Cards/Rectangle 74 (3).webp"
+                  },
+                   {
+                    title: "Customer Focus",
+                    desc: "Every requirement is an opportunity to understand and serve our customers better.",
+                    img: "/images/AboutAs/section7/Cards/customerFocus.webp"
+                  },
+                  {
+                    title: "Improvement",
+                    desc: "We keep learning, refining, and improving how we design and manufacture.",
+                    img: "/images/AboutAs/section7/Cards/immprovement.webp"
                   }
                 ].map((card, idx) => (
                   <div 
                     key={idx}
-                    className="group relative flex flex-col items-center bg-[#0F2747] hover:bg-[#15355e] border border-[#224673] hover:border-orange-500/40 rounded-3xl p-6 transition-all duration-300 transform hover:-translate-y-1.5 shadow-xl hover:shadow-orange-950/10 h-full text-center"
+                    className="pr-card h-full"
+                    style={{ "--pr-delay": `${0.1 + idx * 0.08}s` } as React.CSSProperties}
                   >
-                    {/* Quality Seal Icon Badge */}
-                    <div className="relative w-10 h-10 mb-4 flex-shrink-0">
-                      <Image
-                        src="/images/AboutAs/section7/QualityIcon.webp"
-                        alt="Quality Badge Icon"
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
+                    <div className="group relative flex flex-col items-center bg-[#0F2747] hover:bg-[#15355e] border border-[#224673] hover:border-orange-500/40 rounded-2xl p-4 transition-all duration-300 transform hover:-translate-y-2 shadow-xl hover:shadow-orange-950/20 h-full text-center">
+                      {/* Quality Seal Icon Badge */}
+                      <div className="relative w-12 h-12 mb-3 flex-shrink-0">
+                        <Image
+                          src="/images/AboutAs/section7/QualityIcon.webp"
+                          alt="Quality Badge Icon"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
 
-                    {/* Title & Desc Container */}
-                    <div className="flex-1 flex flex-col justify-start space-y-2 mb-4">
-                      <h4 className="text-lg font-bold text-white font-montserrat">
-                        {card.title}
-                      </h4>
-                      <p className="text-slate-300 text-[11.5px] leading-relaxed font-medium font-inter text-center px-1">
-                        {card.desc}
-                      </p>
-                    </div>
+                      {/* Title & Desc Container */}
+                      <div className="flex-1 flex flex-col justify-start mb-3">
+                        <h4 className="text-lg font-bold text-white tracking-wide">
+                          {card.title}
+                        </h4>
+                        
+                        {/* Underline divider that expands and turns orange on hover */}
+                        <div className="w-8 h-[2px] bg-slate-500/50 mx-auto mt-2 mb-3 group-hover:w-12 group-hover:bg-[#E86D24] transition-all duration-300" />
 
-                    {/* Card Bottom Illustration Image */}
-                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mt-auto flex-shrink-0">
-                      <Image
-                        src={card.img}
-                        alt={card.title}
-                        fill
-                        className="object-cover"
-                      />
+                        <p className="text-slate-300 text-[13px] leading-relaxed font-medium font-inter text-center px-0.5">
+                          {card.desc}
+                        </p>
+                      </div>
+
+                      {/* Card Bottom Illustration Image */}
+                      <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden mt-auto flex-shrink-0">
+                        <Image
+                          src={card.img}
+                          alt={card.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </FadeIn>
+              <style dangerouslySetInnerHTML={{ __html: `
+                .pr-card {
+                  opacity: 0;
+                  transform: translateY(30px) scale(0.96);
+                }
+                .pr-visible .pr-card {
+                  animation: prCardIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+                  animation-delay: var(--pr-delay, 0s);
+                }
+                @keyframes prCardIn {
+                  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+                  to   { opacity: 1; transform: translateY(0) scale(1); }
+                }
+              ` }} />
+            </div>
+
           </div>
         </section>
 
@@ -1266,12 +1317,16 @@ export default function AboutPage() {
               </div>
             </div>
 
+
             {/* SVG Arc */}
             <img
-              src="/images/AboutAs/section8/image.svg"
+              src="/images/AboutAs/section8/image.svg?v=3"
               alt="Our People and Operations Diagram"
               className="op-svg w-full h-auto block z-0"
             />
+
+
+
           </div>
 
           <style dangerouslySetInnerHTML={{ __html: `

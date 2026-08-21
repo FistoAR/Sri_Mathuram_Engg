@@ -399,7 +399,7 @@ export default function HomePage() {
               {/* Stat 1 */}
               <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
                 <div className="flex flex-col items-start text-left max-w-max">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-none tracking-tight font-heading mb-2 text-orange-400">
                     <AnimatedCounter value="29+" delay={500} />
                   </span>
                   <div className="flex items-center gap-2.5 sm:gap-3 text-left">
@@ -502,7 +502,7 @@ export default function HomePage() {
         <div className="relative z-10 space-y-[4vh]">
           {/* Top Tagline Badge - Left Aligned with trusted icon & accent line */}
           <FadeIn direction="up" delay={0.1} className="flex flex-col  gap-1.5">
-            <div className="inline-flex items-center gap-4 text-lg sm:text-xl font-bold tracking-wide text-[#0B2545] uppercase">
+            <div className="inline-flex items-center gap-4 text-lg sm:text-xl font-bold tracking-wide text-[#0C3D6C] uppercase">
               <div className="relative w-6 h-6 flex-shrink-0">
                 <Image
                   src="/images/Home Page/sectionIcons/trustedbyHealthCare.webp"
@@ -519,7 +519,7 @@ export default function HomePage() {
 
           {/* Header Title & Subtitle */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-3">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B2545] ">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0B2545] ">
               WHY SRI MATHURAMS ?
             </h2>
             <p className="  text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
@@ -539,7 +539,7 @@ export default function HomePage() {
                 transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
               }
               .why-card-container .why-card:hover {
-                transform: rotate(45deg) scale(1.15) !important;
+                transform: rotate(45deg) scale(1.06) !important;
               }
               @media (min-width: 1024px) and (max-width: 1140px) {
                 .why-card-scale-wrapper {
@@ -1204,7 +1204,7 @@ export default function HomePage() {
               delay={0.1}
               className="flex flex-col items-start gap-1.5"
             >
-              <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0B2545] uppercase">
+              <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0C3D6C] uppercase">
                 <span className="relative w-7 h-7 flex-shrink-0">
                   <Image
                     src="/images/Home Page/sectionIcons/ourProduct.webp"
@@ -1535,7 +1535,7 @@ export default function HomePage() {
             {/* Title */}
             <FadeIn direction="up" delay={0.15}>
               <h2
-                className="text-3xl sm:text-4xl lg:text-[3.9rem] font-bold text-[#0C3D6C] tracking-widest pt-2 lg:pt-12 font-montserrat"
+                className="text-3xl sm:text-4xl lg:text-[3.9rem] font-extrabold text-[#0B2545] tracking-widest pt-2 lg:pt-12 font-montserrat"
                 style={{ lineHeight: "1.3" }}
               >
                 Building Healthcare Infrastructure Since 1997
@@ -1601,7 +1601,7 @@ export default function HomePage() {
             className="flex flex-col justify-center"
           >
             <div className="flex flex-col items-start gap-1.5">
-              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
                 <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
                     src="/images/Home Page/sectionIcons/trustCertificate.webp"
@@ -1618,7 +1618,7 @@ export default function HomePage() {
 
           {/* Section Header */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0B2545] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2545] tracking-tight">
               Certified Quality. Trusted by Thousands.
             </h2>
             <p className="text-sm md:text-base text-slate-600 max-w-xl mx-auto font-medium">
@@ -1813,7 +1813,7 @@ export default function HomePage() {
             className="flex flex-col items-start"
           >
             <div className="flex flex-col items-start gap-1.5 pb-2">
-              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0B2545] uppercase">
+              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
                 <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
                     src="/images/Home Page/sectionIcons/OurClients.webp"
@@ -1830,7 +1830,7 @@ export default function HomePage() {
 
           {/* Section Title & Subtitle */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#092b54] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2545] tracking-tight">
               Trusted by Healthcare Institutions Across Tamil Nadu
             </h2>
             <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-medium">

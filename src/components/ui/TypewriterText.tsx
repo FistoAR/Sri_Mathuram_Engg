@@ -6,6 +6,7 @@ interface TypewriterTextProps {
   text: string;
   delay?: number;
   speed?: number;
+  step?: number;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ export function TypewriterText({
   text,
   delay = 50,
   speed = 30,
+  step = 1,
   className = "",
 }: TypewriterTextProps) {
   const [displayedText, setDisplayedText] = useState("");
@@ -47,9 +49,9 @@ export function TypewriterText({
       let index = 0;
       const interval = setInterval(() => {
         if (index < text.length) {
-          currentText += text.charAt(index);
+          currentText += text.substring(index, index + step);
           setDisplayedText(currentText);
-          index++;
+          index += step;
         } else {
           clearInterval(interval);
         }
@@ -58,7 +60,7 @@ export function TypewriterText({
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [started, text, speed, delay]);
+  }, [started, text, speed, delay, step]);
 
   return (
     <span ref={elementRef} className={className}>
@@ -66,3 +68,4 @@ export function TypewriterText({
     </span>
   );
 }
+
