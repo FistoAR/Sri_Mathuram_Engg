@@ -21,6 +21,11 @@ export function ProductCard({ product, hideDetails = false }: ProductCardProps) 
       <Link href={`/products/${product.slug}`} scroll={false} className="space-y-3 flex-1 block group/link cursor-pointer">
         {/* Product Image Frame */}
         <div className="relative aspect-[16/10] w-full bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden">
+          {product.needsDetails && (
+            <div className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm z-10">
+              NEED TO ADD DETAILS
+            </div>
+          )}
           <Image
             src={product.image}
             alt={product.name}
