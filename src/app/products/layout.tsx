@@ -289,11 +289,11 @@ function ProductsLayoutContent({
               </div>
             )}
 
-            <div className="bg-[#0B3C83] text-white text-center font-bold py-2.5 text-base tracking-wide border-b border-[#092D62] truncate px-2 rounded-t-2xl flex items-center justify-center min-h-[44px] shrink-0">
+            <div className="bg-slate-200/90 text-[#0B3C83] text-center font-black py-3 text-sm tracking-wider uppercase border-b border-slate-300/80 truncate px-2 rounded-t-2xl flex items-center justify-center min-h-[46px] shrink-0 shadow-2xs">
               {isSidebarExpanded ? (
                 "Product Categories"
               ) : (
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className="w-5 h-5 text-[#0B3C83]" />
               )}
             </div>
             
@@ -319,20 +319,20 @@ function ProductsLayoutContent({
                       href={`/products?category=${encodeURIComponent(catName)}`}
                       scroll={false}
                       onClick={() => handleCategoryClick(catName)}
-                      className={`w-full flex items-center justify-between px-4 rounded-lg py-3 text-base font-bold transition-all text-left group relative ${
+                      className={`w-full flex items-center justify-between px-4 rounded-xl py-3 text-base font-bold transition-all text-left group relative ${
                         isActive
-                          ? "bg-white text-[#0B3C83] border border-slate-200/60 shadow-2xs"
-                          : "bg-slate-100 text-slate-700 hover:text-[#0B3C83] hover:bg-[#0B3C83]/10"
+                          ? "bg-[#0B3C83] text-white shadow-md border border-[#0B3C83]"
+                          : "bg-white text-slate-700 hover:text-[#0B3C83] hover:bg-slate-100/80 border border-slate-200/60 shadow-2xs"
                       } ${isExpanded && catName !== "All Products" && isSidebarExpanded ? "rounded-b-none border-b-0" : ""}`}
                     >
-                      <div className="flex items-center gap-6 min-w-0 flex-1">
-                        <div className="relative w-7 h-7 shrink-0">
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                        <div className="relative w-6 h-6 shrink-0">
                           {catName === "All Products" ? (
                             <Image
                               src={isActive ? "/images/Product Assets/selected.webp" : "/images/Product Assets/unselected.webp"}
                               alt="All Products icon"
                               fill
-                              className="object-contain"
+                              className={`object-contain ${isActive ? "brightness-0 invert" : ""}`}
                             />
                           ) : (
                             <Image
@@ -340,25 +340,22 @@ function ProductsLayoutContent({
                               alt={`${catName} icon`}
                               fill
                               className={`object-contain transition-all duration-300 ${
-                                isActive ? "brightness-100" : "opacity-60 grayscale hover:opacity-100 hover:grayscale-0"
+                                isActive ? "brightness-0 invert" : "opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0"
                               }`}
                             />
                           )}
                         </div>
                         {isSidebarExpanded && (
-                          <div className="relative pb-1 min-w-0 flex-1">
+                          <div className="relative min-w-0 flex-1">
                             <span className="block pr-1">{catName}</span>
-                            {isActive && (
-                              <div className="absolute bottom-0 left-0 w-[3vw] h-[2px] bg-[#E87325]" />
-                            )}
                           </div>
                         )}
                       </div>
                       {isSidebarExpanded && (
-                        <span className={`text-[12px] font-bold px-2 py-0.3 rounded-full shrink-0 transition-all ${
+                        <span className={`text-[12px] font-bold px-2.5 py-0.5 rounded-full shrink-0 transition-all ${
                           isActive
-                            ? "bg-[#E87325] text-white"
-                            : "bg-slate-200/60 text-slate-500 group-hover:bg-[#0B3C83]/10 group-hover:text-[#0B3C83]"
+                            ? "bg-white text-[#0B3C83] shadow-xs font-black"
+                            : "bg-slate-100 text-slate-600 group-hover:bg-[#0B3C83]/10 group-hover:text-[#0B3C83]"
                         }`}>
                           {categoryCounts[catName] || 0}
                         </span>
@@ -443,13 +440,13 @@ function ProductsLayoutContent({
           isMobileDrawerOpen ? "translate-x-0" : "-translate-x-full"
         }`}>
           {/* Drawer Header */}
-          <div className="bg-[#0B3C83] text-white font-bold py-4 px-4 text-base tracking-wide border-b border-[#092D62] flex items-center justify-between shrink-0">
+          <div className="bg-slate-200/90 text-[#0B3C83] font-black py-4 px-4 text-sm tracking-wider uppercase border-b border-slate-300/80 flex items-center justify-between shrink-0 shadow-2xs">
             <span>Product Categories</span>
             <button
               onClick={() => setIsMobileDrawerOpen(false)}
-              className="text-white hover:text-slate-300 transition-colors p-1"
+              className="text-[#0B3C83] hover:text-[#E87325] transition-colors p-1"
             >
-              <ChevronLeft className="w-6 h-6 text-white stroke-[2.5]" />
+              <ChevronLeft className="w-6 h-6 stroke-[2.5]" />
             </button>
           </div>
 
@@ -471,10 +468,10 @@ function ProductsLayoutContent({
                         setIsMobileDrawerOpen(false);
                       }
                     }}
-                    className={`w-full flex items-center justify-between px-4 rounded-lg py-3.5 text-sm font-black transition-all text-left border relative ${
+                    className={`w-full flex items-center justify-between px-4 rounded-xl py-3.5 text-sm font-black transition-all text-left border relative ${
                       isActive
-                        ? "bg-white text-[#0B3C83] border-slate-200 shadow-2xs"
-                        : "bg-slate-100 border-slate-100 text-slate-700 hover:text-[#0B3C83]"
+                        ? "bg-[#0B3C83] text-white border-[#0B3C83] shadow-md"
+                        : "bg-white border-slate-200/60 text-slate-700 hover:text-[#0B3C83]"
                     }`}
                   >
                     <div className="flex items-center gap-4 min-w-0 flex-1">
@@ -483,13 +480,13 @@ function ProductsLayoutContent({
                           src={isActive ? "/images/Product Assets/selected.webp" : "/images/Product Assets/unselected.webp"}
                           alt="category icon"
                           fill
-                          className="object-contain"
+                          className={`object-contain ${isActive ? "brightness-0 invert" : ""}`}
                         />
                       </div>
                       <span className="flex-1 pr-1">{catName}</span>
                     </div>
                     <span className={`text-[10px] font-black px-2 py-0.3 rounded-full shrink-0 ${
-                      isActive ? "bg-[#E87325] text-white" : "bg-slate-200 text-slate-500"
+                      isActive ? "bg-white text-[#0B3C83]" : "bg-slate-200 text-slate-500"
                     }`}>
                       {categoryCounts[catName] || 0}
                     </span>

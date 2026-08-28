@@ -29,6 +29,37 @@ import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FadeIn } from "@/components/ui/FadeIn";
 
+const getFunctionIconPath = (funcTitle: string): string => {
+  const lower = funcTitle.toLowerCase();
+
+  if (lower.includes("reverse trendelenburg")) {
+    return "/images/ProductDetails/Functions/Reverse Trendelenburg.svg";
+  }
+  if (lower.includes("trendelenburg")) {
+    return "/images/ProductDetails/Functions/Trendelenburg.svg";
+  }
+  if (lower.includes("crutch") || lower.includes("lithotomy")) {
+    return "/images/ProductDetails/Functions/Adjustable Knee Crutches.svg";
+  }
+  if (lower.includes("head rise") || lower.includes("head raise")) {
+    return "/images/ProductDetails/Functions/Head Raise .svg";
+  }
+  if (lower.includes("knee") || lower.includes("leg rise") || lower.includes("leg raise")) {
+    return "/images/ProductDetails/Functions/KneeLeg Raise.svg";
+  }
+  if (lower.includes("retractable leg")) {
+    return "/images/ProductDetails/Functions/Retractable Leg Section.svg";
+  }
+  if (lower.includes("height") || lower.includes("hi-lo")) {
+    return "/images/ProductDetails/Functions/Height Adjustment.svg";
+  }
+  if (lower.includes("transfer") || lower.includes("shifter")) {
+    return "/images/ProductDetails/Functions/Patient Transfer.svg";
+  }
+
+  return "/images/ProductDetails/Functions/Backrest Rise.svg";
+};
+
 interface ProductDetailClientProps {
   product: MedicalProduct;
   relatedProducts: MedicalProduct[];
@@ -91,15 +122,13 @@ export function ProductDetailClient({
     }
   };
 
-  // Handle Image Slider State
-  const images = [
-    product.image,
-    ...(product.gallery || []),
-    product.image,
-    product.image,
-    product.image,
-    product.image,
-  ].slice(0, 6); // Fallback to ensure we have enough thumbnails
+  // Handle Image Slider State (Exactly 2 variant images)
+  const images = React.useMemo(() => {
+    if (product.gallery && product.gallery.length > 0) {
+      return [product.image, product.gallery[0]];
+    }
+    return [product.image, product.image];
+  }, [product]);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -209,160 +238,209 @@ export function ProductDetailClient({
         {/* Left Side: Product Gallery */}
         <FadeIn direction="left" duration={0.6} className="h-full">
           <div className="flex flex-col justify-between space-y-4 h-full min-w-0">
-          <div className="pt-1">
-            <Link
-              href={`/products?category=${encodeURIComponent(product.category)}`}
-              scroll={false}
-              className="w-8 h-8 rounded-full bg-[#E86D24] flex items-center justify-center shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-lg active:scale-95 transition-all duration-300 group relative overflow-hidden"
-            >
-              {/* Silver running shine beam effect */}
-              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-silver-shine" />
-              
-              <ChevronLeft className="relative z-10 w-5 h-5 text-white bg-white/20 group-hover:bg-white group-hover:text-[#E86D24] rounded-full p-[2px] transition-all duration-300 group-hover:-translate-x-0.5" />
-            </Link>
-          </div>
-
-          <div className="relative flex-1 min-h-[300px] lg:min-h-0 w-full overflow-hidden flex items-center justify-center group">
-            <Image
-              src={images[activeImageIndex]}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-contain p-4 transition-transform duration-300"
-            />
-
-            {/* Nav Arrows */}
-            <button
-              onClick={handlePrevImage}
-              className="absolute left-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors active:scale-95 z-10 p-2"
-            >
-              <ArrowLeft className="w-7 h-7 stroke-[1.5]" />
-            </button>
-            <button
-              onClick={handleNextImage}
-              className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors active:scale-95 z-10 p-2"
-            >
-              <ArrowRight className="w-7 h-7 stroke-[1.5]" />
-            </button>
-          </div>
-
-          {/* Thumbnail row */}
-          <div className="flex gap-2.5 justify-between py-1 h-[76px] shrink-0">
-            {images.map((img, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveImageIndex(idx)}
-                className={`relative flex-1 h-full rounded-xl border-2 overflow-hidden bg-white shrink-0 transition-all ${
-                  idx === activeImageIndex
-                    ? "border-[#E87325] scale-[1.02] shadow-sm"
-                    : "border-slate-200 hover:border-slate-300"
-                }`}
+            <div className="relative flex-1 min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] w-full overflow-hidden flex items-center justify-center group bg-white rounded-2xl border border-slate-100 p-2">
+              {/* Back Button inside the image card at top-left */}
+              <Link
+                href={`/products?category=${encodeURIComponent(product.category)}`}
+                scroll={false}
+                className="absolute top-3.5 left-3.5 z-30 inline-flex items-center gap-1.5 bg-[#0B3C83] hover:bg-[#092D62] text-white px-3.5 py-1.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all duration-300 group/btn"
               >
-                <Image
-                  src={img}
-                  alt={`${product.name} thumbnail ${idx + 1}`}
-                  fill
-                  sizes="120px"
-                  className="object-contain p-1"
-                />
+                <ArrowLeft className="w-4 h-4 stroke-[2.5] text-white group-hover/btn:-translate-x-0.5 transition-transform" />
+                <span className="text-xs font-bold font-montserrat">Back</span>
+              </Link>
+
+              <Image
+                src={images[activeImageIndex]}
+                alt={product.name}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+              />
+
+              {/* Nav Arrows */}
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors active:scale-95 z-10 p-2 bg-white/70 hover:bg-white rounded-full shadow-sm"
+              >
+                <ArrowLeft className="w-6 h-6 stroke-[2]" />
               </button>
-            ))}
+              <button
+                onClick={handleNextImage}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors active:scale-95 z-10 p-2 bg-white/70 hover:bg-white rounded-full shadow-sm"
+              >
+                <ArrowRight className="w-6 h-6 stroke-[2]" />
+              </button>
+            </div>
+
+            {/* Thumbnail row (2 variant images centered) */}
+            <div className="flex gap-4 justify-center py-2 h-[84px] shrink-0">
+              {images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveImageIndex(idx)}
+                  className={`relative w-24 sm:w-28 h-full rounded-xl border-2 overflow-hidden bg-white shrink-0 transition-all ${
+                    idx === activeImageIndex
+                      ? "border-[#E87325] scale-[1.03] shadow-sm"
+                      : "border-slate-200 hover:border-slate-300 opacity-70 hover:opacity-100"
+                  }`}
+                >
+                  <Image
+                    src={img}
+                    alt={`${product.name} thumbnail ${idx + 1}`}
+                    fill
+                    sizes="120px"
+                    className="object-contain p-1.5"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
         </FadeIn>
 
         {/* Right Side: Product Details & Actions */}
         <FadeIn direction="right" duration={0.6} delay={0.15}>
           <div className="flex flex-col justify-between h-full space-y-6 min-w-0">
-          <div className="space-y-6">
-            <div className="space-y-4">
-              <div className="space-y-1.5 text-left">
-                <div className="inline-flex items-center gap-2 text-base font-black tracking-wider text-[#0B3C83] uppercase font-montserrat">
-                  <Bed className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
-                  <span>{product.category}</span>
-                </div>
-                <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
-              </div>
-              <h1 className="text-2xl md:text-[2rem] lg:text-[2.25rem] font-semibold text-[#0B3C83]  font-montserrat">
-                {product.name}
-              </h1>
-              {product.needsDetails && (
-                <div className="bg-red-50/90 border border-red-200/90 rounded-2xl p-4 md:p-5 shadow-xs my-3.5 font-montserrat flex flex-col gap-3 text-left transition-all">
-                  {/* Tag at Top */}
-                  <div className="inline-flex items-center gap-1.5 bg-red-600 text-white font-black text-xs px-3 py-1.5 rounded-lg tracking-wider uppercase shrink-0 shadow-sm shadow-red-600/20 w-fit">
-                    <AlertTriangle className="w-4 h-4 text-white stroke-[2.5]" />
-                    <span>INTIMATION ALERT</span>
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-1.5 text-left">
+                  <div className="inline-flex items-center gap-2 text-base font-black tracking-wider text-[#0B3C83] uppercase font-montserrat">
+                    <Bed className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
+                    <span>{product.category}</span>
                   </div>
-                  {/* Contents Below */}
+                  <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
+                </div>
+                <h1 className="text-2xl md:text-[2rem] lg:text-[2.25rem] font-semibold text-[#0B3C83]  font-montserrat">
+                  {product.name}
+                </h1>
+                {product.needsDetails && (
+                  <div className="bg-red-50/90 border border-red-200/90 rounded-2xl p-4 md:p-5 shadow-xs my-3.5 font-montserrat flex flex-col gap-3 text-left transition-all">
+                    {/* Tag at Top */}
+                    <div className="inline-flex items-center gap-1.5 bg-red-600 text-white font-black text-xs px-3 py-1.5 rounded-lg tracking-wider uppercase shrink-0 shadow-sm shadow-red-600/20 w-fit">
+                      <AlertTriangle className="w-4 h-4 text-white stroke-[2.5]" />
+                      <span>INTIMATION ALERT</span>
+                    </div>
+                    {/* Contents Below */}
+                    <div className="space-y-1 text-left">
+                      <p className="font-extrabold text-sm md:text-[15px] text-red-950 tracking-wide uppercase">
+                        NEED TO ADD DETAILS
+                      </p>
+                      <p className="text-xs md:text-sm text-red-700/90 font-semibold leading-relaxed">
+                        Technical specifications & model details for this item are pending documentation.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Variant Selector Pills */}
+              {variants.length > 0 && (
+                <div className="space-y-2">
+                  <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
+                    Specification Variant
+                  </span>
+                  <div className="flex flex-wrap gap-2.5">
+                    {variants.map((variant) => {
+                      const isActive = selectedVariant === variant;
+                      return (
+                        <button
+                          key={variant}
+                          onClick={() => setSelectedVariant(variant)}
+                          className={`px-4 py-2.5 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 ${
+                            isActive
+                              ? "bg-white border-slate-800 text-slate-800 shadow-sm"
+                              : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
+                          }`}
+                        >
+                          <span>{variant}</span>
+                          <span
+                            className={`text-[11px] ${isActive ? "text-slate-600" : "text-slate-300"}`}
+                          >
+                            ⓘ
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Product Overview Description */}
+              <div className="space-y-3">
+                <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
+                  Product Overview
+                </span>
+                <div className="space-y-5 text-slate-600 text-base md:text-[15px] leading-relaxed max-w-2xl font-medium">
+                  {product.description ? (
+                    product.description.split('\n').filter(p => p.trim() !== "").map((para, idx) => (
+                      <p key={idx}>{para}</p>
+                    ))
+                  ) : (
+                    <>
+                      <p>
+                        The Mathurams {product.name} is engineered to provide superior
+                        patient care. Manufactured using premium materials, it offers
+                        exceptional durability, smooth operation, and long-lasting performance
+                        in demanding healthcare environments.
+                      </p>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Functions Section inside Right Column */}
+              {product.functions && product.functions.length > 0 && (
+                <div className="space-y-3 pt-4 border-t border-slate-100 font-montserrat">
                   <div className="space-y-1 text-left">
-                    <p className="font-extrabold text-sm md:text-[15px] text-red-950 tracking-wide uppercase">
-                      NEED TO ADD DETAILS
-                    </p>
-                    <p className="text-xs md:text-sm text-red-700/90 font-semibold leading-relaxed">
-                      Technical specifications & model details for this item are pending documentation.
-                    </p>
+                    <div className="flex items-center gap-2">
+                      <Settings className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
+                      <span className="text-xs md:text-sm font-black text-[#092347] uppercase tracking-wider">
+                        FUNCTIONS
+                      </span>
+                    </div>
+                    <div className="w-12 h-[2.5px] bg-[#E87325] rounded-full" />
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 items-start pt-1">
+                    {product.functions.map((funcStr, idx) => {
+                      const parts = funcStr.split("—").map((p) => p.trim());
+                      const titlePart = parts[0] || funcStr;
+                      const valuePart = parts[1] || "";
+                      const cleanTitle = titlePart.replace(/^[①②③④⑤⑥⑦⑧\d\s\.\-]+/, "").trim();
+                      const iconPath = getFunctionIconPath(cleanTitle);
+
+                      return (
+                        <div key={idx} className="flex flex-col items-center text-center group/func min-w-0">
+                          {/* SVG Function Illustration Image */}
+                          <div className="relative w-full h-14 sm:h-16 flex items-center justify-center overflow-hidden">
+                            <Image
+                              src={iconPath}
+                              alt={cleanTitle}
+                              fill
+                              className="object-contain p-0.5 group-hover/func:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+
+                          {/* Small Orange Divider Line */}
+                          <div className="w-4 h-[2px] bg-[#E87325] rounded-full my-1 shrink-0" />
+
+                          {/* Function Text Below Line */}
+                          <div className="text-center w-full px-0.5">
+                            <p className="text-[10px] sm:text-[11px] text-slate-600 font-medium leading-tight">
+                              {cleanTitle}
+                            </p>
+                            {valuePart && (
+                              <p className="font-medium text-[#092347] text-[10px] sm:text-[11px] mt-0.5 leading-tight">
+                                {valuePart}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
             </div>
-
-            {/* Variant Selector Pills */}
-            {variants.length > 0 && (
-              <div className="space-y-2">
-                <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
-                  Specification Variant
-                </span>
-                <div className="flex flex-wrap gap-2.5">
-                  {variants.map((variant) => {
-                    const isActive = selectedVariant === variant;
-                    return (
-                      <button
-                        key={variant}
-                        onClick={() => setSelectedVariant(variant)}
-                        className={`px-4 py-2.5 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 ${
-                          isActive
-                            ? "bg-white border-slate-800 text-slate-800 shadow-sm"
-                            : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
-                        }`}
-                      >
-                        <span>{variant}</span>
-                        <span
-                          className={`text-[11px] ${isActive ? "text-slate-600" : "text-slate-300"}`}
-                        >
-                          ⓘ
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-
-
-            {/* Product Overview Description */}
-            <div className="space-y-3">
-              <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
-                Product Overview
-              </span>
-              <div className="space-y-5 text-slate-600 text-base md:text-[15px] leading-relaxed max-w-2xl font-medium">
-                {product.description ? (
-                  product.description.split('\n').filter(p => p.trim() !== "").map((para, idx) => (
-                    <p key={idx}>{para}</p>
-                  ))
-                ) : (
-                  <>
-                    <p>
-                      The Mathurams {product.name} is engineered to provide superior
-                      patient care. Manufactured using premium materials, it offers
-                      exceptional durability, smooth operation, and long-lasting performance
-                      in demanding healthcare environments.
-                    </p>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
 
           {/* Action buttons row */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-100">
@@ -394,63 +472,7 @@ export function ProductDetailClient({
       </FadeIn>
     </div>
 
-      {/* Functions Section */}
-      {product.functions && product.functions.length > 0 && (
-        <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">
-          <FadeIn direction="up" duration={0.6}>
-            <div className="space-y-2 text-left">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2.5">
-                  <Settings className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
-                  <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
-                    FUNCTIONS
-                  </span>
-                </div>
-                <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
-              </div>
-              <p className="text-slate-500 text-sm md:text-base font-semibold leading-relaxed max-w-2xl">
-                Multi-positional motorized and manual functions engineered for precise patient positioning.
-              </p>
-            </div>
-          </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {product.functions.map((funcStr, idx) => {
-              const parts = funcStr.split("—").map((p) => p.trim());
-              const titlePart = parts[0] || funcStr;
-              const valuePart = parts[1] || "";
-              const numberMatch = titlePart.match(/^[①②③④⑤⑥⑦⑧\d]+/);
-              const numberSymbol = numberMatch ? numberMatch[0] : `${idx + 1}`;
-              const cleanTitle = titlePart.replace(/^[①②③④⑤⑥⑦⑧\d\s\.\-]+/, "").trim();
-
-              return (
-                <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
-                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-[#0B3C83]/30 transition-all duration-300 flex flex-col justify-between h-full min-h-[96px] text-left">
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <span className="w-7 h-7 bg-[#0B3C83]/10 text-[#0B3C83] rounded-full flex items-center justify-center font-black text-xs shrink-0">
-                        {numberSymbol}
-                      </span>
-                      <span className="text-[11px] font-bold text-[#E87325] bg-orange-50 px-2 py-0.5 rounded-md uppercase tracking-wide shrink-0">
-                        Function
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-[#092347] font-extrabold text-sm md:text-[15px] leading-tight">
-                        {cleanTitle}
-                      </p>
-                      {valuePart && (
-                        <p className="text-slate-600 font-semibold text-xs md:text-sm mt-1 bg-slate-50 border border-slate-100 px-2 py-1 rounded-md inline-block">
-                          {valuePart}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </FadeIn>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       {/* Key Features Section */}
       <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">
@@ -472,7 +494,7 @@ export function ProductDetailClient({
             </div>
             <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
           </div>
-          <p className="text-slate-500 text-sm md:text-base font-semibold leading-relaxed max-w-2xl">
+          <p className="text-slate-700 text-sm md:text-base font-medium leading-relaxed max-w-2xl">
             Purpose-built features designed for patient comfort, caregiver
             convenience, and dependable hospital use.
           </p>
@@ -481,38 +503,14 @@ export function ProductDetailClient({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {features.map((item, idx) => {
-            const featureIcons = [
-              "/images/ProductDetails/image 86.webp",
-              "/images/ProductDetails/image 87.webp",
-              "/images/ProductDetails/image 88.webp",
-              "/images/ProductDetails/image 89.webp",
-              "/images/ProductDetails/image 90.webp",
-              "/images/ProductDetails/image 91.webp",
-              "/images/ProductDetails/image 92.webp",
-              "/images/ProductDetails/image 93.webp",
-              "/images/ProductDetails/image 94.webp",
-              "/images/ProductDetails/image 95.webp",
-              "/images/ProductDetails/image 96.webp",
-              "/images/ProductDetails/image 97.webp",
-              "/images/ProductDetails/image 98.webp",
-              "/images/ProductDetails/image 99.webp"
-            ];
-            const iconSrc = featureIcons[idx % featureIcons.length];
             return (
               <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
                 <div
-                  className="group/card flex items-center gap-3.5 bg-white p-3.5 md:p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 min-h-[84px] cursor-pointer"
+                  className="group/card flex items-center gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-[#E87325]/30 transition-all duration-300 min-h-[72px] text-left"
                 >
-                  <div className="relative w-12 h-10 shrink-0 overflow-hidden">
-                    <Image
-                      src={iconSrc}
-                      alt={item}
-                      fill
-                      className="object-contain transition-transform duration-300 group-hover/card:scale-110"
-                    />
-                  </div>
+                  <span className="w-2.5 h-2.5 rotate-45 rounded-[1px] bg-[#E87325] shrink-0 group-hover/card:scale-125 transition-transform duration-300" />
                   <div className="flex-1 min-w-0 text-left">
-                    <p className="text-[#092347] text-xs md:text-sm font-bold leading-snug">
+                    <p className="text-[#092347] text-xs md:text-sm font-medium leading-snug">
                       {item}
                     </p>
                   </div>
@@ -538,7 +536,7 @@ export function ProductDetailClient({
                 </div>
                 <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
               </div>
-              <p className="text-slate-500 text-xs md:text-[13px] font-semibold leading-relaxed">
+              <p className="text-slate-700 text-xs md:text-[16px] font-medium leading-relaxed">
                 Detailed engineering specifications for reliable performance,
                 safety, and long-term durability.
               </p>
@@ -589,7 +587,7 @@ export function ProductDetailClient({
                 </div>
                 <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
               </div>
-              <p className="text-slate-500 text-xs md:text-[13px] font-semibold leading-relaxed">
+              <p className="text-slate-700 text-xs md:text-[16px] font-medium leading-relaxed">
                 Flexible component, finish, and accessory options to meet diverse
                 healthcare requirements.
               </p>
