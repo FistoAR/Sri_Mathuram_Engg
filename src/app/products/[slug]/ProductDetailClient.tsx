@@ -22,6 +22,7 @@ import {
   Clock,
   Menu,
   Bed,
+  AlertTriangle,
 } from "lucide-react";
 import { MedicalProduct, PRODUCTS, CATEGORIES } from "@/lib/data";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
@@ -136,24 +137,20 @@ export function ProductDetailClient({
     setActiveImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  // Specification list
-  const specList =
-    Object.entries(product.specifications || {}).length > 0
-      ? Object.entries(product.specifications || {})
-      : [
-          ["Model", "5 Function Manual ICU Cot"],
-          ["Overall Size", "2200×1000×600-900mm"],
-          ["Mattress Platform", "1980×900mm"],
-          ["Back Rest", "0-75°"],
-          ["Knee Rest", "0-40°"],
-          ["Height Adjustment", "Manual"],
-          ["Trendelenburg", "Yes"],
-          ["Reverse Trendelenburg", "Yes"],
-          ["Material", "Mild Steel"],
-          ["Powder Coating", "Epoxy"],
-          ["Castors", "125 mm Braked"],
-          ["Safe Working Load", "250 Kg"],
-        ];
+  // Technical specs table
+  const specList = React.useMemo(() => {
+    if (product.specifications && Object.keys(product.specifications).length > 0) {
+      return Object.entries(product.specifications);
+    }
+    if (product.needsDetails) {
+      return [["Status", "NEED TO ADD DETAILS"]];
+    }
+    return [
+      ["Overall Dimension", "Standard Hospital Specification"],
+      ["Material", "Mild Steel (MS) / Stainless Steel (SS)"],
+      ["Finish", "Epoxy Powder Coating / SS Finish"],
+    ];
+  }, [product]);
 
   // Config options table
   const configs = React.useMemo(() => {
@@ -163,21 +160,18 @@ export function ProductDetailClient({
         options: val,
       }));
     }
+    if (product.needsDetails) {
+      return [{ component: "Status", options: "NEED TO ADD DETAILS" }];
+    }
     return [
       {
-        component: "Arms",
-        options: "ABS, Stainless Steel (SS), Mild Steel (MS)",
+        component: "Material & Finish",
+        options: "MS / SS with Epoxy Powder Coating",
       },
       {
-        component: "Side Rails",
-        options: "ABS, Stainless Steel Collapsible, Aluminium",
+        component: "Customisation",
+        options: "Size and mounting can be customized as per requirement",
       },
-      {
-        component: "Colour",
-        options: "White, Blue, Green, Grey, Custom Colours",
-      },
-      { component: "Mattress", options: "Optional" },
-      { component: "Accessories", options: "As per customer requirement" },
     ];
   }, [product]);
 
@@ -292,6 +286,24 @@ export function ProductDetailClient({
               <h1 className="text-2xl md:text-[2rem] lg:text-[2.25rem] font-semibold text-[#0B3C83]  font-montserrat">
                 {product.name}
               </h1>
+              {product.needsDetails && (
+                <div className="bg-red-50/90 border border-red-200/90 rounded-2xl p-4 md:p-5 shadow-xs my-3.5 font-montserrat flex flex-col gap-3 text-left transition-all">
+                  {/* Tag at Top */}
+                  <div className="inline-flex items-center gap-1.5 bg-red-600 text-white font-black text-xs px-3 py-1.5 rounded-lg tracking-wider uppercase shrink-0 shadow-sm shadow-red-600/20 w-fit">
+                    <AlertTriangle className="w-4 h-4 text-white stroke-[2.5]" />
+                    <span>INTIMATION ALERT</span>
+                  </div>
+                  {/* Contents Below */}
+                  <div className="space-y-1 text-left">
+                    <p className="font-extrabold text-sm md:text-[15px] text-red-950 tracking-wide uppercase">
+                      NEED TO ADD DETAILS
+                    </p>
+                    <p className="text-xs md:text-sm text-red-700/90 font-semibold leading-relaxed">
+                      Technical specifications & model details for this item are pending documentation.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Variant Selector Pills */}
@@ -326,24 +338,7 @@ export function ProductDetailClient({
               </div>
             )}
 
-            {/* Model Specifications */}
-            {product.modelSpecifications && product.modelSpecifications.length > 0 && (
-              <div className="space-y-2">
-                <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
-                  Model Specifications
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {product.modelSpecifications.map((spec, index) => (
-                    <span
-                      key={index}
-                      className="bg-[#092347]/5 text-[#092347] border border-[#092347]/10 px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-black tracking-wide"
-                    >
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+
 
             {/* Product Overview Description */}
             <div className="space-y-3">
@@ -398,6 +393,64 @@ export function ProductDetailClient({
         </div>
       </FadeIn>
     </div>
+
+      {/* Functions Section */}
+      {product.functions && product.functions.length > 0 && (
+        <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">
+          <FadeIn direction="up" duration={0.6}>
+            <div className="space-y-2 text-left">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2.5">
+                  <Settings className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
+                  <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
+                    FUNCTIONS
+                  </span>
+                </div>
+                <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
+              </div>
+              <p className="text-slate-500 text-sm md:text-base font-semibold leading-relaxed max-w-2xl">
+                Multi-positional motorized and manual functions engineered for precise patient positioning.
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {product.functions.map((funcStr, idx) => {
+              const parts = funcStr.split("—").map((p) => p.trim());
+              const titlePart = parts[0] || funcStr;
+              const valuePart = parts[1] || "";
+              const numberMatch = titlePart.match(/^[①②③④⑤⑥⑦⑧\d]+/);
+              const numberSymbol = numberMatch ? numberMatch[0] : `${idx + 1}`;
+              const cleanTitle = titlePart.replace(/^[①②③④⑤⑥⑦⑧\d\s\.\-]+/, "").trim();
+
+              return (
+                <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
+                  <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-[#0B3C83]/30 transition-all duration-300 flex flex-col justify-between h-full min-h-[96px] text-left">
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <span className="w-7 h-7 bg-[#0B3C83]/10 text-[#0B3C83] rounded-full flex items-center justify-center font-black text-xs shrink-0">
+                        {numberSymbol}
+                      </span>
+                      <span className="text-[11px] font-bold text-[#E87325] bg-orange-50 px-2 py-0.5 rounded-md uppercase tracking-wide shrink-0">
+                        Function
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-[#092347] font-extrabold text-sm md:text-[15px] leading-tight">
+                        {cleanTitle}
+                      </p>
+                      {valuePart && (
+                        <p className="text-slate-600 font-semibold text-xs md:text-sm mt-1 bg-slate-50 border border-slate-100 px-2 py-1 rounded-md inline-block">
+                          {valuePart}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </FadeIn>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Key Features Section */}
       <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">

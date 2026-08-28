@@ -56,7 +56,7 @@ export default function RootLayout({
   const orgSchema = generateOrganizationSchema();
 
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active scroll-smooth`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active scroll-smooth`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
