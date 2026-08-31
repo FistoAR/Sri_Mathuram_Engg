@@ -320,12 +320,12 @@ export default function HomePage() {
   // Get active image based on active category, taking deterministic random from HowWeBuild folder
   const getCenterImageForCategory = (name: string) => {
     const frames = [
-      "/images/Home Page/HowWeBuild/Frame.webp",
-      "/images/Home Page/HowWeBuild/Frame (1).webp",
-      "/images/Home Page/HowWeBuild/Frame (2).webp",
-      "/images/Home Page/HowWeBuild/Frame (3).webp",
-      "/images/Home Page/HowWeBuild/Frame (4).webp",
-      "/images/Home Page/HowWeBuild/Frame (5).webp",
+      "/images/Home Page/HowWeBuild/product-design.webp",
+      "/images/Home Page/HowWeBuild/precision-fabrication.webp",
+      "/images/Home Page/HowWeBuild/power-coating.webp",
+      "/images/Home Page/HowWeBuild/assembly.webp",
+      "/images/Home Page/HowWeBuild/quality-inspection.webp",
+      "/images/Home Page/HowWeBuild/packaging-and-delivery.webp",
     ];
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
@@ -400,7 +400,7 @@ export default function HomePage() {
               <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
                 <div className="flex flex-col items-start text-left max-w-max">
                   <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-none tracking-tight font-heading mb-2 text-orange-400">
-                    <AnimatedCounter value="29+" delay={500} />
+                    <AnimatedCounter value="2 Decades +" delay={500} />
                   </span>
                   <div className="flex items-center gap-2.5 sm:gap-3 text-left">
                     <div className="relative w-9 h-9 flex-shrink-0">
@@ -1258,9 +1258,9 @@ export default function HomePage() {
 
           {/* Interactive Flex Showcase */}
           <div className="flex flex-col lg:flex-row gap-8 items-center pt-8 justify-between">
-            {/* Left Column: 10 Categories */}
+            {/* Left Column: 10 Categories (Shows rightCategories with Left-column alignment) */}
             <div className="hidden lg:block w-full lg:w-[30%] order-2 lg:order-1 flex-shrink-0">
-              {leftCategories.map((cat, idx) => {
+              {rightCategories.map((cat, idx) => {
                 const isActive = activeCategory === cat.name;
                 return (
                   <FadeIn
@@ -1398,9 +1398,9 @@ export default function HomePage() {
               </div>
             </FadeIn>
 
-            {/* Right Column: 10 Categories */}
+            {/* Right Column: 10 Categories (Shows leftCategories with Right-column alignment) */}
             <div className="hidden lg:block w-full lg:w-[30%] order-3 flex-shrink-0">
-              {rightCategories.map((cat, idx) => {
+              {leftCategories.map((cat, idx) => {
                 const isActive = activeCategory === cat.name;
                 return (
                   <FadeIn

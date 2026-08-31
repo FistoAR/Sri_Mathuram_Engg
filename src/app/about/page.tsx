@@ -192,7 +192,7 @@ export default function AboutPage() {
               />
             </span>
             <span className="relative pb-1">
-              <TypewriterText text="OUR COMPANY STORY" speed={1} delay={1} step={3} />
+              <TypewriterText text="OUR STORY" speed={1} delay={1} step={3} />
               <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
             </span>
           </div>
@@ -446,11 +446,21 @@ export default function AboutPage() {
             </div>
 
             {/* Card 8: 30,000+ — flies in from BOTTOM-RIGHT */}
-            <div className="ms-card absolute left-[73%] top-[58%] w-[190px] h-[190px] z-20" style={{ "--tx": "100px", "--ty": "100px", "--delay": "0.36s" } as React.CSSProperties}>
+            <div className="ms-card absolute left-[70%] top-[58%] w-[190px] h-[190px] z-20" style={{ "--tx": "100px", "--ty": "100px", "--delay": "0.36s" } as React.CSSProperties}>
               <div className="ms-parallax w-full h-full" style={{ "--sx": "-20px", "--sy": "-20px" } as React.CSSProperties}>
                 <div className="ms-float-4 w-full h-full rounded-[3rem] p-6 py-[40px] shadow-lg border border-slate-100/60 text-center flex flex-col justify-center items-center" style={{ background: "linear-gradient(135deg, #ffffff 65%, #F4F6F8 65%)" }}>
                   <span className="text-3xl font-bold text-gray-600 block">30,000+</span>
                   <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Products Manufactured Every Year</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 9: 7,000+ — flies in from RIGHT */}
+            <div className="ms-card absolute left-[85%] top-[40%] w-[190px] h-[190px] z-20" style={{ "--tx": "120px", "--ty": "40px", "--delay": "0.44s" } as React.CSSProperties}>
+              <div className="ms-parallax w-full h-full" style={{ "--sx": "15px", "--sy": "-15px" } as React.CSSProperties}>
+                <div className="ms-float-1 w-full h-full rounded-[3rem] p-6 py-[40px] shadow-lg border border-slate-100/60 text-center flex flex-col justify-center items-center" style={{ background: "linear-gradient(135deg, #ffffff 65%, #F4F6F8 65%)" }}>
+                  <span className="text-3xl font-bold text-gray-600 block">7,000+</span>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">More than 7,000+ Happy Customers</span>
                 </div>
               </div>
             </div>
@@ -493,6 +503,11 @@ export default function AboutPage() {
             <div className="ms-card rounded-3xl p-6 shadow-lg border border-slate-100/60 text-center col-span-2 md:col-span-1 flex flex-col justify-center min-h-[140px]" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)", "--tx": "0px", "--ty": "60px", "--delay": "0.5s" } as React.CSSProperties}>
               <span className="text-3xl font-bold text-gray-600 block">30,000+</span>
               <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-2">Products Manufactured Every Year</span>
+            </div>
+            {/* Card 9 */}
+            <div className="ms-card rounded-3xl p-6 shadow-lg border border-slate-100/60 text-center col-span-2 md:col-span-1 flex flex-col justify-center min-h-[140px]" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)", "--tx": "0px", "--ty": "60px", "--delay": "0.6s" } as React.CSSProperties}>
+              <span className="text-3xl font-bold text-gray-600 block">7,000+</span>
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-2">More than 7,000+ Happy Customers</span>
             </div>
           </div>
 
