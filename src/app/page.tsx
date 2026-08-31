@@ -422,13 +422,13 @@ export default function HomePage() {
               <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
                 <div className="flex flex-col items-start text-left max-w-max">
                   <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
-                    <AnimatedCounter value="4,000+" delay={650} />
+                    <AnimatedCounter value="7,000+" delay={650} />
                   </span>
                   <div className="flex items-center gap-2.5 sm:gap-3 text-left">
                     <div className="relative w-9 h-9 flex-shrink-0">
                       <Image
                         src="/images/Home Page/BannerIcons/projectCompleted.webp"
-                        alt="4,000+ Projects Completed"
+                        alt="7,000+ Projects Completed"
                         fill
                         className="object-contain filter brightness-0 invert"
                       />
