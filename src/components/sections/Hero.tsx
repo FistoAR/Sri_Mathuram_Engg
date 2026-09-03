@@ -29,7 +29,7 @@ const slideData: SlideData[] = [
     titleOrange: "BUILDING HEALTHCARE",
     titleNavy: "INFRASTRUCTURE SINCE - 1997",
     description:
-      "For over 29 years, Sri Mathurams Medical Engineering has been manufacturing high-quality hospital furniture and institutions across India.",
+      "For over 29 years, Sri Mathurams Medical Engineering has been manufacturing high-quality hospital furniture across India.",
     image:
       "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=2000&q=90",
     category: "ICU & Hospital Beds",
@@ -78,17 +78,6 @@ const slideData: SlideData[] = [
       "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=2000&q=90",
     category: "Specialty Ward Furniture",
   },
-  {
-    id: "06",
-    badge: "INSPECTION & QUALITY GUARANTEED",
-    titleOrange: "STERILIZATION &",
-    titleNavy: "INSPECTION SOLUTIONS",
-    description:
-      "High-standard autoclaves, linen trolleys, waste bin stands, and IV poles built to withstand rigorous everyday hospital usage with high durability.",
-    image:
-      "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=2000&q=90",
-    category: "Sterilization & Utilities",
-  },
 ];
 
 export function Hero() {
@@ -102,14 +91,42 @@ export function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTextVisible, setIsTextVisible] = useState(true);
   const [isInitial, setIsInitial] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
+  const timeLeftRef = useRef<number>(6000);
+  const startTimeRef = useRef<number>(Date.now());
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Reset the time left when the slide index changes
   useEffect(() => {
-    const interval = setInterval(() => {
-      moveSlider("next");
-    }, 4000);
-
-    return () => clearInterval(interval);
+    timeLeftRef.current = 6000;
   }, [slideIndex]);
+
+  // Handle auto slide with accurate pause/resume
+  useEffect(() => {
+    const startTimer = (time: number) => {
+      startTimeRef.current = Date.now();
+      timeoutRef.current = setTimeout(() => {
+        moveSlider("next");
+      }, time);
+    };
+
+    if (isHovered) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        const passed = Date.now() - startTimeRef.current;
+        timeLeftRef.current = Math.max(0, timeLeftRef.current - passed);
+      }
+    } else {
+      startTimer(timeLeftRef.current);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [slideIndex, isHovered]);
 
   const isAnimating = useRef(false);
 
@@ -225,7 +242,7 @@ export function Hero() {
   const activeItem = slideData[currentSlide];
 
   return (
-    <section className={`hero-section ${isInitial ? "initial-load" : ""} relative w-full h-[90vh] md:h-[91.5vh] overflow-hidden bg-[#f7f5ef] text-slate-900 select-none`}>
+    <section className={`hero-section ${isInitial ? "initial-load" : ""} relative w-full h-[90vh] md:h-[91.5vh] overflow-hidden bg-[#f7f5ef] text-slate-900`}>
       <style>{`
         .hero-section.initial-load {
           opacity: 0;
@@ -423,7 +440,11 @@ export function Hero() {
         {/* Dedicated Staggered Text Content Overlay */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-start pt-[2vh] h-full">
           <div className="w-full px-[5vw] md:px-[4vw] pb-[12vh] md:pb-[14vh] pt-[4vh]">
-            <div className="w-full lg:max-w-[45vw] space-y-[3vh] md:space-y-[2vh] pointer-events-auto">
+            <div 
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              className="w-full lg:max-w-[45vw] space-y-[3vh] md:space-y-[2vh] pointer-events-auto"
+            >
               {/* Line 1: Badge with Trusted Logo & Bottom Orange Accent Line */}
               <div
                 className={`hero-badge flex flex-col items-start gap-1.5 ${isTextVisible ? "line-reveal" : "line-exit"}`}
@@ -523,7 +544,10 @@ export function Hero() {
                   <div
                     key={slideIndex}
                     className="h-full bg-orange-500 rounded-r-full"
-                    style={{ animation: "progressFill 4s linear forwards" }}
+                    style={{ 
+                      animation: "progressFill 6s linear forwards",
+                      animationPlayState: isHovered ? "paused" : "running"
+                    }}
                   />
                 </div>
               )}

@@ -31,10 +31,17 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
   const [countryCode, setCountryCode] = useState('+91');
   const [mobileNumber, setMobileNumber] = useState('');
   const [hospitalName, setHospitalName] = useState('');
+  const [location, setLocation] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const openInquiryModal = (product: InquiryModalProduct) => {
     setSelectedProduct(product);
+    setQuantity('1');
+    setUnit('Unit/Units');
+    setAdditionalDetails('');
+    setMobileNumber('');
+    setHospitalName('');
+    setLocation('');
     setIsSubmitted(false);
     setIsOpen(true);
   };
@@ -92,7 +99,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                   />
                 </div>
                 <div className="flex flex-col min-w-0">
-                  <div className="flex items-center gap-1 md:gap-[0.4vw]">
+                  <div className="flex items-center gap-1 md:gap-[0.4vw] mb-1">
                     <span className="text-[10px] sm:text-xs md:text-[0.68vw] font-bold text-orange-600 uppercase tracking-wider">
                       {selectedProduct.category || 'Hospital Furniture'}
                     </span>
@@ -180,15 +187,25 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                     </div>
                   </div>
 
-                  {/* Hospital / Organization Name */}
-                  <div className="space-y-[0.3vh]">
-                    <label className="text-[10px] sm:text-xs md:text-[0.72vw] font-bold text-slate-700">Hospital / Institution Name (Optional)</label>
-                    <div className="relative">
+                  {/* Hospital Name & Location Row */}
+                  <div className="grid grid-cols-12 gap-3 md:gap-[0.8vw]">
+                    <div className="col-span-6 space-y-[0.3vh]">
+                      <label className="text-[10px] sm:text-xs md:text-[0.72vw] font-bold text-slate-700">Hospital Name (Optional)</label>
                       <input 
                         type="text"
-                        placeholder="e.g. Apollo Hospital, KMCH, Clinic"
+                        placeholder="e.g. Apollo, Clinic"
                         value={hospitalName}
                         onChange={(e) => setHospitalName(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-3 py-2 md:px-[0.8vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.85vw] text-slate-900 outline-none transition-all"
+                      />
+                    </div>
+                    <div className="col-span-6 space-y-[0.3vh]">
+                      <label className="text-[10px] sm:text-xs md:text-[0.72vw] font-bold text-slate-700">Location / City (Optional)</label>
+                      <input 
+                        type="text"
+                        placeholder="e.g. Chennai, Madurai"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
                         className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-3 py-2 md:px-[0.8vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.85vw] text-slate-900 outline-none transition-all"
                       />
                     </div>
