@@ -30,8 +30,7 @@ const slideData: SlideData[] = [
     titleNavy: "INFRASTRUCTURE SINCE - 1997",
     description:
       "For over 29 years, Sri Mathurams Medical Engineering has been manufacturing high-quality hospital furniture across India.",
-    image:
-      "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=2000&q=90",
+    image: "/images/Home Page/HeroSection/image 250.webp",
     category: "ICU & Hospital Beds",
   },
   {
@@ -41,8 +40,7 @@ const slideData: SlideData[] = [
     titleNavy: "HOSPITAL FURNITURE & EQUIPMENT",
     description:
       "Precision engineered SS 304 grade hospital furniture including Mayo tables, crash carts, instrument trolleys, and scrub sinks built for rigorous clinical environments.",
-    image:
-      "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=2000&q=90",
+    image: "/images/Home Page/HeroSection/image 253.webp",
     category: "Stainless Steel Furniture",
   },
   {
@@ -52,8 +50,7 @@ const slideData: SlideData[] = [
     titleNavy: "TABLES & SHADOWLESS LIGHTS",
     description:
       "State-of-the-art hydraulic and electric OT tables designed for multi-specialty surgical setups with maximum ergonomic flexibility and clinical safety.",
-    image:
-      "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=2000&q=90",
+    image: "/images/Home Page/HeroSection/image 254.webp",
     category: "Operation Theatre Equipment",
   },
   {
@@ -63,8 +60,7 @@ const slideData: SlideData[] = [
     titleNavy: "STRETCHERS & WARD FURNITURE",
     description:
       "Ergonomically designed patient transport stretchers, wheel chairs, bedside lockers, and overbed tables for seamless hospital operations.",
-    image:
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=2000&q=90",
+    image: "/images/Home Page/HeroSection/image 256.webp",
     category: "Patient Transport & Ward",
   },
   {
@@ -74,8 +70,7 @@ const slideData: SlideData[] = [
     titleNavy: "SPECIALTY CARE BEDS",
     description:
       "Modular ward solutions, pediatric cots, delivery tables, and attendant beds crafted with robust powder-coated antibacterial materials.",
-    image:
-      "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=2000&q=90",
+    image: "/images/Home Page/HeroSection/image 257.webp",
     category: "Specialty Ward Furniture",
   },
 ];

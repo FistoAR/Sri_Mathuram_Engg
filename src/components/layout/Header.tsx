@@ -94,7 +94,7 @@ export function Header() {
               onClick={() => openInquiryModal({
                 name: "General Inquiry / Custom Order",
                 category: "Hospital Furniture",
-                image: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
                 isGeneral: true
               })}
               className="group relative inline-flex items-center gap-[6px] sm:gap-[0.5vw] bg-orange-500 text-white text-[11px] sm:text-[0.8vw] font-semibold px-[10px] sm:px-[1.2vw] py-[6px] sm:py-[1vh] rounded-lg sm:rounded-[0.6vw] shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-orange-500/35 hover:shadow-lg active:scale-95 transition-all duration-300 border border-orange-400 overflow-hidden shrink-0"

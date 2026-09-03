@@ -171,14 +171,7 @@ export function ProductDetailClient({
     if (product.specifications && Object.keys(product.specifications).length > 0) {
       return Object.entries(product.specifications);
     }
-    if (product.needsDetails) {
-      return [["Status", "NEED TO ADD DETAILS"]];
-    }
-    return [
-      ["Overall Dimension", "Standard Hospital Specification"],
-      ["Material", "Mild Steel (MS) / Stainless Steel (SS)"],
-      ["Finish", "Epoxy Powder Coating / SS Finish"],
-    ];
+    return [];
   }, [product]);
 
   // Config options table
@@ -189,33 +182,14 @@ export function ProductDetailClient({
         options: val,
       }));
     }
-    if (product.needsDetails) {
-      return [{ component: "Status", options: "NEED TO ADD DETAILS" }];
-    }
-    return [
-      {
-        component: "Material & Finish",
-        options: "MS / SS with Epoxy Powder Coating",
-      },
-      {
-        component: "Customisation",
-        options: "Size and mounting can be customized as per requirement",
-      },
-    ];
+    return [];
   }, [product]);
 
   // Key features mapping
   const features =
     product.features && product.features.length > 0
       ? product.features
-      : [
-          "Precision crank system for smooth patient adjustment.",
-          "Robust powder coated mild steel or stainless steel structure.",
-          "Modular ABS head and foot boards for easy sterilisation.",
-          "Collapsible side rails to ensure patient safety and security.",
-          "Smooth rolling heavy duty castors with diagonal brake system.",
-          "Designed and tested for high loading hospital environments.",
-        ];
+      : [];
 
   // Sidebar Categories calculation
   const categoryList = ["All Products", ...CATEGORIES.map((cat) => cat.name)];
@@ -313,21 +287,9 @@ export function ProductDetailClient({
                   {product.name}
                 </h1>
                 {product.needsDetails && (
-                  <div className="bg-red-50/90 border border-red-200/90 rounded-2xl p-4 md:p-5 shadow-xs my-3.5 font-montserrat flex flex-col gap-3 text-left transition-all">
-                    {/* Tag at Top */}
-                    <div className="inline-flex items-center gap-1.5 bg-red-600 text-white font-black text-xs px-3 py-1.5 rounded-lg tracking-wider uppercase shrink-0 shadow-sm shadow-red-600/20 w-fit">
-                      <AlertTriangle className="w-4 h-4 text-white stroke-[2.5]" />
-                      <span>INTIMATION ALERT</span>
-                    </div>
-                    {/* Contents Below */}
-                    <div className="space-y-1 text-left">
-                      <p className="font-extrabold text-sm md:text-[15px] text-red-950 tracking-wide uppercase">
-                        NEED TO ADD DETAILS
-                      </p>
-                      <p className="text-xs md:text-sm text-red-700/90 font-semibold leading-relaxed">
-                        Technical specifications & model details for this item are pending documentation.
-                      </p>
-                    </div>
+                  <div className="inline-flex items-center gap-2 bg-amber-50 text-amber-800 border border-amber-200/80 px-3.5 py-1.5 rounded-lg font-bold text-xs uppercase tracking-wider my-2 font-montserrat w-fit">
+                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse shrink-0" />
+                    <span>Specifications Under Update</span>
                   </div>
                 )}
               </div>
@@ -475,156 +437,164 @@ export function ProductDetailClient({
 
 
       {/* Key Features Section */}
-      <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">
-        <FadeIn direction="up" duration={0.6}>
-          <div className="space-y-2 text-left">
-          <div className="flex flex-col gap-1">
-            <div className="flex items-center gap-2.5">
-              <div className="relative w-5 h-5 shrink-0">
-                <Image
-                  src="/images/ProductDetails/keyFeatures.webp"
-                  alt="star icon"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
-                KEY FEATURES
-              </span>
-            </div>
-            <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
-          </div>
-          <p className="text-slate-700 text-sm md:text-base font-medium leading-relaxed max-w-2xl">
-            Purpose-built features designed for patient comfort, caregiver
-            convenience, and dependable hospital use.
-          </p>
-          </div>
-        </FadeIn>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {features.map((item, idx) => {
-            return (
-              <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
-                <div
-                  className="group/card flex items-center gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-[#E87325]/30 transition-all duration-300 min-h-[72px] text-left"
-                >
-                  <span className="w-2.5 h-2.5 rotate-45 rounded-[1px] bg-[#E87325] shrink-0 group-hover/card:scale-125 transition-transform duration-300" />
-                  <div className="flex-1 min-w-0 text-left">
-                    <p className="text-[#092347] text-xs md:text-sm font-medium leading-snug">
-                      {item}
-                    </p>
-                  </div>
+      {features.length > 0 && (
+        <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">
+          <FadeIn direction="up" duration={0.6}>
+            <div className="space-y-2 text-left">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2.5">
+                <div className="relative w-5 h-5 shrink-0">
+                  <Image
+                    src="/images/ProductDetails/keyFeatures.webp"
+                    alt="star icon"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
-              </FadeIn>
-            );
-          })}
+                <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
+                  KEY FEATURES
+                </span>
+              </div>
+              <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
+            </div>
+            <p className="text-slate-700 text-sm md:text-base font-medium leading-relaxed max-w-2xl">
+              Purpose-built features designed for patient comfort, caregiver
+              convenience, and dependable hospital use.
+            </p>
+            </div>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {features.map((item, idx) => {
+              return (
+                <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
+                  <div
+                    className="group/card flex items-center gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-2xs hover:shadow-md hover:-translate-y-0.5 hover:border-[#E87325]/30 transition-all duration-300 min-h-[72px] text-left"
+                  >
+                    <span className="w-2.5 h-2.5 rotate-45 rounded-[1px] bg-[#E87325] shrink-0 group-hover/card:scale-125 transition-transform duration-300" />
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="text-[#092347] text-xs md:text-sm font-medium leading-snug">
+                        {item}
+                      </p>
+                    </div>
+                  </div>
+                </FadeIn>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Specifications & Configurations Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 border-t border-slate-100 font-montserrat pb-8">
-        {/* Technical Specifications */}
-        <FadeIn direction="up" duration={0.6} delay={0.05} className="h-full">
-          <div className="flex flex-col h-full space-y-4">
-            <div className="space-y-2 text-left shrink-0">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
-                  <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
-                    TECHNICAL SPECIFICATIONS
-                  </span>
+      {(specList.length > 0 || configs.length > 0) && (
+        <div className={`grid grid-cols-1 ${configs.length > 0 && specList.length > 0 ? "lg:grid-cols-2" : "lg:grid-cols-1 max-w-4xl"} gap-8 pt-8 border-t border-slate-100 font-montserrat pb-8`}>
+          {/* Technical Specifications */}
+          {specList.length > 0 && (
+            <FadeIn direction="up" duration={0.6} delay={0.05} className="h-full">
+              <div className="flex flex-col h-full space-y-4">
+                <div className="space-y-2 text-left shrink-0">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
+                      <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
+                        TECHNICAL SPECIFICATIONS
+                      </span>
+                    </div>
+                    <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
+                  </div>
+                  <p className="text-slate-700 text-xs md:text-[16px] font-medium leading-relaxed">
+                    Detailed engineering specifications for reliable performance,
+                    safety, and long-term durability.
+                  </p>
                 </div>
-                <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
-              </div>
-              <p className="text-slate-700 text-xs md:text-[16px] font-medium leading-relaxed">
-                Detailed engineering specifications for reliable performance,
-                safety, and long-term durability.
-              </p>
-            </div>
 
-            <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-              <table className="w-full h-full border-collapse">
-                <thead>
-                  <tr className="bg-[#092347] text-white">
-                    <th className="py-4 px-6 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[30%]">
-                      Specification
-                    </th>
-                    <th className="py-4 px-6 text-left text-xs font-black tracking-wider uppercase">
-                      Details
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {specList.map(([key, val]) => (
-                    <tr
-                      key={key}
-                      className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
-                    >
-                      <td className="py-3.5 px-6 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
-                        {key}
-                      </td>
-                      <td className="py-3.5 px-6 text-slate-600 font-medium text-xs md:text-sm">
-                        {val}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </FadeIn>
-
-        {/* Configurations Options */}
-        <FadeIn direction="up" duration={0.6} delay={0.15} className="h-full">
-          <div className="flex flex-col h-full space-y-4">
-            <div className="space-y-2 text-left shrink-0">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <Settings className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
-                  <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
-                    CONFIGURATIONS OPTIONS
-                  </span>
+                <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
+                  <table className="w-full h-full border-collapse">
+                    <thead>
+                      <tr className="bg-[#092347] text-white">
+                        <th className="py-4 px-6 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[30%]">
+                          Specification
+                        </th>
+                        <th className="py-4 px-6 text-left text-xs font-black tracking-wider uppercase">
+                          Details
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {specList.map(([key, val]) => (
+                        <tr
+                          key={key}
+                          className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
+                        >
+                          <td className="py-3.5 px-6 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
+                            {key}
+                          </td>
+                          <td className="py-3.5 px-6 text-slate-600 font-medium text-xs md:text-sm">
+                            {val}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
               </div>
-              <p className="text-slate-700 text-xs md:text-[16px] font-medium leading-relaxed">
-                Flexible component, finish, and accessory options to meet diverse
-                healthcare requirements.
-              </p>
-            </div>
+            </FadeIn>
+          )}
 
-            <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-              <table className="w-full h-full border-collapse">
-                <thead>
-                  <tr className="bg-[#092347] text-white">
-                    <th className="py-5 px-8 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[28%]">
-                      Component
-                    </th>
-                    <th className="py-5 px-8 text-left text-xs font-black tracking-wider uppercase">
-                      Available Options
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {configs.map((cfg, idx) => (
-                    <tr
-                      key={idx}
-                      className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
-                    >
-                      <td className="py-5 px-8 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
-                        {cfg.component}
-                      </td>
-                      <td className="py-5 px-8 text-slate-600 font-medium text-xs md:text-sm">
-                        {cfg.options}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </FadeIn>
-      </div>
+          {/* Configurations Options */}
+          {configs.length > 0 && (
+            <FadeIn direction="up" duration={0.6} delay={0.15} className="h-full">
+              <div className="flex flex-col h-full space-y-4">
+                <div className="space-y-2 text-left shrink-0">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2">
+                      <Settings className="w-5 h-5 text-[#E87325] stroke-[2.5]" />
+                      <span className="text-sm md:text-base font-black text-[#092347] uppercase tracking-wider">
+                        CONFIGURATIONS OPTIONS
+                      </span>
+                    </div>
+                    <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
+                  </div>
+                  <p className="text-slate-700 text-xs md:text-[16px] font-medium leading-relaxed">
+                    Flexible component, finish, and accessory options to meet diverse
+                    healthcare requirements.
+                  </p>
+                </div>
+
+                <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
+                  <table className="w-full h-full border-collapse">
+                    <thead>
+                      <tr className="bg-[#092347] text-white">
+                        <th className="py-5 px-8 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[28%]">
+                          Component
+                        </th>
+                        <th className="py-5 px-8 text-left text-xs font-black tracking-wider uppercase">
+                          Available Options
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {configs.map((cfg, idx) => (
+                        <tr
+                          key={idx}
+                          className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
+                        >
+                          <td className="py-5 px-8 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
+                            {cfg.component}
+                          </td>
+                          <td className="py-5 px-8 text-slate-600 font-medium text-xs md:text-sm">
+                            {cfg.options}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </FadeIn>
+          )}
+        </div>
+      )}
 
       {/* Reliable Bottom Banner Section */}
       <FadeIn direction="up" duration={0.6} delay={0.25}>
