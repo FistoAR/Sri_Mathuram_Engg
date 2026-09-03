@@ -368,6 +368,9 @@ export function Hero() {
           .thumbnail {
             bottom: 18vh !important;
           }
+          .nextPrevArrows {
+            bottom: calc(18vh + 18vh + 30px) !important;
+          }
           .slider.next .list .item:nth-child(1) img {
             bottom: 18vh !important;
             animation: showImageShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
@@ -426,8 +429,8 @@ export function Hero() {
                 alt={item.category}
                 className="opacity-40 md:opacity-100"
               />
-              {/* Soft light backdrop gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-100 via-slate-100/95 to-slate-100/10 w-full md:w-[65%]" />
+              {/* Soft light backdrop gradient with reduced opacity */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/65 to-transparent w-full md:w-[58%] backdrop-blur-[1px]" />
             </div>
           ))}
         </div>
@@ -442,7 +445,7 @@ export function Hero() {
             >
               {/* Line 1: Badge with Trusted Logo & Bottom Orange Accent Line */}
               <div
-                className={`hero-badge flex flex-col items-start gap-1.5 ${isTextVisible ? "line-reveal" : "line-exit"}`}
+                className={`hero-badge flex flex-col items-start gap-1.5 w-fit ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.1s" : "0s" }}
               >
                 <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1vw] font-bold tracking-wider text-[#0C3D6C] uppercase">
@@ -457,7 +460,7 @@ export function Hero() {
                   <span>{activeItem.badge}</span>
                 </div>
                 {/* Orange underline accent line */}
-                <div className="w-14 sm:w-16 h-[4px] bg-[#E86D24] rounded-full" />
+                <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
               </div>
 
               {/* Line 2: Title */}
@@ -511,9 +514,27 @@ export function Hero() {
             </div>
           </div>
         </div>
+        {/* Top of Preview Container: Left & Right Navigation Buttons (Single Glass Container at Right End) */}
+        <div className="nextPrevArrows absolute z-30 bottom-[calc(11vh+11vh+26px)] md:bottom-[calc(15vh+18vh+30px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto">
+          <button
+            onClick={() => moveSlider("prev")}
+            aria-label="Previous Slide"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+          >
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 stroke-[2.5] -translate-x-[1px]" />
+          </button>
+          <button
+            onClick={() => moveSlider("next")}
+            aria-label="Next Slide"
+            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+          >
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 stroke-[2.5] translate-x-[1px]" />
+          </button>
+        </div>
+
         <div
           ref={thumbnailRef}
-          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[15vh] left-[35vw] md:left-[52vw] right-0 flex items-center gap-[3vw] md:gap-[0.8vw] overflow-x-auto max-w-full"
+          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[15vh] left-[35vw] md:left-[52vw] right-0 flex items-center gap-[3vw] md:gap-[0.8vw] overflow-x-auto max-w-full py-4 px-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {thumbnailsData.map((item, index) => (
@@ -521,14 +542,14 @@ export function Hero() {
               key={item.id}
               data-id={item.id}
               onClick={() => handleThumbnailClick(item.id)}
-              className="item group relative cursor-pointer flex-shrink-0 w-[36vw] sm:w-[28vw] md:w-[13vw] h-[11vh] md:h-[18vh] min-h-[80px] md:min-h-[140px] rounded-xl md:rounded-[1.2vw] overflow-hidden border border-white/80 shadow-xl transition-transform duration-300 hover:scale-105 hover:border-orange-500 bg-white"
+              className="item group relative cursor-pointer flex-shrink-0 w-[36vw] sm:w-[28vw] md:w-[13vw] h-[11vh] md:h-[18vh] min-h-[80px] md:min-h-[140px] rounded-xl md:rounded-[1.2vw] overflow-hidden border border-white/80 shadow-xl transition-all duration-300 hover:scale-105 hover:border-orange-500 hover:shadow-2xl bg-white will-change-transform"
             >
               <img
                 src={item.image}
                 alt={item.category}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-[2vw] md:p-[0.8vw] flex flex-col justify-end">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-[2vw] md:p-[0.8vw] flex flex-col justify-end pointer-events-none">
                 <h4 className="text-[2.8vw] sm:text-[2.2vw] md:text-[0.85vw] font-bold text-white leading-tight line-clamp-2 group-hover:text-orange-300 transition-colors">
                   {item.category}
                 </h4>

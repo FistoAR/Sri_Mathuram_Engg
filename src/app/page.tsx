@@ -504,7 +504,7 @@ export default function HomePage() {
 
         <div className="relative z-10 space-y-[4vh]">
           {/* Top Tagline Badge - Left Aligned with trusted icon & accent line */}
-          <FadeIn direction="up" delay={0.1} className="flex flex-col  gap-1.5">
+          <FadeIn direction="up" delay={0.1} className="flex flex-col items-start gap-1.5 w-fit">
             <div className="inline-flex items-center gap-4 text-lg sm:text-xl font-bold tracking-wide text-[#0C3D6C] uppercase">
               <div className="relative w-6 h-6 flex-shrink-0">
                 <Image
@@ -517,7 +517,7 @@ export default function HomePage() {
               <TypewriterText text="TRUSTED BY HEALTHCARE PROFESSIONALS SINCE 1997" />
             </div>
             {/* Dark Navy accent line under badge */}
-            <div className="w-24 h-[4px] bg-[#E86D24] rounded-full" />
+            <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
           </FadeIn>
 
           {/* Header Title & Subtitle */}
@@ -1262,7 +1262,7 @@ export default function HomePage() {
             <FadeIn
               direction="up"
               delay={0.1}
-              className="flex flex-col items-start gap-1.5"
+              className="flex flex-col items-start gap-1.5 w-fit"
             >
               <div className="inline-flex items-center gap-2.5 text-lg sm:text-xl font-bold tracking-wider text-[#0C3D6C] uppercase">
                 <span className="relative w-7 h-7 flex-shrink-0">
@@ -1276,7 +1276,7 @@ export default function HomePage() {
                 <TypewriterText text="OUR PRODUCTS" />
               </div>
               {/* Orange underline accent line */}
-              <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
+              <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
             </FadeIn>
 
             {/* Hamburger Button for Mobile Categories Panel */}
@@ -1622,7 +1622,7 @@ export default function HomePage() {
           {/* Left Column: Image Container (Flex 1) */}
           <div className="flex-[45%] w-full relative">
             {/* Top Badge: OUR STORY (Overlay on image top left) */}
-            <div className="absolute top-4 left-[4vw] lg:top-8 flex flex-col items-start gap-1 z-20">
+            <div className="absolute top-4 left-[4vw] lg:top-8 flex flex-col items-start gap-1 z-20 w-fit">
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-wider text-white uppercase">
                 <div className="relative w-6 h-6 flex-shrink-0 filter brightness-0 invert">
                   <Image
@@ -1634,7 +1634,7 @@ export default function HomePage() {
                 </div>
                 <TypewriterText text="OUR STORY" />
               </div>
-              <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
+              <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
 
             <FadeIn
@@ -1752,7 +1752,7 @@ export default function HomePage() {
             delay={0.1}
             className="flex flex-col justify-center"
           >
-            <div className="flex flex-col items-start gap-1.5">
+            <div className="flex flex-col items-start gap-1.5 w-fit">
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
                 <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
@@ -1764,7 +1764,7 @@ export default function HomePage() {
                 </div>
                 <TypewriterText text="TRUST & CERTIFICATIONS" />
               </div>
-              <div className="w-20 h-[4px] bg-[#E86D24] rounded-full" />
+              <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
           </FadeIn>
 
@@ -1964,7 +1964,7 @@ export default function HomePage() {
             delay={0.1}
             className="flex flex-col items-start"
           >
-            <div className="flex flex-col items-start gap-1.5 pb-2">
+            <div className="flex flex-col items-start gap-1.5 pb-2 w-fit">
               <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
                 <div className="relative w-7 h-7 flex-shrink-0">
                   <Image
@@ -1976,7 +1976,7 @@ export default function HomePage() {
                 </div>
                 <TypewriterText text="OUR CLIENTS" />
               </div>
-              <div className="w-14 h-[4px] bg-[#E86D24] rounded-full" />
+              <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
             </div>
           </FadeIn>
 
