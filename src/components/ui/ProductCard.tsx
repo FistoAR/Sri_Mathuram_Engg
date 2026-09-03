@@ -12,18 +12,25 @@ interface ProductCardProps {
   hideDetails?: boolean;
 }
 
-export function ProductCard({ product, hideDetails = false }: ProductCardProps) {
+export function ProductCard({
+  product,
+  hideDetails = false,
+}: ProductCardProps) {
   const { openInquiryModal } = useInquiryModal();
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between p-3 h-full group relative font-montserrat">
       {/* Top Content Area - Clickable Card Link */}
-      <Link href={`/products/${product.slug}`} scroll={false} className="space-y-3 flex-1 block group/link cursor-pointer">
+      <Link
+        href={`/products/${product.slug}`}
+        scroll={false}
+        className="space-y-3 flex-1 block group/link cursor-pointer"
+      >
         {/* Product Image Frame */}
         <div className="relative aspect-[16/10] w-full bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden">
           {product.needsDetails && (
-            <div className="absolute top-2 left-2 bg-red-600 text-white text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm z-10">
-              NEED TO ADD DETAILS
+            <div className="absolute top-2 left-2 bg-amber-600/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm z-10">
+              Details Pending
             </div>
           )}
           <Image
@@ -49,7 +56,11 @@ export function ProductCard({ product, hideDetails = false }: ProductCardProps) 
       {/* Button Row */}
       {!hideDetails && (
         <div className="flex flex-col gap-2 mt-4 pt-2.5 border-t border-slate-100 w-full">
-          <Link href={`/products/${product.slug}`} scroll={false} className="w-full">
+          <Link
+            href={`/products/${product.slug}`}
+            scroll={false}
+            className="w-full"
+          >
             <button className="w-full text-center border border-slate-200 hover:border-slate-300 text-slate-700 font-bold py-2 px-3 rounded-lg text-xs transition-all hover:bg-slate-50 whitespace-nowrap">
               View Details
             </button>

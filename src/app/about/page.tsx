@@ -1411,7 +1411,7 @@ export default function AboutPage() {
           <div className="relative z-10 w-full px-8 md:px-12 py-10 flex flex-col justify-center">
             {/* Tagline — index 0 */}
             <div
-              className="cta-item relative inline-flex items-center gap-3 pb-2.5 max-w-full"
+              className="cta-item relative self-start w-fit inline-flex items-center gap-3 pb-2.5"
               style={{ "--cta-i": 0 } as React.CSSProperties}
             >
               <svg
@@ -1426,7 +1426,7 @@ export default function AboutPage() {
                 <span>COMPLETE SOLUTION</span>
                 <span>FOR EVERY HEALTHCARE NEEDS</span>
               </div>
-              <span className="absolute left-0 bottom-0 w-16 h-[3px] bg-[#E86D24] rounded-full" />
+              <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
             </div>
 
             {/* Main Title — index 1 */}
@@ -1455,7 +1455,7 @@ export default function AboutPage() {
                 onClick={() => openInquiryModal({
                   name: "About Page Custom Quote Inquiry",
                   category: "Hospital Furniture",
-                  image: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                  image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
                   isGeneral: true
                 })}
                 className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
@@ -1465,12 +1465,12 @@ export default function AboutPage() {
                 </span>
                 Request a Quote
               </button>
-              <a href="tel:+919176212345">
-                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2">
+              <Link href="/contact">
+                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2 cursor-pointer">
                   <Image src="/images/ContactPage/call.webp" alt="Call Icon" width={18} height={18} className="object-contain" />
                   Contact Sales
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
 

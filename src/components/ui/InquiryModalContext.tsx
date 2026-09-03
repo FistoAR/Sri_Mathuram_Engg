@@ -14,7 +14,7 @@ interface InquiryModalProduct {
 }
 
 interface InquiryModalContextType {
-  openInquiryModal: (product: InquiryModalProduct) => void;
+  openInquiryModal: (product?: InquiryModalProduct) => void;
   closeInquiryModal: () => void;
 }
 
@@ -34,8 +34,15 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
   const [location, setLocation] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const openInquiryModal = (product: InquiryModalProduct) => {
-    setSelectedProduct(product);
+  const openInquiryModal = (product?: InquiryModalProduct) => {
+    setSelectedProduct(
+      product || {
+        name: "General Inquiry / Custom Order",
+        category: "Hospital Furniture",
+        image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+        isGeneral: true,
+      }
+    );
     setQuantity('1');
     setUnit('Unit/Units');
     setAdditionalDetails('');
@@ -92,7 +99,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
               <div className="bg-slate-50 border border-slate-200/90 rounded-lg md:rounded-[0.8vw] p-3 md:p-[0.8vw] flex items-center gap-3 md:gap-[1vw]">
                 <div className="w-12 h-12 md:w-[4.2vw] md:h-[4.2vw] relative bg-white rounded-md md:rounded-[0.6vw] border border-slate-200 p-[0.3vw] shrink-0 flex items-center justify-center overflow-hidden shadow-2xs">
                   <Image 
-                    src={selectedProduct.image || '/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp'} 
+                    src={selectedProduct.image || '/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp'} 
                     alt={selectedProduct.name}
                     fill
                     className="object-contain p-[0.2vw]"
@@ -144,7 +151,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                             setSelectedProduct({
                               name: "General Inquiry / Custom Order",
                               category: "Hospital Furniture",
-                              image: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                              image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
                               isGeneral: true
                             });
                           }

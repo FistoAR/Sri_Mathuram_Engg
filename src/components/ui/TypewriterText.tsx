@@ -8,18 +8,25 @@ interface TypewriterTextProps {
   speed?: number;
   step?: number;
   className?: string;
+  onComplete?: () => void;
 }
 
 export function TypewriterText({
   text,
   delay = 50,
-  speed = 30,
+  speed = 25,
   step = 1,
   className = "",
+  onComplete,
 }: TypewriterTextProps) {
   const [displayedText, setDisplayedText] = useState("");
   const [started, setStarted] = useState(false);
   const elementRef = useRef<HTMLSpanElement>(null);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,15 +52,20 @@ export function TypewriterText({
     if (!started) return;
 
     const timer = setTimeout(() => {
-      let currentText = "";
       let index = 0;
+      let currentText = "";
       const interval = setInterval(() => {
         if (index < text.length) {
           currentText += text.substring(index, index + step);
           setDisplayedText(currentText);
           index += step;
+          if (index >= text.length) {
+            clearInterval(interval);
+            onCompleteRef.current?.();
+          }
         } else {
           clearInterval(interval);
+          onCompleteRef.current?.();
         }
       }, speed);
       return () => clearInterval(interval);

@@ -166,7 +166,7 @@ export default function ContactPage() {
                   name: "Contact Page Top Inquiry",
                   category: "Hospital Furniture",
                   image:
-                    "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                    "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
                   isGeneral: true,
                 })
               }
@@ -555,7 +555,7 @@ export default function ContactPage() {
           </div>
           <div className="relative z-10 w-full px-8 md:px-12 py-10 flex flex-col justify-center">
             <div
-              className="ctac relative inline-flex items-center gap-3 pb-2.5 max-w-full"
+              className="ctac relative self-start w-fit inline-flex items-center gap-3 pb-2.5"
               style={{ "--ci": 0 } as React.CSSProperties}
             >
               <svg
@@ -575,7 +575,7 @@ export default function ContactPage() {
                 <span>COMPLETE SOLUTION</span>
                 <span>FOR EVERY HEALTHCARE NEEDS</span>
               </div>
-              <span className="absolute left-0 bottom-0 w-16 h-[3px] bg-[#E86D24] rounded-full" />
+              <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
             </div>
             <h2
               className="ctac text-2xl md:text-4xl font-semibold text-white leading-tight mt-4"
@@ -603,7 +603,7 @@ export default function ContactPage() {
                     name: "Contact Page Bottom Solutions Inquiry",
                     category: "Hospital Furniture",
                     image:
-                      "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                      "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
                     isGeneral: true,
                   })
                 }
@@ -619,8 +619,8 @@ export default function ContactPage() {
                 </span>
                 Request a Quote
               </button>
-              <a href="tel:+919176212345">
-                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2">
+              <a href="#contact-form">
+                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2 cursor-pointer">
                   <Image
                     src="/images/ContactPage/call.webp"
                     alt="Call Icon"

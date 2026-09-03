@@ -126,113 +126,115 @@ export default function HomePage() {
   // Define categories for left and right sidebar lists
   const leftCategories = [
     {
-      name: "Dressing Trolleys",
+      name: "ICU Beds",
       iconIndex: 0,
-      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+      img: "/images/Product Assets/productsImage/MF30 – ICU Cot Remote.webp",
     },
     {
-      name: "Over Bed Tables",
+      name: "Fowler Cots",
       iconIndex: 1,
-      img: "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+      img: "/images/Product Assets/productsImage/MF39 – Fowler Cot.webp",
     },
     {
-      name: "Bedside Lockers",
+      name: "Semi Fowler Cots",
       iconIndex: 2,
-      img: "/images/Product Assets/HospitalBedsideLocker/extra-10410436.webp",
+      img: "/images/Product Assets/productsImage/MF35 – Semi Fowler Cot.webp",
     },
     {
-      name: "Wheelchairs",
+      name: "Plain Cots",
       iconIndex: 3,
-      img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp",
+      img: "/images/Product Assets/productsImage/MF61 – Plain Cot.webp",
     },
     {
-      name: "Attender Cots",
+      name: "Labour Cots",
       iconIndex: 4,
-      img: "/images/Product Assets/Beds/Attender-Cot-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF70 – SS Remote Labor Cot.webp",
     },
     {
-      name: "Examination Couches",
+      name: "Stretcher Trolleys",
       iconIndex: 5,
-      img: "/images/Product Assets/Beds/Hospital-Examination-Couch-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF43 – Stretcher Trolley.webp",
     },
     {
-      name: "Stainless Steel Furniture",
+      name: "Transfer Trolleys",
       iconIndex: 0,
-      img: "/images/Product Assets/SurgicalSink/OT-Surgical-Scrub-Sink.webp",
+      img: "/images/Product Assets/productsImage/MF66 – Transfer Trolley.webp",
     },
     {
-      name: "Ward Furniture",
+      name: "Crash Carts",
       iconIndex: 1,
-      img: "/images/Product Assets/Beds/Two-Tier-Cot-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF84 – Crash Cart.webp",
     },
     {
-      name: "Custom Hospital Furniture",
+      name: "Instrument Trolleys",
       iconIndex: 2,
-      img: "/images/Product Assets/Furnitures/Hospital-Foot-Stool.webp",
+      img: "/images/Product Assets/productsImage/MF10 – Instrument Trolley.webp",
     },
     {
-      name: "ICU Beds (Manual)",
+      name: "Drug Trolleys",
       iconIndex: 3,
-      img: "/images/Product Assets/ICU CotBed/ICU-Cot.webp",
+      img: "/images/Product Assets/productsImage/MF47 – Drug Trolley.webp",
     },
   ];
 
   const rightCategories = [
     {
-      name: "ICU Beds",
+      name: "Dressing Trolleys",
       iconIndex: 0,
-      img: "/images/Product Assets/ICU CotBed/-Remote-ICU-Cot.webp",
+      img: "/images/Product Assets/productsImage/MF57 – SS Dressing Trolley.webp",
     },
     {
-      name: "Fowler Cots",
+      name: "Over Bed Tables",
       iconIndex: 1,
-      img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF07 – Over Bed Table.webp",
     },
     {
-      name: "Semi Fowler Cots",
+      name: "Bedside Lockers",
       iconIndex: 2,
-      img: "/images/Product Assets/Beds/Hospital-Fowler-Cot-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
     },
     {
-      name: "Plain Cots",
+      name: "Wheelchairs",
       iconIndex: 3,
-      img: "/images/Product Assets/Beds/Plain-Examination-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF49 – Wheel Chair.webp",
     },
     {
-      name: "Labour Cots",
+      name: "Attender Cots",
       iconIndex: 4,
-      img: "/images/Product Assets/Beds/Labour-Table-Hydraulic-Bed.webp",
+      img: "/images/Product Assets/productsImage/MF19 – Attender Cot.webp",
     },
     {
-      name: "Stretcher Trolleys",
+      name: "Examination Couches",
       iconIndex: 5,
-      img: "/images/Product Assets/Stretchers/Plain-Stretcher.webp",
+      img: "/images/Product Assets/productsImage/MF64 – Deluxe Examination Couch.webp",
     },
     {
-      name: "Transfer Trolleys",
+      name: "Stainless Steel Furniture",
       iconIndex: 0,
-      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+      img: "/images/Product Assets/productsImage/MF108 – SS Rack.webp",
     },
     {
-      name: "Crash Carts",
+      name: "Ward Furniture",
       iconIndex: 1,
-      img: "/images/Product Assets/HospitalTrolley/Hospital-Crash-Cart-Trolley.webp",
+      img: "/images/Product Assets/productsImage/MF117 – Two Tier Cot.webp",
     },
     {
-      name: "Instrument Trolleys",
+      name: "Custom Hospital Furniture",
       iconIndex: 2,
-      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+      img: "/images/Product Assets/productsImage/MF53 – Single Foot Step.webp",
     },
     {
-      name: "Drug Trolleys",
+      name: "ICU Beds (Manual)",
       iconIndex: 3,
-      img: "/images/Product Assets/HospitalTrolley/Theatre-Drug-Trolley.webp",
+      img: "/images/Product Assets/productsImage/MF24 – ICU Cot Manual.webp",
     },
   ];
 
-  const [activeCategory, setActiveCategory] = useState("Dressing Trolleys");
+  const [activeCategory, setActiveCategory] = useState("ICU Beds");
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
-  const [isImageHovered, setIsImageHovered] = useState(false);
+  const [isAutoPlayPaused, setIsAutoPlayPaused] = useState(false);
+  const [whyTitleTyped, setWhyTitleTyped] = useState(false);
+  const [storyTitleTyped, setStoryTitleTyped] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isSectionVisible, setIsSectionVisible] = useState(false);
 
@@ -252,7 +254,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    if (!isSectionVisible || isImageHovered) return;
+    if (!isSectionVisible || isAutoPlayPaused) return;
 
     const interval = setInterval(() => {
       setActiveCategory((prev) => {
@@ -264,10 +266,10 @@ export default function HomePage() {
         const nextIndex = (currentIndex + 1) % allNames.length;
         return allNames[nextIndex];
       });
-    }, 2000);
+    }, 2800);
 
     return () => clearInterval(interval);
-  }, [isSectionVisible, isImageHovered, activeCategory]);
+  }, [isSectionVisible, isAutoPlayPaused, leftCategories, rightCategories]);
 
   // Get dynamic category icon mapping
   const getCategoryIcon = (name: string) => {
@@ -317,22 +319,23 @@ export default function HomePage() {
     }
   };
 
+  const showcaseFrames = [
+    "/images/Home Page/HowWeBuild/product-design.webp",
+    "/images/Home Page/HowWeBuild/precision-fabrication.webp",
+    "/images/Home Page/HowWeBuild/power-coating.webp",
+    "/images/Home Page/HowWeBuild/assembly.webp",
+    "/images/Home Page/HowWeBuild/quality-inspection.webp",
+    "/images/Home Page/HowWeBuild/packaging-and-delivery.webp",
+  ];
+
   // Get active image based on active category, taking deterministic random from HowWeBuild folder
   const getCenterImageForCategory = (name: string) => {
-    const frames = [
-      "/images/Home Page/HowWeBuild/product-design.webp",
-      "/images/Home Page/HowWeBuild/precision-fabrication.webp",
-      "/images/Home Page/HowWeBuild/power-coating.webp",
-      "/images/Home Page/HowWeBuild/assembly.webp",
-      "/images/Home Page/HowWeBuild/quality-inspection.webp",
-      "/images/Home Page/HowWeBuild/packaging-and-delivery.webp",
-    ];
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
       hash = name.charCodeAt(i) + ((hash << 5) - hash);
     }
-    const idx = Math.abs(hash) % frames.length;
-    return frames[idx];
+    const idx = Math.abs(hash) % showcaseFrames.length;
+    return showcaseFrames[idx];
   };
 
   const activeProductImage = getCenterImageForCategory(activeCategory);
@@ -518,29 +521,86 @@ export default function HomePage() {
           </FadeIn>
 
           {/* Header Title & Subtitle */}
-          <FadeIn direction="up" delay={0.15} className="text-center space-y-3">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0B2545] ">
-              WHY SRI MATHURAMS ?
+          <div className="text-center space-y-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0B2545] min-h-[44px] flex items-center justify-center">
+              <TypewriterText
+                text="WHY SRI MATHURAMS ?"
+                speed={50}
+                delay={150}
+                onComplete={() => setWhyTitleTyped(true)}
+              />
             </h2>
-            <p className="  text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              For more than two decades, healthcare institutions have{" "}
-              <span className="font-semibold text-slate-900">
-                relied on our products for quality, reliability, and consistent
-                performance.
-              </span>
-            </p>
-          </FadeIn>
+            <div className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed space-y-1">
+              <p
+                className={`transition-all duration-700 ease-out transform ${
+                  whyTitleTyped
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3 pointer-events-none"
+                }`}
+                style={{ transitionDelay: whyTitleTyped ? "150ms" : "0ms" }}
+              >
+                For more than two decades, healthcare institutions have{" "}
+                <span className="font-semibold text-slate-900">
+                  relied on our products
+                </span>
+              </p>
+              <p
+                className={`transition-all duration-700 ease-out transform ${
+                  whyTitleTyped
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3 pointer-events-none"
+                }`}
+                style={{ transitionDelay: whyTitleTyped ? "500ms" : "0ms" }}
+              >
+                <span className="font-semibold text-slate-900">
+                  for quality, reliability, and consistent performance.
+                </span>
+              </p>
+            </div>
+          </div>
 
           {/* Interactive Interlocking Diamond Cards Layout (Desktop Only) */}
           <div className="hidden lg:flex justify-center items-center py-8 px-4 w-full mx-auto overflow-hidden">
             <style>{`
               .why-card-container .why-card {
                 transform: rotate(45deg) scale(1);
-                transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
               }
-              .why-card-container .why-card:hover {
-                transform: rotate(45deg) scale(1.06) !important;
+
+              @keyframes diamondRipple {
+                0%, 100% {
+                  transform: rotate(45deg) scale(1);
+                  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
+                }
+                30% {
+                  transform: rotate(45deg) scale(1.055);
+                  box-shadow: 0 18px 30px -6px rgba(11, 37, 69, 0.22), 0 0 16px rgba(232, 109, 36, 0.18);
+                }
+                60% {
+                  transform: rotate(45deg) scale(1.01);
+                }
               }
+
+              .why-card-container .why-card-1 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 0.0s; }
+              .why-card-container .why-card-2 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 0.4s; }
+              .why-card-container .why-card-3 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 0.8s; }
+              .why-card-container .why-card-4 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 1.2s; }
+              .why-card-container .why-card-5 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 1.6s; }
+              .why-card-container .why-card-6 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 2.0s; }
+              .why-card-container .why-card-7 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 2.4s; }
+              .why-card-container .why-card-8 .why-card { animation: diamondRipple 3.2s ease-in-out infinite 2.8s; }
+
+              /* Bring hovered card forward and pause its animation while scaling up */
+              .why-card-container .why-wave-card:hover {
+                z-index: 80 !important;
+              }
+
+              .why-card-container .why-wave-card:hover .why-card {
+                animation-play-state: paused !important;
+                transform: rotate(45deg) scale(1.09) !important;
+                box-shadow: 0 22px 35px -8px rgba(11, 37, 69, 0.28), 0 0 18px rgba(232, 109, 36, 0.25) !important;
+              }
+
               @media (min-width: 1024px) and (max-width: 1140px) {
                 .why-card-scale-wrapper {
                   transform: scale(0.72);
@@ -577,7 +637,7 @@ export default function HomePage() {
             <div className="why-card-scale-wrapper">
               <div className="why-card-container relative w-[1320px] h-[460px] min-w-[1320px] my-4">
                 {/* Card 1: Superior Manufacturing Quality (Lower Row 1) */}
-                <div className="absolute left-[60px] top-[178px] z-10 hover:z-50">
+                <div className="absolute left-[60px] top-[178px] z-10 hover:z-50 why-wave-card why-card-1">
                   <FadeIn direction="down" duration={1.2} delay={0.15}>
                     <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -604,7 +664,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 2: Excellent value for money (Upper Row 1 - Orange) */}
-                <div className="absolute left-[200px] top-[33px] z-20 hover:z-50">
+                <div className="absolute left-[200px] top-[33px] z-20 hover:z-50 why-wave-card why-card-2">
                   <FadeIn direction="down" duration={1.2} delay={0.3}>
                     <div className="why-card w-[195px] h-[195px] bg-[#E86D24] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-lg hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -631,7 +691,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 3: Reliable after-sales service (Lower Row 2) */}
-                <div className="absolute left-[340px] top-[178px] z-10 hover:z-50">
+                <div className="absolute left-[340px] top-[178px] z-10 hover:z-50 why-wave-card why-card-3">
                   <FadeIn direction="down" duration={1.2} delay={0.45}>
                     <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -658,7 +718,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 4: Customized product solutions (Upper Row 2) */}
-                <div className="absolute left-[480px] top-[33px] z-20 hover:z-50">
+                <div className="absolute left-[480px] top-[33px] z-20 hover:z-50 why-wave-card why-card-4">
                   <FadeIn direction="down" duration={1.2} delay={0.6}>
                     <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -685,7 +745,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 5: Timely Delivery (Lower Row 3 - Navy Blue) */}
-                <div className="absolute left-[620px] top-[178px] z-20 hover:z-50">
+                <div className="absolute left-[620px] top-[178px] z-20 hover:z-50 why-wave-card why-card-5">
                   <FadeIn direction="down" duration={1.2} delay={0.75}>
                     <div className="why-card w-[195px] h-[195px] bg-[#0B3B60] text-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-2xl hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -710,7 +770,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 6: Strong technical support (Upper Row 3) */}
-                <div className="absolute left-[760px] top-[33px] z-10 hover:z-50">
+                <div className="absolute left-[760px] top-[33px] z-10 hover:z-50 why-wave-card why-card-6">
                   <FadeIn direction="down" duration={1.2} delay={0.9}>
                     <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -737,7 +797,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 7: Long-Lasting Products (Lower Row 4) */}
-                <div className="absolute left-[900px] top-[178px] z-10 hover:z-50">
+                <div className="absolute left-[900px] top-[178px] z-10 hover:z-50 why-wave-card why-card-7">
                   <FadeIn direction="down" duration={1.2} delay={1.05}>
                     <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -762,7 +822,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Card 8: Transparent and customer-focused service (Upper Row 4) */}
-                <div className="absolute left-[1040px] top-[33px] z-20 hover:z-50">
+                <div className="absolute left-[1040px] top-[33px] z-20 hover:z-50 why-wave-card why-card-8">
                   <FadeIn direction="down" duration={1.2} delay={1.2}>
                     <div className="why-card w-[195px] h-[195px] bg-white border-[3px] border-[#f7f5ef] flex items-center justify-center p-2 text-center cursor-pointer shadow-md hover:shadow-2xl">
                       <div className="-rotate-45 flex flex-col items-center justify-center space-y-1 max-w-[148px]">
@@ -1257,10 +1317,13 @@ export default function HomePage() {
           </FadeIn>
 
           {/* Interactive Flex Showcase */}
-          <div className="flex flex-col lg:flex-row gap-8 items-center pt-8 justify-between">
-            {/* Left Column: 10 Categories (Shows rightCategories with Left-column alignment) */}
+          <div
+            onMouseLeave={() => setIsAutoPlayPaused(false)}
+            className="flex flex-col lg:flex-row gap-8 items-center pt-8 justify-between"
+          >
+            {/* Left Column: 10 Categories */}
             <div className="hidden lg:block w-full lg:w-[30%] order-2 lg:order-1 flex-shrink-0">
-              {rightCategories.map((cat, idx) => {
+              {leftCategories.map((cat, idx) => {
                 const isActive = activeCategory === cat.name;
                 return (
                   <FadeIn
@@ -1271,16 +1334,29 @@ export default function HomePage() {
                   >
                     <button
                       onClick={() => setActiveCategory(cat.name)}
-                      className={`w-full flex items-center justify-end gap-4 text-right group transition-all duration-300 py-2 px-3 rounded-2xl ${
+                      onMouseEnter={() => {
+                        setActiveCategory(cat.name);
+                        setIsAutoPlayPaused(true);
+                      }}
+                      onMouseLeave={() => setIsAutoPlayPaused(false)}
+                      className={`w-full flex items-center justify-end gap-4 text-right group py-2 px-3 rounded-2xl cursor-pointer ${
                         isActive
-                          ? "text-[#E86D24] font-bold "
-                          : "text-slate-700 hover:text-[#0B3B60] font-semibold"
+                          ? "text-[#E86D24] font-bold transition-colors duration-300"
+                          : "text-slate-700 hover:text-[#E86D24] font-semibold"
                       }`}
                     >
-                      <span className="text-sm sm:text-[15px] font-montserrat tracking-wide">
+                      <span
+                        className={`inline-block text-sm sm:text-[15px] font-montserrat tracking-wide transition-transform duration-300 origin-right ${
+                          isActive ? "scale-105" : ""
+                        }`}
+                      >
                         {cat.name}
                       </span>
-                      <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <div
+                        className={`relative w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform duration-300 ${
+                          isActive ? "scale-110" : ""
+                        }`}
+                      >
                         <svg
                           viewBox="0 0 100 100"
                           className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
@@ -1298,8 +1374,8 @@ export default function HomePage() {
                             strokeDashoffset={isActive ? 102 : 0}
                             className={
                               isActive
-                                ? "transition-all duration-[800ms] ease-in-out"
-                                : ""
+                                ? "transition-all duration-700 ease-in-out"
+                                : "transition-none"
                             }
                           />
                           {/* Orange overlay segment */}
@@ -1315,14 +1391,16 @@ export default function HomePage() {
                             strokeDashoffset={isActive ? 0 : 102}
                             className={
                               isActive
-                                ? "transition-all duration-[800ms] ease-in-out"
-                                : ""
+                                ? "transition-all duration-700 ease-in-out"
+                                : "transition-none"
                             }
                           />
                         </svg>
                         <div
-                          className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
-                            isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
+                          className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center z-10 ${
+                            isActive
+                              ? "bg-[#E86D24] transition-all duration-500"
+                              : "bg-[#0B3B60]"
                           }`}
                         >
                           <div className="relative w-[20px] h-[20px]">
@@ -1349,8 +1427,8 @@ export default function HomePage() {
             >
               {/* Outer container with relative positioning and padding for borders */}
               <div
-                onMouseEnter={() => setIsImageHovered(true)}
-                onMouseLeave={() => setIsImageHovered(false)}
+                onMouseEnter={() => setIsAutoPlayPaused(true)}
+                onMouseLeave={() => setIsAutoPlayPaused(false)}
                 className="relative w-full h-[60vh] aspect-[4/3] max-w-lg"
               >
                 {/* Top-Left Blue Border Bracket (Offset outside the container) */}
@@ -1362,15 +1440,30 @@ export default function HomePage() {
                 {/* Main White Frame Container */}
                 <div className="relative w-full h-full rounded-[2.5rem] bg-white shadow-2xl border border-slate-100 p-2 z-10">
                   {/* Inner Image with custom rounded corners matching mockup */}
-                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-slate-50/60 border border-slate-100">
-                    <Image
-                      src={activeProductImage}
-                      alt={activeCategory}
-                      fill
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition-all duration-500 transform hover:scale-103"
-                    />
+                  <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-slate-900 border border-slate-100">
+                    {/* Persistent image stack - zero blink during transition */}
+                    {showcaseFrames.map((imgSrc) => {
+                      const isCurrent = activeProductImage === imgSrc;
+                      return (
+                        <div
+                          key={imgSrc}
+                          className={`absolute inset-0 transition-all duration-700 ease-out transform ${
+                            isCurrent
+                              ? "opacity-100 translate-x-0 scale-100 z-10 pointer-events-auto"
+                              : "opacity-0 translate-x-10 scale-102 z-0 pointer-events-none"
+                          }`}
+                        >
+                          <Image
+                            src={imgSrc}
+                            alt=""
+                            fill
+                            priority
+                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      );
+                    })}
 
                     {/* View Details Button overlay */}
                     <Link
@@ -1379,11 +1472,28 @@ export default function HomePage() {
                     >
                       <button className="bg-[#E86D24] hover:bg-[#d65e1c] text-white font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2">
                         <span>View</span>
-                        <ArrowRight className="w-4.5 h-4.5" />
+                        <ArrowRight className="w-4.5 h-4.5 animate-arrow-linear" />
                       </button>
                     </Link>
                   </div>
                 </div>
+
+                <style>{`
+                  @keyframes arrowSlideLinear {
+                    0% {
+                      transform: translateX(0);
+                    }
+                    50% {
+                      transform: translateX(6px);
+                    }
+                    100% {
+                      transform: translateX(0);
+                    }
+                  }
+                  .animate-arrow-linear {
+                    animation: arrowSlideLinear 1.2s ease-in-out infinite;
+                  }
+                `}</style>
 
                 {/* Explore Range Button attached to the bottom left of the container */}
                 <Link
@@ -1392,15 +1502,15 @@ export default function HomePage() {
                 >
                   <button className="relative z-30 bg-[#0B3B60] hover:bg-[#051c30] text-white font-extrabold text-[10px] sm:text-xs px-6 pb-3 pt-4 rounded-b-2xl shadow-md transition-all flex items-center gap-2 tracking-wider">
                     <span>EXPLORE COMPLETE PRODUCT RANGE</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 animate-arrow-linear" />
                   </button>
                 </Link>
               </div>
             </FadeIn>
 
-            {/* Right Column: 10 Categories (Shows leftCategories with Right-column alignment) */}
+            {/* Right Column: 10 Categories */}
             <div className="hidden lg:block w-full lg:w-[30%] order-3 flex-shrink-0">
-              {leftCategories.map((cat, idx) => {
+              {rightCategories.map((cat, idx) => {
                 const isActive = activeCategory === cat.name;
                 return (
                   <FadeIn
@@ -1411,13 +1521,22 @@ export default function HomePage() {
                   >
                     <button
                       onClick={() => setActiveCategory(cat.name)}
-                      className={`w-full flex items-center justify-start gap-4 text-left group transition-all duration-300 py-2 px-3 rounded-2xl ${
+                      onMouseEnter={() => {
+                        setActiveCategory(cat.name);
+                        setIsAutoPlayPaused(true);
+                      }}
+                      onMouseLeave={() => setIsAutoPlayPaused(false)}
+                      className={`w-full flex items-center justify-start gap-4 text-left group py-2 px-3 rounded-2xl cursor-pointer ${
                         isActive
-                          ? "text-[#E86D24] font-bold"
-                          : "text-slate-700 hover:text-[#0B3B60] font-semibold"
+                          ? "text-[#E86D24] font-bold transition-colors duration-300"
+                          : "text-slate-700 hover:text-[#E86D24] font-semibold"
                       }`}
                     >
-                      <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <div
+                        className={`relative w-10 h-10 flex-shrink-0 flex items-center justify-center transition-transform duration-300 ${
+                          isActive ? "scale-110" : ""
+                        }`}
+                      >
                         <svg
                           viewBox="0 0 100 100"
                           className="absolute -inset-[2px] w-[calc(100%+4px)] h-[calc(100%+4px)] rotate-[170deg] z-0 pointer-events-none"
@@ -1435,8 +1554,8 @@ export default function HomePage() {
                             strokeDashoffset={isActive ? 102 : 0}
                             className={
                               isActive
-                                ? "transition-all duration-[800ms] ease-in-out"
-                                : ""
+                                ? "transition-all duration-700 ease-in-out"
+                                : "transition-none"
                             }
                           />
                           {/* Orange overlay segment */}
@@ -1452,14 +1571,16 @@ export default function HomePage() {
                             strokeDashoffset={isActive ? 0 : 102}
                             className={
                               isActive
-                                ? "transition-all duration-[800ms] ease-in-out"
-                                : ""
+                                ? "transition-all duration-700 ease-in-out"
+                                : "transition-none"
                             }
                           />
                         </svg>
                         <div
-                          className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
-                            isActive ? "bg-[#E86D24]" : "bg-[#0B3B60]"
+                          className={`relative w-[29px] h-[29px] rounded-full flex items-center justify-center z-10 ${
+                            isActive
+                              ? "bg-[#E86D24] transition-all duration-500"
+                              : "bg-[#0B3B60]"
                           }`}
                         >
                           <div className="relative w-[20px] h-[20px]">
@@ -1472,7 +1593,11 @@ export default function HomePage() {
                           </div>
                         </div>
                       </div>
-                      <span className="text-sm sm:text-[15px] font-semibold font-montserrat tracking-wide">
+                      <span
+                        className={`inline-block text-sm sm:text-[15px] font-semibold font-montserrat tracking-wide transition-transform duration-300 origin-left ${
+                          isActive ? "scale-105" : ""
+                        }`}
+                      >
                         {cat.name}
                       </span>
                     </button>
@@ -1533,22 +1658,31 @@ export default function HomePage() {
           {/* Right Column: Content (Flex 1) */}
           <div className="flex-[55%] w-[55%] relative text-left space-y-6 lg:pr-[4vw] py-12 lg:py-8">
             {/* Title */}
-            <FadeIn direction="up" delay={0.15}>
-              <h2
-                className="text-3xl sm:text-4xl lg:text-[3.9rem] font-extrabold text-[#0B2545] tracking-widest pt-2 lg:pt-12 font-montserrat"
-                style={{ lineHeight: "1.3" }}
-              >
-                Building Healthcare Infrastructure Since 1997
-              </h2>
-            </FadeIn>
-
-            {/* Description Paragraph with Bold Terms */}
-            <FadeIn
-              direction="up"
-              delay={0.2}
-              className="space-y-4 text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-xl font-inter"
+            <h2
+              className="text-3xl sm:text-4xl lg:text-[3.9rem] font-extrabold text-[#0B2545] tracking-widest pt-2 lg:pt-12 font-montserrat"
+              style={{ lineHeight: "1.3" }}
             >
-              <p style={{ lineHeight: "1.8" }}>
+              <TypewriterText
+                text="Building Healthcare Infrastructure Since 1997"
+                speed={24}
+                delay={100}
+                onComplete={() => setStoryTitleTyped(true)}
+              />
+            </h2>
+
+            {/* Description Paragraph with Bold Terms - Line by Line Fade in */}
+            <div className="space-y-4 text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-xl font-inter">
+              <p
+                className={`transition-all duration-700 ease-out transform ${
+                  storyTitleTyped
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3 pointer-events-none"
+                }`}
+                style={{
+                  lineHeight: "1.8",
+                  transitionDelay: storyTitleTyped ? "150ms" : "0ms",
+                }}
+              >
                 For over{" "}
                 <strong className="text-slate-900 font-semibold">
                   29 years
@@ -1562,20 +1696,38 @@ export default function HomePage() {
                 <strong className="text-slate-900 font-semibold">
                   quality, durability, and functionality
                 </strong>
-                . Today, we proudly serve hospitals, clinics, medical colleges,
+                .
+              </p>
+              <p
+                className={`transition-all duration-700 ease-out transform ${
+                  storyTitleTyped
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-3 pointer-events-none"
+                }`}
+                style={{
+                  lineHeight: "1.8",
+                  transitionDelay: storyTitleTyped ? "450ms" : "0ms",
+                }}
+              >
+                Today, we proudly serve hospitals, clinics, medical colleges,
                 and healthcare institutions with{" "}
                 <strong className="text-slate-900 font-semibold">
                   trusted healthcare solutions built to last
                 </strong>
                 .
               </p>
-            </FadeIn>
+            </div>
 
             {/* CTA Button */}
-            <FadeIn
-              direction="up"
-              delay={0.25}
-              className="pt-2 flex justify-start"
+            <div
+              className={`pt-2 flex justify-start transition-all duration-700 ease-out transform ${
+                storyTitleTyped
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-3 pointer-events-none"
+              }`}
+              style={{
+                transitionDelay: storyTitleTyped ? "750ms" : "0ms",
+              }}
             >
               <Link href="/about">
                 <button className="bg-[#0B3B60] hover:bg-[#062454] text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-lg uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 group">
@@ -1583,7 +1735,7 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
-            </FadeIn>
+            </div>
           </div>
         </div>
       </section>
@@ -2096,7 +2248,7 @@ export default function HomePage() {
             duration={0.8}
           >
             {/* Tagline */}
-            <div className="relative inline-flex items-center gap-3 pb-2.5 max-w-full">
+            <div className="relative self-start w-fit inline-flex items-center gap-3 pb-2.5">
               <svg
                 className="w-8 h-8 sm:w-[34px] sm:h-[34px] lg:w-5 lg:h-5 text-[#E86D24] flex-shrink-0"
                 fill="none"
@@ -2114,7 +2266,7 @@ export default function HomePage() {
                 <span>COMPLETE SOLUTION</span>
                 <span>FOR EVERY HEALTHCARE NEEDS</span>
               </div>
-              <span className="absolute left-0 bottom-0 w-16 h-[3px] bg-[#E86D24] rounded-full" />
+              <span className="absolute left-0 bottom-0 w-1/2 h-[3px] bg-[#E86D24] rounded-full" />
             </div>
 
             {/* Main Title */}
@@ -2139,7 +2291,7 @@ export default function HomePage() {
                     name: "Complete Hospital Furniture Solutions Inquiry",
                     category: "Hospital Furniture",
                     image:
-                      "/images/Product Assets/HospitalBedsideLocker/extra-10410435.webp",
+                      "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
                     isGeneral: true,
                   })
                 }
@@ -2156,18 +2308,18 @@ export default function HomePage() {
                 Request a Quote
               </button>
 
-              <a href="tel:+919176212345">
-                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2">
+              <Link href="/contact">
+                <button className="bg-transparent hover:bg-white/10 text-white border-2 border-white/60 hover:border-white font-bold text-xs px-5 py-3 rounded-xl uppercase transition-all inline-flex items-center gap-2 cursor-pointer">
                   <Image
                     src="/images/ContactPage/call.webp"
                     alt="Call Icon"
                     width={18}
                     height={18}
-                    className="object-contain "
+                    className="object-contain"
                   />
                   Contact Sales
                 </button>
-              </a>
+              </Link>
             </div>
           </FadeIn>
         </div>
