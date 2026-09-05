@@ -64,70 +64,80 @@ export const CATEGORIES: Category[] = [
     "slug": "ward-furniture",
     "name": "Ward Furniture",
     "description": "Bedside lockers, overbed tables, attender cots, and ward hospital beds.",
-    "icon": "/images/Product Assets/Icons/Ward Furniture.webp"
+    "icon": "/images/Product Assets/Icons/Ward Furniture.webp",
+    "banner": "/images/Product Assets/Banners/Ward Furniture.webp"
   },
   {
     "id": "icu-critical-care",
     "slug": "icu-critical-care",
     "name": "ICU & Critical Care",
     "description": "Manual and motorized ICU beds with remote control and safety side rails.",
-    "icon": "/images/Product Assets/Icons/ICU & Critical Care .webp"
+    "icon": "/images/Product Assets/Icons/ICU & Critical Care .webp",
+    "banner": "/images/Product Assets/Banners/ICU & Critical Care.webp"
   },
   {
     "id": "emergency-patient-transfer",
     "slug": "emergency-patient-transfer",
     "name": "Emergency & Patient Transfer",
     "description": "Stretcher trolleys, wheelchairs, transfer trolleys and patient shifters.",
-    "icon": "/images/Product Assets/Icons/Emergency & Patient Transfer.webp"
+    "icon": "/images/Product Assets/Icons/Emergency & Patient Transfer.webp",
+    "banner": "/images/Product Assets/Banners/Emergency & Patient Transfer.webp"
   },
   {
     "id": "labour-maternity",
     "slug": "labour-maternity",
     "name": "Labour & Maternity",
     "description": "Baby cradles, remote & manual labor cots, and pediatric beds.",
-    "icon": "/images/Product Assets/Icons/Labour & Maternity.webp"
+    "icon": "/images/Product Assets/Icons/Labour & Maternity.webp",
+    "banner": "/images/Product Assets/Banners/Labour & Maternity.webp"
   },
   {
     "id": "examination-consultation",
     "slug": "examination-consultation",
     "name": "Examination & Consultation",
     "description": "Revolving stools, examination couches, gynec tables, and X-ray lobbies.",
-    "icon": "/images/Product Assets/Icons/Examination & Consultation.webp"
+    "icon": "/images/Product Assets/Icons/Examination & Consultation.webp",
+    "banner": "/images/Product Assets/Banners/Examination & Consultation.webp"
   },
   {
     "id": "medical-trolleys",
     "slug": "medical-trolleys",
     "name": "Medical Trolleys",
     "description": "Instrument trolleys, Mayo trolleys, ECG carts, crash carts, and linen trolleys.",
-    "icon": "/images/Product Assets/Icons/Medical Trolleys.webp"
+    "icon": "/images/Product Assets/Icons/Medical Trolleys.webp",
+    "banner": "/images/Product Assets/Banners/Medical Trolleys.webp"
   },
   {
     "id": "ot-equipment",
     "slug": "ot-equipment",
     "name": "OT Equipment",
     "description": "Operation theater tables, lights, anesthesia machines, foggers, and autoclaves.",
-    "icon": "/images/Product Assets/Icons/OT Equipment.webp"
+    "icon": "/images/Product Assets/Icons/OT Equipment.webp",
+    "banner": "/images/Product Assets/Banners/OT Equipment.webp"
   },
   {
     "id": "ss-furniture-ward-accessories",
     "slug": "ss-furniture-ward-accessories",
     "name": "Stainless Steel Furniture & Ward Accessories",
     "description": "IV stands, foot steps, kick buckets, wash basins, and 3-fold screens.",
-    "icon": "/images/Product Assets/Icons/Stainless Steel Furniture & Ward Accessories.webp"
+    "icon": "/images/Product Assets/Icons/Stainless Steel Furniture & Ward Accessories.webp",
+    "banner": "/images/Product Assets/Banners/Stainless Steel Furniture.webp"
   },
   {
     "id": "accessories",
     "slug": "accessories",
     "name": "Accessories",
     "description": "Hospital mattresses, pillows, side rails, castors, actuators, and control boxes.",
-    "icon": "/images/Product Assets/Icons/Accessories.webp"
+    "icon": "/images/Product Assets/Icons/Accessories.webp",
+    "banner": "/images/Product Assets/Banners/Accessories.webp"
   },
   {
     "id": "general-furniture",
     "slug": "general-furniture",
     "name": "General Furniture",
     "description": "Waiting area seater chairs, two-tier cots, and closed pharmacy trolleys.",
-    "icon": "/images/Product Assets/Icons/General Furniture.webp"
+    "icon": "/images/Product Assets/Icons/General Furniture.webp",
+    "banner": "/images/Product Assets/Banners/General Furniture.webp"
   }
 ];
 

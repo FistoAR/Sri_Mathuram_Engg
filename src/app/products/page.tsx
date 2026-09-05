@@ -125,10 +125,11 @@ function ProductsPageContent() {
 
   // Representative banner image for the category
   const bannerImage = useMemo(() => {
-    const firstProduct = PRODUCTS.find((p) => p.category === currentCategory);
-    return (
-      firstProduct?.image || "/images/Product Assets/ICU CotBed/ICU-Cot.webp"
-    );
+    if (currentCategory === "All Products") {
+      return "/images/Product Assets/rightsideBanner.webp";
+    }
+    const cat = CATEGORIES.find((c) => c.name === currentCategory);
+    return cat?.banner || "/images/Product Assets/rightsideBanner.webp";
   }, [currentCategory]);
 
   const mainRef = React.useRef<HTMLDivElement>(null);
@@ -171,12 +172,13 @@ function ProductsPageContent() {
       {/* Category Banner Card */}
       <div className="hidden lg:block relative rounded-2xl overflow-hidden border border-slate-200/90 w-full shadow-2xs">
         <Image
-          src="/images/Product Assets/rightsideBanner.webp"
-          alt="Product Banner"
+          key={bannerImage}
+          src={bannerImage}
+          alt={`${currentCategory} Banner`}
           width={1200}
           height={160}
           sizes="100vw"
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover transition-opacity duration-300"
           priority
         />
       </div>
@@ -241,11 +243,12 @@ function ProductsPageContent() {
       {/* Mobile/Tablet Category Banner Card at Bottom */}
       <div className="lg:hidden relative rounded-2xl overflow-hidden border border-slate-200/90 w-full aspect-[3.2/1] shadow-2xs mt-8">
         <Image
-          src="/images/Product Assets/rightsideBanner.webp"
-          alt="Product Banner"
+          key={bannerImage}
+          src={bannerImage}
+          alt={`${currentCategory} Banner`}
           fill
           sizes="100vw"
-          className="object-fill"
+          className="object-fill transition-opacity duration-300"
           priority
         />
       </div>

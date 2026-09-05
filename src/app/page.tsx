@@ -128,52 +128,52 @@ export default function HomePage() {
     {
       name: "ICU Beds",
       iconIndex: 0,
-      img: "/images/Product Assets/productsImage/MF30 – ICU Cot Remote.webp",
+      img: "/images/Home Page/ourProducts/products/ICU Beds.webp",
     },
     {
       name: "Fowler Cots",
       iconIndex: 1,
-      img: "/images/Product Assets/productsImage/MF39 – Fowler Cot.webp",
+      img: "/images/Home Page/ourProducts/products/Fowler Cots.webp",
     },
     {
       name: "Semi Fowler Cots",
       iconIndex: 2,
-      img: "/images/Product Assets/productsImage/MF35 – Semi Fowler Cot.webp",
+      img: "/images/Home Page/ourProducts/products/Semi Fowler Cots.webp",
     },
     {
       name: "Plain Cots",
       iconIndex: 3,
-      img: "/images/Product Assets/productsImage/MF61 – Plain Cot.webp",
+      img: "/images/Home Page/ourProducts/products/Plain Cots.webp",
     },
     {
       name: "Labour Cots",
       iconIndex: 4,
-      img: "/images/Product Assets/productsImage/MF70 – SS Remote Labor Cot.webp",
+      img: "/images/Home Page/ourProducts/products/Labour Cots.webp",
     },
     {
       name: "Stretcher Trolleys",
       iconIndex: 5,
-      img: "/images/Product Assets/productsImage/MF43 – Stretcher Trolley.webp",
+      img: "/images/Home Page/ourProducts/products/Stretcher Trolleys.webp",
     },
     {
       name: "Transfer Trolleys",
       iconIndex: 0,
-      img: "/images/Product Assets/productsImage/MF66 – Transfer Trolley.webp",
+      img: "/images/Home Page/ourProducts/products/Transfer Trolleys.webp",
     },
     {
       name: "Crash Carts",
       iconIndex: 1,
-      img: "/images/Product Assets/productsImage/MF84 – Crash Cart.webp",
+      img: "/images/Home Page/ourProducts/products/Crash Carts.webp",
     },
     {
       name: "Instrument Trolleys",
       iconIndex: 2,
-      img: "/images/Product Assets/productsImage/MF10 – Instrument Trolley.webp",
+      img: "/images/Home Page/ourProducts/products/Instrument Trolleys.webp",
     },
     {
       name: "Drug Trolleys",
       iconIndex: 3,
-      img: "/images/Product Assets/productsImage/MF47 – Drug Trolley.webp",
+      img: "/images/Home Page/ourProducts/products/Drug Trolleys.webp",
     },
   ];
 
@@ -181,52 +181,52 @@ export default function HomePage() {
     {
       name: "Dressing Trolleys",
       iconIndex: 0,
-      img: "/images/Product Assets/productsImage/MF57 – SS Dressing Trolley.webp",
+      img: "/images/Home Page/ourProducts/products/Dressing Trolleys.webp",
     },
     {
       name: "Over Bed Tables",
       iconIndex: 1,
-      img: "/images/Product Assets/productsImage/MF07 – Over Bed Table.webp",
+      img: "/images/Home Page/ourProducts/products/Over Bed Tables.webp",
     },
     {
       name: "Bedside Lockers",
       iconIndex: 2,
-      img: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+      img: "/images/Home Page/ourProducts/products/Bedside Lockers.webp",
     },
     {
       name: "Wheelchairs",
       iconIndex: 3,
-      img: "/images/Product Assets/productsImage/MF49 – Wheel Chair.webp",
+      img: "/images/Home Page/ourProducts/products/Wheelchairs.webp",
     },
     {
       name: "Attender Cots",
       iconIndex: 4,
-      img: "/images/Product Assets/productsImage/MF19 – Attender Cot.webp",
+      img: "/images/Home Page/ourProducts/products/Frame 728.webp",
     },
     {
       name: "Examination Couches",
       iconIndex: 5,
-      img: "/images/Product Assets/productsImage/MF64 – Deluxe Examination Couch.webp",
+      img: "/images/Home Page/ourProducts/products/Examination Couches.webp",
     },
     {
       name: "Stainless Steel Furniture",
       iconIndex: 0,
-      img: "/images/Product Assets/productsImage/MF108 – SS Rack.webp",
+      img: "/images/Home Page/ourProducts/products/Stainless Steel Furniture.webp",
     },
     {
       name: "Ward Furniture",
       iconIndex: 1,
-      img: "/images/Product Assets/productsImage/MF117 – Two Tier Cot.webp",
+      img: "/images/Home Page/ourProducts/products/Ward Furniture.webp",
     },
     {
       name: "Custom Hospital Furniture",
       iconIndex: 2,
-      img: "/images/Product Assets/productsImage/MF53 – Single Foot Step.webp",
+      img: "/images/Home Page/ourProducts/products/Custom Hospital Furniture.webp",
     },
     {
       name: "ICU Beds (Manual)",
       iconIndex: 3,
-      img: "/images/Product Assets/productsImage/MF24 – ICU Cot Manual.webp",
+      img: "/images/Home Page/ourProducts/products/ICU Beds-1.webp",
     },
   ];
 
@@ -319,23 +319,13 @@ export default function HomePage() {
     }
   };
 
-  const showcaseFrames = [
-    "/images/Home Page/HowWeBuild/product-design.webp",
-    "/images/Home Page/HowWeBuild/precision-fabrication.webp",
-    "/images/Home Page/HowWeBuild/power-coating.webp",
-    "/images/Home Page/HowWeBuild/assembly.webp",
-    "/images/Home Page/HowWeBuild/quality-inspection.webp",
-    "/images/Home Page/HowWeBuild/packaging-and-delivery.webp",
-  ];
+  const allProductCategories = [...leftCategories, ...rightCategories];
+  const showcaseFrames = Array.from(new Set(allProductCategories.map((c) => c.img)));
 
-  // Get active image based on active category, taking deterministic random from HowWeBuild folder
+  // Get active image based on active category from ourProducts/products folder
   const getCenterImageForCategory = (name: string) => {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const idx = Math.abs(hash) % showcaseFrames.length;
-    return showcaseFrames[idx];
+    const matched = allProductCategories.find((c) => c.name === name);
+    return matched?.img || "/images/Home Page/ourProducts/products/ICU Beds.webp";
   };
 
   const activeProductImage = getCenterImageForCategory(activeCategory);
@@ -388,7 +378,9 @@ export default function HomePage() {
                 width: 2.25rem !important;
                 height: 2.25rem !important;
               }
-              .home-stat-item span.font-black {
+              .home-stat-item span.font-black,
+              .home-stat-item span.font-extrabold,
+              .home-stat-number {
                 font-size: 2rem !important;
               }
               .home-stat-item span.text-[9px] {
@@ -398,14 +390,14 @@ export default function HomePage() {
             }
           `}</style>
           <FadeIn direction="up" delay={0.1} className="px-[4vw]">
-            <div className="home-stats-banner-container w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0B2545] via-[#134074] to-[#0B2545] shadow-2xl py-6 lg:py-5 px-8 sm:px-12 lg:px-8 xl:px-12 2xl:px-16 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-6 border border-white/20 backdrop-blur-md">
+            <div className="home-stats-banner-container w-full rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#0B2545] via-[#134074] to-[#0B2545] shadow-2xl py-6 lg:py-6 px-4 sm:px-8 lg:px-6 xl:px-10 2xl:px-12 grid grid-cols-2 lg:grid-cols-4 items-center gap-y-6 lg:gap-y-0 border border-white/20 backdrop-blur-md">
               {/* Stat 1 */}
-              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
-                <div className="flex flex-col items-start text-left max-w-max">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-none tracking-tight font-heading mb-2 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center border-r border-white/20 px-2 sm:px-4 lg:px-4 xl:px-6 w-full">
+                <div className="flex flex-col items-center text-center max-w-full">
+                  <span className="home-stat-number text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400 whitespace-nowrap text-center">
                     <AnimatedCounter value="2 Decades +" delay={500} />
                   </span>
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                  <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-left">
                     <div className="relative w-9 h-9 flex-shrink-0">
                       <Image
                         src="/images/Home Page/BannerIcons/yearOfExperience.webp"
@@ -422,12 +414,12 @@ export default function HomePage() {
               </div>
 
               {/* Stat 2 */}
-              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
-                <div className="flex flex-col items-start text-left max-w-max">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 px-2 sm:px-4 lg:px-4 xl:px-6 w-full">
+                <div className="flex flex-col items-center text-center max-w-full">
+                  <span className="home-stat-number text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400 whitespace-nowrap text-center">
                     <AnimatedCounter value="7,000+" delay={650} />
                   </span>
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                  <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-left">
                     <div className="relative w-9 h-9 flex-shrink-0">
                       <Image
                         src="/images/Home Page/BannerIcons/projectCompleted.webp"
@@ -444,12 +436,12 @@ export default function HomePage() {
               </div>
 
               {/* Stat 3 */}
-              <div className="home-stat-item flex flex-col items-center justify-center lg:border-r border-white/20 pr-6 lg:pr-4 xl:pr-8 2xl:pr-14 w-[calc(50%-8px)] lg:w-auto">
-                <div className="flex flex-col items-start text-left max-w-max">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center border-r border-white/20 px-2 sm:px-4 lg:px-4 xl:px-6 w-full">
+                <div className="flex flex-col items-center text-center max-w-full">
+                  <span className="home-stat-number text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400 whitespace-nowrap text-center">
                     <AnimatedCounter value="30,000+" delay={800} />
                   </span>
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
+                  <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-left">
                     <div className="relative w-9 h-9 flex-shrink-0">
                       <Image
                         src="/images/Home Page/BannerIcons/ProductManufature.webp"
@@ -466,13 +458,13 @@ export default function HomePage() {
               </div>
 
               {/* Stat 4 */}
-              <div className="home-stat-item flex flex-col items-center justify-center w-[calc(50%-8px)] lg:w-auto">
-                <div className="flex flex-col items-start text-left max-w-max">
-                  <span className="text-3xl tracking-wide -ml-[0.4vw] sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400">
+              <div className="home-stat-item flex flex-col items-center justify-center px-2 sm:px-4 lg:px-4 xl:px-6 w-full">
+                <div className="flex flex-col items-center text-center max-w-full">
+                  <span className="home-stat-number text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400 whitespace-nowrap text-center">
                     <AnimatedCounter value="1,000" delay={950} />
                   </span>
-                  <div className="flex items-center gap-2.5 sm:gap-3 text-left">
-                    <div className="relative  w-9 h-9 flex-shrink-0">
+                  <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-left">
+                    <div className="relative w-9 h-9 flex-shrink-0">
                       <Image
                         src="/images/Home Page/BannerIcons/bedsDelivered.webp"
                         alt="1,000+ Beds Delivered"
@@ -1330,7 +1322,7 @@ export default function HomePage() {
                     key={cat.name}
                     direction="right"
                     delay={0.05 * idx}
-                    className="w-full"
+                    className="w-full flex justify-end"
                   >
                     <button
                       onClick={() => setActiveCategory(cat.name)}
@@ -1339,7 +1331,7 @@ export default function HomePage() {
                         setIsAutoPlayPaused(true);
                       }}
                       onMouseLeave={() => setIsAutoPlayPaused(false)}
-                      className={`w-full flex items-center justify-end gap-4 text-right group py-2 px-3 rounded-2xl cursor-pointer ${
+                      className={`w-fit max-w-max flex items-center justify-end gap-4 text-right group py-1.5 px-3 rounded-2xl cursor-pointer ${
                         isActive
                           ? "text-[#E86D24] font-bold transition-colors duration-300"
                           : "text-slate-700 hover:text-[#E86D24] font-semibold"
@@ -1429,7 +1421,7 @@ export default function HomePage() {
               <div
                 onMouseEnter={() => setIsAutoPlayPaused(true)}
                 onMouseLeave={() => setIsAutoPlayPaused(false)}
-                className="relative w-full h-[60vh] aspect-[4/3] max-w-lg"
+                className="relative w-full aspect-square max-w-[440px] sm:max-w-[480px] lg:max-w-[480px] xl:max-w-[530px]"
               >
                 {/* Top-Left Blue Border Bracket (Offset outside the container) */}
                 <div className="absolute -top-3 -left-3 w-[45%] h-[45%] border-t-[5px] border-l-[5px] border-[#0B3B60] rounded-tl-[2.8rem] pointer-events-none z-0" />
@@ -1491,7 +1483,7 @@ export default function HomePage() {
                     }
                   }
                   .animate-arrow-linear {
-                    animation: arrowSlideLinear 1.2s ease-in-out infinite;
+                    animation: arrowSlideLinear 1.6s infinite ease-in-out;
                   }
                 `}</style>
 
@@ -1517,7 +1509,7 @@ export default function HomePage() {
                     key={cat.name}
                     direction="left"
                     delay={0.05 * idx}
-                    className="w-full"
+                    className="w-full flex justify-start"
                   >
                     <button
                       onClick={() => setActiveCategory(cat.name)}
@@ -1526,7 +1518,7 @@ export default function HomePage() {
                         setIsAutoPlayPaused(true);
                       }}
                       onMouseLeave={() => setIsAutoPlayPaused(false)}
-                      className={`w-full flex items-center justify-start gap-4 text-left group py-2 px-3 rounded-2xl cursor-pointer ${
+                      className={`w-fit max-w-max flex items-center justify-start gap-4 text-left group py-1.5 px-3 rounded-2xl cursor-pointer ${
                         isActive
                           ? "text-[#E86D24] font-bold transition-colors duration-300"
                           : "text-slate-700 hover:text-[#E86D24] font-semibold"
@@ -1656,11 +1648,11 @@ export default function HomePage() {
           </div>
 
           {/* Right Column: Content (Flex 1) */}
-          <div className="flex-[55%] w-[55%] relative text-left space-y-6 lg:pr-[4vw] py-12 lg:py-8">
+          <div className="w-full lg:w-[55%] lg:flex-[55%] relative text-left space-y-5 sm:space-y-6 px-6 sm:px-10 lg:px-0 lg:pr-[4vw] py-8 sm:py-10 lg:py-8">
             {/* Title */}
             <h2
-              className="text-3xl sm:text-4xl lg:text-[3.9rem] font-extrabold text-[#0B2545] tracking-widest pt-2 lg:pt-12 font-montserrat"
-              style={{ lineHeight: "1.3" }}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.4rem] xl:text-[3.9rem] font-extrabold text-[#0B2545] tracking-tight sm:tracking-normal lg:tracking-wider pt-0 lg:pt-8 font-montserrat"
+              style={{ lineHeight: "1.25" }}
             >
               <TypewriterText
                 text="Building Healthcare Infrastructure Since 1997"
@@ -1671,7 +1663,7 @@ export default function HomePage() {
             </h2>
 
             {/* Description Paragraph with Bold Terms - Line by Line Fade in */}
-            <div className="space-y-4 text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-xl font-inter">
+            <div className="space-y-4 text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed font-normal max-w-xl font-inter">
               <p
                 className={`transition-all duration-700 ease-out transform ${
                   storyTitleTyped
@@ -1730,7 +1722,7 @@ export default function HomePage() {
               }}
             >
               <Link href="/about">
-                <button className="bg-[#0B3B60] hover:bg-[#062454] text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-lg uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 group">
+                <button className="bg-[#0B3B60] hover:bg-[#062454] text-white font-bold text-xs sm:text-sm px-6 sm:px-7 py-3 sm:py-3.5 rounded-lg uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 group">
                   <span>READ OUR STORY</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
