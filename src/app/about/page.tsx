@@ -271,7 +271,7 @@ export default function AboutPage() {
               {[
                 "Healthcare is built on trust and for more than 29 years, Sri Mathurams Medical Engineering has earned that trust by manufacturing hospital furniture and medical equipment that combines quality, durability, functionality, and value.",
                 "Founded in 1997, the company began with a simple vision: to strengthen healthcare infrastructure by manufacturing dependable hospital furniture that supports doctors, caregivers, and patients alike.",
-                "What started as a small manufacturing unit has grown into one of South India's trusted hospital furniture manufacturers, supplying hospitals, medical colleges, clinics, healthcare institutions, distributors, and individual customers across India.",
+                "What started as a small manufacturing unit has grown into one of South India's trusted hospital furniture manufacturers, supplying hospitals, medical colleges, clinics, healthcare, distributors, and individual customers across India.",
               ].map((text, i) => (
                 <p
                   key={i}
@@ -394,7 +394,7 @@ export default function AboutPage() {
               <div className="ms-parallax w-full h-full" style={{ "--sx": "22px", "--sy": "22px" } as React.CSSProperties}>
                 <div className="ms-float-4 w-full h-full rounded-[3.5rem] py-[50px] p-6 shadow-lg border border-slate-100/60 text-center flex flex-col justify-center items-center" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)" }}>
                   <span className="text-3xl font-bold text-gray-600 block">4,000+</span>
-                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Healthcare Institutions Served</span>
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-3 leading-snug">Healthcare Served</span>
                 </div>
               </div>
             </div>
@@ -492,7 +492,7 @@ export default function AboutPage() {
             {/* Card 4 */}
             <div className="ms-card rounded-3xl p-6 shadow-lg border border-slate-100/60 text-center col-span-1 flex flex-col justify-center min-h-[140px]" style={{ background: "linear-gradient(135deg, #ffffff 65%, #f7fbfbd7 65%)", "--tx": "60px", "--ty": "60px", "--delay": "0.3s" } as React.CSSProperties}>
               <span className="text-3xl font-bold text-gray-600 block">4,000+</span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-2">Healthcare Institutions Served</span>
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mt-2">Healthcare Served</span>
             </div>
             {/* Card 6 */}
             <div className="ms-card text-white flex flex-col justify-center items-center rounded-3xl p-6 text-center shadow-lg col-span-2 md:col-span-1 min-h-[140px]" style={{ background: "linear-gradient(135deg, #0353A4 65%, rgba(9, 98, 194, 0.95) 65%)", "--tx": "60px", "--ty": "0px", "--delay": "0.4s" } as React.CSSProperties}>
@@ -648,7 +648,7 @@ export default function AboutPage() {
               <div className="vm-bracket-br absolute bottom-4 right-4 w-8 h-8 border-b-[3px] border-r-[3px] border-[#E86D24]" />
               <div className="space-y-4 pt-4 pb-4">
                 <h4 className="text-lg font-bold text-[#0B2545] leading-snug font-montserrat">A Stronger Future for Healthcare Infrastructure</h4>
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed text-justify font-medium font-inter">We envision a future where healthcare institutions have access to dependable, thoughtfully engineered, and accessible hospital furniture solutions that support better patient care.</p>
+                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed text-justify font-medium font-inter">We envision a future where healthcare has access to dependable, thoughtfully engineered, and accessible hospital furniture solutions that support better patient care.</p>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed text-justify font-medium font-inter">Our ambition is to grow from a trusted manufacturing partner into a broader healthcare engineering organization, continuously improving products, processes, technology, and service.</p>
               </div>
             </div>
@@ -839,7 +839,7 @@ export default function AboutPage() {
                 {
                   subtitle: "Today",
                   title: "Serving Healthcare, Across India",
-                  desc: "Serving healthcare institutions across India with standard products, customized solutions, manufacturing expertise, and dependable support.",
+                  desc: "Serving healthcare across India with standard products, customized solutions, manufacturing expertise, and dependable support.",
                   icon: "/images/AboutAs/section5/Icons/Simplification (3).svg",
                   img: "/images/AboutAs/section5/progressImages/image (4).webp"
                 },

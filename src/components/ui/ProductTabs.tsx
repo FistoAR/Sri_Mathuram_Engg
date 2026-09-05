@@ -180,7 +180,7 @@ export function ProductTabs({ product }: ProductTabsProps) {
                 },
                 {
                   question: "Which locations in India do you service for direct delivery?",
-                  answer: "We offer direct factory delivery and installation services strictly across Tamil Nadu, covering all private and government medical institutions.",
+                  answer: "We offer direct factory delivery and installation services strictly across Tamil Nadu, covering all private and government medical.",
                 },
                 {
                   question: "What warranty and post-sales technical support do you offer?",
@@ -192,7 +192,7 @@ export function ProductTabs({ product }: ProductTabsProps) {
                 },
                 {
                   question: "Do you offer discounted pricing for bulk hospital orders?",
-                  answer: "Yes! We provide tier-based institutional pricing for bulk orders of hospital beds, lockers, stretchers, and trolleys. Click 'Get a Price / Quote' to request custom terms.",
+                  answer: "Yes! We provide tier-based pricing for bulk orders of hospital beds, lockers, stretchers, and trolleys. Click 'Get a Price / Quote' to request custom terms.",
                 },
               ]}
             />

@@ -16,7 +16,8 @@ interface SlideData {
   id: string;
   badge: string;
   titleOrange: string;
-  titleNavy: string;
+  titleNavy?: string;
+  tagline: string;
   description: string;
   image: string;
   category: string;
@@ -26,52 +27,62 @@ const slideData: SlideData[] = [
   {
     id: "01",
     badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
-    titleOrange: "BUILDING HEALTHCARE",
-    titleNavy: "INFRASTRUCTURE SINCE - 1997",
+    titleOrange: "WARD FURNITURE",
+    tagline: "Designed for Everyday Patient Care",
     description:
-      "For over 29 years, Sri Mathurams Medical Engineering has been manufacturing high-quality hospital furniture across India.",
-    image: "/images/Home Page/HeroSection/image 250.webp",
-    category: "ICU & Hospital Beds",
+      "Practical and durable furniture solutions designed for patient comfort, hygiene, and efficient hospital wards.",
+    image: "/images/Home Page/HeroSection/Ward Furniture.webp",
+    category: "Ward Furniture",
   },
   {
     id: "02",
-    badge: "PREMIUM STAINLESS STEEL SOLUTIONS",
-    titleOrange: "STAINLESS STEEL",
-    titleNavy: "HOSPITAL FURNITURE & EQUIPMENT",
+    badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
+    titleOrange: "ICU & CRITICAL CARE",
+    tagline: "Built for Critical Care Environments",
     description:
-      "Precision engineered SS 304 grade hospital furniture including Mayo tables, crash carts, instrument trolleys, and scrub sinks built for rigorous clinical environments.",
-    image: "/images/Home Page/HeroSection/image 253.webp",
-    category: "Stainless Steel Furniture",
+      "Reliable equipment and furniture engineered to support intensive care, patient safety, and clinical efficiency.",
+    image: "/images/Home Page/HeroSection/ICU & Critical Care.webp",
+    category: "ICU & Critical Care",
   },
   {
     id: "03",
-    badge: "ADVANCED OPERATION THEATRE SETUP",
-    titleOrange: "OPERATION THEATRE",
-    titleNavy: "TABLES & SHADOWLESS LIGHTS",
+    badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
+    titleOrange: "EMERGENCY & PATIENT TRANSFER",
+    tagline: "Ready When Every Second Matters",
     description:
-      "State-of-the-art hydraulic and electric OT tables designed for multi-specialty surgical setups with maximum ergonomic flexibility and clinical safety.",
-    image: "/images/Home Page/HeroSection/image 254.webp",
-    category: "Operation Theatre Equipment",
+      "Dependable transfer and emergency solutions designed for smooth patient movement and quick response.",
+    image: "/images/Home Page/HeroSection/Emergency & Patient Transfer.webp",
+    category: "Emergency & Patient Transfer",
   },
   {
     id: "04",
-    badge: "PATIENT CARE & ERGONOMIC COMFORT",
-    titleOrange: "PATIENT TRANSFER",
-    titleNavy: "STRETCHERS & WARD FURNITURE",
+    badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
+    titleOrange: "LABOUR & MATERNITY",
+    tagline: "Comfort for Every Stage of Care",
     description:
-      "Ergonomically designed patient transport stretchers, wheel chairs, bedside lockers, and overbed tables for seamless hospital operations.",
-    image: "/images/Home Page/HeroSection/image 256.webp",
-    category: "Patient Transport & Ward",
+      "Purpose-built maternity solutions designed to support mothers, caregivers, and healthcare professionals.",
+    image: "/images/Home Page/HeroSection/Labour & Maternity.webp",
+    category: "Labour & Maternity",
   },
   {
     id: "05",
-    badge: "CUSTOMIZED MEDICAL WARD UNITS",
-    titleOrange: "PEDIATRIC & WARD",
-    titleNavy: "SPECIALTY CARE BEDS",
+    badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
+    titleOrange: "EXAMINATION & CONSULTATION",
+    tagline: "Designed for Confident Clinical Care",
     description:
-      "Modular ward solutions, pediatric cots, delivery tables, and attendant beds crafted with robust powder-coated antibacterial materials.",
-    image: "/images/Home Page/HeroSection/image 257.webp",
-    category: "Specialty Ward Furniture",
+      "Functional examination and consultation furniture created for comfort, accessibility, and efficient clinical workflows.",
+    image: "/images/Home Page/HeroSection/Examination & Consultation.webp",
+    category: "Examination & Consultation",
+  },
+  {
+    id: "06",
+    badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
+    titleOrange: "OT EQUIPMENT",
+    tagline: "Precision for the Operating Room",
+    description:
+      "Reliable operating theatre solutions engineered to support sterile environments, surgical procedures, and clinical efficiency.",
+    image: "/images/Home Page/HeroSection/OT Equipment.webp",
+    category: "OT Equipment",
   },
 ];
 
@@ -335,34 +346,34 @@ export function Hero() {
         .slider .list .item:nth-child(1) { z-index: 1; }
         /* Mobile Slide Animations */
         .slider.next .list .item:nth-child(1) img {
-          width: 36vw; height: 11vh; position: absolute; bottom: 11vh; left: 35vw; right: auto; border-radius: 12px;
+          width: 50vw; height: 11vh; position: absolute; bottom: 11vh; left: 35vw; right: auto; border-radius: 12px;
           animation: showImageMobile 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
         }
         @keyframes showImageMobile {
-          from { bottom: 11vh; left: 35vw; right: auto; width: 36vw; height: 11vh; border-radius: 12px; }
+          from { bottom: 11vh; left: 35vw; right: auto; width: 50vw; height: 11vh; border-radius: 12px; }
           to { bottom: 0; right: 0; left: 0; width: 100%; height: 100%; border-radius: 0; }
         }
         .slider.prev .list .item:nth-child(2) img {
           animation: outFrameMobile 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           position: absolute; bottom: 0; left: 35vw; right: auto;
         }
-        @keyframes outFrameMobile { to { width: 36vw; height: 11vh; bottom: 11vh; left: 35vw; right: auto; border-radius: 12px; } }
+        @keyframes outFrameMobile { to { width: 50vw; height: 11vh; bottom: 11vh; left: 35vw; right: auto; border-radius: 12px; } }
 
         /* Desktop Media Query (min-width: 768px) */
         @media (min-width: 768px) {
           .slider.next .list .item:nth-child(1) img {
-            width: 13vw; height: 18vh; position: absolute; bottom: 15vh; left: 52vw; right: auto; border-radius: 1.2vw;
+            width: 17vw; height: 18vh; position: absolute; bottom: 15vh; left: 46vw; right: auto; border-radius: 1.2vw;
             animation: showImage 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           }
           @keyframes showImage {
-            from { bottom: 15vh; left: 52vw; right: auto; width: 13vw; height: 18vh; border-radius: 1.2vw; }
+            from { bottom: 15vh; left: 46vw; right: auto; width: 17vw; height: 18vh; border-radius: 1.2vw; }
             to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
           }
           .slider.prev .list .item:nth-child(2) img {
             animation: outFrame 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
             position: absolute; bottom: 0; left: 0; right: auto;
           }
-          @keyframes outFrame { to { width: 13vw; height: 18vh; bottom: 15vh; left: 52vw; right: auto; border-radius: 1.2vw; } }
+          @keyframes outFrame { to { width: 17vw; height: 18vh; bottom: 15vh; left: 46vw; right: auto; border-radius: 1.2vw; } }
         }
         @media (min-width: 1024px) and (max-height: 720px) {
           .thumbnail {
@@ -379,11 +390,11 @@ export function Hero() {
             animation: outFrameShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           }
           @keyframes showImageShortHeight {
-            from { bottom: 18vh; left: 52vw; right: auto; width: 13vw; height: 18vh; border-radius: 1.2vw; }
+            from { bottom: 18vh; left: 46vw; right: auto; width: 17vw; height: 18vh; border-radius: 1.2vw; }
             to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
           }
           @keyframes outFrameShortHeight {
-            to { width: 13vw; height: 18vh; bottom: 18vh; left: 52vw; right: auto; border-radius: 1.2vw; }
+            to { width: 17vw; height: 18vh; bottom: 18vh; left: 46vw; right: auto; border-radius: 1.2vw; }
           }
         }
         .slider.next .nextPrevArrows button, .slider.prev .nextPrevArrows button { pointer-events: none; }
@@ -441,14 +452,14 @@ export function Hero() {
             <div 
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="w-full lg:max-w-[45vw] space-y-[3vh] md:space-y-[2vh] pointer-events-auto"
+              className="w-full lg:max-w-[45vw] flex flex-col gap-4 sm:gap-5 md:gap-5 lg:gap-6 pointer-events-auto"
             >
               {/* Line 1: Badge with Trusted Logo & Bottom Orange Accent Line */}
               <div
-                className={`hero-badge flex flex-col items-start gap-1.5 w-fit ${isTextVisible ? "line-reveal" : "line-exit"}`}
+                className={`hero-badge flex flex-col items-start gap-2 w-fit ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.1s" : "0s" }}
               >
-                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1vw] font-bold tracking-wider text-[#0C3D6C] uppercase">
+                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1.2vw] font-bold tracking-wider text-[#0C3D6C] uppercase">
                   <div className="relative w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0">
                     <Image
                       src="/images/Home Page/sectionIcons/trustedMedical.webp"
@@ -463,53 +474,58 @@ export function Hero() {
                 <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
               </div>
 
-              {/* Line 2: Title */}
-              <h1
-                className={`hero-title text-[6.5vw] sm:text-[5.5vw] md:text-[3.1vw] font-bold text-navy-950 font-heading ${isTextVisible ? "line-reveal" : "line-exit"}`}
+              {/* Line 2: Title & Tagline */}
+              <div
+                className={`hero-title flex flex-col gap-2 sm:gap-2.5 md:gap-3 ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.25s" : "0.05s" }}
               >
-                <span className="text-orange-500 block">
+                <h1 className="text-[7vw] sm:text-[5.5vw] md:text-[3.2vw] font-Montserrat font-extrabold text-[#E86D24] tracking-wider uppercase leading-[1.08] font-heading">
                   {activeItem.titleOrange}
-                </span>
-                <span className="text-[#0B2545] block mt-[0.2vh]">
-                  {activeItem.titleNavy}
-                </span>
-              </h1>
+                </h1>
+                {activeItem.tagline && (
+                  <h2 className="text-[4.2vw] sm:text-[3vw] md:text-[2.1vw] font-Montserrat font-semibold text-[#104272] tracking-wider leading-snug">
+                    {activeItem.tagline}
+                  </h2>
+                )}
+                {activeItem.titleNavy && (
+                  <span className="text-[#0B2545] block text-[6.5vw] sm:text-[5.5vw] md:text-[3.1vw] font-inter">
+                    {activeItem.titleNavy}
+                  </span>
+                )}
+              </div>
 
-              <div className="space-y-[1.8vh]">
-                {/* Line 3: Description */}
-                <p
-                  className={`hero-description text-[3.8vw] sm:text-[2.6vw] md:text-[1.1vw] text-slate-700 font-medium leading-relaxed max-w-[90vw] md:max-w-[38vw] ${isTextVisible ? "line-reveal" : "line-exit"}`}
-                  style={{ animationDelay: isTextVisible ? "0.4s" : "0.1s" }}
+              {/* Line 3: Description */}
+              <p
+                className={`hero-description text-[3.8vw] sm:text-[2.6vw] md:text-[1.05vw] text-slate-700 font-medium leading-relaxed md:leading-[1.7] max-w-[90vw] md:max-w-[40vw] ${isTextVisible ? "line-reveal" : "line-exit"}`}
+                style={{ animationDelay: isTextVisible ? "0.4s" : "0.1s" }}
+              >
+                {activeItem.description}
+              </p>
+
+              {/* Line 4: Action Buttons (Request a Quote on Left, Explore Products on Right matching the frames) */}
+              <div
+                className={`hero-buttons flex flex-wrap gap-[2.5vw] md:gap-[1vw] pt-2 md:pt-3 ${isTextVisible ? "line-reveal" : "line-exit"}`}
+                style={{ animationDelay: isTextVisible ? "0.55s" : "0.15s" }}
+              >
+                <button
+                  onClick={() => openInquiryModal({
+                    name: activeItem.titleOrange + (activeItem.tagline ? " - " + activeItem.tagline : ""),
+                    category: activeItem.category,
+                    image: activeItem.image,
+                    isGeneral: true
+                  })}
+                  className="bg-[#0B2545] hover:bg-[#134074] text-white font-bold text-[3.5vw] sm:text-[2.2vw] md:text-[0.85vw] px-[5vw] sm:px-[3.5vw] md:px-[1.4vw] py-[1.8vh] md:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-[1.5vw] md:gap-[0.5vw]"
                 >
-                  {activeItem.description}
-                </p>
+                  REQUEST A QUOTE{" "}
+                  <Send className="w-[4vw] sm:w-[2.5vw] md:w-[1vw] h-[4vw] sm:h-[2.5vw] md:h-[1vw] rotate-45 hero-button-arrow-rotated" />
+                </button>
 
-                {/* Line 4: Action Buttons */}
-                <div
-                  className={`hero-buttons flex flex-wrap gap-[2.5vw] md:gap-[1vw] pt-[1.5vh] ${isTextVisible ? "line-reveal" : "line-exit"}`}
-                  style={{ animationDelay: isTextVisible ? "0.55s" : "0.15s" }}
-                >
-                  <Link href="/products">
-                    <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold text-[3.5vw] sm:text-[2.2vw] md:text-[0.85vw] px-[5vw] sm:px-[3.5vw] md:px-[1.4vw] py-[1.8vh] md:py-[1.3vh] rounded-xl sm:rounded-full uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-[1.5vw] md:gap-[0.5vw]">
-                      EXPLORE PRODUCTS{" "}
-                      <ArrowRight className="w-[4vw] sm:w-[2.5vw] md:w-[1vw] h-[4vw] sm:h-[2.5vw] md:h-[1vw] hero-button-arrow" />
-                    </button>
-                  </Link>
-
-                  <button
-                    onClick={() => openInquiryModal({
-                      name: activeItem.titleOrange + " " + activeItem.titleNavy,
-                      category: activeItem.category,
-                      image: activeItem.image,
-                      isGeneral: true
-                    })}
-                    className="bg-slate-900 hover:bg-slate-800 text-white font-bold text-[3.5vw] sm:text-[2.2vw] md:text-[0.85vw] px-[5vw] sm:px-[3.5vw] md:px-[1.4vw] py-[1.8vh] md:py-[1.3vh] rounded-xl sm:rounded-full uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-[1.5vw] md:gap-[0.5vw]"
-                  >
-                    REQUEST A QUOTE{" "}
-                    <Send className="w-[4vw] sm:w-[2.5vw] md:w-[1vw] h-[4vw] sm:h-[2.5vw] md:h-[1vw] rotate-45 hero-button-arrow-rotated" />
+                <Link href={`/products?category=${encodeURIComponent(activeItem.category)}`}>
+                  <button className="bg-[#E86D24] hover:bg-orange-600 text-white font-bold text-[3.5vw] sm:text-[2.2vw] md:text-[0.85vw] px-[5vw] sm:px-[3.5vw] md:px-[1.4vw] py-[1.8vh] md:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-[1.5vw] md:gap-[0.5vw]">
+                    EXPLORE PRODUCTS{" "}
+                    <ArrowRight className="w-[4vw] sm:w-[2.5vw] md:w-[1vw] h-[4vw] sm:h-[2.5vw] md:h-[1vw] hero-button-arrow" />
                   </button>
-                </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -534,7 +550,7 @@ export function Hero() {
 
         <div
           ref={thumbnailRef}
-          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[15vh] left-[35vw] md:left-[52vw] right-0 flex items-center gap-[3vw] md:gap-[0.8vw] overflow-x-auto max-w-full py-4 px-2"
+          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[15vh] left-[35vw] md:left-[46vw] right-0 flex items-center gap-[3vw] md:gap-[0.8vw] overflow-x-auto max-w-full py-4 px-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {thumbnailsData.map((item, index) => (
@@ -542,15 +558,15 @@ export function Hero() {
               key={item.id}
               data-id={item.id}
               onClick={() => handleThumbnailClick(item.id)}
-              className="item group relative cursor-pointer flex-shrink-0 w-[36vw] sm:w-[28vw] md:w-[13vw] h-[11vh] md:h-[18vh] min-h-[80px] md:min-h-[140px] rounded-xl md:rounded-[1.2vw] overflow-hidden border border-white/80 shadow-xl transition-all duration-300 hover:scale-105 hover:border-orange-500 hover:shadow-2xl bg-white will-change-transform"
+              className="item group relative cursor-pointer flex-shrink-0 w-[50vw] sm:w-[38vw] md:w-[17vw] min-w-[210px] md:min-w-[245px] h-[11vh] md:h-[18vh] min-h-[80px] md:min-h-[140px] rounded-xl md:rounded-[1.2vw] overflow-hidden border border-white/80 shadow-xl transition-all duration-300 hover:scale-105 hover:border-orange-500 hover:shadow-2xl bg-white will-change-transform"
             >
               <img
                 src={item.image}
                 alt={item.category}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent p-[2vw] md:p-[0.8vw] flex flex-col justify-end pointer-events-none">
-                <h4 className="text-[2.8vw] sm:text-[2.2vw] md:text-[0.85vw] font-bold text-white leading-tight line-clamp-2 group-hover:text-orange-300 transition-colors">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent px-3 py-2.5 sm:px-4 sm:py-3 md:px-[0.9vw] md:py-[0.8vw] flex flex-col justify-end pointer-events-none">
+                <h4 className="text-[3.2vw] sm:text-[2.2vw] md:text-[0.9vw] lg:text-[0.82vw] font-bold text-white leading-tight whitespace-nowrap group-hover:text-orange-300 transition-colors">
                   {item.category}
                 </h4>
               </div>
