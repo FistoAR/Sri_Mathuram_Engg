@@ -31,7 +31,7 @@ export const COMPANY_INFO = {
   name: 'Sri Mathurams Medical Engineering',
   legalName: 'Sri Mathurams Medical Engineering Pvt. Ltd.',
   tagline: 'Engineering Healthcare. Delivering Excellence Since 1997.',
-  description: 'Premium Hospital Furniture & Medical Equipment Manufacturer trusted by hospitals, clinics, and healthcare institutions across Tamil Nadu.',
+  description: 'Premium Hospital Furniture & Medical Equipment Manufacturer trusted by hospitals, clinics, and healthcare across Tamil Nadu.',
   url: 'https://srimathuramsmedical.com',
   email: 'info@srimathuramsmedical.com',
   salesEmail: 'sales@srimathuramsmedical.com',

@@ -531,7 +531,7 @@ export default function HomePage() {
                 }`}
                 style={{ transitionDelay: whyTitleTyped ? "150ms" : "0ms" }}
               >
-                For more than two decades, healthcare institutions have{" "}
+                For more than two decades, healthcare has{" "}
                 <span className="font-semibold text-slate-900">
                   relied on our products
                 </span>
@@ -1702,7 +1702,7 @@ export default function HomePage() {
                 }}
               >
                 Today, we proudly serve hospitals, clinics, medical colleges,
-                and healthcare institutions with{" "}
+                and healthcare with{" "}
                 <strong className="text-slate-900 font-semibold">
                   trusted healthcare solutions built to last
                 </strong>
@@ -1975,11 +1975,11 @@ export default function HomePage() {
           {/* Section Title & Subtitle */}
           <FadeIn direction="up" delay={0.15} className="text-center space-y-2">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2545] tracking-tight">
-              Trusted by Healthcare Institutions Across Tamil Nadu
+              Trusted by Healthcare Across Tamil Nadu
             </h2>
             <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-medium">
               We are proud to be a preferred partner for hospitals, clinics, and
-              healthcare institutions.
+              healthcare.
             </p>
           </FadeIn>
 
@@ -2085,7 +2085,7 @@ export default function HomePage() {
               </div>
             </FadeIn>
 
-            {/* Card 5: Healthcare Institutions */}
+            {/* Card 5: Healthcare */}
             <FadeIn
               direction="up"
               delay={0.3}
@@ -2108,8 +2108,6 @@ export default function HomePage() {
               <div className="space-y-1">
                 <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
                   HEALTHCARE
-                  <br />
-                  INSTITUTIONS
                 </h3>
                 <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
               </div>
@@ -2168,7 +2166,7 @@ export default function HomePage() {
               </div>
             </FadeIn>
 
-            {/* Logo 4: SRM Institute */}
+            {/* Logo 4: SRM */}
             <FadeIn
               direction="up"
               delay={0.25}

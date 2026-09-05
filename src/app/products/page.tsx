@@ -126,10 +126,10 @@ function ProductsPageContent() {
   // Representative banner image for the category
   const bannerImage = useMemo(() => {
     if (currentCategory === "All Products") {
-      return "/images/Product Assets/rightsideBanner.webp";
+      return "/images/Product Assets/Banners/AllProducts.webp";
     }
     const cat = CATEGORIES.find((c) => c.name === currentCategory);
-    return cat?.banner || "/images/Product Assets/rightsideBanner.webp";
+    return cat?.banner || "/images/Product Assets/Banners/AllProducts.webp";
   }, [currentCategory]);
 
   const mainRef = React.useRef<HTMLDivElement>(null);
