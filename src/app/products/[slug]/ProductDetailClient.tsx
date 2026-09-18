@@ -29,6 +29,7 @@ import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { ProductBottomBanner } from "@/components/products/ProductBottomBanner";
+import { SecureImage } from "@/components/ui/SecureImage";
 
 const getFunctionIconPath = (funcTitle: string): string => {
   const lower = funcTitle.toLowerCase();
@@ -214,7 +215,7 @@ export function ProductDetailClient({
         {/* Left Side: Product Gallery */}
         <FadeIn direction="left" duration={0.6} className="h-full">
           <div className="flex flex-col justify-between space-y-4 h-full min-w-0">
-            <div className="relative flex-1 min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] w-full overflow-hidden flex items-center justify-center group bg-[#efefef] rounded-2xl border border-slate-100 p-2">
+            <div className="relative flex-1 min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] w-full overflow-hidden flex items-center justify-center group bg-white rounded-2xl border border-slate-200 shadow-sm">
               {/* Back Button inside the image card at top-left */}
               <Link
                 href={`/products?category=${encodeURIComponent(product.category)}`}
@@ -225,12 +226,12 @@ export function ProductDetailClient({
                 <span className="text-xs font-bold font-montserrat">Back</span>
               </Link>
 
-              <Image
+              <SecureImage
                 src={images[activeImageIndex]}
                 alt={product.name}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
 
               {/* Nav Arrows */}
@@ -254,18 +255,18 @@ export function ProductDetailClient({
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
-                  className={`relative w-24 sm:w-28 h-full rounded-xl border-2 overflow-hidden bg-[#ebebeb] shrink-0 transition-all ${
+                  className={`relative w-24 sm:w-28 h-full rounded-xl border-2 overflow-hidden bg-white shrink-0 transition-all ${
                     idx === activeImageIndex
                       ? "border-[#E87325] scale-[1.03] shadow-sm"
                       : "border-slate-200 hover:border-slate-300 opacity-70 hover:opacity-100"
                   }`}
                 >
-                  <Image
+                  <SecureImage
                     src={img}
                     alt={`${product.name} thumbnail ${idx + 1}`}
                     fill
                     sizes="120px"
-                    className="object-contain p-1.5"
+                    className="object-cover"
                   />
                 </button>
               ))}
@@ -684,13 +685,13 @@ export function ProductDetailClient({
           {duplicatedProducts.map((p, idx) => (
             <div key={`${p.id}-dup-${idx}`} className="w-[280px] shrink-0 h-full">
               <div className="group/related bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3.5 cursor-pointer h-[400px]">
-                <div className="relative aspect-[1.3/1] w-full bg-slate-50/50 rounded-xl overflow-hidden mb-3.5">
-                  <Image
+                <div className="relative aspect-[1.3/1] w-full bg-white rounded-xl overflow-hidden mb-3.5 border border-slate-100">
+                  <SecureImage
                     src={p.image}
                     alt={p.name}
                     fill
                     sizes="240px"
-                    className="object-contain p-2 transition-transform duration-500 group-hover/related:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover/related:scale-105"
                   />
                 </div>
                 <div className="space-y-1.5 flex-1 flex flex-col justify-between">

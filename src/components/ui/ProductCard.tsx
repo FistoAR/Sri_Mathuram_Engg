@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { MedicalProduct, getCategoryTheme } from "@/lib/data";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
+import { SecureImage } from "@/components/ui/SecureImage";
 
 interface ProductCardProps {
   product: MedicalProduct;
@@ -26,7 +26,7 @@ export function ProductCard({
     : product.name;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between p-3 h-full group relative font-montserrat">
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between p-3 h-full group relative font-montserrat select-none">
       {/* Top Content Area - Clickable Card Link */}
       <Link
         href={`/products/${product.slug}`}
@@ -34,18 +34,18 @@ export function ProductCard({
         className="space-y-3 flex-1 block group/link cursor-pointer"
       >
         {/* Product Image Frame */}
-        <div className="relative aspect-[16/10] w-full bg-[#efefef] rounded-xl border border-slate-100 flex items-center justify-center overflow-hidden">
+        <div className="relative aspect-[16/10] w-full bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
           {product.needsDetails && (
             <div className="absolute top-2 left-2 bg-amber-600/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm z-10">
               Details Pending
             </div>
           )}
-          <Image
+          <SecureImage
             src={product.image}
             alt={displayName}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-contain p-3 group-hover:scale-105 group-hover/link:scale-105 transition-transform duration-500"
+            className="object-cover group-hover:scale-105 group-hover/link:scale-105 transition-transform duration-500"
           />
         </div>
 

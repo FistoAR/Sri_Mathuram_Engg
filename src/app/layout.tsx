@@ -48,6 +48,7 @@ export const metadata: Metadata = {
 import { InquiryModalProvider } from '@/components/ui/InquiryModalContext';
 import { Preloader } from '@/components/ui/Preloader';
 import { SmoothScroll } from '@/components/ui/SmoothScroll';
+import { SecurityGuard } from '@/components/ui/SecurityGuard';
 
 export default function RootLayout({
   children,
@@ -92,7 +93,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
+      <body className="bg-slate-50 text-slate-900 flex flex-col min-h-screen select-none">
+        <SecurityGuard />
         <SmoothScroll>
           <Preloader />
           <Script

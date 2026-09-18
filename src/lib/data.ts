@@ -546,7 +546,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Deluxe Attender Cot",
     "category": "Ward Furniture",
     "description": "The Mathurams Deluxe Attender Cot provides a comfortable resting space for patient attendants, with an additional lower shelf included in the Deluxe version for convenient storage.",
-    "image": "/images/Product Assets/productsImage/MF20 – Attender Cot.webp",
+    "image": "/images/Product Assets/productsImage/MF20 – Deluxe Attender Cot.webp",
     "features": [
       "Comfortable attendant resting space",
       "Additional lower storage shelf",
@@ -584,7 +584,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Double Shelf Attender Cot with Shelf",
     "category": "Ward Furniture",
     "description": "The Mathurams Double Shelf Attender Cot provides a comfortable resting space for patient attendants with two lower storage shelves for convenient placement of personal belongings and essentials.",
-    "image": "/images/Product Assets/productsImage/MF22 – Attender Cot.webp",
+    "image": "/images/Product Assets/productsImage/MF22 –  Attender Cot With Shelf.webp",
     "features": [
       "Comfortable attendant resting space",
       "Two lower storage shelves",
@@ -852,7 +852,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS IV Stand",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams Full SS IV Stand is designed to provide convenient and stable support for intravenous fluid administration in hospital wards, treatment areas and patient care environments. Its stainless-steel construction offers durability and easy maintenance for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF04 – IV Stand.webp",
+    "image": "/images/Product Assets/productsImage/MF04 –  Full SS IV Stand.webp",
     "features": [
       "Full stainless-steel construction",
       "Height suitable for routine IV fluid administration",
@@ -889,7 +889,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS IV Stand",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams MS IV Stand is designed to provide stable and convenient support for intravenous fluid administration in hospital wards, treatment areas and patient care environments. Its mild steel construction offers a durable and practical solution for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF06 – IV Stand.webp",
+    "image": "/images/Product Assets/productsImage/MF06 –  MS IV Stand.webp",
     "features": [
       "Durable MS construction",
       "Stable base for secure positioning",
@@ -926,7 +926,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Fibre Base IV Stand",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams Fibre Base IV Stand is designed to provide stable and convenient support for intravenous fluid administration in hospital wards, treatment areas and patient care environments. Its fibre base provides a sturdy and practical foundation, while the stand is designed for easy positioning alongside the patient.",
-    "image": "/images/Product Assets/productsImage/MF05 – IV Stand.webp",
+    "image": "/images/Product Assets/productsImage/MF05 –  Fibre Base IV Stand.webp",
     "features": [
       "Durable fibre base construction",
       "Height suitable for routine IV fluid administration",
@@ -964,7 +964,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Single Foot Step - SS",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams Single Foot Step provides a stable raised platform to assist patients and healthcare professionals where additional stepping height is required. Available in MS and SS variants, its compact construction makes it suitable for use alongside examination couches, beds and other hospital furniture. The SS variant offers enhanced corrosion resistance and easy maintenance, making it well suited for areas requiring frequent cleaning.",
-    "image": "/images/Product Assets/productsImage/MF54 – Single Foot Step.webp",
+    "image": "/images/Product Assets/productsImage/MF54 – Single Foot Step - SS.webp",
     "features": [
       "Single-step design",
       "Available in MS and SS variants",
@@ -1002,7 +1002,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Double Foot Step - SS",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams Double Foot Step provides a stable two-level platform to assist patients and healthcare professionals where additional stepping support is required. Its two-step design provides gradual and convenient access to elevated hospital beds, examination couches and other medical furniture. Available in MS and SS variants, the SS version offers enhanced corrosion resistance, easy cleaning and durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF56 – Double Foot Step.webp",
+    "image": "/images/Product Assets/productsImage/MF56 –  Double Foot Step - SS.webp",
     "features": [
       "Two-step design for gradual access",
       "Available in MS and SS variants",
@@ -1040,7 +1040,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Kick Bucket",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams SS Kick Bucket is designed for convenient collection of used materials during surgical and clinical procedures. Its compact design allows easy positioning near the procedure area, while the stainless-steel construction provides corrosion resistance, easy cleaning and durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF97 – Kick Bucket.webp",
+    "image": "/images/Product Assets/productsImage/MF97 – SS Kick Bucket.webp",
     "features": [
       "Full stainless-steel construction",
       "Designed for collection of used materials during procedures",
@@ -1077,7 +1077,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Wash Basin Stand",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams SS Wash Basin Stand is designed to provide convenient access to a wash basin in hospital wards, examination areas and procedure rooms. Its compact freestanding design allows convenient placement wherever required. The stainless-steel construction provides corrosion resistance, easy cleaning and long-term durability, making it suitable for regular use in healthcare environments.",
-    "image": "/images/Product Assets/productsImage/MF98 – Wash Basin Stand.webp",
+    "image": "/images/Product Assets/productsImage/MF98 – SS Wash Basin Stand.webp",
     "features": [
       "Full stainless-steel construction",
       "SS wash basin included",
@@ -1114,7 +1114,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS 3 Fold Screen",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams 3 Fold Screen is designed to provide temporary privacy and separation between patient areas in hospitals, clinics and examination rooms. Its foldable three-panel design allows the screen to be extended when required and folded into a compact size for convenient positioning and storage.",
-    "image": "/images/Product Assets/productsImage/MF99 – 3 Fold Screen.webp",
+    "image": "/images/Product Assets/productsImage/MF99 – 3 Fold Screen (MS).webp",
     "features": [
       "Three-fold privacy screen",
       "Provides privacy and separation between patient areas",
@@ -1154,7 +1154,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Rack 4 Shelf",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams SS Rack – 4 Shelf is designed for organised storage of medical supplies, linen, equipment and other hospital essentials. Its four-tier arrangement provides ample storage while allowing convenient access to frequently required items. The stainless-steel construction provides excellent corrosion resistance, easy cleaning and long-term durability, making the rack suitable for regular use across hospital departments.",
-    "image": "/images/Product Assets/productsImage/MF108 – SS Rack.webp",
+    "image": "/images/Product Assets/productsImage/MF108 – SS Rack 4 Shelf.webp",
     "features": [
       "Four spacious storage shelves",
       "Full stainless-steel construction",
@@ -1193,7 +1193,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "OT Scrub",
     "category": "Stainless Steel Furniture & Ward Accessories",
     "description": "The Mathurams Scrub is designed for hand and instrument washing in operation theatre and surgical preparation areas. Its stainless-steel construction provides a hygienic, corrosion-resistant and easy-to-clean surface, making it suitable for environments requiring frequent cleaning and maintenance. The unit can be configured with different tap arrangements and operating mechanisms according to hospital requirements.",
-    "image": "/images/Product Assets/productsImage/MF109 – Scrub.webp",
+    "image": "/images/Product Assets/productsImage/MF109 – OT Scrub.webp",
     "features": [
       "Designed for surgical hand washing",
       "Full stainless-steel construction",
@@ -1269,7 +1269,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Instrument Trolley 24” × 18”",
     "category": "Medical Trolleys",
     "description": "The Mathurams SS Instrument Trolley is designed for convenient placement and organised handling of surgical and medical instruments during procedures. Its stainless-steel construction provides a durable, smooth and easy-to-clean surface suitable for healthcare environments.",
-    "image": "/images/Product Assets/productsImage/MF10 – Instrument Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF10 –  Instrument Trolley 24” × 18”.webp",
     "features": [
       "Full stainless-steel construction",
       "Smooth, easy-to-clean surface",
@@ -1306,7 +1306,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Instrument Trolley 3’ × 2’",
     "category": "Medical Trolleys",
     "description": "The Mathurams SS Instrument Trolley (3' × 2') provides a spacious stainless-steel working surface for organized surgical and clinical instrument handling during hospital procedures.",
-    "image": "/images/Product Assets/productsImage/MF11 – Instrument Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF11 –  Instrument Trolley 3’ × 2’.webp",
     "features": [
       "Full stainless-steel construction",
       "Smooth, easy-to-clean surface",
@@ -1343,7 +1343,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Instrument Trolley 4’ × 2’",
     "category": "Medical Trolleys",
     "description": "The Mathurams SS Instrument Trolley is designed for convenient placement and organised handling of surgical and medical instruments during procedures. Its stainless-steel construction provides a durable, smooth and easy-to-clean surface suitable for healthcare environments.",
-    "image": "/images/Product Assets/productsImage/MF12 – Instrument Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF12 –  Instrument Trolley 4’ × 2’.webp",
     "features": [
       "Full stainless-steel construction",
       "Smooth, easy-to-clean surface",
@@ -1420,7 +1420,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Drug Trolley",
     "category": "Medical Trolleys",
     "description": "The Mathurams Drug Trolley is designed for organised storage and convenient distribution of medicines across hospital wards and patient care areas. Its multiple-bin arrangement helps segregate and arrange medications systematically, allowing healthcare staff to access required medicines efficiently during routine rounds. Available in MS and SS variants, the trolley can be configured with single-side or double-side storage arrangements based on capacity requirements.",
-    "image": "/images/Product Assets/productsImage/MF47 – Drug Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF47 –  Drug Trolley (MS).webp",
     "features": [
       "Organised multi-bin medication storage",
       "Large and small PVC bins for systematic segregation",
@@ -1500,7 +1500,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS ECG Trolley",
     "category": "Medical Trolleys",
     "description": "The Mathurams ECG Trolley is designed for organised placement and convenient handling of ECG equipment, accessories and consumables during diagnostic procedures. Its three-shelf arrangement provides dedicated space for the ECG recorder and supporting items, while the integrated cable holder helps keep ECG lead cables organised and reduces tangling during use. Available in MS and SS variants, the SS version offers enhanced corrosion resistance, easy cleaning and durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF58 – ECG Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF58 – ECG Trolley (MS).webp",
     "features": [
       "Dedicated trolley for ECG equipment",
       "Three-shelf storage arrangement",
@@ -1543,7 +1543,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Cylinder Trolley B Type",
     "category": "Medical Trolleys",
     "description": "The Mathurams B Type Cylinder Trolley is designed for the convenient handling and transportation of B-type medical gas cylinders within hospitals and healthcare facilities. Its compact structure securely supports the cylinder while allowing easy movement between wards, treatment areas and other clinical locations. Available in MS and SS variants, the SS version offers enhanced corrosion resistance, easy cleaning and long-term durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF75 – Cylinder Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF75 –  Cylinder Trolley B Type (MS).webp",
     "features": [
       "Designed for B-type medical gas cylinders",
       "Secure cylinder holding arrangement",
@@ -1581,7 +1581,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS D Type Cylinder Trolley",
     "category": "Medical Trolleys",
     "description": "The Mathurams D Type Cylinder Trolley is designed for the secure and convenient transportation of D-type medical gas cylinders within hospitals and healthcare facilities. Its sturdy construction supports safe handling of the larger cylinder while allowing convenient movement between wards, treatment areas and other clinical locations. Available in MS and SS variants, the SS version provides enhanced corrosion resistance, easy cleaning and long-term durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF78 – Cylinder Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF75 –  Cylinder Trolley B Type (MS).webp",
     "features": [
       "Designed for D-type medical gas cylinders",
       "Sturdy construction for secure cylinder handling",
@@ -1619,7 +1619,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Crash Cart",
     "category": "Medical Trolleys",
     "description": "The Mathurams Crash Cart is designed to keep essential emergency medical supplies and accessories organised and readily accessible during critical situations. Its modular storage arrangement combines drawers, PVC bins and an SS tray, allowing different emergency supplies to be systematically arranged for quick access. Available in MS and SS variants, the SS version provides enhanced corrosion resistance, easy cleaning and long-term durability for demanding hospital environments.",
-    "image": "/images/Product Assets/productsImage/MF84 – Crash Cart.webp",
+    "image": "/images/Product Assets/productsImage/MF84 – Crash Cart (MS).webp",
     "features": [
       "Designed for organised emergency medical storage",
       "Modular drawer system for convenient access",
@@ -1665,7 +1665,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Mini Crash Cart Mini",
     "category": "Medical Trolleys",
     "description": "The Mathurams Mini Crash Cart is a compact emergency storage unit designed to keep essential medical supplies organised and readily accessible during critical situations. Its narrow, space-efficient design makes it particularly suitable for patient care areas where a full-size crash cart may occupy more space. Available in with-top and without-top variants, the Mini Crash Cart provides flexibility based on the storage and working-surface requirements of the healthcare facility.",
-    "image": "/images/Product Assets/productsImage/MF86 – Crash Cart.webp",
+    "image": "/images/Product Assets/productsImage/MF86 – Crash Cart MIni.webp",
     "features": [
       "Compact and space-efficient emergency storage",
       "Organised access to essential medical supplies",
@@ -1707,7 +1707,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Nebulizer Trolley",
     "category": "Medical Trolleys",
     "description": "The Mathurams Nebulizer Trolley is a compact equipment trolley designed for the convenient placement and movement of nebulizer equipment and related accessories within hospitals and patient care areas. Its organised design keeps the nebulizer unit easily accessible while providing a dedicated platform for routine respiratory care. Available in MS and SS variants, the SS version offers enhanced corrosion resistance, easy cleaning and long-term durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF88 – Nebuliser Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF88 – Nebuliser Trolley (MS).webp",
     "features": [
       "Dedicated trolley for nebulizer equipment",
       "Compact and space-efficient design",
@@ -1745,7 +1745,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Linen Trolley Plain",
     "category": "Medical Trolleys",
     "description": "The Mathurams Plain Linen Trolley is designed for convenient collection, storage and transportation of linen within hospitals and healthcare facilities. Its spacious design provides practical capacity for handling linen between wards, laundry areas and other hospital departments. Available in MS and SS variants, the SS version provides enhanced corrosion resistance, easy cleaning and long-term durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF91 – Linen Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF91 – Linen Trolley Plain.webp",
     "features": [
       "Designed for hospital linen collection and transportation",
       "Spacious storage capacity",
@@ -1782,7 +1782,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Linen Trolley Door Type",
     "category": "Medical Trolleys",
     "description": "The Mathurams Door Type Linen Trolley is designed for the organised handling and transportation of linen within hospitals. Its dual-sided storage arrangement provides separate compartments for fresh linen and used linen, helping maintain clear segregation during collection and distribution. The enclosed door-type construction keeps linen contained during movement. Available in MS and SS variants, the SS version provides enhanced corrosion resistance, easy cleaning and long-term durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF92 – Linen Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF92 – Linen Trolley Door Type.webp",
     "features": [
       "Separate storage for fresh and used linen",
       "Dual-sided compartment design",
@@ -1861,7 +1861,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Laparoscopy Trolley",
     "category": "Medical Trolleys",
     "description": "The Mathurams Laparoscopy Trolley is designed for organised placement and handling of laparoscopic equipment and accessories in operation theatres and procedure areas. Its multi-shelf arrangement provides dedicated space for equipment, while seven integrated power sockets allow convenient connectivity of devices through the trolley. Available in MS and SS variants, the SS version offers enhanced corrosion resistance, easy cleaning and long-term durability for demanding clinical environments.",
-    "image": "/images/Product Assets/productsImage/MF111 – Laparoscopy Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF111 – Laparoscopy Trolley (MS).webp",
     "features": [
       "Designed for laparoscopic equipment",
       "Five-shelf equipment arrangement",
@@ -1946,7 +1946,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Cylinder Trolley A Type",
     "category": "Medical Trolleys",
     "description": "The Mathurams A-Type Cylinder Trolley in mild steel provides stable, safe transport and positioning of small A-type medical gas cylinders across hospital wards and emergency rooms.",
-    "image": "/images/Product Assets/productsImage/MF75 – Cylinder Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF75 –  Cylinder Trolley B Type (MS).webp",
     "features": [
       "Designed specifically for A-type medical gas cylinders",
       "Secure cylinder retaining ring and chain",
@@ -1983,7 +1983,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Cushion Top Revolving Stool",
     "category": "Examination & Consultation",
     "description": "The Mathurams SS Revolving Stool is designed to provide comfortable and flexible seating for healthcare professionals during examinations, procedures and routine clinical activities. Its soft cushioned seat and adjustable height allow users to set a comfortable working position.",
-    "image": "/images/Product Assets/productsImage/MF13 – SS Revolving Stool.webp",
+    "image": "/images/Product Assets/productsImage/MF13 – Cushion Top Revolving Stool (SS).webp",
     "features": [
       "Full SS construction",
       "Soft and comfortable cushioned seat",
@@ -2023,7 +2023,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Top Revolving Stool",
     "category": "Examination & Consultation",
     "description": "The Mathurams SS Revolving Stool with SS Top is designed to provide stable and flexible seating for healthcare professionals during examinations, procedures and routine clinical activities. Its stainless-steel top and height-adjustable revolving design offer a practical and easy-to-maintain seating solution for healthcare environments.",
-    "image": "/images/Product Assets/productsImage/MF14 – SS Revolving Stool.webp",
+    "image": "/images/Product Assets/productsImage/MF14 – SS Top Revolving Stool (SS).webp",
     "features": [
       "Stainless-steel construction",
       "Stainless-steel top",
@@ -2063,7 +2063,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Backrest Cushion Revolving Stool",
     "category": "Examination & Consultation",
     "description": "The Mathurams SS Revolving Stool with Backrest Cushion provides comfortable and flexible seating for healthcare professionals during examinations, procedures and routine clinical activities. The cushioned seat and backrest provide added comfort, while the height-adjustable revolving design allows convenient positioning during use.",
-    "image": "/images/Product Assets/productsImage/MF15 – SS Revolving Stool.webp",
+    "image": "/images/Product Assets/productsImage/MF15 – Backrest Cushion Revolving Stool (SS).webp",
     "features": [
       "Full SS construction",
       "Soft cushioned seat and backrest",
@@ -2104,7 +2104,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Examination Couch – Plain Cabinets",
     "category": "Examination & Consultation",
     "description": "The Mathurams Deluxe Examination Couch (Plain Cabinets) features an adjustable backrest, attached rectangular foot step, and spacious enclosed cabinet storage for clinical supplies.",
-    "image": "/images/Product Assets/productsImage/MF64 – Deluxe Examination Couch.webp",
+    "image": "/images/Product Assets/productsImage/MF64 – Examination Couch – Plain Cabinets.webp",
     "features": [
       "Adjustable backrest for patient positioning",
       "Integrated storage for clinical essentials",
@@ -2196,7 +2196,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Examination Table – Plain",
     "category": "Examination & Consultation",
     "description": "The Mathurams Drug Trolley is designed for organised storage and convenient distribution of medicines across hospital wards and patient care areas. Its multiple-bin arrangement helps segregate and arrange medications systematically, allowing healthcare staff to access required medicines efficiently during routine rounds. Available in MS and SS Models, the trolley can be configured with single-side or double-side storage arrangements based on capacity requirements.",
-    "image": "/images/Product Assets/productsImage/MF80 – Examination Table.webp",
+    "image": "/images/Product Assets/productsImage/MF80 –  Examination Table – Plain.webp",
     "features": [
       "Organised multi-bin medication storage",
       "Large and small PVC bins for systematic segregation",
@@ -2236,7 +2236,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Examination Table – Head Rise",
     "category": "Examination & Consultation",
     "description": "The Mathurams Examination Table – Head Rise is designed for routine patient examinations and clinical procedures, with an adjustable head section for comfortable patient positioning. The table also offers integrated bottom storage configurations for convenient access to frequently required clinical supplies.",
-    "image": "/images/Product Assets/productsImage/MF81 – Examination Table.webp",
+    "image": "/images/Product Assets/productsImage/MF81 –  Examination Table – Head Rise.webp",
     "features": [
       "Adjustable head section",
       "Integrated bottom storage frame",
@@ -2279,7 +2279,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Double Storage Examination Table - Storage",
     "category": "Examination & Consultation",
     "description": "The Mathurams Double Storage Examination Table combines a comfortable examination surface with comprehensive storage including two drawers and two cupboards, keeping diagnostic supplies and medical consumables organized and within reach.",
-    "image": "/images/Product Assets/productsImage/MF83 – Examination Table.webp",
+    "image": "/images/Product Assets/productsImage/MF83 – Examination Table - Storage.webp",
     "features": [
       "Adjustable head section for comfortable positioning",
       "Dual drawers and double door cabinet storage",
@@ -2324,7 +2324,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Scan Couch",
     "category": "Examination & Consultation",
     "description": "The Mathurams Scan Table is designed for diagnostic and scanning procedures, providing a comfortable patient platform with electrically controlled positioning. The wired remote enables convenient height adjustment, while the adjustable backrest supports patient positioning during examinations.",
-    "image": "/images/Product Assets/productsImage/MF96 – Scan Table.webp",
+    "image": "/images/Product Assets/productsImage/MF96 – Scan Couch.webp",
     "features": [
       "Designed for scanning and diagnostic procedures",
       "Electrically adjustable height",
@@ -2370,7 +2370,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Attendant Stool",
     "category": "Examination & Consultation",
     "description": "The Mathurams Attendant Stool provides simple and convenient seating for patient attendants in hospital wards and patient rooms. Its compact design allows easy placement beside hospital beds while occupying minimal floor space. Available in MS and SS variants, the SS version offers enhanced corrosion resistance, easy cleaning and long-term durability for regular hospital use.",
-    "image": "/images/Product Assets/productsImage/MF106 – SS Stool.webp",
+    "image": "/images/Product Assets/productsImage/MF106 – Attendant Stool.webp",
     "features": [
       "Designed for patient attendant seating",
       "Compact and space-efficient design",
@@ -2408,7 +2408,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Double X-Ray View Box",
     "category": "Examination & Consultation",
     "description": "The Mathurams X-Ray View Box is designed for clear and convenient viewing of X-ray films in hospitals, clinics and diagnostic centres. It provides a uniformly illuminated viewing surface to assist medical professionals in examining radiographic films. Available in Single, Double and Four View variants, allowing the required number of X-ray films to be viewed based on clinical requirements.",
-    "image": "/images/Product Assets/productsImage/MF110 – X-Ray Lobby.webp",
+    "image": "/images/Product Assets/productsImage/MF110 –  Double X-RAY VIEW BOX.webp",
     "features": [
       "Designed for viewing X-ray films",
       "Uniform illuminated viewing surface",
@@ -2445,7 +2445,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Four View X-Ray View Box",
     "category": "Examination & Consultation",
     "description": "The Mathurams Four View X-Ray Lobby provides quad-panel uniform LED backlit illumination for simultaneously examining multiple radiographic and surgical films.",
-    "image": "/images/Product Assets/productsImage/MF153 – X-Ray Lobby.webp",
+    "image": "/images/Product Assets/productsImage/MF153 - Four view  X-RAY VIEW BOX.webp",
     "features": [
       "Designed for viewing X-ray films",
       "Uniform illuminated viewing surface",
@@ -2480,7 +2480,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "5 Function ICU Cot Manual (ABS Arms, ABS Side Rails)",
     "category": "ICU & Critical Care",
     "description": "The Mathurams 5-Function Manual ICU Cot is designed for intensive care and critical care environments, providing comprehensive patient positioning through a reliable manual crank mechanism. Its robust construction and flexible configuration options make it suitable for varied hospital requirements.",
-    "image": "/images/Product Assets/productsImage/MF24 – ICU Cot Manual.webp",
+    "image": "/images/Product Assets/productsImage/MF27 – 3 FUNCTION ICU COT MANUAL(SS Arms, SS Collapsible Rails).webp",
     "features": [
       "Five-function manual operation",
       "Smooth manual crank mechanism",
@@ -2535,7 +2535,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "3 Function ICU Cot Manual (SS Arms, SS Collapsible Rails)",
     "category": "ICU & Critical Care",
     "description": "The Mathurams 3-Function Manual ICU Cot is designed for intensive care and critical care environments, providing essential patient positioning through reliable manual crank operation. Its practical configuration supports comfortable patient care while allowing hospitals to select suitable arms, side rails and mobility options.",
-    "image": "/images/Product Assets/productsImage/MF27 – ICU Cot 3 Function Manual.webp",
+    "image": "/images/Product Assets/productsImage/MF27 – 3 FUNCTION ICU COT MANUAL(SS Arms, SS Collapsible Rails).webp",
     "features": [
       "Three-function manual operation",
       "Manual crank mechanism",
@@ -2588,7 +2588,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "ICU Cot Remote (ABS Arms, ABS Side Rails)",
     "category": "ICU & Critical Care",
     "description": "The Mathurams Remote ICU Cot combines convenient electrically powered patient positioning with durable hospital-grade construction. It is available in 3-Function and 5-Function configurations, allowing hospitals to select the level of positioning control suited to their requirements.",
-    "image": "/images/Product Assets/productsImage/MF30 – ICU Cot Remote.webp",
+    "image": "/images/Product Assets/productsImage/MF30 – ICU COT REMOTE (ABS Arms,ABS Side Rails).webp",
     "features": [
       "Wired remote operation",
       "Available in 3-Function and 5-Function configurations",
@@ -2719,7 +2719,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Remote Height Adjustable Labour Cot",
     "category": "Labour & Maternity",
     "description": "The Mathurams SS Remote Labour Cot – Height Adjustable is designed for labour and maternity care, providing electrically controlled height adjustment to support convenient patient handling and caregiver access during procedures. The adjustable working height allows the cot to be positioned according to procedural and caregiver requirements. The stainless-steel construction offers enhanced corrosion resistance, easy cleaning and long-term durability, making it suitable for maternity environments requiring frequent cleaning and maintenance.",
-    "image": "/images/Product Assets/productsImage/MF71 – SS Remote Labor Cot.webp",
+    "image": "/images/Product Assets/productsImage/MF71 – Remote HEIGHT ADJUSTABLE LABOUR COT.webp",
     "features": [
       "Electrically adjustable height",
       "Wired remote operation",
@@ -2769,7 +2769,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Manual V Type Labour Cot",
     "category": "Labour & Maternity",
     "description": "The Mathurams SS Manual Labour Cot – V Type is designed to support patient positioning and caregiver access during labour and maternity procedures. Its V-type design is configured for obstetric care, while the manual operating mechanism provides reliable positioning without dependence on electrical power. The stainless-steel construction offers enhanced corrosion resistance, easy cleaning and long-term durability, making it suitable for maternity and labour care environments.",
-    "image": "/images/Product Assets/productsImage/MF72 – Manual Labor Cot SS.webp",
+    "image": "/images/Product Assets/productsImage/MF72 – Manual V TYPE LABOUR COT.webp",
     "features": [
       "V-type labour cot design",
       "Manual operation",
@@ -2819,7 +2819,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Labour Table",
     "category": "Labour & Maternity",
     "description": "The Mathurams Labour Table is designed for labour, delivery and maternity procedures. Its V-cut tabletop provides convenient access during procedures, while the lithotomy support and basin arrangement assist in patient positioning and clinical use.",
-    "image": "/images/Product Assets/productsImage/MF70 – SS Remote Labor Cot.webp",
+    "image": "/images/Product Assets/productsImage/MF74 – Labour Table.webp",
     "features": [
       "V-cut tabletop design",
       "Full stainless-steel construction",
@@ -2902,7 +2902,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Manual Gynec Examination Couch",
     "category": "Labour & Maternity",
     "description": "The Mathurams Gynec Examination Couch is designed for gynaecological examinations and procedures, providing comfortable patient positioning along with integrated storage and examination support features. The couch includes lithotomy leg supports with belts, a removable basin, retractable foot step, three drawers and three cupboards, providing a practical all-in-one solution for gynaecological examination areas.",
-    "image": "/images/Product Assets/productsImage/MF93 – Gynec Examination Couch.webp",
+    "image": "/images/Product Assets/productsImage/MF93 – Manual GYNEC EXAMINATION COUCH.webp",
     "features": [
       "Designed for gynaecological examinations and procedures",
       "Adjustable backrest",
@@ -2953,7 +2953,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Remote Gynec Examination Couch",
     "category": "Labour & Maternity",
     "description": "The Mathurams Remote Gynec Examination Couch is designed for comfortable and efficient gynecological examinations and minor procedures. Featuring motorized remote-controlled adjustments for height and backrest positioning, it provides smooth patient positioning with integrated adjustable lithotomy leg crutches.",
-    "image": "/images/Product Assets/productsImage/MF94 – Gynec Examination Couch.webp",
+    "image": "/images/Product Assets/productsImage/MF93 – Manual GYNEC EXAMINATION COUCH.webp",
     "features": [
       "Motorized wired remote control operation",
       "Adjustable height and backrest positioning",
@@ -3043,7 +3043,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Casualty Cot Cum Trolley",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams Casualty Cot Cum Trolley is designed for versatile casualty, emergency, and patient transfer use.",
-    "image": "/images/Product Assets/productsImage/MF38 – Trolley Cum Cot.webp",
+    "image": "/images/Product Assets/productsImage/MF38 – Casualty Cot Cum Trolley.webp",
     "features": [
       "Dual-purpose trolley and cot design",
       "Suitable for patient transfer and bedside care",
@@ -3139,7 +3139,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Hi-Low Stretcher",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams Hi-Lo Stretcher is designed for patient transportation with the added advantage of height adjustment and backrest positioning, allowing caregivers to set the stretcher at a convenient level for patient handling and transfer. Its adjustable height provides greater flexibility during patient movement between beds, treatment areas and procedure rooms, while the backrest can be raised to support different patient positions.",
-    "image": "/images/Product Assets/productsImage/MF45 – Stretcher Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF45 – HI-LOW STRETCHER.webp",
     "features": [
       "Height-adjustable stretcher design",
       "Adjustable backrest for patient positioning",
@@ -3187,7 +3187,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Foldable Wheelchair",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams MS Foldable Wheelchair is designed to provide convenient mobility and patient transportation within hospitals, healthcare facilities and other care environments. Its foldable construction allows the wheelchair to be compactly stored and transported when not in use, while the MS frame provides a durable structure for regular use.",
-    "image": "/images/Product Assets/productsImage/MF49 – Wheel Chair.webp",
+    "image": "/images/Product Assets/productsImage/MF49 – MS FOLDABLE WHEELCHAIR.webp",
     "features": [
       "Foldable design for convenient storage and transportation",
       "Durable MS construction",
@@ -3223,7 +3223,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Wheelchair",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams MS Wheelchair is designed to provide reliable and comfortable patient mobility within hospitals and healthcare facilities. Its sturdy mild-steel frame with epoxy powder coating offers durability and dependable support for routine patient transport.",
-    "image": "/images/Product Assets/productsImage/MF50 – Wheel Chair.webp",
+    "image": "/images/Product Assets/productsImage/MF50 – MS WHEELCHAIR.webp",
     "features": [
       "Available in MS, SS and SS Heavy variants",
       "Comfortable seat and backrest",
@@ -3265,7 +3265,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Heavy Wheelchair",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams SS Heavy Wheelchair is a heavy-duty patient mobility solution constructed from reinforced stainless steel. Engineered for high load capacity and demanding clinical usage, it provides exceptional structural stability and long-term corrosion resistance.",
-    "image": "/images/Product Assets/productsImage/MF52 – Wheel Chair.webp",
+    "image": "/images/Product Assets/productsImage/MF52 – SS Heavy WHEELCHAIR.webp",
     "features": [
       "Available in MS, SS and SS Heavy variants",
       "Comfortable seat and backrest",
@@ -3307,7 +3307,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Transfer Trolley",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams SS Transfer Trolley is designed for sterile-zone patient transfers in operating theatres and intensive care suites, featuring a full stainless-steel transferable stretcher top and chassis for maximum hygiene.",
-    "image": "/images/Product Assets/productsImage/MF67 – Transfer Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF67 – SS Transfer Trolley.webp",
     "features": [
       "Designed for controlled patient transfer",
       "Helps maintain separation between sterile and non-sterile areas",
@@ -3352,7 +3352,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Hi-Low Transfer Trolley",
     "category": "Emergency & Patient Transfer",
     "description": "The Mathurams Hi-Lo Transfer Trolley combines controlled patient transfer with height-adjustable positioning, allowing caregivers to adjust the trolley height for better alignment with beds and other patient-support surfaces during transfers. Its detachable and transferable stretcher top supports movement between sterile and non-sterile hospital areas, while the Hi-Lo mechanism provides additional flexibility during patient handling. Available in MS and SS variants, with the SS version providing enhanced corrosion resistance, easier cleaning and long-term durability.",
-    "image": "/images/Product Assets/productsImage/MF68 – Transfer Trolley.webp",
+    "image": "/images/Product Assets/productsImage/MF68 – MS HI-LOW TRANSFER TROLLEY.webp",
     "features": [
       "Height-adjustable Hi-Lo design",
       "Designed for controlled patient transfer",
@@ -3438,7 +3438,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Blood Collection Chair",
     "category": "General Furniture",
     "description": "The Mathurams Blood Collection Chair is designed to provide comfortable and supportive seating for patients during blood collection and other short clinical procedures. Its ergonomic seating arrangement helps maintain a convenient patient position, while the integrated arm support provides a stable surface for blood collection.",
-    "image": "/images/Product Assets/productsImage/MF101 – Blood Collection Chair.webp",
+    "image": "/images/Product Assets/productsImage/MF101 - Blood Collection Chair.webp",
     "features": [
       "Designed for blood collection procedures",
       "Comfortable cushioned seating",
@@ -3592,7 +3592,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Pharmacy Rack",
     "category": "General Furniture",
     "description": "The Mathurams Pharmacy Rack is a robust, high-capacity modular storage system designed for hospital pharmacies, medicine dispensaries, and clinical storage rooms. Built with heavy-gauge steel and multiple adjustable shelves with label holders, it ensures organized, systematic categorization of pharmaceuticals and medical supplies.",
-    "image": "/images/Product Assets/productsImage/MF108 – SS Rack.webp",
+    "image": "/images/Product Assets/productsImage/MF139 -  Pharmacy Rack.webp",
     "features": [
       "Multiple heavy-duty storage shelves with high load capacity",
       "Modular tiered configuration for organized medicine batch sorting",
@@ -3751,7 +3751,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "SS Collapsible Side Rails",
     "category": "Accessories",
     "description": "The Mathurams SS Collapsible Side Rails provide robust, medical-grade patient containment for intensive care and general ward cots. Fabricated from stainless steel, they offer exceptional structural rigidity, easy single-hand drop operation, and uncompromised hygienic cleaning.",
-    "image": "/images/Product Assets/productsImage/MF123 – SS Collapsible.webp",
+    "image": "/images/Product Assets/productsImage/MF123 – SS Collapsible Side Rails.webp",
     "features": [
       "Heavy-gauge stainless steel tubular construction",
       "One-touch collapsible mechanism for quick caregiver access",
@@ -3902,7 +3902,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "ABS Arms",
     "category": "Accessories",
     "description": "The Mathurams ABS Arms are premium-grade medical bed head and foot boards moulded from high-impact ABS polymer. Designed for ICU beds and recovery cots, they feature integrated lock levers for quick removal during clinical emergencies and intubation, combined with smooth ergonomic contours for effortless cleaning and sterilization.",
-    "image": "/images/ProductDetails/StandardAccessories/ABS Head.webp",
+    "image": "/images/Product Assets/productsImage/MF137 – ABS Arms.webp",
     "features": [
       "High-impact injection-moulded ABS polymer construction",
       "Quick-release locking mechanism for immediate removal during emergencies",
@@ -3945,7 +3945,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "ABS Side Rails",
     "category": "Accessories",
     "description": "The Mathurams ABS Side Rails are 4-piece tuck-away safety side barriers manufactured from durable ABS polymer. Featuring gas-spring dampened collapsible drop-down operation and built-in angle indicators, they provide maximum patient fall prevention while allowing swift bedside access for medical staff.",
-    "image": "/images/Product Assets/productsImage/MF120 – Aluminium Side Rails.webp",
+    "image": "/images/Product Assets/productsImage/MF138 – ABS Side Rails.webp",
     "features": [
       "Four-piece split collapsible tuck-away design (2 head + 2 foot sections)",
       "Smooth gas-spring assisted one-hand release mechanism",
@@ -4093,7 +4093,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "2” Castors",
     "category": "Accessories",
     "description": "The Mathurams 2\" Hospital Castors are compact, smooth-rolling wheels designed for light hospital furniture, drip stands, waste bins and foot steps. Featuring non-marking synthetic treads and low rolling resistance, they protect hospital flooring while ensuring effortless maneuverability.",
-    "image": "/images/Product Assets/productsImage/MF148 – Castors.webp",
+    "image": "/images/Product Assets/productsImage/MF148 – 2”  CASTORS.webp",
     "features": [
       "2-inch wheel diameter for compact, low-profile medical furniture",
       "Non-marking, silent-rolling synthetic rubber / PU tread",
@@ -4130,7 +4130,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "3” Castors",
     "category": "Accessories",
     "description": "The Mathurams 3\" Hospital Castors deliver reliable mobility for bedside lockers, dressing trolleys, mayo stands and diagnostic equipment. With heavy-duty polymer wheels and shielded swivel raceways, they roll smoothly over elevator thresholds and tile grout.",
-    "image": "/images/Product Assets/productsImage/MF149 – Castors.webp",
+    "image": "/images/Product Assets/productsImage/MF149 – 3”  CASTORS.webp",
     "features": [
       "3-inch diameter wheel providing optimal balance of height and rolling ease",
       "Polyurethane / Virgin Nylon wheel body resistant to chemicals and wear",
@@ -4167,7 +4167,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "4” Castors",
     "category": "Accessories",
     "description": "The Mathurams 4\" Hospital Castors are heavy-duty mobile wheels designed for general ward cots, recovery stretchers and linen transport trolleys. Their larger diameter effortlessly overcomes surface transitions, while the anti-static tread ensures patient safety.",
-    "image": "/images/Product Assets/productsImage/MF150 – Castors.webp",
+    "image": "/images/Product Assets/productsImage/MF150 – 4”  CASTORS.webp",
     "features": [
       "4-inch diameter for effortless rolling over doorways and lift sills",
       "Heavy-duty cast polyurethane tyre bonded to polypropylene wheel centre",
@@ -4204,7 +4204,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "5” Castors",
     "category": "Accessories",
     "description": "The Mathurams 5\" Hospital Castors are large-diameter, high-performance transport wheels engineered for ICU beds, emergency stretcher trolleys and heavy patient transfer units. They offer exceptional shock absorption, minimal push effort, and superior directional stability.",
-    "image": "/images/Product Assets/productsImage/MF151 – Castors.webp",
+    "image": "/images/Product Assets/productsImage/MF151 – 5”  CASTORS.webp",
     "features": [
       "5-inch diameter wheels for effortless high-speed emergency transit",
       "Elastic polyurethane tread absorbs floor shocks and protects patient comfort",
@@ -4241,7 +4241,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Centre Locking Castors",
     "category": "Accessories",
     "description": "The Mathurams Central Locking Castors are specialized ICU and critical care mobility wheels linked via an internal hexagonal cam rod mechanism. A single foot pedal at the bed's corner simultaneously controls all four castors for Total Lock, Steer (directional tracking), and Free Swivel.",
-    "image": "/images/Product Assets/productsImage/MF152 – Castors Centre Locking.webp",
+    "image": "/images/Product Assets/productsImage/MF152 – Centre Locking  CASTORS.webp",
     "features": [
       "Central locking system operated via integrated hexagonal cam rod",
       "Three-stage pedal action: Total Lock, Directional Steer, and Free Swivel",
@@ -4279,7 +4279,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Plain Side Rails",
     "category": "Accessories",
     "description": "The Mathurams MS Plain Side Rails are designed for hospital cots and beds to provide reliable patient fall protection. Manufactured from sturdy mild steel with an epoxy powder-coated finish.",
-    "image": "/images/Product Assets/productsImage/MF126 – SS Plain Side Rails.webp",
+    "image": "/images/Product Assets/productsImage/MF158 – MS Plain Side Rails.webp",
     "features": [
       "Strong and durable MS construction",
       "Provides dependable side protection for patients",
@@ -4413,7 +4413,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Vertical Autoclave",
     "category": "OT Equipment",
     "description": "The Mathurams Vertical Autoclave is designed for steam sterilisation of medical instruments and materials in hospitals, laboratories and healthcare facilities. Its stainless steel construction with Argon Arc welding provides a smooth, durable and corrosion resistant body, while separate safety and pressure control systems support reliable operation.",
-    "image": "/images/Product Assets/productsImage/MF141 – Vertical Autoclave.webp",
+    "image": "/images/Product Assets/productsImage/MF141 –   Vertical Autoclave.webp",
     "features": [
       "Stainless steel body with Argon Arc welded construction",
       "Separate safety valves for inner and outer chambers",
@@ -4457,7 +4457,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Horizontal Autoclave",
     "category": "OT Equipment",
     "description": "The Mathurams Horizontal Autoclave is designed for high-capacity steam sterilisation in hospitals, laboratories and healthcare facilities. Its SS 304 / SS 316 chamber construction, steam-jacketed design and automated safety controls provide reliable sterilisation for demanding clinical applications.",
-    "image": "/images/Product Assets/productsImage/MF142 – Horizontal Autoclave.webp",
+    "image": "/images/Product Assets/productsImage/MF142 –  Horizontal Autoclave.webp",
     "features": [
       "SS 304 / SS 316 inner and outer chambers",
       "Steam jacketed construction for efficient sterilisation",
@@ -4505,7 +4505,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Anaesthesia Machine",
     "category": "OT Equipment",
     "description": "The Mathurams Anaesthesia Machine is designed for controlled delivery of medical gases and anaesthetic agents during surgical procedures. The system incorporates essential pressure regulation, flow control and oxygen safety mechanisms, with provisions for breathing circuits, vaporisers and ventilator connectivity.",
-    "image": "/images/Product Assets/productsImage/MF143 – Anaesthesia Machine.webp",
+    "image": "/images/Product Assets/productsImage/MF143 –  Anaesthesia Machine.webp",
     "features": [
       "O₂ and N₂O gas delivery system",
       "Pin index cylinder connections",
@@ -4551,7 +4551,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Multiparameter Monitor",
     "category": "OT Equipment",
     "description": "The Mathurams Multiparameter Monitor is designed for continuous monitoring of essential patient vital parameters in operation theatres, intensive care units and recovery rooms. It provides high-contrast, real-time waveform and numeric display of physiological parameters for adult, pediatric and neonatal patients.",
-    "image": "/images/Product Assets/productsImage/MF144 – Multiparameter Monitor.webp",
+    "image": "/images/Product Assets/productsImage/MF144 –  Multiparameter Monitor.webp",
     "features": [
       "Simultaneous monitoring of ECG, NIBP, SpO₂, Respiration and Temperature",
       "High-resolution color TFT display with multi-lead ECG waveform viewing",
@@ -4589,7 +4589,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Suction Apparatus",
     "category": "OT Equipment",
     "description": "The Mathurams Suction Apparatus is designed for the controlled removal of fluids and secretions during medical and surgical procedures. Its compact, mobile trolley construction with high-capacity collection jars enables convenient use across operation theatres, intensive care units and patient wards.",
-    "image": "/images/Product Assets/productsImage/MF154 – Suction Apparatus.webp",
+    "image": "/images/Product Assets/productsImage/MF154 –  SUCTION APPARATUS.webp",
     "features": [
       "Designed for heavy-duty medical and surgical suction procedures",
       "Calibrated vacuum regulator with analog pressure gauge",
@@ -4628,7 +4628,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Fogger",
     "category": "OT Equipment",
     "description": "The Mathurams Fogger is designed for the dispersion of disinfectant solution as an ultra-fine aerosol mist for whole-room and surface sterilization in healthcare environments. It ensures rapid, complete coverage of enclosed spaces including operation theatres, intensive care units and sterile compounding laboratories.",
-    "image": "/images/Product Assets/productsImage/MF155 – Fogger.webp",
+    "image": "/images/Product Assets/productsImage/MF155 –  FOGGER.webp",
     "features": [
       "Ultra-fine mist aerosol dispersion for 100% room coverage",
       "Designed for airborne and surface microbial disinfection",
@@ -4695,3 +4695,4 @@ export function matchesProductSearch(product: MedicalProduct, rawQuery: string):
     return searchableText.includes(token);
   });
 }
+

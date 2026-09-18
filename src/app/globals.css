@@ -170,3 +170,37 @@ html.preloader-done footer {
 html.preloader-active.preloader-done footer {
   transition-delay: 5s !important;
 }
+
+/* ==========================================================================
+   Anti-Screenshot, Anti-Capture & Print Shield Protection
+   ========================================================================== */
+
+/* 1. Global Image Protection */
+img, canvas, picture {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+/* 2. Blank screen / image suppression during screenshot triggers & focus-loss */
+body.screen-protect-active img,
+body.screen-protect-active canvas,
+body.screen-protect-active [data-secure-img] {
+  opacity: 0 !important;
+  filter: blur(40px) brightness(0) !important;
+  visibility: hidden !important;
+  transition: opacity 0.05s ease !important;
+}
+
+/* 3. Strip all images & content completely when printing or saving to PDF */
+@media print {
+  html, body {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+}

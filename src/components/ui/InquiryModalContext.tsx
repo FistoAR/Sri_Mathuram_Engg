@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 import Image from 'next/image';
 import { X, Send, CheckCircle2, ShieldCheck, PhoneCall, Building2 } from 'lucide-react';
 import { MedicalProduct, PRODUCTS } from '@/lib/data';
+import { SecureImage } from '@/components/ui/SecureImage';
 
 const CATEGORY_OPTIONS = [
   { label: 'ICU Beds & Critical Care', matchKey: 'ICU & Critical Care' },
@@ -136,12 +137,12 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
             <div className="p-4 md:p-[1.5vw] space-y-3 md:space-y-[1.5vh]">
               {/* Product Preview Card Box */}
               <div className="bg-slate-50 border border-slate-200/90 rounded-lg md:rounded-[0.8vw] p-3 md:p-[0.8vw] flex items-center gap-3 md:gap-[1vw]">
-                <div className="w-12 h-12 md:w-[4.2vw] md:h-[4.2vw] relative bg-white rounded-md md:rounded-[0.6vw] border border-slate-200 p-[0.3vw] shrink-0 flex items-center justify-center overflow-hidden shadow-2xs">
-                  <Image 
+                <div className="w-12 h-12 md:w-[4.2vw] md:h-[4.2vw] relative bg-white rounded-md md:rounded-[0.6vw] border border-slate-200 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs">
+                  <SecureImage 
                     src={selectedProduct.image || '/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp'} 
                     alt={selectedProduct.name}
                     fill
-                    className="object-contain p-[0.2vw]"
+                    className="object-cover"
                   />
                 </div>
                 <div className="flex flex-col min-w-0">
