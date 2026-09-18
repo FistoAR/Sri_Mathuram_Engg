@@ -206,15 +206,18 @@ export function Footer() {
             <ul className="space-y-3 text-[14px] sm:text-[15px] font-medium text-slate-300 font-inter">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#E86D24] shrink-0 mt-0.5" />
-                <span className="leading-snug">No. 123/1A, Industrial Estate, Guindy, Chennai - 600032, Tamil Nadu, India.</span>
+                <span className="leading-snug">404/2B3, Cheran Industrial Estate, Vadavalli to Kanuvai Road, Somayampalayam, Coimbatore - 641108, Tamil Nadu, India.</span>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#E86D24] shrink-0" />
-                <a href="tel:+919176212345" className="hover:text-white transition-colors">+91 91762 12345</a>
+              <li className="flex items-start gap-2.5">
+                <Phone className="w-4 h-4 text-[#E86D24] shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-1">
+                  <a href="tel:+919842204966" className="hover:text-white transition-colors whitespace-nowrap">+91 98422 04966</a>
+                  <a href="tel:+918883011166" className="hover:text-white transition-colors whitespace-nowrap">+91 88830 11166</a>
+                </div>
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#E86D24] shrink-0" />
-                <a href="mailto:info@srimathurams.com" className="hover:text-white transition-colors">info@srimathurams.com</a>
+                <a href="mailto:mathuramindia@gmail.com" className="hover:text-white transition-colors">mathuramindia@gmail.com</a>
               </li>
               <li className="flex items-center gap-2.5">
                 <Globe className="w-4 h-4 text-[#E86D24] shrink-0" />

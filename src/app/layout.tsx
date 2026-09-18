@@ -47,6 +47,7 @@ export const metadata: Metadata = {
 
 import { InquiryModalProvider } from '@/components/ui/InquiryModalContext';
 import { Preloader } from '@/components/ui/Preloader';
+import { SmoothScroll } from '@/components/ui/SmoothScroll';
 
 export default function RootLayout({
   children,
@@ -56,7 +57,7 @@ export default function RootLayout({
   const orgSchema = generateOrganizationSchema();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active scroll-smooth`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -92,25 +93,27 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-slate-50 text-slate-900 flex flex-col min-h-screen">
-        <Preloader />
-        <Script
-          id="organization-jsonld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
-        />
-        <InquiryModalProvider>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold shadow-lg"
-          >
-            Skip to main content
-          </a>
-          <Header />
-          <main id="main-content" className="flex-1 bg-slate-50 overflow-x-hidden min-h-screen">
-            {children}
-          </main>
-          <Footer />
-        </InquiryModalProvider>
+        <SmoothScroll>
+          <Preloader />
+          <Script
+            id="organization-jsonld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+          />
+          <InquiryModalProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold shadow-lg"
+            >
+              Skip to main content
+            </a>
+            <Header />
+            <main id="main-content" className="flex-1 bg-slate-50 overflow-x-hidden min-h-screen">
+              {children}
+            </main>
+            <Footer />
+          </InquiryModalProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

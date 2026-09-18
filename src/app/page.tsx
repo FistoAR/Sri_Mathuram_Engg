@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Hero } from "@/components/sections/Hero";
 import { BuildQualitySection } from "@/components/sections/BuildQualitySection";
+import { ClientsSection } from "@/components/sections/ClientsSection";
+import TrustCertificationsSection from "@/components/sections/TrustCertificationsSection";
 import { PRODUCTS, CATEGORIES } from "@/lib/data";
 import {
   Award,
@@ -127,51 +129,61 @@ export default function HomePage() {
   const leftCategories = [
     {
       name: "ICU Beds",
+      category: "ICU & Critical Care",
       iconIndex: 0,
       img: "/images/Home Page/ourProducts/products/ICU Beds.webp",
     },
     {
       name: "Fowler Cots",
+      category: "Ward Furniture",
       iconIndex: 1,
       img: "/images/Home Page/ourProducts/products/Fowler Cots.webp",
     },
     {
       name: "Semi Fowler Cots",
+      category: "Ward Furniture",
       iconIndex: 2,
       img: "/images/Home Page/ourProducts/products/Semi Fowler Cots.webp",
     },
     {
       name: "Plain Cots",
+      category: "Ward Furniture",
       iconIndex: 3,
       img: "/images/Home Page/ourProducts/products/Plain Cots.webp",
     },
     {
       name: "Labour Cots",
+      category: "Labour & Maternity",
       iconIndex: 4,
       img: "/images/Home Page/ourProducts/products/Labour Cots.webp",
     },
     {
       name: "Stretcher Trolleys",
+      category: "Emergency & Patient Transfer",
       iconIndex: 5,
       img: "/images/Home Page/ourProducts/products/Stretcher Trolleys.webp",
     },
     {
       name: "Transfer Trolleys",
+      category: "Emergency & Patient Transfer",
       iconIndex: 0,
       img: "/images/Home Page/ourProducts/products/Transfer Trolleys.webp",
     },
     {
       name: "Crash Carts",
+      category: "Medical Trolleys",
       iconIndex: 1,
       img: "/images/Home Page/ourProducts/products/Crash Carts.webp",
     },
     {
       name: "Instrument Trolleys",
+      category: "Medical Trolleys",
       iconIndex: 2,
       img: "/images/Home Page/ourProducts/products/Instrument Trolleys.webp",
     },
     {
       name: "Drug Trolleys",
+      category: "Medical Trolleys",
       iconIndex: 3,
       img: "/images/Home Page/ourProducts/products/Drug Trolleys.webp",
     },
@@ -180,53 +192,63 @@ export default function HomePage() {
   const rightCategories = [
     {
       name: "Dressing Trolleys",
+      category: "Medical Trolleys",
       iconIndex: 0,
       img: "/images/Home Page/ourProducts/products/Dressing Trolleys.webp",
     },
     {
       name: "Over Bed Tables",
+      category: "Ward Furniture",
       iconIndex: 1,
       img: "/images/Home Page/ourProducts/products/Over Bed Tables.webp",
     },
     {
       name: "Bedside Lockers",
+      category: "Ward Furniture",
       iconIndex: 2,
       img: "/images/Home Page/ourProducts/products/Bedside Lockers.webp",
     },
     {
       name: "Wheelchairs",
+      category: "Emergency & Patient Transfer",
       iconIndex: 3,
       img: "/images/Home Page/ourProducts/products/Wheelchairs.webp",
     },
     {
       name: "Attender Cots",
+      category: "Ward Furniture",
       iconIndex: 4,
-      img: "/images/Home Page/ourProducts/products/Frame 728.webp",
+      img: "/images/Home Page/ourProducts/products/AttenderCot.webp",
     },
     {
       name: "Examination Couches",
+      category: "Examination & Consultation",
       iconIndex: 5,
       img: "/images/Home Page/ourProducts/products/Examination Couches.webp",
     },
     {
       name: "Stainless Steel Furniture",
+      category: "Stainless Steel Furniture & Ward Accessories",
       iconIndex: 0,
       img: "/images/Home Page/ourProducts/products/Stainless Steel Furniture.webp",
     },
     {
       name: "Ward Furniture",
+      category: "Ward Furniture",
       iconIndex: 1,
       img: "/images/Home Page/ourProducts/products/Ward Furniture.webp",
     },
     {
       name: "Custom Hospital Furniture",
+      category: "General Furniture",
       iconIndex: 2,
       img: "/images/Home Page/ourProducts/products/Custom Hospital Furniture.webp",
     },
     {
-      name: "ICU Beds (Manual)",
+      name: "Accessories",
+      category: "Accessories",
       iconIndex: 3,
-      img: "/images/Home Page/ourProducts/products/ICU Beds-1.webp",
+      img: "/images/Home Page/ourProducts/products/Accsories.webp",
     },
   ];
 
@@ -292,8 +314,8 @@ export default function HomePage() {
         return "/images/Home Page/ourProducts/ward 1.webp";
       case "Custom Hospital Furniture":
         return "/images/Home Page/ourProducts/custome 1.webp";
-      case "ICU Beds (Manual)":
-        return "/images/Home Page/ourProducts/icu 1.webp";
+      case "Accessories":
+        return "/images/Home Page/ourProducts/Vector.webp";
       case "ICU Beds":
         return "/images/Home Page/ourProducts/icu 1.webp";
       case "Fowler Cots":
@@ -320,12 +342,21 @@ export default function HomePage() {
   };
 
   const allProductCategories = [...leftCategories, ...rightCategories];
-  const showcaseFrames = Array.from(new Set(allProductCategories.map((c) => c.img)));
+  const showcaseFrames = Array.from(
+    new Set(allProductCategories.map((c) => c.img)),
+  );
 
   // Get active image based on active category from ourProducts/products folder
   const getCenterImageForCategory = (name: string) => {
     const matched = allProductCategories.find((c) => c.name === name);
-    return matched?.img || "/images/Home Page/ourProducts/products/ICU Beds.webp";
+    return (
+      matched?.img || "/images/Home Page/ourProducts/products/ICU Beds.webp"
+    );
+  };
+
+  const getTargetCategoryForProduct = (name: string) => {
+    const matched = allProductCategories.find((c) => c.name === name);
+    return matched?.category || "All Products";
   };
 
   const activeProductImage = getCenterImageForCategory(activeCategory);
@@ -395,7 +426,7 @@ export default function HomePage() {
               <div className="home-stat-item flex flex-col items-center justify-center border-r border-white/20 px-2 sm:px-4 lg:px-4 xl:px-6 w-full">
                 <div className="flex flex-col items-center text-center max-w-full">
                   <span className="home-stat-number text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-black leading-none tracking-tight font-heading mb-2 text-orange-400 whitespace-nowrap text-center">
-                    <AnimatedCounter value="2 Decades +" delay={500} />
+                    <AnimatedCounter value="3 Decades +" delay={300} />
                   </span>
                   <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-left">
                     <div className="relative w-9 h-9 flex-shrink-0">
@@ -496,7 +527,11 @@ export default function HomePage() {
 
         <div className="relative z-10 space-y-[4vh]">
           {/* Top Tagline Badge - Left Aligned with trusted icon & accent line */}
-          <FadeIn direction="up" delay={0.1} className="flex flex-col items-start gap-1.5 w-fit">
+          <FadeIn
+            direction="up"
+            delay={0.1}
+            className="flex flex-col items-start gap-1.5 w-fit"
+          >
             <div className="inline-flex items-center gap-4 text-lg sm:text-xl font-bold tracking-wide text-[#0C3D6C] uppercase">
               <div className="relative w-6 h-6 flex-shrink-0">
                 <Image
@@ -520,6 +555,7 @@ export default function HomePage() {
                 speed={50}
                 delay={150}
                 onComplete={() => setWhyTitleTyped(true)}
+                onReset={() => setWhyTitleTyped(false)}
               />
             </h2>
             <div className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed space-y-1">
@@ -1459,10 +1495,12 @@ export default function HomePage() {
 
                     {/* View Details Button overlay */}
                     <Link
-                      href="/products"
+                      href={`/products?category=${encodeURIComponent(
+                        getTargetCategoryForProduct(activeCategory),
+                      )}`}
                       className="absolute bottom-6 right-6 z-20"
                     >
-                      <button className="bg-[#E86D24] hover:bg-[#d65e1c] text-white font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2">
+                      <button className="bg-[#E86D24] hover:bg-[#d65e1c] text-white font-bold text-sm sm:text-base px-6 py-3 rounded-2xl shadow-lg transition-all flex items-center gap-2 cursor-pointer">
                         <span>View</span>
                         <ArrowRight className="w-4.5 h-4.5 animate-arrow-linear" />
                       </button>
@@ -1659,6 +1697,7 @@ export default function HomePage() {
                 speed={24}
                 delay={100}
                 onComplete={() => setStoryTitleTyped(true)}
+                onReset={() => setStoryTitleTyped(false)}
               />
             </h2>
 
@@ -1733,487 +1772,13 @@ export default function HomePage() {
       </section>
 
       {/* 5. TRUST & CERTIFICATIONS SECTION */}
-      <section className="w-full px-[4vw] py-[8vh] relative overflow-hidden bg-slate-50 ">
-        {/* Soft background medical/hexagonal pattern */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#0b2545_1px,transparent_1px)] [background-size:20px_20px]" />
-
-        <div className=" relative z-10 space-y-[4vh]">
-          {/* Top Tagline */}
-          <FadeIn
-            direction="up"
-            delay={0.1}
-            className="flex flex-col justify-center"
-          >
-            <div className="flex flex-col items-start gap-1.5 w-fit">
-              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
-                <div className="relative w-7 h-7 flex-shrink-0">
-                  <Image
-                    src="/images/Home Page/sectionIcons/trustCertificate.webp"
-                    alt="Trust & Certifications Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <TypewriterText text="TRUST & CERTIFICATIONS" />
-              </div>
-              <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
-            </div>
-          </FadeIn>
-
-          {/* Section Header */}
-          <FadeIn direction="up" delay={0.15} className="text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2545] tracking-tight">
-              Certified Quality. Trusted by Thousands.
-            </h2>
-            <p className="text-sm md:text-base text-slate-600 max-w-xl mx-auto font-medium">
-              Our certifications reflect our commitment to quality, safety, and
-              excellence in every product we manufacture.
-            </p>
-          </FadeIn>
-
-          {/* 7 Certification Cards Row */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 pt-4">
-            {/* Cert 1: ISO 9001 */}
-            <FadeIn
-              direction="up"
-              delay={0.1}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/ISO1.webp"
-                  alt="ISO 9001 Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  ISO 9001
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
-                  Quality Management
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Cert 2: ISO 13485 */}
-            <FadeIn
-              direction="up"
-              delay={0.15}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/ISO2.webp"
-                  alt="ISO 13485 Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  ISO 13485
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
-                  Medical Quality
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Cert 3: ZED */}
-            <FadeIn
-              direction="up"
-              delay={0.2}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/Zed.webp"
-                  alt="ZED Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  ZED
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
-                  Zero Defect
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Cert 4: MSME */}
-            <FadeIn
-              direction="up"
-              delay={0.25}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/msme.webp"
-                  alt="MSME Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  MSME
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
-                  Registered
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Cert 5: NSIC */}
-            <FadeIn
-              direction="up"
-              delay={0.3}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/nsic.webp"
-                  alt="NSIC Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  NSIC
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
-                  Registered
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Cert 6: MAKE IN INDIA */}
-            <FadeIn
-              direction="up"
-              delay={0.35}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/MakeInIndia.webp"
-                  alt="Make in India Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  MAKE IN INDIA
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-0.5">
-                  Proudly Indian
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Cert 7: ASSOCHAM */}
-            <FadeIn
-              direction="up"
-              delay={0.4}
-              className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-3 group"
-            >
-              <div className="relative w-18 h-18 sm:w-24 sm:h-24 flex items-center justify-center">
-                <Image
-                  src="/images/Home Page/certificates/assocham.webp"
-                  alt="ASSOCHAM Member Certificate"
-                  fill
-                  className="object-contain p-1 group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <span className="text-md font-black text-[#0B2545] block">
-                  ASSOCHAM
-                </span>
-                <span className="text-[12px] text-slate-500 font-medium leading-tight block mt-1">
-                  Member
-                </span>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
+      <TrustCertificationsSection />
 
       {/* 6. HOW WE BUILD QUALITY (SCROLL-PINNED ACCORDION) SECTION */}
       <BuildQualitySection />
 
       {/* 7. OUR CLIENTS SECTION */}
-      <section className="w-full px-[4vw] py-[8vh] relative overflow-hidden bg-white border-t border-b border-slate-100">
-        <div className="w-full mx-auto space-y-[4vh]">
-          {/* Top Tagline */}
-          <FadeIn
-            direction="up"
-            delay={0.1}
-            className="flex flex-col items-start"
-          >
-            <div className="flex flex-col items-start gap-1.5 pb-2 w-fit">
-              <div className="inline-flex items-center gap-2 text-lg sm:text-xl font-bold tracking-widest text-[#0C3D6C] uppercase">
-                <div className="relative w-7 h-7 flex-shrink-0">
-                  <Image
-                    src="/images/Home Page/sectionIcons/OurClients.webp"
-                    alt="Our Clients Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <TypewriterText text="OUR CLIENTS" />
-              </div>
-              <div className="w-1/2 h-[4px] bg-[#E86D24] rounded-full" />
-            </div>
-          </FadeIn>
-
-          {/* Section Title & Subtitle */}
-          <FadeIn direction="up" delay={0.15} className="text-center space-y-2">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2545] tracking-tight">
-              Trusted by Healthcare Across Tamil Nadu
-            </h2>
-            <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-medium">
-              We are proud to be a preferred partner for hospitals, clinics, and
-              healthcare.
-            </p>
-          </FadeIn>
-
-          {/* Top Row: 5 Client Category Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-2">
-            {/* Card 1: Government Hospitals */}
-            <FadeIn
-              direction="up"
-              delay={0.1}
-              className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-4 group"
-            >
-              <div className="w-14 h-14 flex items-center justify-center text-[#0B2545]">
-                <svg
-                  className="w-12 h-12 stroke-[1.5]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.5h-15V21"
-                  />
-                </svg>
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
-                  GOVERNMENT
-                  <br />
-                  HOSPITALS
-                </h3>
-                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
-              </div>
-            </FadeIn>
-
-            {/* Card 2: Private Hospitals */}
-            <FadeIn
-              direction="up"
-              delay={0.15}
-              className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-4 group"
-            >
-              <div className="w-14 h-14 flex items-center justify-center text-[#0284C7]">
-                <div className="w-10 h-10 rounded-full bg-sky-500 text-white flex items-center justify-center font-bold text-lg">
-                  +
-                </div>
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
-                  PRIVATE
-                  <br />
-                  HOSPITALS
-                </h3>
-                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
-              </div>
-            </FadeIn>
-
-            {/* Card 3: Medical Colleges */}
-            <FadeIn
-              direction="up"
-              delay={0.2}
-              className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-4 group"
-            >
-              <div className="w-14 h-14 flex items-center justify-center text-[#0B2545]">
-                <svg
-                  className="w-12 h-12 stroke-[1.5]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4.26 10.147L12 14.6l7.74-4.453a1.5 1.5 0 000-2.594L12 3.1 4.26 7.553a1.5 1.5 0 000 2.594zM12 20.9l-6.85-3.94v-3.95L12 17l6.85-3.94v3.95L12 20.9z"
-                  />
-                </svg>
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
-                  MEDICAL
-                  <br />
-                  COLLEGES
-                </h3>
-                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
-              </div>
-            </FadeIn>
-
-            {/* Card 4: Clinics */}
-            <FadeIn
-              direction="up"
-              delay={0.25}
-              className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-4 group"
-            >
-              <div className="w-14 h-14 flex items-center justify-center text-teal-600">
-                <div className="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                  +
-                </div>
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
-                  CLINICS
-                </h3>
-                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
-              </div>
-            </FadeIn>
-
-            {/* Card 5: Healthcare */}
-            <FadeIn
-              direction="up"
-              delay={0.3}
-              className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all text-center flex flex-col items-center justify-between space-y-4 group"
-            >
-              <div className="w-14 h-14 flex items-center justify-center text-[#0B2545]">
-                <svg
-                  className="w-12 h-12 stroke-[1.5]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
-                  />
-                </svg>
-              </div>
-              <div className="space-y-1">
-                <h3 className="text-sm font-bold text-[#0B2545] uppercase tracking-wider">
-                  HEALTHCARE
-                </h3>
-                <div className="w-12 h-1 bg-slate-500 mx-auto rounded-full group-hover:bg-orange-500 transition-colors" />
-              </div>
-            </FadeIn>
-          </div>
-
-          {/* Bottom Row: Client Brand Logos Bar */}
-          <div className="pt-6 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
-            {/* Logo 1: Kilpauk Medical College */}
-            <FadeIn
-              direction="up"
-              delay={0.1}
-              className="flex items-center justify-center gap-2 p-2 opacity-85 hover:opacity-100 transition-opacity"
-            >
-              <div className="w-10 h-10 rounded-full border-2 border-[#0B2545] flex items-center justify-center text-[10px] font-black text-[#0B2545]">
-                KMC
-              </div>
-              <span className="text-[12px] font-black text-[#0B2545] leading-tight">
-                GOVERNMENT KILPAUK
-                <br />
-                MEDICAL COLLEGE
-              </span>
-            </FadeIn>
-
-            {/* Logo 2: Apollo Hospitals */}
-            <FadeIn
-              direction="up"
-              delay={0.15}
-              className="flex items-center justify-center p-2 opacity-85 hover:opacity-100 transition-opacity"
-            >
-              <div className="flex items-center gap-1">
-                <span className="text-lg font-black text-amber-500">A</span>
-                <span className="text-base font-black text-[#0B2545] tracking-tight">
-                  Apollo
-                </span>
-                <span className="text-[11px] font-bold text-slate-500 block">
-                  Hospitals
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Logo 3: Kauvery Hospital */}
-            <FadeIn
-              direction="up"
-              delay={0.2}
-              className="flex items-center justify-center p-2 opacity-85 hover:opacity-100 transition-opacity"
-            >
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-orange-500 to-amber-400" />
-                <span className="text-sm font-black text-[#8B0000] tracking-tight">
-                  kauvery
-                </span>
-                <span className="text-[9px] font-semibold text-slate-500">
-                  hospital
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Logo 4: SRM */}
-            <FadeIn
-              direction="up"
-              delay={0.25}
-              className="flex items-center justify-center p-2 opacity-85 hover:opacity-100 transition-opacity"
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-full border border-blue-900 flex items-center justify-center text-[8px] font-bold text-blue-900">
-                  SRM
-                </div>
-                <span className="text-sm font-black text-[#0B2545] tracking-wider">
-                  SRM
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Logo 5: MIOT International */}
-            <FadeIn
-              direction="up"
-              delay={0.3}
-              className="flex items-center justify-center p-2 opacity-85 hover:opacity-100 transition-opacity"
-            >
-              <div className="flex items-center gap-1.5">
-                <span className="text-base font-black text-[#0B2545] tracking-tighter">
-                  miot
-                </span>
-                <span className="text-[9px] font-bold text-amber-500 uppercase">
-                  International
-                </span>
-              </div>
-            </FadeIn>
-
-            {/* Logo 6: Chettinad Health City */}
-            <FadeIn
-              direction="up"
-              delay={0.35}
-              className="flex items-center justify-center p-2 opacity-85 hover:opacity-100 transition-opacity"
-            >
-              <div className="flex items-center gap-1.5">
-                <div className="w-4 h-4 bg-teal-500 rotate-45 rounded-sm" />
-                <span className="text-xs font-black text-[#0B2545]">
-                  Chettinad
-                </span>
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
+      <ClientsSection />
 
       {/* 8. CALL TO ACTION BANNER */}
       <section className="w-full px-[4vw] py-16 !mt-0">

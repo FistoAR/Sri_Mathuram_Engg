@@ -19,6 +19,12 @@ export function ProductCard({
   const { openInquiryModal } = useInquiryModal();
   const theme = getCategoryTheme(product.category);
 
+  const displayName = product.modelNumber
+    ? (product.name.toLowerCase().startsWith(product.modelNumber.toLowerCase())
+        ? product.name
+        : `${product.modelNumber} – ${product.name}`)
+    : product.name;
+
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between p-3 h-full group relative font-montserrat">
       {/* Top Content Area - Clickable Card Link */}
@@ -36,7 +42,7 @@ export function ProductCard({
           )}
           <Image
             src={product.image}
-            alt={product.name}
+            alt={displayName}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-contain p-3 group-hover:scale-105 group-hover/link:scale-105 transition-transform duration-500"
@@ -46,7 +52,7 @@ export function ProductCard({
         {/* Text details */}
         <div className="space-y-1.5">
           <h3 className="text-base font-bold text-slate-900 group-hover:text-[#0B3C83] group-hover/link:text-[#0B3C83] transition-colors leading-tight whitespace-normal break-words">
-            {product.name}
+            {displayName}
           </h3>
           <p className="text-slate-500 text-xs font-medium leading-relaxed line-clamp-2">
             {product.description}

@@ -538,6 +538,7 @@ function ProductsLayoutContent({
             
             <nav
               ref={sidebarNavRef}
+              data-lenis-prevent
               className={`p-3 space-y-2 flex-1 relative ${
                 isSidebarExpanded 
                   ? "overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-[360px]" 
@@ -832,7 +833,10 @@ function ProductsLayoutContent({
           </div>
 
           {/* Drawer Nav Category list */}
-          <nav className="p-4 space-y-2.5 flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden bg-slate-50">
+          <nav
+            data-lenis-prevent
+            className="p-4 space-y-2.5 flex-1 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden bg-slate-50"
+          >
             {categoryList.map((catName) => {
               const isActive = activeCategory === catName;
               const productsInCat = PRODUCTS.filter((p) => p.category === catName);
