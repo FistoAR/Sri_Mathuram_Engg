@@ -2,6 +2,21 @@
 
 import React, { useState } from 'react';
 import { FileText, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { PRODUCTS } from '@/lib/data';
+
+const CATEGORY_OPTIONS = [
+  { label: 'ICU Beds & Critical Care', matchKey: 'ICU & Critical Care' },
+  { label: 'Ward Furniture', matchKey: 'Ward Furniture' },
+  { label: 'Emergency & Patient Transfer', matchKey: 'Emergency & Patient Transfer' },
+  { label: 'Labour & Maternity', matchKey: 'Labour & Maternity' },
+  { label: 'OT Equipment', matchKey: 'OT Equipment' },
+  { label: 'SS Furniture & Ward Accessories', matchKey: 'Stainless Steel Furniture & Ward Accessories' },
+  { label: 'Medical Trolleys & Carts', matchKey: 'Medical Trolleys' },
+  { label: 'Examination & Consultation', matchKey: 'Examination & Consultation' },
+  { label: 'General Furniture', matchKey: 'General Furniture' },
+  { label: 'Accessories', matchKey: 'Accessories' },
+  { label: 'Custom/Other Requirement', matchKey: 'Custom' },
+];
 
 interface ContactFormState {
   name: string;
@@ -9,6 +24,7 @@ interface ContactFormState {
   city: string;
   phone: string;
   email: string;
+  category: string;
   product: string;
   quantity: string;
   message: string;
@@ -21,6 +37,7 @@ export function ContactForm() {
     city: '',
     phone: '',
     email: '',
+    category: '',
     product: '',
     quantity: '',
     message: '',
@@ -34,6 +51,26 @@ export function ContactForm() {
   ) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCat = e.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      category: selectedCat,
+      product: selectedCat === 'Custom/Other Requirement' ? 'Custom Requirement' : '',
+    }));
+  };
+
+  const selectedCategoryConfig = CATEGORY_OPTIONS.find(
+    (c) => c.label === formData.category || c.matchKey === formData.category
+  );
+
+  const filteredProducts =
+    selectedCategoryConfig && selectedCategoryConfig.matchKey !== 'Custom'
+      ? PRODUCTS.filter(
+          (p) => p.category.toLowerCase() === selectedCategoryConfig.matchKey.toLowerCase()
+        )
+      : [];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +98,7 @@ export function ContactForm() {
         city: '',
         phone: '',
         email: '',
+        category: '',
         product: '',
         quantity: '',
         message: '',
@@ -80,18 +118,6 @@ export function ContactForm() {
     'Tirunelveli',
     'Thoothukudi',
     'Other',
-  ];
-
-  const products = [
-    'ICU Beds & Critical Care',
-    'Ward Furniture',
-    'Emergency & Patient Transfer',
-    'Labour & Maternity',
-    'OT Equipment',
-    'SS Furniture & Ward Accessories',
-    'Medical Trolleys & Carts',
-    'Examination & Consultation',
-    'Custom/Other Requirement',
   ];
 
   return (
@@ -149,7 +175,7 @@ export function ContactForm() {
             required
             value={formData.city}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat"
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat cursor-pointer"
           >
             <option value="" disabled hidden>City *</option>
             {cities.map((city) => (
@@ -182,33 +208,64 @@ export function ContactForm() {
           />
         </div>
 
-        {/* Product & Quantity */}
+        {/* Category & Product Code */}
         <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":7} as React.CSSProperties}>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleCategoryChange}
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat cursor-pointer"
+          >
+            <option value="">Select Category</option>
+            {CATEGORY_OPTIONS.map((cat) => (
+              <option key={cat.label} value={cat.label} className="text-slate-900">
+                {cat.label}
+              </option>
+            ))}
+          </select>
+
           <select
             name="product"
             value={formData.product}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat"
+            disabled={!formData.category || (formData.category !== 'Custom/Other Requirement' && filteredProducts.length === 0)}
+            className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat cursor-pointer disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
           >
-            <option value="">Product / Requirement</option>
-            {products.map((prod) => (
-              <option key={prod} value={prod} className="text-slate-900">
-                {prod}
+            <option value="">
+              {!formData.category
+                ? 'Select Category First'
+                : formData.category === 'Custom/Other Requirement'
+                ? 'Custom / Other Requirement'
+                : 'Select Product Code / Name'}
+            </option>
+            {formData.category === 'Custom/Other Requirement' ? (
+              <option value="Custom / Other Requirement" className="text-slate-900">
+                Custom / Other Requirement
               </option>
-            ))}
+            ) : (
+              filteredProducts.map((prod) => (
+                <option key={prod.id} value={`${prod.modelNumber ? prod.modelNumber + ' - ' : ''}${prod.name}`} className="text-slate-900">
+                  {prod.modelNumber ? `${prod.modelNumber} – ` : ''}{prod.name}
+                </option>
+              ))
+            )}
           </select>
+        </div>
+
+        {/* Quantity */}
+        <div className="sc-child" style={{"--i":8} as React.CSSProperties}>
           <input
             type="text"
             name="quantity"
             value={formData.quantity}
             onChange={handleChange}
-            placeholder="Quantity"
+            placeholder="Quantity (e.g. 5 Units, 10 Beds)"
             className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all"
           />
         </div>
 
         {/* Message */}
-        <div className="sc-child" style={{"--i":8} as React.CSSProperties}>
+        <div className="sc-child" style={{"--i":9} as React.CSSProperties}>
           <textarea
             name="message"
             required
@@ -224,8 +281,8 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="sc-child w-full flex items-center justify-center gap-2 bg-[#104272] hover:bg-[#15548F] text-white font-semibold text-md py-4 px-6 rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed"
-          style={{"--i":9} as React.CSSProperties}
+          className="sc-child w-full flex items-center justify-center gap-2 bg-[#104272] hover:bg-[#15548F] text-white font-semibold text-md py-4 px-6 rounded-xl transition-all shadow-md active:scale-[0.99] disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer"
+          style={{"--i":10} as React.CSSProperties}
         >
           {status === 'loading' ? (
             <>

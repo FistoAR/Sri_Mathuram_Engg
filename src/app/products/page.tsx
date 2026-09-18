@@ -189,6 +189,7 @@ function ProductsPageContent() {
   return (
     <main
       ref={mainRef}
+      data-lenis-prevent
       className={`flex-1 min-w-0 space-y-6 lg:h-[calc(100vh-140px)] lg:overflow-y-auto pr-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden relative transition-all duration-700 transform ${
         isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}

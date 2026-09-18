@@ -85,10 +85,21 @@ const slideData: SlideData[] = [
     image: "/images/Home Page/HeroSection/OT Equipment.webp",
     category: "OT Equipment",
   },
+  {
+    id: "07",
+    badge: "TRUSTED MEDICAL EQUIPMENT MANUFACTURER",
+    titleOrange: "HOMECARE",
+    tagline: "Bringing Quality Care Home",
+    description:
+      "Reliable homecare equipment for recovery, mobility, and everyday care available for sale and rent.",
+    image: "/images/Home Page/HeroSection/HomeCare.webp",
+    category: "Home Care",
+  },
 ];
 
 const CATEGORY_TITLE_COLORS: Record<string, string> = {
   "Labour & Maternity": "#E05A85",           // Interchanged: darker vibrant rose pink for top
+  "Home Care": "#E86D24",
 };
 
 const CATEGORY_TAGLINE_COLORS: Record<string, string> = {
@@ -102,6 +113,7 @@ const CATEGORY_TAGLINE_COLORS: Record<string, string> = {
   "Stainless Steel Furniture & Ward Accessories": "#E05A85",
   "Accessories": "#0D9488",
   "General Furniture": "#8D6E63",
+  "Home Care": "#0B3C83",
 };
 
 export function Hero() {
@@ -110,7 +122,7 @@ export function Hero() {
   const listRef = useRef<HTMLDivElement | null>(null);
   const thumbnailRef = useRef<HTMLDivElement | null>(null);
 
-  const thumbnailsData = [...slideData.slice(1), slideData[0]];
+  const thumbnailsData = [...slideData];
   const [slideIndex, setSlideIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTextVisible, setIsTextVisible] = useState(true);
@@ -245,8 +257,8 @@ export function Hero() {
     setIsTextVisible(false);
 
     setTimeout(() => {
-      // Append all items before and including the clicked index to the end
-      for (let k = 0; k <= targetDomIndex; k++) {
+      // Append all items before the clicked index to the end
+      for (let k = 0; k < targetDomIndex; k++) {
         sliderList.appendChild(sliderItems[k]);
         thumbnail.appendChild(thumbnailItems[k]);
       }
@@ -367,55 +379,55 @@ export function Hero() {
         .slider .list .item:nth-child(1) { z-index: 1; }
         /* Mobile Slide Animations */
         .slider.next .list .item:nth-child(1) img {
-          width: 50vw; height: 11vh; position: absolute; bottom: 11vh; left: 35vw; right: auto; border-radius: 12px;
+          width: 42vw; height: 9.5vh; position: absolute; bottom: 11vh; left: 35vw; right: auto; border-radius: 10px;
           animation: showImageMobile 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
         }
         @keyframes showImageMobile {
-          from { bottom: 11vh; left: 35vw; right: auto; width: 50vw; height: 11vh; border-radius: 12px; }
+          from { bottom: 11vh; left: 35vw; right: auto; width: 42vw; height: 9.5vh; border-radius: 10px; }
           to { bottom: 0; right: 0; left: 0; width: 100%; height: 100%; border-radius: 0; }
         }
         .slider.prev .list .item:nth-child(2) img {
           animation: outFrameMobile 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           position: absolute; bottom: 0; left: 35vw; right: auto;
         }
-        @keyframes outFrameMobile { to { width: 50vw; height: 11vh; bottom: 11vh; left: 35vw; right: auto; border-radius: 12px; } }
+        @keyframes outFrameMobile { to { width: 42vw; height: 9.5vh; bottom: 11vh; left: 35vw; right: auto; border-radius: 10px; } }
 
         /* Desktop Media Query (min-width: 768px) */
         @media (min-width: 768px) {
           .slider.next .list .item:nth-child(1) img {
-            width: 17vw; height: 18vh; position: absolute; bottom: 15vh; left: 46vw; right: auto; border-radius: 1.2vw;
+            width: 13.5vw; height: 14vh; position: absolute; bottom: 13vh; left: 48vw; right: auto; border-radius: 0.9vw;
             animation: showImage 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           }
           @keyframes showImage {
-            from { bottom: 15vh; left: 46vw; right: auto; width: 17vw; height: 18vh; border-radius: 1.2vw; }
+            from { bottom: 13vh; left: 48vw; right: auto; width: 13.5vw; height: 14vh; border-radius: 0.9vw; }
             to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
           }
           .slider.prev .list .item:nth-child(2) img {
             animation: outFrame 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
             position: absolute; bottom: 0; left: 0; right: auto;
           }
-          @keyframes outFrame { to { width: 17vw; height: 18vh; bottom: 15vh; left: 46vw; right: auto; border-radius: 1.2vw; } }
+          @keyframes outFrame { to { width: 13.5vw; height: 14vh; bottom: 13vh; left: 48vw; right: auto; border-radius: 0.9vw; } }
         }
         @media (min-width: 1024px) and (max-height: 720px) {
           .thumbnail {
-            bottom: 18vh !important;
+            bottom: 14vh !important;
           }
           .nextPrevArrows {
-            bottom: calc(18vh + 18vh + 30px) !important;
+            bottom: calc(14vh + 14vh + 18px) !important;
           }
           .slider.next .list .item:nth-child(1) img {
-            bottom: 18vh !important;
+            bottom: 14vh !important;
             animation: showImageShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           }
           .slider.prev .list .item:nth-child(2) img {
             animation: outFrameShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
           }
           @keyframes showImageShortHeight {
-            from { bottom: 18vh; left: 46vw; right: auto; width: 17vw; height: 18vh; border-radius: 1.2vw; }
+            from { bottom: 14vh; left: 48vw; right: auto; width: 13.5vw; height: 14vh; border-radius: 0.9vw; }
             to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
           }
           @keyframes outFrameShortHeight {
-            to { width: 17vw; height: 18vh; bottom: 18vh; left: 46vw; right: auto; border-radius: 1.2vw; }
+            to { width: 13.5vw; height: 14vh; bottom: 14vh; left: 48vw; right: auto; border-radius: 0.9vw; }
           }
         }
         .slider.next .nextPrevArrows button, .slider.prev .nextPrevArrows button { pointer-events: none; }
@@ -627,60 +639,76 @@ export function Hero() {
           </div>
         </div>
         {/* Top of Preview Container: Left & Right Navigation Buttons (Single Glass Container at Right End) */}
-        <div className="nextPrevArrows absolute z-30 bottom-[calc(11vh+11vh+26px)] md:bottom-[calc(15vh+18vh+30px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto">
+        <div className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto">
           <button
             onClick={() => moveSlider("prev")}
             aria-label="Previous Slide"
-            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+            className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
           >
-            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 stroke-[2.5] -translate-x-[1px]" />
+            <ChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5] -translate-x-[1px]" />
           </button>
           <button
             onClick={() => moveSlider("next")}
             aria-label="Next Slide"
-            className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+            className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
           >
-            <ChevronRight className="w-4 h-4 md:w-5 md:h-5 stroke-[2.5] translate-x-[1px]" />
+            <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5] translate-x-[1px]" />
           </button>
         </div>
 
         <div
           ref={thumbnailRef}
-          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[15vh] left-[35vw] md:left-[46vw] right-0 flex items-center gap-[3vw] md:gap-[0.8vw] overflow-x-auto max-w-full py-4 px-2"
+          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[13vh] left-[35vw] md:left-[48vw] right-0 flex items-center gap-[2.5vw] md:gap-[0.7vw] overflow-x-auto max-w-full py-3 px-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {thumbnailsData.map((item, index) => (
-            <div
-              key={item.id}
-              data-id={item.id}
-              onClick={() => handleThumbnailClick(item.id)}
-              className="item group relative cursor-pointer flex-shrink-0 w-[50vw] sm:w-[38vw] md:w-[17vw] min-w-[210px] md:min-w-[245px] h-[11vh] md:h-[18vh] min-h-[80px] md:min-h-[140px] rounded-xl md:rounded-[1.2vw] overflow-hidden border border-white/80 shadow-xl transition-all duration-300 hover:scale-105 hover:border-orange-500 hover:shadow-2xl active:scale-[0.97] bg-white will-change-transform select-none outline-none"
-            >
-              <img
-                src={item.image}
-                alt={item.category}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent px-3 py-2.5 sm:px-4 sm:py-3 md:px-[0.9vw] md:py-[0.8vw] flex flex-col justify-end pointer-events-none">
-                <h4 className="text-[3.2vw] sm:text-[2.2vw] md:text-[0.9vw] lg:text-[0.82vw] font-bold text-white leading-tight whitespace-nowrap group-hover:text-orange-300 transition-colors">
-                  {item.category}
-                </h4>
-              </div>
-              {/* Autoplay loading bar on the next preview card */}
-              {item.id === slideData[(currentSlide + 1) % slideData.length].id && (
-                <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-black/40 z-30 overflow-hidden">
-                  <div
-                    key={slideIndex}
-                    className="h-full bg-orange-500 rounded-r-full"
-                    style={{ 
-                      animation: "progressFill 6s linear forwards",
-                      animationPlayState: isHovered ? "paused" : "running"
-                    }}
-                  />
+          {thumbnailsData.map((item) => {
+            const isCurrent = item.id === slideData[currentSlide].id;
+            return (
+              <div
+                key={item.id}
+                data-id={item.id}
+                onClick={() => handleThumbnailClick(item.id)}
+                className={`item group relative cursor-pointer flex-shrink-0 w-[42vw] sm:w-[32vw] md:w-[13.5vw] min-w-[165px] md:min-w-[190px] h-[9.5vh] md:h-[14vh] min-h-[70px] md:min-h-[110px] rounded-lg md:rounded-[0.9vw] overflow-hidden border shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] bg-white will-change-transform select-none outline-none ${
+                  isCurrent
+                    ? "border-orange-500 ring-2 ring-orange-500/70 shadow-xl scale-[1.02]"
+                    : "border-white/80 hover:border-orange-400 hover:shadow-xl opacity-90 hover:opacity-100"
+                }`}
+              >
+                <img
+                  src={item.image}
+                  alt={item.category}
+                  className="w-full h-full object-cover"
+                />
+
+                {/* Bottom Category Label */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent px-2.5 py-2 sm:px-3 sm:py-2.5 md:px-[0.75vw] md:py-[0.65vw] flex flex-col justify-end pointer-events-none">
+                  <h4
+                    className={`text-[2.8vw] sm:text-[2vw] md:text-[0.82vw] lg:text-[0.78vw] font-bold leading-tight transition-colors line-clamp-1 ${
+                      isCurrent
+                        ? "text-orange-400 font-extrabold"
+                        : "text-white group-hover:text-orange-300"
+                    }`}
+                  >
+                    {item.category}
+                  </h4>
                 </div>
-              )}
-            </div>
-          ))}
+
+                {/* Autoplay loading bar on the selected background preview card */}
+                {isCurrent && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/40 z-30 overflow-hidden">
+                    <div
+                      key={slideIndex}
+                      className="h-full bg-orange-500 rounded-r-full shadow-sm"
+                      style={{
+                        animation: "progressFill 6s linear forwards",
+                        animationPlayState: isHovered ? "paused" : "running",
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

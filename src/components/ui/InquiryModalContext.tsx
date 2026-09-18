@@ -5,6 +5,20 @@ import Image from 'next/image';
 import { X, Send, CheckCircle2, ShieldCheck, PhoneCall, Building2 } from 'lucide-react';
 import { MedicalProduct, PRODUCTS } from '@/lib/data';
 
+const CATEGORY_OPTIONS = [
+  { label: 'ICU Beds & Critical Care', matchKey: 'ICU & Critical Care' },
+  { label: 'Ward Furniture', matchKey: 'Ward Furniture' },
+  { label: 'Emergency & Patient Transfer', matchKey: 'Emergency & Patient Transfer' },
+  { label: 'Labour & Maternity', matchKey: 'Labour & Maternity' },
+  { label: 'OT Equipment', matchKey: 'OT Equipment' },
+  { label: 'SS Furniture & Ward Accessories', matchKey: 'Stainless Steel Furniture & Ward Accessories' },
+  { label: 'Medical Trolleys & Carts', matchKey: 'Medical Trolleys' },
+  { label: 'Examination & Consultation', matchKey: 'Examination & Consultation' },
+  { label: 'General Furniture', matchKey: 'General Furniture' },
+  { label: 'Accessories', matchKey: 'Accessories' },
+  { label: 'Custom/Other Requirement', matchKey: 'Custom' },
+];
+
 interface InquiryModalProduct {
   name: string;
   image?: string;
@@ -23,6 +37,7 @@ const InquiryModalContext = createContext<InquiryModalContextType | undefined>(u
 export function InquiryModalProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<InquiryModalProduct | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   
   // Form State
   const [quantity, setQuantity] = useState('1');
@@ -35,14 +50,23 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const openInquiryModal = (product?: InquiryModalProduct) => {
-    setSelectedProduct(
-      product || {
+    if (product && !product.isGeneral) {
+      setSelectedProduct(product);
+      const matched = CATEGORY_OPTIONS.find(
+        (c) =>
+          c.matchKey.toLowerCase() === (product.category || '').toLowerCase() ||
+          c.label.toLowerCase() === (product.category || '').toLowerCase()
+      );
+      setSelectedCategory(matched ? matched.label : (product.category || ''));
+    } else {
+      setSelectedProduct({
         name: "General Inquiry / Custom Order",
         category: "Hospital Furniture",
         image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
         isGeneral: true,
-      }
-    );
+      });
+      setSelectedCategory('');
+    }
     setQuantity('1');
     setUnit('Unit/Units');
     setAdditionalDetails('');
@@ -56,6 +80,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
   const closeInquiryModal = () => {
     setIsOpen(false);
     setSelectedProduct(null);
+    setSelectedCategory('');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,14 +92,28 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
     }, 2800);
   };
 
+  const currentCategoryConfig = CATEGORY_OPTIONS.find(
+    (c) => c.label === selectedCategory || c.matchKey === selectedCategory
+  );
+
+  const categoryProducts = currentCategoryConfig && currentCategoryConfig.matchKey !== 'Custom'
+    ? PRODUCTS.filter(
+        (p) => p.category.toLowerCase() === currentCategoryConfig.matchKey.toLowerCase()
+      )
+    : [];
+
   return (
     <InquiryModalContext.Provider value={{ openInquiryModal, closeInquiryModal }}>
       {children}
 
       {/* Inquiry Modal Popup Overlay */}
       {isOpen && selectedProduct && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-[1.5vw] bg-slate-950/70 backdrop-blur-md animate-fade-in">
+        <div 
+          data-lenis-prevent
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-[1.5vw] bg-slate-950/70 backdrop-blur-md animate-fade-in"
+        >
           <div 
+            data-lenis-prevent
             className="bg-white w-full max-w-md md:max-w-[32vw] rounded-xl md:rounded-[1.2vw] shadow-2xl border border-slate-200/90 overflow-hidden relative animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
@@ -86,7 +125,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
               </div>
               <button 
                 onClick={closeInquiryModal}
-                className="w-8 h-8 md:w-[2vw] md:h-[2vw] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all shrink-0"
+                className="w-8 h-8 md:w-[2vw] md:h-[2vw] rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all shrink-0 cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-4 h-4 md:w-[1.1vw] md:h-[1.1vw]" />
@@ -135,38 +174,79 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                 /* Inquiry Form */
                  <form onSubmit={handleSubmit} className="space-y-3 md:space-y-[1.2vh]">
                   {selectedProduct.isGeneral && (
-                    <div className="space-y-[0.3vh]">
-                      <label className="text-[10px] sm:text-xs md:text-[0.72vw] font-bold text-slate-700">Interested Product</label>
-                      <select 
-                        onChange={(e) => {
-                          const prod = PRODUCTS.find(p => p.id === e.target.value);
-                          if (prod) {
-                            setSelectedProduct({
-                              name: prod.name,
-                              category: prod.category,
-                              image: prod.image,
-                              isGeneral: true
-                            });
-                          } else {
-                            setSelectedProduct({
-                              name: "General Inquiry / Custom Order",
-                              category: "Hospital Furniture",
-                              image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
-                              isGeneral: true
-                            });
-                          }
-                        }}
-                        className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-3 py-2 md:px-[0.8vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.85vw] font-semibold text-[#0B3C83] outline-none transition-all cursor-pointer"
-                      >
-                        <option value="">-- General Inquiry (Select a product if specific) --</option>
-                        {PRODUCTS.map((prod) => (
-                          <option key={prod.id} value={prod.id}>
-                            {prod.name} ({prod.category})
+                    <div className="grid grid-cols-12 gap-3 md:gap-[0.8vw]">
+                      <div className="col-span-6 space-y-[0.3vh]">
+                        <label className="text-[10px] sm:text-xs md:text-[0.72vw] font-bold text-slate-700">Select Category</label>
+                        <select 
+                          value={selectedCategory}
+                          onChange={(e) => {
+                            const newCat = e.target.value;
+                            setSelectedCategory(newCat);
+                            if (!newCat || newCat === 'Custom/Other Requirement') {
+                              setSelectedProduct({
+                                name: newCat === 'Custom/Other Requirement' ? 'Custom Requirement' : 'General Inquiry / Custom Order',
+                                category: newCat || 'Hospital Furniture',
+                                image: '/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp',
+                                isGeneral: true,
+                              });
+                            } else {
+                              const catCfg = CATEGORY_OPTIONS.find(c => c.label === newCat);
+                              const prodsInCat = PRODUCTS.filter(p => p.category.toLowerCase() === (catCfg?.matchKey || newCat).toLowerCase());
+                              if (prodsInCat.length > 0) {
+                                const first = prodsInCat[0];
+                                setSelectedProduct({
+                                  name: `${first.modelNumber ? first.modelNumber + ' – ' : ''}${first.name}`,
+                                  category: first.category,
+                                  image: first.image,
+                                  isGeneral: true,
+                                });
+                              }
+                            }
+                          }}
+                          className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-2 py-2 md:px-[0.6vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.82vw] font-semibold text-[#0B3C83] outline-none transition-all cursor-pointer"
+                        >
+                          <option value="">Select Category</option>
+                          {CATEGORY_OPTIONS.map((cat) => (
+                            <option key={cat.label} value={cat.label}>
+                              {cat.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="col-span-6 space-y-[0.3vh]">
+                        <label className="text-[10px] sm:text-xs md:text-[0.72vw] font-bold text-slate-700">Product Code / Name</label>
+                        <select 
+                          disabled={!selectedCategory || selectedCategory === 'Custom/Other Requirement'}
+                          onChange={(e) => {
+                            const prod = PRODUCTS.find((p) => p.id === e.target.value);
+                            if (prod) {
+                              setSelectedProduct({
+                                name: `${prod.modelNumber ? prod.modelNumber + ' – ' : ''}${prod.name}`,
+                                category: prod.category,
+                                image: prod.image,
+                                isGeneral: true,
+                              });
+                            }
+                          }}
+                          className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-2 py-2 md:px-[0.6vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.82vw] font-semibold text-[#0B3C83] outline-none transition-all cursor-pointer disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
+                        >
+                          <option value="">
+                            {!selectedCategory
+                              ? 'Select Category First'
+                              : selectedCategory === 'Custom/Other Requirement'
+                              ? 'Custom Requirement'
+                              : 'Select Product Code'}
                           </option>
-                        ))}
-                      </select>
+                          {categoryProducts.map((prod) => (
+                            <option key={prod.id} value={prod.id}>
+                              {prod.modelNumber ? `${prod.modelNumber} – ` : ''}{prod.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   )}
+
                   {/* Quantity & Unit Row */}
                   <div className="grid grid-cols-12 gap-3 md:gap-[0.8vw]">
                     <div className="col-span-6 space-y-[0.3vh]">
@@ -185,7 +265,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                       <select 
                         value={unit}
                         onChange={(e) => setUnit(e.target.value)}
-                        className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-3 py-2 md:px-[0.8vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.85vw] font-semibold text-slate-900 outline-none transition-all"
+                        className="w-full bg-slate-50 border border-slate-300 focus:border-[#0B3C83] rounded-lg md:rounded-[0.6vw] px-3 py-2 md:px-[0.8vw] md:py-[0.8vh] text-xs sm:text-sm md:text-[0.85vw] font-semibold text-slate-900 outline-none transition-all cursor-pointer"
                       >
                         <option value="Unit/Units">Unit/Units</option>
                         <option value="Set/Sets">Set/Sets</option>
@@ -255,7 +335,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 hover:from-orange-700 hover:to-orange-700 text-white font-bold text-xs sm:text-sm md:text-[0.95vw] py-3 px-4 md:py-[1.2vh] md:px-[1.2vw] rounded-lg md:rounded-[0.7vw] transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 md:gap-[0.5vw] mt-4"
+                    className="w-full bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 hover:from-orange-700 hover:to-orange-700 text-white font-bold text-xs sm:text-sm md:text-[0.95vw] py-3 px-4 md:py-[1.2vh] md:px-[1.2vw] rounded-lg md:rounded-[0.7vw] transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 md:gap-[0.5vw] mt-4 cursor-pointer"
                   >
                     <span>Submit Request</span>
                     <Send className="w-4 h-4 md:w-[1vw] md:h-[1vw]" />

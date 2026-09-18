@@ -183,7 +183,7 @@ export default function ContactPage() {
               Request A Quote
             </button>
             <a
-              href="https://wa.me/919176212345"
+              href="https://wa.me/919842204966"
               target="_blank"
               rel="noopener noreferrer"
               className="hero-btn-right"
@@ -244,11 +244,11 @@ export default function ContactPage() {
                         <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-medium">
                           Sri Mathurams Medical Engineering
                           <br />
-                          No. 123/13, Industrial Estate,
+                          404/2B3, Cheran Industrial Estate,
                           <br />
-                          Guindy, Chennai – 600032,
+                          Vadavalli to Kanuvai Road, Somayampalayam,
                           <br />
-                          Tamil Nadu, India.
+                          Coimbatore – 641108, Tamil Nadu, India.
                         </p>
                       ),
                     },
@@ -256,12 +256,18 @@ export default function ContactPage() {
                       icon: "/images/ContactPage/call.webp",
                       label: "Call Us",
                       content: (
-                        <p className="text-slate-600 text-xs sm:text-sm font-semibold">
+                        <p className="text-slate-600 text-xs sm:text-sm font-semibold flex flex-col gap-0.5">
                           <a
-                            href="tel:+919176212345"
+                            href="tel:+919842204966"
                             className="hover:text-[#E86D24] transition-colors"
                           >
-                            +91 91762 12345
+                            +91 98422 04966
+                          </a>
+                          <a
+                            href="tel:+918883011166"
+                            className="hover:text-[#E86D24] transition-colors"
+                          >
+                            +91 88830 11166
                           </a>
                         </p>
                       ),
@@ -272,10 +278,10 @@ export default function ContactPage() {
                       content: (
                         <p className="text-slate-600 text-xs sm:text-sm font-semibold">
                           <a
-                            href="mailto:info@srimathurams.com"
+                            href="mailto:mathuramindia@gmail.com"
                             className="hover:text-[#E86D24] transition-colors"
                           >
-                            info@srimathurams.com
+                            mathuramindia@gmail.com
                           </a>
                         </p>
                       ),
@@ -410,7 +416,7 @@ export default function ContactPage() {
               </p>
             </div>
             <a
-              href="https://maps.google.com/?q=Industrial+Estate,+Guindy,+Chennai,+Tamil+Nadu"
+              href="https://maps.google.com/?q=404/2B3,+Cheran+Industrial+Estate,+Vadavalli+to+Kanuvai+Road,+Somayampalayam,+Coimbatore+-+641108"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4"
@@ -424,8 +430,8 @@ export default function ContactPage() {
           {/* Col 2: Map — from bottom */}
           <div className="sc-up w-full md:flex-grow min-h-[300px] md:min-h-[380px] rounded-3xl overflow-hidden shadow-md border border-slate-100 relative bg-slate-100">
             <iframe
-              title="Sri Mathurams Guindy Chennai Location Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.375836881983!2d80.2014!3d12.9972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a52676226053907%3A0xff3c9bc73708e3cf!2sGuindy%20Industrial%20Estate%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
+              title="Sri Mathurams Coimbatore Location Map"
+              src="https://maps.google.com/maps?q=404/2B3,%20Cheran%20Industrial%20Estate,%20Vadavalli%20to%20Kanuvai%20Road,%20Somayampalayam,%20Coimbatore%20-%20641108&t=&z=14&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -473,12 +479,20 @@ export default function ContactPage() {
                       style={{ filter: "brightness(0) invert(1)" }}
                     />
                   </div>
-                  <a
-                    href="tel:+919176212345"
-                    className="text-gray-700 hover:text-[#E86D24] font-semibold text-md transition-colors"
-                  >
-                    +91 91762 12345
-                  </a>
+                  <div className="flex flex-col">
+                    <a
+                      href="tel:+919842204966"
+                      className="text-gray-700 hover:text-[#E86D24] font-semibold text-sm transition-colors"
+                    >
+                      +91 98422 04966
+                    </a>
+                    <a
+                      href="tel:+918883011166"
+                      className="text-gray-700 hover:text-[#E86D24] font-semibold text-sm transition-colors"
+                    >
+                      +91 88830 11166
+                    </a>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-[#E86D24] flex items-center justify-center flex-shrink-0 relative overflow-hidden p-2">
@@ -492,10 +506,10 @@ export default function ContactPage() {
                     />
                   </div>
                   <a
-                    href="mailto:info@srimathurams.com"
-                    className="text-gray-700 hover:text-[#E86D24] font-semibold text-md transition-colors"
+                    href="mailto:mathuramindia@gmail.com"
+                    className="text-gray-700 hover:text-[#E86D24] font-semibold text-sm transition-colors"
                   >
-                    info@srimathurams.com
+                    mathuramindia@gmail.com
                   </a>
                 </div>
                 <div className="flex items-center gap-3">
@@ -508,7 +522,7 @@ export default function ContactPage() {
                     </svg>
                   </div>
                   <a
-                    href="https://wa.me/919176212345"
+                    href="https://wa.me/919842204966"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#25D366] hover:underline font-semibold text-md flex items-center gap-1"

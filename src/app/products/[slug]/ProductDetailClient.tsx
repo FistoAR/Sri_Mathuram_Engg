@@ -205,6 +205,7 @@ export function ProductDetailClient({
 
   return (
     <main 
+      data-lenis-prevent
       className="flex-1 min-w-0 lg:h-[calc(100vh-140px)] lg:overflow-y-auto pr-2 relative"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
