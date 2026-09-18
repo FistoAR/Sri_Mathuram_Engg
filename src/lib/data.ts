@@ -69,11 +69,12 @@ export interface CategoryTheme {
 
 export const CATEGORY_COLORS: Record<string, CategoryTheme> = {
   "Ward Furniture": {
-    bg: "#27AE60",
-    text: "#FFFFFF",
-    badgeBg: "#FFFFFF",
-    badgeText: "#196F3D",
-    border: "#27AE60",
+    bg: "#78BECD",
+    text: "#154854",
+    badgeBg: "#154854",
+    badgeText: "#FFFFFF",
+    border: "#78BECD",
+    isLight: true,
   },
   "ICU & Critical Care": {
     bg: "#0284C7",
@@ -169,7 +170,7 @@ export const CATEGORIES: Category[] = [
     "description": "Bedside lockers, overbed tables, attender cots, and ward hospital beds.",
     "icon": "/images/Product Assets/Icons/Ward Furniture.webp",
     "banner": "/images/Product Assets/Banners/Ward Furniture.webp",
-    "color": "#27AE60"
+    "color": "#78BECD"
   },
   {
     "id": "icu-critical-care",

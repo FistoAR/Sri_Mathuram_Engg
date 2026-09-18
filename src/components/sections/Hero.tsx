@@ -103,7 +103,7 @@ const CATEGORY_TITLE_COLORS: Record<string, string> = {
 };
 
 const CATEGORY_TAGLINE_COLORS: Record<string, string> = {
-  "Ward Furniture": "#38A169",               // Softer fresh emerald green
+  "Ward Furniture": "#78BECD",               // Matches respective Ward Furniture cyan #78BECD
   "ICU & Critical Care": "#0284C7",          // Match with first line color
   "Emergency & Patient Transfer": "#795548", // Softer warm mocha brown
   "Labour & Maternity": "#E05A85",           // Matches vibrant rose pink of first line
@@ -663,6 +663,8 @@ export function Hero() {
         >
           {thumbnailsData.map((item) => {
             const isCurrent = item.id === slideData[currentSlide].id;
+            const itemTheme = getCategoryTheme(item.category);
+            const itemColor = CATEGORY_TITLE_COLORS[item.category] || itemTheme.bg;
             return (
               <div
                 key={item.id}
@@ -670,9 +672,17 @@ export function Hero() {
                 onClick={() => handleThumbnailClick(item.id)}
                 className={`item group relative cursor-pointer flex-shrink-0 w-[42vw] sm:w-[32vw] md:w-[13.5vw] min-w-[165px] md:min-w-[190px] h-[9.5vh] md:h-[14vh] min-h-[70px] md:min-h-[110px] rounded-lg md:rounded-[0.9vw] overflow-hidden border shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] bg-white will-change-transform select-none outline-none ${
                   isCurrent
-                    ? "border-orange-500 ring-2 ring-orange-500/70 shadow-xl scale-[1.02]"
-                    : "border-white/80 hover:border-orange-400 hover:shadow-xl opacity-90 hover:opacity-100"
+                    ? "shadow-xl scale-[1.02]"
+                    : "border-white/80 hover:shadow-xl opacity-90 hover:opacity-100"
                 }`}
+                style={
+                  isCurrent
+                    ? {
+                        borderColor: itemColor,
+                        boxShadow: `0 0 0 2.5px ${itemColor}, 0 20px 25px -5px rgba(0, 0, 0, 0.25)`,
+                      }
+                    : undefined
+                }
               >
                 <img
                   src={item.image}
@@ -683,10 +693,10 @@ export function Hero() {
                 {/* Bottom Category Label */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent px-2.5 py-2 sm:px-3 sm:py-2.5 md:px-[0.75vw] md:py-[0.65vw] flex flex-col justify-end pointer-events-none">
                   <h4
-                    className={`text-[2.8vw] sm:text-[2vw] md:text-[0.82vw] lg:text-[0.78vw] font-bold leading-tight transition-colors line-clamp-1 ${
+                    className={`text-[2.8vw] sm:text-[2vw] md:text-[0.82vw] lg:text-[0.78vw] leading-tight transition-colors line-clamp-1 text-white ${
                       isCurrent
-                        ? "text-orange-400 font-extrabold"
-                        : "text-white group-hover:text-orange-300"
+                        ? "font-extrabold"
+                        : "font-bold group-hover:text-slate-200"
                     }`}
                   >
                     {item.category}
@@ -698,8 +708,9 @@ export function Hero() {
                   <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/40 z-30 overflow-hidden">
                     <div
                       key={slideIndex}
-                      className="h-full bg-orange-500 rounded-r-full shadow-sm"
+                      className="h-full rounded-r-full shadow-sm"
                       style={{
+                        backgroundColor: itemColor,
                         animation: "progressFill 6s linear forwards",
                         animationPlayState: isHovered ? "paused" : "running",
                       }}
