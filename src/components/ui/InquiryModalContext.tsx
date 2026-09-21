@@ -63,7 +63,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
       setSelectedProduct({
         name: "General Inquiry / Custom Order",
         category: "Hospital Furniture",
-        image: "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+        image: "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
         isGeneral: true,
       });
       setSelectedCategory('');
@@ -139,7 +139,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
               <div className="bg-slate-50 border border-slate-200/90 rounded-lg md:rounded-[0.8vw] p-3 md:p-[0.8vw] flex items-center gap-3 md:gap-[1vw]">
                 <div className="w-12 h-12 md:w-[4.2vw] md:h-[4.2vw] relative bg-white rounded-md md:rounded-[0.6vw] border border-slate-200 shrink-0 flex items-center justify-center overflow-hidden shadow-2xs">
                   <SecureImage 
-                    src={selectedProduct.image || '/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp'} 
+                    src={selectedProduct.image || '/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp'} 
                     alt={selectedProduct.name}
                     fill
                     className="object-cover"
@@ -187,7 +187,7 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                               setSelectedProduct({
                                 name: newCat === 'Custom/Other Requirement' ? 'Custom Requirement' : 'General Inquiry / Custom Order',
                                 category: newCat || 'Hospital Furniture',
-                                image: '/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp',
+                                image: '/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp',
                                 isGeneral: true,
                               });
                             } else {

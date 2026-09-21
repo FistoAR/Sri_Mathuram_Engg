@@ -281,7 +281,11 @@ export function Hero() {
   const taglineColor = CATEGORY_TAGLINE_COLORS[activeItem.category] || activeTheme.bg;
 
   return (
-    <section className={`hero-section ${isInitial ? "initial-load" : ""} relative w-full h-[90vh] md:h-[91.5vh] overflow-hidden bg-[#f7f5ef] text-slate-900`}>
+    <section 
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`hero-section ${isInitial ? "initial-load" : ""} relative w-full h-[90vh] md:h-[91.5vh] overflow-hidden bg-[#f7f5ef] text-slate-900`}
+    >
       <style>{`
         .hero-section.initial-load {
           opacity: 0;
@@ -639,7 +643,11 @@ export function Hero() {
           </div>
         </div>
         {/* Top of Preview Container: Left & Right Navigation Buttons (Single Glass Container at Right End) */}
-        <div className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto">
+        <div 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto"
+        >
           <button
             onClick={() => moveSlider("prev")}
             aria-label="Previous Slide"
@@ -658,6 +666,8 @@ export function Hero() {
 
         <div
           ref={thumbnailRef}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[13vh] left-[35vw] md:left-[48vw] right-0 flex items-center gap-[2.5vw] md:gap-[0.7vw] overflow-x-auto max-w-full py-3 px-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >

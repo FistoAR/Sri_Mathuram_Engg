@@ -260,6 +260,63 @@ export default function HomePage() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isSectionVisible, setIsSectionVisible] = useState(false);
 
+  // Track scrolling to prevent accidental category changes when page is scrolling under cursor
+  const isScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hoverDebounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      isScrollingRef.current = true;
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      scrollTimeoutRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 150);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+      if (hoverDebounceRef.current) {
+        clearTimeout(hoverDebounceRef.current);
+      }
+    };
+  }, []);
+
+  const handleCategoryHover = (name: string) => {
+    if (isScrollingRef.current) return;
+    setIsAutoPlayPaused(true);
+
+    if (hoverDebounceRef.current) {
+      clearTimeout(hoverDebounceRef.current);
+    }
+
+    // Debounce fast cursor movements (120ms) to prevent UI hanging/flicker
+    hoverDebounceRef.current = setTimeout(() => {
+      setActiveCategory(name);
+    }, 120);
+  };
+
+  const handleCategoryClick = (name: string) => {
+    if (hoverDebounceRef.current) {
+      clearTimeout(hoverDebounceRef.current);
+    }
+    setActiveCategory(name);
+    setIsAutoPlayPaused(true);
+  };
+
+  const handleCategoryLeave = () => {
+    if (hoverDebounceRef.current) {
+      clearTimeout(hoverDebounceRef.current);
+    }
+    setIsAutoPlayPaused(false);
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -1346,7 +1403,7 @@ export default function HomePage() {
 
           {/* Interactive Flex Showcase */}
           <div
-            onMouseLeave={() => setIsAutoPlayPaused(false)}
+            onMouseLeave={handleCategoryLeave}
             className="flex flex-col lg:flex-row gap-8 items-center pt-8 justify-between"
           >
             {/* Left Column: 10 Categories */}
@@ -1361,12 +1418,10 @@ export default function HomePage() {
                     className="w-full flex justify-end"
                   >
                     <button
-                      onClick={() => setActiveCategory(cat.name)}
-                      onMouseEnter={() => {
-                        setActiveCategory(cat.name);
-                        setIsAutoPlayPaused(true);
-                      }}
-                      onMouseLeave={() => setIsAutoPlayPaused(false)}
+                      onClick={() => handleCategoryClick(cat.name)}
+                      onMouseEnter={() => handleCategoryHover(cat.name)}
+                      onMouseMove={() => handleCategoryHover(cat.name)}
+                      onMouseLeave={handleCategoryLeave}
                       className={`w-fit max-w-max flex items-center justify-end gap-4 text-right group py-1.5 px-3 rounded-2xl cursor-pointer ${
                         isActive
                           ? "text-[#E86D24] font-bold transition-colors duration-300"
@@ -1550,12 +1605,10 @@ export default function HomePage() {
                     className="w-full flex justify-start"
                   >
                     <button
-                      onClick={() => setActiveCategory(cat.name)}
-                      onMouseEnter={() => {
-                        setActiveCategory(cat.name);
-                        setIsAutoPlayPaused(true);
-                      }}
-                      onMouseLeave={() => setIsAutoPlayPaused(false)}
+                      onClick={() => handleCategoryClick(cat.name)}
+                      onMouseEnter={() => handleCategoryHover(cat.name)}
+                      onMouseMove={() => handleCategoryHover(cat.name)}
+                      onMouseLeave={handleCategoryLeave}
                       className={`w-fit max-w-max flex items-center justify-start gap-4 text-left group py-1.5 px-3 rounded-2xl cursor-pointer ${
                         isActive
                           ? "text-[#E86D24] font-bold transition-colors duration-300"
@@ -1846,7 +1899,7 @@ export default function HomePage() {
                     name: "Complete Hospital Furniture Solutions Inquiry",
                     category: "Hospital Furniture",
                     image:
-                      "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+                      "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
                     isGeneral: true,
                   })
                 }

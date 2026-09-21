@@ -34,7 +34,7 @@ export function ProductCard({
         className="space-y-3 flex-1 block group/link cursor-pointer"
       >
         {/* Product Image Frame */}
-        <div className="relative aspect-[16/10] w-full bg-slate-50 rounded-xl border border-slate-100 overflow-hidden">
+        <div className="relative aspect-[16/10] w-full bg-white rounded-xl border border-slate-100 overflow-hidden">
           {product.needsDetails && (
             <div className="absolute top-2 left-2 bg-amber-600/90 text-white text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider shadow-sm z-10">
               Details Pending

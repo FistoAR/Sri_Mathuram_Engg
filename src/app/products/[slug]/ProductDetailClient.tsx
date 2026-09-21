@@ -23,6 +23,7 @@ import {
   Menu,
   Bed,
   AlertTriangle,
+  ZoomIn,
 } from "lucide-react";
 import { MedicalProduct, PRODUCTS, CATEGORIES } from "@/lib/data";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
@@ -124,41 +125,120 @@ export function ProductDetailClient({
     }
   };
 
-  // Handle Image Slider State (Exactly 2 variant images)
+  // Handle Image Gallery Slider State
   const images = React.useMemo(() => {
     if (product.gallery && product.gallery.length > 0) {
-      return [product.image, product.gallery[0]];
+      return [product.image, ...product.gallery];
     }
-    return [product.image, product.image];
+    return [product.image];
   }, [product]);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Dynamic specification variants based on category or fallback
-  const variants = React.useMemo(() => {
-    if (product.specificationVariants && product.specificationVariants.length > 0) {
-      return product.specificationVariants.map((v) => v.name);
+  // Reset active image index when product changes
+  React.useEffect(() => {
+    setActiveImageIndex(0);
+  }, [product.id, product.slug]);
+
+  // Ultra-Smooth Magnifier + Wheel Scroll Zoom (Flipkart / Amazon style)
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomScaleDisplay, setZoomScaleDisplay] = useState(2.2);
+  const imageContainerRef = React.useRef<HTMLDivElement>(null);
+  const zoomTargetRef = React.useRef<HTMLDivElement>(null);
+  const zoomStateRef = React.useRef({ x: 50, y: 50, scale: 2.2, isZoomed: false });
+
+  // Native non-passive wheel listener for smooth scroll zooming on exact cursor spot
+  React.useEffect(() => {
+    const container = imageContainerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      const isOverControls = !!(e.target as HTMLElement)?.closest?.('[data-no-zoom="true"]');
+      if (isOverControls) return;
+
+      e.preventDefault();
+      const delta = -e.deltaY * 0.0035;
+      const newScale = Math.min(5.0, Math.max(1.3, zoomStateRef.current.scale + delta));
+      zoomStateRef.current.scale = newScale;
+      setZoomScaleDisplay(Math.round(newScale * 10) / 10);
+
+      if (zoomTargetRef.current) {
+        zoomTargetRef.current.style.transform = `scale(${newScale})`;
+      }
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageContainerRef.current || !zoomTargetRef.current) return;
+
+    const isOverControls = !!(e.target as HTMLElement)?.closest?.('[data-no-zoom="true"]');
+    if (isOverControls) {
+      zoomTargetRef.current.style.transform = "scale(1)";
+      zoomTargetRef.current.style.transformOrigin = "50% 50%";
+      if (isZoomed) setIsZoomed(false);
+      return;
     }
-    return [];
-  }, [product]);
 
-  const [selectedVariant, setSelectedVariant] = useState(
-    variants[0] || "Standard Configuration",
-  );
+    if (!isZoomed) setIsZoomed(true);
 
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+
+    zoomStateRef.current.x = x;
+    zoomStateRef.current.y = y;
+
+    // Direct hardware-accelerated style update without triggering React re-renders
+    zoomTargetRef.current.style.transformOrigin = `${x}% ${y}%`;
+    zoomTargetRef.current.style.transform = `scale(${zoomStateRef.current.scale})`;
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    const isOverControls = !!(e.target as HTMLElement)?.closest?.('[data-no-zoom="true"]');
+    if (isOverControls) {
+      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+      setIsZoomed(false);
+      return;
+    }
+
+    setIsZoomed(true);
+    zoomStateRef.current.isZoomed = true;
+    if (!imageContainerRef.current || !zoomTargetRef.current) return;
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    zoomStateRef.current.x = x;
+    zoomStateRef.current.y = y;
+    zoomTargetRef.current.style.transformOrigin = `${x}% ${y}%`;
+    zoomTargetRef.current.style.transform = `scale(${zoomStateRef.current.scale})`;
+  };
+
+  const handleMouseLeave = () => {
+    setIsZoomed(false);
+    zoomStateRef.current.isZoomed = false;
+    zoomStateRef.current.scale = 2.2;
+    setZoomScaleDisplay(2.2);
+    if (zoomTargetRef.current) {
+      zoomTargetRef.current.style.transform = "scale(1)";
+      zoomTargetRef.current.style.transformOrigin = "50% 50%";
+    }
+  };
+
+  // Automatically switch to the next image every 4 seconds if multiple images exist (pause when user is hovering/zooming)
   React.useEffect(() => {
-    setSelectedVariant(variants[0] || "Standard Configuration");
-  }, [variants]);
-
-  // Automatically switch to the next image every 4 seconds
-  React.useEffect(() => {
+    if (images.length <= 1 || isZoomed) return;
     const timer = setInterval(() => {
       setActiveImageIndex((prev) =>
         prev === images.length - 1 ? 0 : prev + 1,
       );
     }, 4000);
     return () => clearInterval(timer);
-  }, [images.length]);
+  }, [images.length, isZoomed]);
 
   const handlePrevImage = () => {
     setActiveImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -204,6 +284,38 @@ export function ProductDetailClient({
     ).length;
   });
 
+  const parsedGalleryItems = React.useMemo(() => {
+    if (!product.galleryLabels || product.galleryLabels.length === 0) {
+      return product.modelNumber ? [{ code: product.modelNumber, spec: "" }] : [];
+    }
+    return product.galleryLabels.map((lbl) => {
+      const dashMatch = lbl.match(/^([A-Za-z0-9\s]+?)\s*-\s*(.+)$/);
+      if (dashMatch) {
+        const code = dashMatch[1].trim();
+        let spec = dashMatch[2].trim();
+        spec = spec.replace(/\s*\((Primary|Secondary)\)\s*$/i, "").trim();
+        return { code, spec };
+      }
+      const parenMatch = lbl.match(/^([A-Za-z0-9\s]+?)\s*\((.+)\)$/);
+      if (parenMatch) {
+        const code = parenMatch[1].trim();
+        let spec = parenMatch[2].trim();
+        spec = spec.replace(/\s*\((Primary|Secondary)\)\s*$/i, "").trim();
+        return { code, spec };
+      }
+      return { code: lbl.trim(), spec: "" };
+    });
+  }, [product.galleryLabels, product.modelNumber]);
+
+  const uniqueModelCodes = React.useMemo(() => {
+    const codes = parsedGalleryItems.map((item) => item.code).filter(Boolean);
+    return Array.from(new Set(codes));
+  }, [parsedGalleryItems]);
+
+  const hasMultipleProductCodes = uniqueModelCodes.length > 1;
+  const activeGalleryItem = parsedGalleryItems[activeImageIndex] || parsedGalleryItems[0];
+  const activeSpec = hasMultipleProductCodes ? (activeGalleryItem?.spec || "") : "";
+
   return (
     <main 
       data-lenis-prevent
@@ -211,65 +323,141 @@ export function ProductDetailClient({
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {/* Main Grid Container: Gallery & Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch py-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start py-2">
         {/* Left Side: Product Gallery */}
-        <FadeIn direction="left" duration={0.6} className="h-full">
-          <div className="flex flex-col justify-between space-y-4 h-full min-w-0">
-            <div className="relative flex-1 min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] w-full overflow-hidden flex items-center justify-center group bg-white rounded-2xl border border-slate-200 shadow-sm">
+        <FadeIn direction="left" duration={0.6} className="w-full lg:sticky lg:top-2">
+          <div className="w-full min-w-0">
+            <div
+              ref={imageContainerRef}
+              onMouseEnter={handleMouseEnter}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="relative w-full aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] max-h-[460px] overflow-hidden flex items-center justify-center group bg-white rounded-2xl border border-slate-200 shadow-sm cursor-crosshair select-none"
+            >
               {/* Back Button inside the image card at top-left */}
               <Link
                 href={`/products?category=${encodeURIComponent(product.category)}`}
                 scroll={false}
+                data-no-zoom="true"
+                onMouseEnter={() => {
+                  if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                  setIsZoomed(false);
+                }}
                 className="absolute top-3.5 left-3.5 z-30 inline-flex items-center gap-1.5 bg-[#0B3C83] hover:bg-[#092D62] text-white px-3.5 py-1.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all duration-300 group/btn"
               >
                 <ArrowLeft className="w-4 h-4 stroke-[2.5] text-white group-hover/btn:-translate-x-0.5 transition-transform" />
                 <span className="text-xs font-bold font-montserrat">Back</span>
               </Link>
 
-              <SecureImage
-                src={images[activeImageIndex]}
-                alt={product.name}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-
-              {/* Nav Arrows */}
-              <button
-                onClick={handlePrevImage}
-                className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors active:scale-95 z-10 p-2 bg-white/70 hover:bg-white rounded-full shadow-sm"
-              >
-                <ArrowLeft className="w-6 h-6 stroke-[2]" />
-              </button>
-              <button
-                onClick={handleNextImage}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors active:scale-95 z-10 p-2 bg-white/70 hover:bg-white rounded-full shadow-sm"
-              >
-                <ArrowRight className="w-6 h-6 stroke-[2]" />
-              </button>
-            </div>
-
-            {/* Thumbnail row (2 variant images centered) */}
-            <div className="flex gap-4 justify-center py-2 h-[84px] shrink-0">
-              {images.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`relative w-24 sm:w-28 h-full rounded-xl border-2 overflow-hidden bg-white shrink-0 transition-all ${
-                    idx === activeImageIndex
-                      ? "border-[#E87325] scale-[1.03] shadow-sm"
-                      : "border-slate-200 hover:border-slate-300 opacity-70 hover:opacity-100"
-                  }`}
+              {/* Active Image Indicator / Counter at top-right */}
+              {images.length > 1 && (
+                <div 
+                  data-no-zoom="true"
+                  onMouseEnter={() => {
+                    if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                    setIsZoomed(false);
+                  }}
+                  className="absolute top-3.5 right-3.5 z-30 bg-slate-900/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full text-[11px] font-mono font-bold tracking-wider shadow-sm border border-white/10"
                 >
-                  <SecureImage
-                    src={img}
-                    alt={`${product.name} thumbnail ${idx + 1}`}
-                    fill
-                    sizes="120px"
-                    className="object-cover"
-                  />
-                </button>
-              ))}
+                  {activeImageIndex + 1} / {images.length}
+                </div>
+              )}
+
+              {/* Zoom hint badge */}
+              <div
+                className={`absolute bottom-3.5 right-3.5 z-20 pointer-events-none flex items-center gap-1.5 bg-slate-900/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm transition-all duration-300 ${
+                  isZoomed ? "opacity-90 bg-slate-900/85 text-orange-300 border border-orange-500/30" : "opacity-80"
+                }`}
+              >
+                <ZoomIn className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                <span>
+                  {isZoomed ? `${zoomScaleDisplay}x (Scroll to adjust)` : "Hover to zoom • Scroll to adjust"}
+                </span>
+              </div>
+
+              {/* Magnifier Scalable Product Image Box */}
+              <div
+                ref={zoomTargetRef}
+                className="relative w-full h-full pointer-events-none transition-transform duration-75 ease-out will-change-transform"
+                style={{
+                  transformOrigin: "50% 50%",
+                  transform: "scale(1)",
+                }}
+              >
+                <SecureImage
+                  src={images[activeImageIndex] || product.image}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain p-4 sm:p-6"
+                />
+              </div>
+
+              {/* Nav Arrows (Only if multiple images) */}
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    data-no-zoom="true"
+                    onMouseEnter={() => {
+                      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                      setIsZoomed(false);
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrevImage();
+                    }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 transition-colors active:scale-95 z-30 p-2 bg-white/80 hover:bg-white rounded-full shadow-md cursor-pointer"
+                    aria-label="Previous image"
+                  >
+                    <ArrowLeft className="w-6 h-6 stroke-[2]" />
+                  </button>
+                  <button
+                    type="button"
+                    data-no-zoom="true"
+                    onMouseEnter={() => {
+                      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                      setIsZoomed(false);
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNextImage();
+                    }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900 transition-colors active:scale-95 z-30 p-2 bg-white/80 hover:bg-white rounded-full shadow-md cursor-pointer"
+                    aria-label="Next image"
+                  >
+                    <ArrowRight className="w-6 h-6 stroke-[2]" />
+                  </button>
+
+                  {/* Carousel Indicator Dots */}
+                  <div 
+                    data-no-zoom="true"
+                    onMouseEnter={() => {
+                      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                      setIsZoomed(false);
+                    }}
+                    className="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-slate-900/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-sm"
+                  >
+                    {images.map((_, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        data-no-zoom="true"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveImageIndex(idx);
+                        }}
+                        className={`transition-all duration-300 rounded-full cursor-pointer ${
+                          idx === activeImageIndex
+                            ? "w-5 h-2 bg-[#E87325]"
+                            : "w-2 h-2 bg-white/60 hover:bg-white"
+                        }`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </FadeIn>
@@ -289,20 +477,61 @@ export function ProductDetailClient({
                 
                 <h1 className="text-2xl md:text-[2rem] lg:text-[2.25rem] font-bold text-[#0B3C83] font-montserrat tracking-tight leading-tight">
                   {product.name}
+                  {activeSpec && (
+                    <span className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-500 ml-2 font-montserrat inline-block">
+                      ({activeSpec})
+                    </span>
+                  )}
                 </h1>
 
-                {/* Product Code Tag */}
-                {product.modelNumber && (
+                {/* Product Code Tag: Multi-Code if distinct codes exist, Single Code otherwise */}
+                {hasMultipleProductCodes ? (
                   <div className="flex items-center pt-0.5">
                     <div className="inline-flex items-stretch rounded-md border border-slate-200 bg-white overflow-hidden shadow-2xs text-xs font-mono">
-                      <span className="bg-[#0B3C83] text-white px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center">
+                      <span className="bg-white text-slate-500 px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center border-r border-slate-200">
                         PRODUCT CODE
                       </span>
-                      <span className="px-3 py-1 font-bold text-[#0B3C83] tracking-wider text-xs bg-slate-50 flex items-center border-l border-slate-200">
-                        {product.modelNumber}
-                      </span>
+                      {parsedGalleryItems.map((item, idx) => {
+                        const isActive = idx === activeImageIndex;
+                        return (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={() => {
+                              if (images.length > 1) {
+                                setActiveImageIndex(idx);
+                              }
+                            }}
+                            className={`px-3 py-1 font-bold tracking-wider text-xs flex items-center transition-all ${
+                              idx > 0 ? "border-l border-slate-200" : ""
+                            } ${
+                              images.length > 1 ? "cursor-pointer" : "cursor-default"
+                            } ${
+                              isActive
+                                ? "bg-[#0B3C83] text-white shadow-xs font-extrabold"
+                                : "bg-white text-slate-500 hover:bg-slate-50 hover:text-[#0B3C83]"
+                            }`}
+                            title={item.spec ? `${item.code} (${item.spec})` : item.code}
+                          >
+                            {item.code}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
+                ) : (
+                  (product.modelNumber || uniqueModelCodes[0]) && (
+                    <div className="flex items-center pt-0.5">
+                      <div className="inline-flex items-stretch rounded-md border border-slate-200 bg-white overflow-hidden shadow-2xs text-xs font-mono">
+                        <span className="bg-[#0B3C83] text-white px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center">
+                          PRODUCT CODE
+                        </span>
+                        <span className="px-3 py-1 font-bold text-[#0B3C83] tracking-wider text-xs bg-slate-50 flex items-center border-l border-slate-200">
+                          {product.modelNumber || uniqueModelCodes[0]}
+                        </span>
+                      </div>
+                    </div>
+                  )
                 )}
 
                 {product.needsDetails && (
@@ -313,37 +542,7 @@ export function ProductDetailClient({
                 )}
               </div>
 
-              {/* Variant Selector Pills */}
-              {variants.length > 0 && (
-                <div className="space-y-2">
-                  <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
-                    Specification Variant
-                  </span>
-                  <div className="flex flex-wrap gap-2.5">
-                    {variants.map((variant) => {
-                      const isActive = selectedVariant === variant;
-                      return (
-                        <button
-                          key={variant}
-                          onClick={() => setSelectedVariant(variant)}
-                          className={`px-4 py-2.5 rounded-xl text-sm font-bold border transition-all flex items-center gap-1.5 ${
-                            isActive
-                              ? "bg-white border-slate-800 text-slate-800 shadow-sm"
-                              : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
-                          }`}
-                        >
-                          <span>{variant}</span>
-                          <span
-                            className={`text-[11px] ${isActive ? "text-slate-600" : "text-slate-300"}`}
-                          >
-                            ⓘ
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+
 
               {/* Product Overview Description */}
               <div className="space-y-3">

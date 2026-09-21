@@ -13,6 +13,7 @@ export interface Product {
   fullDescription?: string;
   image: string;
   gallery?: string[];
+  galleryLabels?: string[];
   specifications?: ProductSpecification[] | Record<string, string>;
   features?: string[];
   applications?: string[];

@@ -315,7 +315,7 @@ export default function AboutPage() {
 
               {/* Paragraphs line by line */}
               {[
-                "Healthcare is built on trust and for more than 29 years, Sri Mathurams Medical Engineering has earned that trust by manufacturing hospital furniture and medical equipment that combines quality, durability, functionality, and value.",
+                "Healthcare is built on trust and for more than 30 years, Sri Mathurams Medical Engineering has earned that trust by manufacturing hospital furniture and medical equipment that combines quality, durability, functionality, and value.",
                 "Founded in 1997, the company began with a simple vision: to strengthen healthcare infrastructure by manufacturing dependable hospital furniture that supports doctors, caregivers, and patients alike.",
                 "What started as a small manufacturing unit has grown into one of South India's trusted hospital furniture manufacturers, supplying hospitals, medical colleges, clinics, healthcare, distributors, and individual customers across India.",
               ].map((text, i) => (
@@ -446,7 +446,7 @@ export default function AboutPage() {
 
             {/* Card 2: Note card — flies in from TOP-LEFT */}
             <div
-              className="ms-card absolute left-[22%] -top-[5%] w-[190px] h-[180px] z-30"
+              className="ms-card absolute left-[22%] -top-[5%] w-[200px] h-[185px] z-30"
               style={
                 {
                   "--tx": "-80px",
@@ -461,9 +461,9 @@ export default function AboutPage() {
                   { "--sx": "14px", "--sy": "14px" } as React.CSSProperties
                 }
               >
-                <div className="ms-float-2 w-full h-full text-justify bg-white rounded-[1rem] p-4 shadow-lg border border-slate-100/60 flex flex-col">
+                <div className="ms-float-2 w-full h-full text-justify bg-white rounded-[1.25rem] p-4 shadow-lg border border-slate-100/60 flex flex-col justify-start">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xs">
+                    <span className="w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-xs shrink-0">
                       i
                     </span>
                   </div>
@@ -595,7 +595,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Card 6: Blue 29+ — flies in from RIGHT */}
+            {/* Card 6: Blue 30+ — flies in from RIGHT */}
             <div
               className="ms-card absolute left-[59%] top-[18%] w-[210px] h-[210px] z-20"
               style={
@@ -619,7 +619,7 @@ export default function AboutPage() {
                       "linear-gradient(135deg, #0353A4 65%, rgba(9, 98, 194, 0.95) 65%)",
                   }}
                 >
-                  <span className="text-5xl font-bold block">29+</span>
+                  <span className="text-5xl font-bold block">30+</span>
                   <span className="text-[11px] text-slate-200 font-semibold uppercase tracking-wider block mt-2 leading-snug">
                     Years of Manufacturing Excellence
                   </span>
@@ -847,7 +847,7 @@ export default function AboutPage() {
                 } as React.CSSProperties
               }
             >
-              <span className="text-3xl font-bold block">29+</span>
+              <span className="text-3xl font-bold block">30+</span>
               <span className="text-[10px] text-slate-200 font-semibold uppercase tracking-wider block mt-1">
                 Years of Manufacturing Excellence
               </span>
@@ -2076,7 +2076,7 @@ export default function AboutPage() {
                     name: "About Page Custom Quote Inquiry",
                     category: "Hospital Furniture",
                     image:
-                      "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+                      "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
                     isGeneral: true,
                   })
                 }

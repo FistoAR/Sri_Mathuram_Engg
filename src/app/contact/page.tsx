@@ -166,7 +166,7 @@ export default function ContactPage() {
                   name: "Contact Page Top Inquiry",
                   category: "Hospital Furniture",
                   image:
-                    "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+                    "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
                   isGeneral: true,
                 })
               }
@@ -617,7 +617,7 @@ export default function ContactPage() {
                     name: "Contact Page Bottom Solutions Inquiry",
                     category: "Hospital Furniture",
                     image:
-                      "/images/Product Assets/productsImage/MF01 – Plain Bedside Locker.webp",
+                      "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
                     isGeneral: true,
                   })
                 }
