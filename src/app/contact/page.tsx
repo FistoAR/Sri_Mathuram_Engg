@@ -218,13 +218,13 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="space-y-2">
                   <h2
-                    className="sc-child text-2xl sm:text-[1.8vw] font-bold text-navy-950 leading-none uppercase"
+                    className="sc-child text-2xl sm:text-3xl lg:text-[1.8vw] font-bold text-navy-950 leading-none uppercase"
                     style={{ "--i": 1 } as React.CSSProperties}
                   >
                     GET IN TOUCH
                   </h2>
                   <p
-                    className="sc-child text-slate-500 font-medium text-xs sm:text-[0.9vw] leading-relaxed"
+                    className="sc-child text-slate-500 font-medium text-xs sm:text-sm lg:text-[0.9vw] leading-relaxed"
                     style={{ "--i": 2 } as React.CSSProperties}
                   >
                     Tell us what you are looking for and our team will get back
@@ -380,16 +380,16 @@ export default function ContactPage() {
       </section>
 
       {/* ═══ 3. FIND US / MAP / QUICK CONTACT ═══ */}
-      <section className="w-full px-[6vw] lg:px-[8vw] mt-20 space-y-12">
+      <section className="w-full px-[5vw] lg:px-[8vw] mt-16 md:mt-20 space-y-12">
         <div
-          className="flex flex-col md:flex-row justify-between items-stretch gap-10 lg:gap-14 xl:gap-18 w-full"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-stretch w-full"
           ref={obs}
         >
           {/* Col 1: Visit — from left */}
-          <div className="sc-left w-full md:w-[320px] flex-shrink-0 flex flex-col justify-between gap-[4vh]">
+          <div className="sc-left md:col-span-1 lg:col-span-3 flex flex-col justify-between gap-6">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 text-[#E86D24] font-bold text-lg uppercase">
-                <span className="relative w-7 h-7 flex-shrink-0">
+              <div className="inline-flex items-center gap-2 text-[#E86D24] font-bold text-base sm:text-lg uppercase">
+                <span className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0">
                   <Image
                     src="/images/ContactPage/findUs.webp"
                     alt="Find Us"
@@ -402,14 +402,14 @@ export default function ContactPage() {
                   <span className="absolute left-0 bottom-0 w-1/2 h-[2px] bg-[#E86D24] rounded-full" />
                 </span>
               </div>
-              <h2 className="text-3xl font-bold text-navy-600 leading-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-navy-600 leading-tight">
                 Visit Our Facility
               </h2>
-              <p className="text-slate-600 text-base leading-relaxed font-medium font-inter">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium font-inter">
                 Have a project requirement or want to discuss your needs in
                 person?
               </p>
-              <p className="text-slate-600 text-base leading-relaxed font-medium font-inter">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium font-inter">
                 Visit our facility and connect directly with our team to explore
                 our products, manufacturing capabilities and customized
                 solutions.
@@ -419,16 +419,16 @@ export default function ContactPage() {
               href="https://maps.google.com/?q=404/2B3,+Cheran+Industrial+Estate,+Vadavalli+to+Kanuvai+Road,+Somayampalayam,+Coimbatore+-+641108"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-4"
+              className="inline-block mt-2"
             >
-              <button className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-semibold text-md px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2">
-                Get Directions <Navigation className="w-5 h-5 rotate-45" />
+              <button className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-semibold text-sm sm:text-md px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer active:scale-95">
+                Get Directions <Navigation className="w-4 h-4 sm:w-5 sm:h-5 rotate-45" />
               </button>
             </a>
           </div>
 
           {/* Col 2: Map — from bottom */}
-          <div className="sc-up w-full md:flex-grow min-h-[300px] md:min-h-[380px] rounded-3xl overflow-hidden shadow-md border border-slate-100 relative bg-slate-100">
+          <div className="sc-up md:col-span-2 lg:col-span-6 min-h-[320px] md:min-h-[380px] rounded-3xl overflow-hidden shadow-md border border-slate-100 relative bg-slate-100 order-last lg:order-none">
             <iframe
               title="Sri Mathurams Coimbatore Location Map"
               src="https://maps.google.com/maps?q=404/2B3,%20Cheran%20Industrial%20Estate,%20Vadavalli%20to%20Kanuvai%20Road,%20Somayampalayam,%20Coimbatore%20-%20641108&t=&z=14&ie=UTF8&iwloc=&output=embed"
@@ -442,11 +442,11 @@ export default function ContactPage() {
           </div>
 
           {/* Col 3: Quick Contact — from right */}
-          <div className="sc-right w-full md:w-[320px] flex-shrink-0 flex flex-col justify-between space-y-6">
-            <div className="w-full max-w-[285px] md:ml-auto flex flex-col justify-between h-full space-y-6">
+          <div className="sc-right md:col-span-1 lg:col-span-3 flex flex-col justify-between space-y-6">
+            <div className="w-full flex flex-col justify-between h-full space-y-6">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 text-[#E86D24] font-bold text-lg uppercase">
-                  <span className="relative w-7 h-7 flex-shrink-0">
+                <div className="inline-flex items-center gap-2 text-[#E86D24] font-bold text-base sm:text-lg uppercase">
+                  <span className="relative w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0">
                     <Image
                       src="/images/ContactPage/contact.webp"
                       alt="Quick Contact"
@@ -459,10 +459,10 @@ export default function ContactPage() {
                     <span className="absolute left-0 bottom-0 w-1/2 h-[2px] bg-[#E86D24] rounded-full" />
                   </span>
                 </div>
-                <h2 className="text-3xl font-bold text-navy-600 leading-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-navy-600 leading-tight">
                   Need Assistance?
                 </h2>
-                <p className="text-slate-600 text-base leading-relaxed font-medium font-inter">
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium font-inter">
                   For urgent product enquiries or quotation requirements, contact
                   our team directly.
                 </p>

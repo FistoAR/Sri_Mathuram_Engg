@@ -55,12 +55,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-slate-200 shadow-sm font-montserrat">
       {/* Main header navbar */}
-      <div className="px-[3vw]">
-        <div className="flex items-center justify-between h-[8vh] min-h-[60px]">
+      <div className="px-4 sm:px-[3vw]">
+        <div className="flex items-center justify-between h-[64px] sm:h-[8vh] min-h-[60px]">
           
           {/* Logo using logo.webp and text */}
-          <Link href="/" className="flex items-center gap-3 group focus:outline-none">
-            <div className="relative h-[8vh] w-[8vh] min-h-[36px] min-w-[36px] overflow-hidden flex-shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none">
+            <div className="relative h-10 w-10 sm:h-[8vh] sm:w-[8vh] sm:min-h-[36px] sm:min-w-[36px] overflow-hidden flex-shrink-0">
               <Image
                 src="/images/logo.webp"
                 alt="Sri Mathurams Medical Engineering Logo"
@@ -87,7 +87,7 @@ export function Header() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`text-[0.8vw] font-bold uppercase transition-colors pb-[0.3vh] ${
+                  className={`text-sm lg:text-[0.85vw] font-bold uppercase transition-colors pb-[0.3vh] ${
                     active
                       ? 'text-orange-600 border-b-2 border-orange-500'
                       : 'text-slate-800 hover:text-orange-600'
@@ -100,7 +100,7 @@ export function Header() {
           </nav>
 
           {/* Right Action Button & Mobile Hamburger Menu Button */}
-          <div className="flex items-center gap-[10px]">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => openInquiryModal({
                 name: "General Inquiry / Custom Order",
@@ -108,13 +108,13 @@ export function Header() {
                 image: "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
                 isGeneral: true
               })}
-              className="group relative inline-flex items-center gap-[6px] sm:gap-[0.5vw] bg-orange-500 text-white text-[11px] sm:text-[0.8vw] font-semibold px-[10px] sm:px-[1.2vw] py-[6px] sm:py-[1vh] rounded-lg sm:rounded-[0.6vw] shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-orange-500/35 hover:shadow-lg active:scale-95 transition-all duration-300 border border-orange-400 overflow-hidden shrink-0"
+              className="hidden sm:inline-flex group relative items-center gap-1.5 sm:gap-2 bg-orange-500 text-white text-xs sm:text-sm lg:text-[0.85vw] font-semibold px-3 sm:px-4 lg:px-[1.2vw] py-2 sm:py-2.5 lg:py-[1vh] rounded-lg sm:rounded-xl lg:rounded-[0.6vw] shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-orange-500/35 hover:shadow-lg active:scale-95 transition-all duration-300 border border-orange-400 overflow-hidden shrink-0"
             >
               {/* Silver running shine beam effect */}
               <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none animate-silver-shine" />
 
               <span className="relative z-10 whitespace-nowrap">Request a quote</span>
-              <ChevronRight className="relative z-10 w-[12px] h-[12px] sm:w-[1vw] sm:h-[1vw] bg-white/20 rounded-full p-[1px] group-hover:bg-white group-hover:text-orange-600 transition-all duration-300 animate-move-right-infinite" />
+              <ChevronRight className="relative z-10 w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1vw] lg:h-[1vw] bg-white/20 rounded-full p-[1px] group-hover:bg-white group-hover:text-orange-600 transition-all duration-300 animate-move-right-infinite" />
             </button>
 
             {/* Mobile Hamburger Toggle Button */}

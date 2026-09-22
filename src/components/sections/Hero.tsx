@@ -396,8 +396,8 @@ export function Hero() {
         }
         @keyframes outFrameMobile { to { width: 42vw; height: 9.5vh; bottom: 11vh; left: 35vw; right: auto; border-radius: 10px; } }
 
-        /* Desktop Media Query (min-width: 768px) */
-        @media (min-width: 768px) {
+        /* Desktop Media Query (min-width: 1024px) */
+        @media (min-width: 1024px) {
           .slider.next .list .item:nth-child(1) img {
             width: 13.5vw; height: 14vh; position: absolute; bottom: 13vh; left: 48vw; right: auto; border-radius: 0.9vw;
             animation: showImage 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
@@ -411,6 +411,23 @@ export function Hero() {
             position: absolute; bottom: 0; left: 0; right: auto;
           }
           @keyframes outFrame { to { width: 13.5vw; height: 14vh; bottom: 13vh; left: 48vw; right: auto; border-radius: 0.9vw; } }
+        }
+
+        /* Tablet Media Query (min-width: 768px and max-width: 1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .slider.next .list .item:nth-child(1) img {
+            width: 22vw; height: 11vh; position: absolute; bottom: 11vh; left: 45vw; right: auto; border-radius: 10px;
+            animation: showImageTablet 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+          }
+          @keyframes showImageTablet {
+            from { bottom: 11vh; left: 45vw; right: auto; width: 22vw; height: 11vh; border-radius: 10px; }
+            to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
+          }
+          .slider.prev .list .item:nth-child(2) img {
+            animation: outFrameTablet 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+            position: absolute; bottom: 0; left: 0; right: auto;
+          }
+          @keyframes outFrameTablet { to { width: 22vw; height: 11vh; bottom: 11vh; left: 45vw; right: auto; border-radius: 10px; } }
         }
         @media (min-width: 1024px) and (max-height: 720px) {
           .thumbnail {
@@ -548,15 +565,15 @@ export function Hero() {
             <div 
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              className="w-full lg:max-w-[45vw] flex flex-col gap-5 sm:gap-6 md:gap-6 lg:gap-8 pointer-events-auto"
+              className="w-full md:max-w-[54vw] lg:max-w-[45vw] flex flex-col gap-4 sm:gap-5 md:gap-6 lg:gap-8 pointer-events-auto"
             >
               {/* Line 1: Badge with Trusted Logo & Bottom Orange Accent Line */}
               <div
                 className={`hero-badge flex flex-col items-start gap-2 w-fit ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.1s" : "0s" }}
               >
-                <div className="inline-flex items-center gap-2 text-[3.2vw] sm:text-[1.8vw] md:text-[1.2vw] font-bold tracking-wider text-[#0C3D6C] uppercase">
-                  <div className="relative w-4 h-4 sm:w-6 sm:h-6 flex-shrink-0">
+                <div className="inline-flex items-center gap-2 text-xs sm:text-sm lg:text-[1.1vw] font-bold tracking-wider text-[#0C3D6C] uppercase">
+                  <div className="relative w-4 h-4 sm:w-5 sm:h-5 lg:w-[1.2vw] lg:h-[1.2vw] flex-shrink-0">
                     <Image
                       src="/images/Home Page/sectionIcons/trustedMedical.webp"
                       alt="Trusted Logo"
@@ -568,7 +585,7 @@ export function Hero() {
                 </div>
                 {/* Dynamic Category Color Underline Accent Line */}
                 <div
-                  className="w-1/2 h-[4px] rounded-full transition-colors duration-500"
+                  className="w-1/2 h-[3px] sm:h-[4px] rounded-full transition-colors duration-500"
                   style={{ backgroundColor: titleColor }}
                 />
               </div>
@@ -579,21 +596,21 @@ export function Hero() {
                 style={{ animationDelay: isTextVisible ? "0.25s" : "0.05s" }}
               >
                 <h1 
-                  className="text-[7vw] sm:text-[5.5vw] md:text-[3.2vw] font-Montserrat font-extrabold tracking-wider uppercase leading-[1.08] font-heading transition-colors duration-500"
+                  className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.2vw] font-Montserrat font-extrabold tracking-wider uppercase leading-[1.08] font-heading transition-colors duration-500"
                   style={{ color: titleColor }}
                 >
                   {activeItem.titleOrange}
                 </h1>
                 {activeItem.tagline && (
                   <h2 
-                    className="text-[4.2vw] sm:text-[3vw] md:text-[2.1vw] font-Montserrat font-semibold tracking-wider leading-snug transition-colors duration-500"
+                    className="text-base sm:text-xl md:text-2xl lg:text-[2.1vw] font-Montserrat font-semibold tracking-wider leading-snug transition-colors duration-500"
                     style={{ color: taglineColor }}
                   >
                     {activeItem.tagline}
                   </h2>
                 )}
                 {activeItem.titleNavy && (
-                  <span className="text-[#0B2545] block text-[6.5vw] sm:text-[5.5vw] md:text-[3.1vw] font-inter">
+                  <span className="text-[#0B2545] block text-xl sm:text-3xl md:text-4xl lg:text-[3.1vw] font-inter">
                     {activeItem.titleNavy}
                   </span>
                 )}
@@ -601,7 +618,7 @@ export function Hero() {
 
               {/* Line 3: Description */}
               <p
-                className={`hero-description text-[3.8vw] sm:text-[2.6vw] md:text-[1.05vw] text-slate-700 font-medium leading-relaxed md:leading-[1.7] max-w-[90vw] md:max-w-[40vw] ${isTextVisible ? "line-reveal" : "line-exit"}`}
+                className={`hero-description text-xs sm:text-sm md:text-base lg:text-[1.05vw] text-slate-700 font-medium leading-relaxed md:leading-[1.7] max-w-[85vw] md:max-w-[48vw] lg:max-w-[40vw] ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.4s" : "0.1s" }}
               >
                 {activeItem.description}
@@ -609,7 +626,7 @@ export function Hero() {
 
               {/* Line 4: Action Buttons (Request a Quote on Left, Explore Products on Right matching the frames) */}
               <div
-                className={`hero-buttons flex flex-wrap gap-[2.5vw] md:gap-[1vw] pt-2 md:pt-3 ${isTextVisible ? "line-reveal" : "line-exit"}`}
+                className={`hero-buttons flex flex-wrap gap-3 sm:gap-4 md:gap-[1vw] pt-2 md:pt-3 ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.55s" : "0.15s" }}
               >
                 <button
@@ -619,15 +636,15 @@ export function Hero() {
                     image: activeItem.image,
                     isGeneral: true
                   })}
-                  className="bg-[#0B2545] hover:bg-[#134074] text-white font-bold text-[3.5vw] sm:text-[2.2vw] md:text-[0.85vw] px-[5vw] sm:px-[3.5vw] md:px-[1.4vw] py-[1.8vh] md:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-[1.5vw] md:gap-[0.5vw]"
+                  className="bg-[#0B2545] hover:bg-[#134074] text-white font-bold text-xs sm:text-sm lg:text-[0.85vw] px-4 sm:px-6 lg:px-[1.4vw] py-2.5 sm:py-3 lg:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 lg:gap-[0.5vw]"
                 >
                   REQUEST A QUOTE{" "}
-                  <Send className="w-[4vw] sm:w-[2.5vw] md:w-[1vw] h-[4vw] sm:h-[2.5vw] md:h-[1vw] rotate-45 hero-button-arrow-rotated" />
+                  <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1vw] lg:h-[1vw] rotate-45 hero-button-arrow-rotated" />
                 </button>
 
                 <Link href={`/products?category=${encodeURIComponent(activeItem.category)}`}>
                   <button 
-                    className="font-bold text-[3.5vw] sm:text-[2.2vw] md:text-[0.85vw] px-[5vw] sm:px-[3.5vw] md:px-[1.4vw] py-[1.8vh] md:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg hover:brightness-105 transition-all flex items-center gap-[1.5vw] md:gap-[0.5vw]"
+                    className="font-bold text-xs sm:text-sm lg:text-[0.85vw] px-4 sm:px-6 lg:px-[1.4vw] py-2.5 sm:py-3 lg:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg hover:brightness-105 transition-all flex items-center gap-2 lg:gap-[0.5vw]"
                     style={{
                       backgroundColor: activeTheme.bg,
                       color: activeTheme.text,
@@ -635,7 +652,7 @@ export function Hero() {
                     }}
                   >
                     EXPLORE PRODUCTS{" "}
-                    <ArrowRight className="w-[4vw] sm:w-[2.5vw] md:w-[1vw] h-[4vw] sm:h-[2.5vw] md:h-[1vw] hero-button-arrow" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1vw] lg:h-[1vw] hero-button-arrow" />
                   </button>
                 </Link>
               </div>
@@ -646,7 +663,7 @@ export function Hero() {
         <div 
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto"
+          className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(11vh+11vh+18px)] lg:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto"
         >
           <button
             onClick={() => moveSlider("prev")}
@@ -668,7 +685,7 @@ export function Hero() {
           ref={thumbnailRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[13vh] left-[35vw] md:left-[48vw] right-0 flex items-center gap-[2.5vw] md:gap-[0.7vw] overflow-x-auto max-w-full py-3 px-2"
+          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[11vh] lg:bottom-[13vh] left-[35vw] md:left-[45vw] lg:left-[48vw] right-0 flex items-center gap-[2.5vw] md:gap-[1vw] lg:gap-[0.7vw] overflow-x-auto max-w-full py-3 px-2"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {thumbnailsData.map((item) => {
@@ -680,7 +697,7 @@ export function Hero() {
                 key={item.id}
                 data-id={item.id}
                 onClick={() => handleThumbnailClick(item.id)}
-                className={`item group relative cursor-pointer flex-shrink-0 w-[42vw] sm:w-[32vw] md:w-[13.5vw] min-w-[165px] md:min-w-[190px] h-[9.5vh] md:h-[14vh] min-h-[70px] md:min-h-[110px] rounded-lg md:rounded-[0.9vw] overflow-hidden border shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] bg-white will-change-transform select-none outline-none ${
+                className={`item group relative cursor-pointer flex-shrink-0 w-[42vw] sm:w-[32vw] md:w-[20vw] lg:w-[13.5vw] min-w-[155px] md:min-w-[170px] lg:min-w-[190px] h-[9.5vh] md:h-[11vh] lg:h-[14vh] min-h-[70px] md:min-h-[90px] lg:min-h-[110px] rounded-lg md:rounded-[0.9vw] overflow-hidden border shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] bg-white will-change-transform select-none outline-none ${
                   isCurrent
                     ? "shadow-xl scale-[1.02]"
                     : "border-white/80 hover:shadow-xl opacity-90 hover:opacity-100"

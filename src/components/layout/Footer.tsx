@@ -50,10 +50,10 @@ export function Footer() {
       <div className="w-full  px-5 sm:px-8 md:px-10 lg:px-[4vw]">
 
         {/* Responsive Grid/Flex Layout for Columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-row justify-between items-start gap-8 sm:gap-10 lg:gap-0 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-row justify-between items-start gap-8 md:gap-10 lg:gap-0 pb-10">
 
           {/* Column 1: Brand Logo, Description & Social Icons */}
-          <div className="ft-col w-full lg:flex-[1.35] flex flex-col items-start gap-2.5 lg:pr-6 xl:pr-8 lg:border-r border-slate-700/80 border-b sm:border-b-0 pb-6 sm:pb-0 border-slate-700/40 shrink-0" style={{ "--ft-i": 0 } as React.CSSProperties}>
+          <div className="ft-col w-full lg:flex-[1.35] flex flex-col items-start gap-2.5 lg:pr-6 xl:pr-8 lg:border-r border-slate-700/80 border-b md:border-b-0 pb-6 md:pb-0 border-slate-700/40 shrink-0" style={{ "--ft-i": 0 } as React.CSSProperties}>
             <Link href="/" className="inline-block">
               <div className="flex items-center gap-3">
                 <div className="relative h-[76px] w-[76px] sm:h-[84px] sm:w-[84px] overflow-hidden flex-shrink-0">
@@ -78,7 +78,7 @@ export function Footer() {
 
           {/* Column 2: QUICK LINKS */}
           <div
-            className="ft-col w-full sm:w-auto lg:flex-[0.7] space-y-4 lg:px-6 xl:px-8 lg:border-r border-slate-700/80 border-b sm:border-b-0 pb-6 sm:pb-0 border-slate-700/40 shrink-0"
+            className="ft-col w-full lg:flex-[0.7] space-y-4 lg:px-6 xl:px-8 lg:border-r border-slate-700/80 border-b md:border-b-0 pb-6 md:pb-0 border-slate-700/40 shrink-0"
             style={{ "--ft-i": 1 } as React.CSSProperties}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -109,7 +109,7 @@ export function Footer() {
                         <ArrowRight className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 mt-0.5 transition-all duration-300 transform ${
                           isHighlighted ? 'text-[#E86D24] scale-[1.2] translate-x-0.3' : 'text-slate-300 group-hover:text-[#E86D24] group-hover:scale-[1.2] group-hover:translate-x-0.5'
                         }`} />
-                        <span className="leading-snug whitespace-nowrap">{link.label}</span>
+                        <span className="leading-snug">{link.label}</span>
                       </button>
                     ) : (
                       <Link
@@ -121,7 +121,7 @@ export function Footer() {
                         <ArrowRight className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 mt-0.5 transition-all duration-300 transform ${
                           isHighlighted ? 'text-[#E86D24] scale-[1.2] translate-x-0.3' : 'text-slate-300 group-hover:text-[#E86D24] group-hover:scale-[1.2] group-hover:translate-x-0.5'
                         }`} />
-                        <span className="leading-snug whitespace-nowrap">{link.label}</span>
+                        <span className="leading-snug">{link.label}</span>
                       </Link>
                     )}
                   </li>
@@ -132,7 +132,7 @@ export function Footer() {
 
           {/* Column 3: PRODUCT CATEGORIES (2 Sub-columns: 5 & 5) */}
           <div
-            className="ft-col w-full sm:w-auto lg:flex-[2.35] space-y-4 lg:px-6 xl:px-8 lg:border-r border-slate-700/80 border-b sm:border-b-0 pb-6 sm:pb-0 border-slate-700/40 shrink-0"
+            className="ft-col w-full md:col-span-2 lg:col-span-1 lg:flex-[2.35] space-y-4 lg:px-6 xl:px-8 lg:border-r border-slate-700/80 border-b md:border-b-0 pb-6 md:pb-0 border-slate-700/40"
             style={{ "--ft-i": 2 } as React.CSSProperties}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -141,7 +141,7 @@ export function Footer() {
               <h3 className="text-[14px] sm:text-[15px] font-bold text-white uppercase tracking-wider font-montserrat whitespace-nowrap">PRODUCT CATEGORIES</h3>
               <div className="w-1/2 h-[2.5px] bg-[#E86D24] rounded-full" />
             </div>
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-x-6 sm:gap-x-8 xl:gap-x-10 gap-y-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 sm:gap-x-10 xl:gap-x-12 gap-y-3.5">
               {/* Left Sub-column (First 5) */}
               <ul className="space-y-3.5 text-[14px] sm:text-[15px] font-medium font-inter">
                 {CATEGORIES.slice(0, 5).map((cat, i) => {
@@ -157,7 +157,7 @@ export function Footer() {
                         <ArrowRight className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 mt-0.5 transition-all duration-300 transform ${
                           isHighlighted ? 'text-[#E86D24] scale-[1.1] translate-x-0.3' : 'text-slate-300 group-hover:text-[#E86D24] group-hover:scale-[1.2] group-hover:translate-x-0.5'
                         }`} />
-                        <span className="leading-snug whitespace-nowrap">{cat.name}</span>
+                        <span className="leading-snug">{cat.name}</span>
                       </Link>
                     </li>
                   );
@@ -168,7 +168,6 @@ export function Footer() {
               <ul className="space-y-3.5 text-[14px] sm:text-[15px] font-medium font-inter">
                 {CATEGORIES.slice(5, 10).map((cat, i) => {
                   const isHighlighted = !isHovered && activeHighlight === 10 + i;
-                  const isStainlessSteel = cat.name.includes('Stainless Steel Furniture');
                   return (
                     <li key={i}>
                       <Link
@@ -180,15 +179,7 @@ export function Footer() {
                         <ArrowRight className={`w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0 mt-0.5 transition-all duration-300 transform ${
                           isHighlighted ? 'text-[#E86D24] scale-[1.1] translate-x-0.3' : 'text-slate-300 group-hover:text-[#E86D24] group-hover:scale-[1.2] group-hover:translate-x-0.5'
                         }`} />
-                        <span className="leading-snug">
-                          {isStainlessSteel ? (
-                            <>
-                              Stainless Steel Furniture &amp;<br />Ward Accessories
-                            </>
-                          ) : (
-                            <span className="whitespace-nowrap">{cat.name}</span>
-                          )}
-                        </span>
+                        <span className="leading-snug">{cat.name}</span>
                       </Link>
                     </li>
                   );
@@ -198,7 +189,7 @@ export function Footer() {
           </div>
 
           {/* Column 4: CONTACT INFORMATION */}
-          <div className="ft-col w-full sm:w-auto lg:flex-[1.25] space-y-4 lg:pl-6 xl:pl-8" style={{ "--ft-i": 3 } as React.CSSProperties}>
+          <div className="ft-col w-full md:col-span-2 lg:col-span-1 lg:flex-[1.25] space-y-4 lg:pl-6 xl:pl-8" style={{ "--ft-i": 3 } as React.CSSProperties}>
             <div className="inline-block space-y-1.5">
               <h3 className="text-[14px] sm:text-[15px] font-bold text-white uppercase tracking-wider font-montserrat">CONTACT INFORMATION</h3>
               <div className="w-1/2 h-[2.5px] bg-[#E86D24] rounded-full" />
