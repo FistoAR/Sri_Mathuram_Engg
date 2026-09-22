@@ -24,6 +24,8 @@ import {
   Bed,
   AlertTriangle,
   ZoomIn,
+  Share2,
+  Check,
 } from "lucide-react";
 import { MedicalProduct, PRODUCTS, CATEGORIES } from "@/lib/data";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
@@ -140,6 +142,32 @@ export function ProductDetailClient({
   }, [product]);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    if (!url) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      try {
+        await navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+        return;
+      } catch (e) {}
+    }
+
+    try {
+      const input = document.createElement("input");
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch (e) {}
+  };
 
   // Reset active image index when product changes
   React.useEffect(() => {
@@ -486,20 +514,61 @@ export function ProductDetailClient({
               onMouseLeave={handleMouseLeave}
               className="relative w-full aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] max-h-[460px] overflow-hidden flex items-center justify-center group bg-white rounded-2xl border border-slate-200 shadow-sm cursor-crosshair select-none"
             >
-              {/* Back Button inside the image card at top-left */}
-              <Link
-                href={`/products?category=${encodeURIComponent(product.category)}`}
-                scroll={false}
-                data-no-zoom="true"
-                onMouseEnter={() => {
-                  if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
-                  setIsZoomed(false);
-                }}
-                className="absolute top-3.5 left-3.5 z-30 inline-flex items-center gap-1.5 bg-[#0B3C83] hover:bg-[#092D62] text-white px-3.5 py-1.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all duration-300 group/btn"
-              >
-                <ArrowLeft className="w-4 h-4 stroke-[2.5] text-white group-hover/btn:-translate-x-0.5 transition-transform" />
-                <span className="text-xs font-bold font-montserrat">Back</span>
-              </Link>
+              {/* Back & Share Buttons inside the image card at top-left */}
+              <div className="absolute top-3.5 left-3.5 z-30 flex items-center gap-2">
+                <Link
+                  href={`/products?category=${encodeURIComponent(product.category)}`}
+                  scroll={false}
+                  data-no-zoom="true"
+                  onMouseEnter={() => {
+                    if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                    setIsZoomed(false);
+                  }}
+                  className="inline-flex items-center gap-1.5 bg-[#0B3C83] hover:bg-[#092D62] text-white px-3.5 py-1.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all duration-300 group/btn cursor-pointer select-none"
+                >
+                  <ArrowLeft className="w-4 h-4 stroke-[2.5] text-white group-hover/btn:-translate-x-0.5 transition-transform" />
+                  <span className="text-xs font-bold font-montserrat">Back</span>
+                </Link>
+
+                <div className="relative">
+                  <button
+                    type="button"
+                    data-no-zoom="true"
+                    onClick={handleShare}
+                    onMouseEnter={() => {
+                      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                      setIsZoomed(false);
+                    }}
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all duration-300 cursor-pointer select-none ${
+                      copied
+                        ? "bg-emerald-600 text-white shadow-emerald-500/30 ring-2 ring-emerald-400/40"
+                        : "bg-white/90 hover:bg-white text-slate-700 hover:text-[#0B3C83] border border-slate-200/80"
+                    }`}
+                    title="Share product link"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span className="text-xs font-bold font-montserrat">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Share2 className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span className="text-xs font-bold font-montserrat">Share</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Tooltip on copy */}
+                  {copied && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-40 whitespace-nowrap bg-slate-900/95 text-white text-[11px] font-semibold font-montserrat px-3 py-1.5 rounded-lg shadow-xl border border-slate-700/80 flex items-center gap-1.5 pointer-events-none animate-in fade-in zoom-in-95 duration-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                      <span>Link copied to clipboard!</span>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-[1px] border-4 border-transparent border-b-slate-900/95" />
+                    </div>
+                  )}
+                </div>
+              </div>
 
               {/* Active Image Indicator / Counter at top-right */}
               {images.length > 1 && (
@@ -787,7 +856,7 @@ export function ProductDetailClient({
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100 w-full max-w-full">
               <button
                 onClick={() => openInquiryModal(product)}
-                className="w-full sm:flex-1 bg-[#0B3C83] hover:bg-[#092D62] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider"
+                className="w-full sm:flex-1 bg-[#0B3C83] hover:bg-[#092D62] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider cursor-pointer"
               >
                 <FileText className="w-4 h-4 text-white shrink-0" />
                 <span>REQUEST A QUOTE</span>
@@ -798,7 +867,7 @@ export function ProductDetailClient({
                 rel="noopener noreferrer"
                 className="w-full sm:flex-1 block"
               >
-                <button className="w-full bg-[#25D366] hover:bg-[#1ebd59] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider">
+                <button className="w-full bg-[#25D366] hover:bg-[#1ebd59] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider cursor-pointer">
                   <svg
                     className="w-4 h-4 fill-white shrink-0"
                     viewBox="0 0 24 24"
