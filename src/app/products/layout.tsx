@@ -919,8 +919,12 @@ function ProductsLayoutContent({
                           <Link
                             key={prod.id}
                             href={`/products/${prod.slug}`}
-                            scroll={false}
-                            onClick={() => setIsMobileDrawerOpen(false)}
+                            onClick={() => {
+                              setIsMobileDrawerOpen(false);
+                              if (typeof window !== "undefined") {
+                                window.scrollTo(0, 0);
+                              }
+                            }}
                             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-bold transition-all text-left leading-normal border ${
                               isProdActive
                                 ? "shadow-xs border-2"

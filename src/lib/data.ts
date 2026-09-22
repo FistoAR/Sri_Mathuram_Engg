@@ -2665,7 +2665,9 @@ export const PRODUCTS: MedicalProduct[] = [
     "functions": [
       "① Backrest Rise — Adjustable",
       "② Knee/Leg Raise — Adjustable",
-      "③ Height Adjustment — Remote"
+      "③ Trendelenburg",
+      "④ Reverse Trendelenburg",
+      "⑤ Height Adjustment — Remote"
     ],
     "detailedSpec": {
       "Functions": "3 Function / 5 Function",

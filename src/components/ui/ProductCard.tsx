@@ -30,7 +30,11 @@ export function ProductCard({
       {/* Top Content Area - Clickable Card Link */}
       <Link
         href={`/products/${product.slug}`}
-        scroll={false}
+        onClick={() => {
+          if (typeof window !== "undefined") {
+            window.scrollTo(0, 0);
+          }
+        }}
         className="space-y-3 flex-1 block group/link cursor-pointer"
       >
         {/* Product Image Frame */}
@@ -65,7 +69,11 @@ export function ProductCard({
         <div className="flex flex-col gap-2 mt-4 pt-2.5 border-t border-slate-100 w-full">
           <Link
             href={`/products/${product.slug}`}
-            scroll={false}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.scrollTo(0, 0);
+              }
+            }}
             className="w-full"
           >
             <button

@@ -240,7 +240,7 @@ export function Header() {
               </button>
 
               <a
-                href="https://wa.me/919842212345"
+                href="https://wa.me/919842204966"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full"

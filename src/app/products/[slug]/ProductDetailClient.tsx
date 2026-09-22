@@ -169,9 +169,34 @@ export function ProductDetailClient({
     } catch (e) {}
   };
 
-  // Reset active image index when product changes
+  const mainRef = React.useRef<HTMLElement>(null);
+
+  // Reset active image index and ensure scroll starts at 0 whenever product changes (especially critical on mobile)
   React.useEffect(() => {
     setActiveImageIndex(0);
+
+    const scrollToTop = () => {
+      if (typeof window !== "undefined") {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        if ((window as any).__lenis) {
+          (window as any).__lenis.scrollTo(0, { immediate: true });
+        }
+      }
+      if (mainRef.current) {
+        mainRef.current.scrollTop = 0;
+      }
+    };
+
+    scrollToTop();
+    const rafId = requestAnimationFrame(scrollToTop);
+    const timer = setTimeout(scrollToTop, 50);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timer);
+    };
   }, [product.id, product.slug]);
 
   // Ultra-Smooth Magnifier + Wheel Scroll Zoom (Flipkart / Amazon style)
@@ -498,6 +523,7 @@ export function ProductDetailClient({
 
   return (
     <main 
+      ref={mainRef}
       data-lenis-prevent
       className="flex-1 w-full max-w-full min-w-0 lg:h-[calc(100vh-140px)] lg:overflow-y-auto px-1 sm:px-2 lg:px-2 lg:pr-6 relative"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -862,7 +888,7 @@ export function ProductDetailClient({
                 <span>REQUEST A QUOTE</span>
               </button>
               <a
-                href="https://wa.me/919842212345"
+                href="https://wa.me/919842204966"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:flex-1 block"
@@ -1115,39 +1141,55 @@ export function ProductDetailClient({
         >
           {duplicatedProducts.map((p, idx) => (
             <div key={`${p.id}-dup-${idx}`} className="w-[280px] shrink-0 h-full">
-              <div className="group/related bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3.5 cursor-pointer h-[400px]">
-                <div className="relative aspect-[1.3/1] w-full bg-white rounded-xl overflow-hidden mb-3.5 border border-slate-100">
-                  <SecureImage
-                    src={p.image}
-                    alt={p.name}
-                    fill
-                    sizes="240px"
-                    className="object-cover transition-transform duration-500 group-hover/related:scale-105"
-                  />
-                </div>
-                <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+              <div className="group/related bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3.5 h-[400px]">
+                <Link
+                  href={`/products/${p.slug}`}
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.scrollTo(0, 0);
+                    }
+                  }}
+                  className="space-y-3 flex-1 block group/link cursor-pointer"
+                >
+                  <div className="relative aspect-[1.3/1] w-full bg-white rounded-xl overflow-hidden mb-3.5 border border-slate-100">
+                    <SecureImage
+                      src={p.image}
+                      alt={p.name}
+                      fill
+                      sizes="240px"
+                      className="object-cover transition-transform duration-500 group-hover/related:scale-105"
+                    />
+                  </div>
                   <div className="space-y-1">
-                    <h3 className="text-[#092347] font-black text-sm md:text-base leading-tight whitespace-normal break-words">
+                    <h3 className="text-[#092347] font-black text-sm md:text-base leading-tight whitespace-normal break-words group-hover/link:text-[#0B3C83] transition-colors">
                       {p.name}
                     </h3>
                     <p className="text-slate-500 text-[11px] font-medium leading-normal line-clamp-3">
                       {p.description || "Designed for patient comfort, safety, and efficient caregiving with a durable and ergonomic structure."}
                     </p>
                   </div>
-                  <div className="flex flex-col gap-2 pt-3 border-t border-slate-100 mt-3.5 w-full">
-                    <Link href={`/products/${p.slug}`} scroll={false} className="w-full">
-                      <button className="w-full border border-[#0B3C83] text-[#0B3C83] hover:bg-[#0B3C83]/5 rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center whitespace-nowrap">
-                        View Details
-                      </button>
-                    </Link>
-                    <button
-                      onClick={() => openInquiryModal(p)}
-                      className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center flex items-center justify-center gap-1 active:scale-95 whitespace-nowrap"
-                    >
-                      <span>Send Enquiry</span>
-                      <ChevronRight className="w-3 h-3 text-white shrink-0" />
+                </Link>
+                <div className="flex flex-col gap-2 pt-3 border-t border-slate-100 mt-3.5 w-full">
+                  <Link
+                    href={`/products/${p.slug}`}
+                    onClick={() => {
+                      if (typeof window !== "undefined") {
+                        window.scrollTo(0, 0);
+                      }
+                    }}
+                    className="w-full"
+                  >
+                    <button className="w-full border border-[#0B3C83] text-[#0B3C83] hover:bg-[#0B3C83]/5 rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center whitespace-nowrap cursor-pointer">
+                      View Details
                     </button>
-                  </div>
+                  </Link>
+                  <button
+                    onClick={() => openInquiryModal(p)}
+                    className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center flex items-center justify-center gap-1 active:scale-95 whitespace-nowrap cursor-pointer"
+                  >
+                    <span>Send Enquiry</span>
+                    <ChevronRight className="w-3 h-3 text-white shrink-0" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -1213,7 +1255,7 @@ export function ProductDetailClient({
                 </FadeIn>
                 <FadeIn direction="right" delay={0.35}>
                   <a
-                    href="https://wa.me/919842212345"
+                    href="https://wa.me/919842204966"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full border border-white/60 hover:bg-white/10 text-white py-3 px-5 rounded-xl font-bold text-xs transition-transform duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider text-center"

@@ -289,7 +289,7 @@ export function ProductBottomBanner({
             transition={{ duration: 0.65, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
           >
             <a
-              href="https://wa.me/919842212345"
+              href="https://wa.me/919842204966"
               target="_blank"
               rel="noopener noreferrer"
               id="btn-whatsapp-link"
