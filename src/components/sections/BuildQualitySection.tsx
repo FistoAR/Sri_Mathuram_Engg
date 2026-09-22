@@ -173,12 +173,12 @@ export function BuildQualitySection() {
 
             {/* Right Column: Dynamic Expandable Accordion with Scroll Animation */}
             <div ref={cardsRef} className="lg:col-span-8 relative flex flex-col justify-center w-full">
-              {/* Top Right STEP-XX Watermark */}
+              {/* Top Right STEP-XX Watermark (Desktop Only) */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={isCardsInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="absolute -top-[72px] right-10 pointer-events-none select-none z-0"
+                className="hidden lg:block absolute -top-[72px] right-10 pointer-events-none select-none z-0"
               >
                 <span className="text-6xl sm:text-7xl lg:text-8xl font-normal text-slate-500/20 tracking-wider font-mono">
                   {currentStep.stepNumber}

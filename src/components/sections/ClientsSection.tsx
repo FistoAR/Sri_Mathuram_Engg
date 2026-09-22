@@ -269,7 +269,15 @@ const SECTOR_CARDS = [
     title: "GOVERNMENT HOSPITALS",
     desc: "ICU Beds, Ward Furniture & Stretchers",
     icon: (
-      <svg className="w-7 h-7 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className="w-7 h-7 transition-transform duration-300"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <line x1="3" y1="21" x2="21" y2="21" />
         <line x1="4" y1="10" x2="20" y2="10" />
         <polygon points="12 3 2 10 22 10 12 3" />
@@ -285,7 +293,15 @@ const SECTOR_CARDS = [
     title: "PRIVATE HOSPITALS",
     desc: "Electric ICU Beds & Deluxe Room Sets",
     icon: (
-      <svg className="w-7 h-7 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className="w-7 h-7 transition-transform duration-300"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z" />
         <line x1="12" y1="8" x2="12" y2="16" strokeWidth="2.2" />
         <line x1="8" y1="12" x2="16" y2="12" strokeWidth="2.2" />
@@ -297,7 +313,15 @@ const SECTOR_CARDS = [
     title: "MEDICAL COLLEGES",
     desc: "Anatomy Tables & Lab Setup",
     icon: (
-      <svg className="w-7 h-7 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className="w-7 h-7 transition-transform duration-300"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
         <path d="M6 12v5c3 3 9 3 12 0v-5" />
       </svg>
@@ -308,7 +332,15 @@ const SECTOR_CARDS = [
     title: "CLINICS",
     desc: "Examination Couches & Wheelchairs",
     icon: (
-      <svg className="w-7 h-7 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className="w-7 h-7 transition-transform duration-300"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
         <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
         <circle cx="20" cy="10" r="2" />
@@ -320,7 +352,15 @@ const SECTOR_CARDS = [
     title: "HOME CARE",
     desc: "Recliner Beds & Walking Aids",
     icon: (
-      <svg className="w-7 h-7 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <svg
+        className="w-7 h-7 transition-transform duration-300"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
         <path d="M12 11v6" strokeWidth="2" />
         <path d="M9 14h6" strokeWidth="2" />
@@ -360,7 +400,10 @@ const sectorCardVariants: Variants = {
 
 export function ClientsSection() {
   const sectorCardsRef = useRef<HTMLDivElement>(null);
-  const isSectorInView = useInView(sectorCardsRef, { once: false, amount: 0.2 });
+  const isSectorInView = useInView(sectorCardsRef, {
+    once: false,
+    amount: 0.2,
+  });
 
   const row1Items = [...SECONDARY_ROW_1, ...SECONDARY_ROW_1];
   const row2Items = [
@@ -405,7 +448,11 @@ export function ClientsSection() {
             className="text-center space-y-2 mt-4"
           >
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B2545] tracking-tight">
-              <TypewriterText text="Trusted by Healthcare Across India" speed={35} delay={150} />
+              <TypewriterText
+                text="Trusted by Healthcare Across India"
+                speed={35}
+                delay={150}
+              />
             </h2>
             <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-medium">
               We are proud to be a preferred manufacturing partner for premier

@@ -51,7 +51,7 @@ export function TypewriterText({
           onResetRef.current?.();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     const el = elementRef.current;
@@ -109,7 +109,8 @@ export function TypewriterText({
       {words.map((word, wordIdx) => {
         const wordChars = Array.from(word);
         const wordStartIndex = runningCharCount;
-        runningCharCount += wordChars.length + (wordIdx < words.length - 1 ? 1 : 0);
+        runningCharCount +=
+          wordChars.length + (wordIdx < words.length - 1 ? 1 : 0);
 
         return (
           <React.Fragment key={wordIdx}>
@@ -133,7 +134,7 @@ export function TypewriterText({
               })}
             </span>
             {wordIdx < words.length - 1 && (
-              <span className="inline-block whitespace-pre">{" "}</span>
+              <span className="inline-block whitespace-pre"> </span>
             )}
           </React.Fragment>
         );

@@ -80,12 +80,19 @@ export function ProductDetailClient({
 
   const duplicatedProducts = React.useMemo(() => {
     if (relatedProducts.length === 0) return [];
-    // Repeat the array to guarantee enough content for a seamless infinite loop
-    return [...relatedProducts, ...relatedProducts, ...relatedProducts];
+    // Render related products cleanly without memory-heavy triplication
+    return relatedProducts;
   }, [relatedProducts]);
 
   React.useEffect(() => {
-    if (isSliderHovered || isTemporarilyPaused || !sliderRef.current || relatedProducts.length <= 1) return;
+    // Only run smooth marquee autoscroll on desktop non-touch devices
+    const isTouch =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+
+    if (isTouch || isSliderHovered || isTemporarilyPaused || !sliderRef.current || relatedProducts.length <= 1) return;
 
     let animationFrameId: number;
     const el = sliderRef.current;
@@ -93,9 +100,8 @@ export function ProductDetailClient({
     const step = () => {
       if (el) {
         el.scrollLeft += 0.8; // Slow, ultra-smooth continuous motion
-        const originalWidth = el.scrollWidth / 3;
-        if (el.scrollLeft >= originalWidth) {
-          el.scrollLeft -= originalWidth;
+        if (el.scrollLeft >= el.scrollWidth - el.clientWidth) {
+          el.scrollLeft = 0;
         }
       }
       animationFrameId = requestAnimationFrame(step);
@@ -544,6 +550,7 @@ export function ProductDetailClient({
                   src={images[activeImageIndex] || product.image}
                   alt={product.name}
                   fill
+                  priority={true}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-contain p-4 sm:p-6"
                 />

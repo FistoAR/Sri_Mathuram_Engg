@@ -101,8 +101,40 @@ export function SecureImage({
   const [decryptedSrc, setDecryptedSrc] = useState<string>(() => {
     return memoryBlobCache.get(src) || "";
   });
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(priority);
 
   useEffect(() => {
+    if (priority || memoryBlobCache.has(src)) {
+      setIsVisible(true);
+      return;
+    }
+
+    const element = containerRef.current;
+    if (!element || typeof IntersectionObserver === "undefined") {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [src, priority]);
+
+  useEffect(() => {
+    if (!isVisible) return;
     let isMounted = true;
     if (memoryBlobCache.has(src)) {
       setDecryptedSrc(memoryBlobCache.get(src)!);
@@ -118,10 +150,11 @@ export function SecureImage({
     return () => {
       isMounted = false;
     };
-  }, [src]);
+  }, [src, isVisible]);
 
   return (
     <div
+      ref={containerRef}
       data-secure-img="true"
       className={`relative w-full h-full select-none overflow-hidden ${
         fill ? "absolute inset-0" : ""
