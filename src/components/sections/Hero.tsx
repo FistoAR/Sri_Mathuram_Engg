@@ -308,56 +308,56 @@ export function Hero() {
 
         /* Staggered entrance animations for left side text */
         html.preloader-done .hero-section.initial-load .hero-badge {
-          animation: initialFadeInLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+          animation: initialFadeInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
         }
         html.preloader-done .hero-section.initial-load .hero-title {
-          animation: initialFadeInLeft 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+          animation: initialFadeInLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
         html.preloader-done .hero-section.initial-load .hero-description {
-          animation: initialFadeInLeft 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+          animation: initialFadeInLeft 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
         }
         html.preloader-done .hero-section.initial-load .hero-buttons {
-          animation: initialFadeInLeft 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+          animation: initialFadeInLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
         }
 
         /* Staggered entrance animations for preview thumbnails */
         html.preloader-done .hero-section.initial-load .thumbnail .item:nth-child(1) {
-          animation: initialSlideInRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+          animation: initialSlideInRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
         }
         html.preloader-done .hero-section.initial-load .thumbnail .item:nth-child(2) {
-          animation: initialSlideInRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+          animation: initialSlideInRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
         }
         html.preloader-done .hero-section.initial-load .thumbnail .item:nth-child(3) {
-          animation: initialSlideInRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+          animation: initialSlideInRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
         }
         html.preloader-done .hero-section.initial-load .thumbnail .item:nth-child(4) {
-          animation: initialSlideInRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.0s both;
+          animation: initialSlideInRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
         }
         html.preloader-done .hero-section.initial-load .thumbnail .item:nth-child(5) {
-          animation: initialSlideInRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.2s both;
+          animation: initialSlideInRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
         }
         html.preloader-done .hero-section.initial-load .thumbnail .item:nth-child(6) {
-          animation: initialSlideInRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both;
+          animation: initialSlideInRight 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.05s both;
         }
 
         /* Slow zoom-in background image */
         html.preloader-done .hero-section.initial-load .slider .list .item:nth-child(1) img {
-          animation: initialZoomIn 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation: initialZoomIn 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes initialFadeInLeft {
-          from { opacity: 0; transform: translateX(-40px); filter: blur(4px); }
-          to { opacity: 1; transform: translateX(0); filter: blur(0); }
+          from { opacity: 0; transform: translate3d(-30px, 0, 0); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
 
         @keyframes initialZoomIn {
-          from { opacity: 0; transform: scale(1.12); }
-          to { opacity: 1; transform: scale(1); }
+          from { opacity: 0; transform: scale(1.08) translateZ(0); }
+          to   { opacity: 1; transform: scale(1) translateZ(0); }
         }
 
         @keyframes initialSlideInRight {
-          from { opacity: 0; transform: translateX(150px) scale(0.95); filter: blur(4px); }
-          to { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
+          from { opacity: 0; transform: translate3d(80px, 0, 0) scale(0.96); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
         }
 
         .hero-button-arrow {
@@ -379,22 +379,28 @@ export function Hero() {
 
         .slider { height: 100%; width: 100%; overflow: hidden; position: relative; }
         .slider .list .item { width: 100%; height: 100%; position: absolute; inset: 0 0 0 0; }
-        .slider .list .item img { width: 100%; height: 100%; object-fit: cover; object-position: right; }
+        .slider .list .item img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: right;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          will-change: opacity, transform;
+        }
         .slider .list .item:nth-child(1) { z-index: 1; }
-        /* Mobile Slide Animations */
-        .slider.next .list .item:nth-child(1) img {
-          width: 42vw; height: 9.5vh; position: absolute; bottom: 11vh; left: 35vw; right: auto; border-radius: 10px;
-          animation: showImageMobile 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+
+        /* Hardware-Accelerated Mobile Slide Animations (No layout thrashing) */
+        @media (max-width: 767px) {
+          .slider.next .list .item:nth-child(1) img,
+          .slider.prev .list .item:nth-child(1) img {
+            animation: mobileSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+          }
+          @keyframes mobileSlideIn {
+            from { opacity: 0; transform: scale(1.04) translateZ(0); }
+            to   { opacity: 1; transform: scale(1) translateZ(0); }
+          }
         }
-        @keyframes showImageMobile {
-          from { bottom: 11vh; left: 35vw; right: auto; width: 42vw; height: 9.5vh; border-radius: 10px; }
-          to { bottom: 0; right: 0; left: 0; width: 100%; height: 100%; border-radius: 0; }
-        }
-        .slider.prev .list .item:nth-child(2) img {
-          animation: outFrameMobile 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-          position: absolute; bottom: 0; left: 35vw; right: auto;
-        }
-        @keyframes outFrameMobile { to { width: 42vw; height: 9.5vh; bottom: 11vh; left: 35vw; right: auto; border-radius: 10px; } }
 
         /* Desktop Media Query (min-width: 1024px) */
         @media (min-width: 1024px) {
@@ -455,27 +461,24 @@ export function Hero() {
         
         .line-reveal {
           opacity: 0;
-          transform: translateY(25px);
-          filter: blur(6px);
-          animation: lineIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          transform: translate3d(0, 18px, 0);
+          animation: lineIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .line-exit {
           opacity: 1;
-          transform: translateY(0px);
-          animation: lineOut 0.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+          transform: translate3d(0, 0, 0);
+          animation: lineOut 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
         }
         @keyframes lineIn {
           to {
             opacity: 1;
-            transform: translateY(0px);
-            filter: blur(0px);
+            transform: translate3d(0, 0, 0);
           }
         }
         @keyframes lineOut {
           to {
             opacity: 0;
-            transform: translateY(-20px);
-            filter: blur(6px);
+            transform: translate3d(0, -14px, 0);
           }
         }
         @keyframes progressFill {
@@ -483,16 +486,19 @@ export function Hero() {
           to { width: 100%; }
         }
 
-        /* Thumbnail smooth enter/exit transitions */
+        /* Thumbnail smooth transitions */
         .thumbnail .item {
           -webkit-tap-highlight-color: transparent;
           -webkit-touch-callout: none;
           user-select: none;
           outline: none;
-          transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                      box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                      border-color 0.3s ease,
-                      opacity 0.35s ease;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          will-change: transform, opacity;
+          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                      box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                      border-color 0.25s ease,
+                      opacity 0.3s ease;
         }
         .thumbnail .item:focus {
           outline: none;
@@ -501,41 +507,41 @@ export function Hero() {
           outline: 2px solid #E86D24;
           outline-offset: 2px;
         }
-        /* Entering thumbnail — slides in from right and fades up */
+        /* Entering thumbnail */
         .slider.next .thumbnail .item:last-child {
-          animation: thumbEnterRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: thumbEnterRight 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         .slider.prev .thumbnail .item:first-child {
-          animation: thumbEnterLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: thumbEnterLeft 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
-        /* Exiting thumbnail (the one that just left the front) */
+        /* Exiting thumbnail */
         .slider.next .thumbnail .item:nth-child(2) {
-          animation: thumbShift 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: thumbShift 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         .slider.prev .thumbnail .item:nth-last-child(2) {
-          animation: thumbShift 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: thumbShift 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         @keyframes thumbEnterRight {
-          from { opacity: 0; transform: translateX(60px) scale(0.92); filter: blur(4px); }
-          to   { opacity: 1; transform: translateX(0)   scale(1);    filter: blur(0); }
+          from { opacity: 0; transform: translate3d(40px, 0, 0) scale(0.94); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes thumbEnterLeft {
-          from { opacity: 0; transform: translateX(-60px) scale(0.92); filter: blur(4px); }
-          to   { opacity: 1; transform: translateX(0)    scale(1);    filter: blur(0); }
+          from { opacity: 0; transform: translate3d(-40px, 0, 0) scale(0.94); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
         }
         @keyframes thumbShift {
-          from { opacity: 0.5; transform: translateX(-12px) scale(0.97); }
-          to   { opacity: 1;   transform: translateX(0)     scale(1);   }
+          from { opacity: 0.6; transform: translate3d(-8px, 0, 0) scale(0.98); }
+          to   { opacity: 1;   transform: translate3d(0, 0, 0) scale(1); }
         }
 
         /* Main background image cross-fade on slide change */
         .slider .list .item:nth-child(1) {
           z-index: 1;
-          transition: opacity 0.5s ease;
+          transition: opacity 0.4s ease;
         }
         .slider.next .list .item:nth-child(1),
         .slider.prev .list .item:nth-child(1) {
-          animation: bgFadeIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+          animation: bgFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         @keyframes bgFadeIn {
           from { opacity: 0; }
@@ -553,8 +559,8 @@ export function Hero() {
                 alt={item.category}
                 className="opacity-40 md:opacity-100"
               />
-              {/* Soft light backdrop gradient with reduced opacity */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/95 to-transparent w-full md:w-[58%] backdrop-blur-[1px]" />
+              {/* Soft light backdrop gradient without CPU-intensive backdrop-blur */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/95 to-transparent w-full md:w-[58%]" />
             </div>
           ))}
         </div>
