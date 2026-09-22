@@ -98,20 +98,20 @@ const slideData: SlideData[] = [
 ];
 
 const CATEGORY_TITLE_COLORS: Record<string, string> = {
-  "Labour & Maternity": "#E05A85",           // Interchanged: darker vibrant rose pink for top
+  "Labour & Maternity": "#E05A85", // Interchanged: darker vibrant rose pink for top
   "Home Care": "#E86D24",
 };
 
 const CATEGORY_TAGLINE_COLORS: Record<string, string> = {
-  "Ward Furniture": "#78BECD",               // Matches respective Ward Furniture cyan #78BECD
-  "ICU & Critical Care": "#0284C7",          // Match with first line color
+  "Ward Furniture": "#78BECD", // Matches respective Ward Furniture cyan #78BECD
+  "ICU & Critical Care": "#0284C7", // Match with first line color
   "Emergency & Patient Transfer": "#795548", // Softer warm mocha brown
-  "Labour & Maternity": "#E05A85",           // Matches vibrant rose pink of first line
-  "Examination & Consultation": "#525252",   // Lighter slate graphite
-  "OT Equipment": "#104272",                 // Match with first line color
-  "Medical Trolleys": "#68D391",             // Lighter sage green
+  "Labour & Maternity": "#E05A85", // Matches vibrant rose pink of first line
+  "Examination & Consultation": "#525252", // Lighter slate graphite
+  "OT Equipment": "#104272", // Match with first line color
+  "Medical Trolleys": "#68D391", // Lighter sage green
   "Stainless Steel Furniture & Ward Accessories": "#E05A85",
-  "Accessories": "#0D9488",
+  Accessories: "#0D9488",
   "General Furniture": "#8D6E63",
   "Home Care": "#0B3C83",
 };
@@ -243,7 +243,9 @@ export function Hero() {
 
     let targetDomIndex = -1;
     for (let k = 0; k < thumbnailItems.length; k++) {
-      if ((thumbnailItems[k] as HTMLElement).getAttribute("data-id") === clickedId) {
+      if (
+        (thumbnailItems[k] as HTMLElement).getAttribute("data-id") === clickedId
+      ) {
         targetDomIndex = k;
         break;
       }
@@ -277,11 +279,13 @@ export function Hero() {
 
   const activeItem = slideData[currentSlide];
   const activeTheme = getCategoryTheme(activeItem.category);
-  const titleColor = CATEGORY_TITLE_COLORS[activeItem.category] || activeTheme.bg;
-  const taglineColor = CATEGORY_TAGLINE_COLORS[activeItem.category] || activeTheme.bg;
+  const titleColor =
+    CATEGORY_TITLE_COLORS[activeItem.category] || activeTheme.bg;
+  const taglineColor =
+    CATEGORY_TAGLINE_COLORS[activeItem.category] || activeTheme.bg;
 
   return (
-    <section 
+    <section
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={`hero-section ${isInitial ? "initial-load" : ""} relative w-full h-[90vh] md:h-[91.5vh] overflow-hidden bg-[#f7f5ef] text-slate-900`}
@@ -568,7 +572,7 @@ export function Hero() {
         {/* Dedicated Staggered Text Content Overlay */}
         <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-center h-full">
           <div className="w-full px-[5vw] md:px-[4vw] pb-[12vh] md:pb-[14vh]">
-            <div 
+            <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className="w-full md:max-w-[54vw] lg:max-w-[45vw] flex flex-col gap-4 sm:gap-5 md:gap-6 lg:gap-8 pointer-events-auto"
@@ -601,14 +605,14 @@ export function Hero() {
                 className={`hero-title flex flex-col gap-2 sm:gap-2.5 md:gap-3 ${isTextVisible ? "line-reveal" : "line-exit"}`}
                 style={{ animationDelay: isTextVisible ? "0.25s" : "0.05s" }}
               >
-                <h1 
+                <h1
                   className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.2vw] font-Montserrat font-extrabold tracking-wider uppercase leading-[1.08] font-heading transition-colors duration-500"
                   style={{ color: titleColor }}
                 >
                   {activeItem.titleOrange}
                 </h1>
                 {activeItem.tagline && (
-                  <h2 
+                  <h2
                     className="text-base sm:text-xl md:text-2xl lg:text-[2.1vw] font-Montserrat font-semibold tracking-wider leading-snug transition-colors duration-500"
                     style={{ color: taglineColor }}
                   >
@@ -636,20 +640,26 @@ export function Hero() {
                 style={{ animationDelay: isTextVisible ? "0.55s" : "0.15s" }}
               >
                 <button
-                  onClick={() => openInquiryModal({
-                    name: activeItem.titleOrange + (activeItem.tagline ? " - " + activeItem.tagline : ""),
-                    category: activeItem.category,
-                    image: activeItem.image,
-                    isGeneral: true
-                  })}
+                  onClick={() =>
+                    openInquiryModal({
+                      name:
+                        activeItem.titleOrange +
+                        (activeItem.tagline ? " - " + activeItem.tagline : ""),
+                      category: activeItem.category,
+                      image: activeItem.image,
+                      isGeneral: true,
+                    })
+                  }
                   className="bg-[#0B2545] hover:bg-[#134074] text-white font-bold text-xs sm:text-sm lg:text-[0.85vw] px-4 sm:px-6 lg:px-[1.4vw] py-2.5 sm:py-3 lg:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 lg:gap-[0.5vw]"
                 >
                   REQUEST A QUOTE{" "}
                   <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-[1vw] lg:h-[1vw] rotate-45 hero-button-arrow-rotated" />
                 </button>
 
-                <Link href={`/products?category=${encodeURIComponent(activeItem.category)}`}>
-                  <button 
+                <Link
+                  href={`/products?category=${encodeURIComponent(activeItem.category)}`}
+                >
+                  <button
                     className="font-bold text-xs sm:text-sm lg:text-[0.85vw] px-4 sm:px-6 lg:px-[1.4vw] py-2.5 sm:py-3 lg:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg hover:brightness-105 transition-all flex items-center gap-2 lg:gap-[0.5vw]"
                     style={{
                       backgroundColor: activeTheme.bg,
@@ -666,7 +676,7 @@ export function Hero() {
           </div>
         </div>
         {/* Top of Preview Container: Left & Right Navigation Buttons (Single Glass Container at Right End) */}
-        <div 
+        <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(11vh+11vh+18px)] lg:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto"
@@ -697,7 +707,8 @@ export function Hero() {
           {thumbnailsData.map((item) => {
             const isCurrent = item.id === slideData[currentSlide].id;
             const itemTheme = getCategoryTheme(item.category);
-            const itemColor = CATEGORY_TITLE_COLORS[item.category] || itemTheme.bg;
+            const itemColor =
+              CATEGORY_TITLE_COLORS[item.category] || itemTheme.bg;
             return (
               <div
                 key={item.id}
@@ -758,4 +769,3 @@ export function Hero() {
     </section>
   );
 }
-

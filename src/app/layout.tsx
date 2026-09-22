@@ -1,28 +1,28 @@
-import type { Metadata } from 'next';
-import Script from 'next/script';
-import { Inter, Outfit, Montserrat } from 'next/font/google';
-import './globals.css';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { generateOrganizationSchema } from '@/lib/seo';
-import { COMPANY_INFO } from '@/lib/data';
+import type { Metadata } from "next";
+import Script from "next/script";
+import { Inter, Outfit, Montserrat } from "next/font/google";
+import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { generateOrganizationSchema } from "@/lib/seo";
+import { COMPANY_INFO } from "@/lib/data";
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-outfit',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  display: "swap",
 });
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -33,22 +33,22 @@ export const metadata: Metadata = {
   description: COMPANY_INFO.description,
   metadataBase: new URL(COMPANY_INFO.url),
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
+    type: "website",
+    locale: "en_US",
     url: COMPANY_INFO.url,
     siteName: COMPANY_INFO.name,
   },
   icons: {
-    icon: '/images/logo.webp',
-    shortcut: '/images/logo.webp',
-    apple: '/images/logo.webp',
+    icon: "/images/logo.webp",
+    shortcut: "/images/logo.webp",
+    apple: "/images/logo.webp",
   },
 };
 
-import { InquiryModalProvider } from '@/components/ui/InquiryModalContext';
-import { Preloader } from '@/components/ui/Preloader';
-import { SmoothScroll } from '@/components/ui/SmoothScroll';
-import { SecurityGuard } from '@/components/ui/SecurityGuard';
+import { InquiryModalProvider } from "@/components/ui/InquiryModalContext";
+import { Preloader } from "@/components/ui/Preloader";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { SecurityGuard } from "@/components/ui/SecurityGuard";
 
 export default function RootLayout({
   children,
@@ -58,7 +58,11 @@ export default function RootLayout({
   const orgSchema = generateOrganizationSchema();
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${outfit.variable} ${montserrat.variable} preloader-active`}
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -110,7 +114,10 @@ export default function RootLayout({
               Skip to main content
             </a>
             <Header />
-            <main id="main-content" className="flex-1 bg-slate-50 overflow-x-hidden min-h-screen">
+            <main
+              id="main-content"
+              className="flex-1 bg-slate-50 overflow-x-hidden min-h-screen"
+            >
               {children}
             </main>
             <Footer />
