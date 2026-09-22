@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 // Matching decryption key sequence
-const SCRAMBLE_KEY = [0x53, 0x4D, 0x45, 0x32, 0x30, 0x32, 0x36, 0xAA, 0xBB, 0xCC];
+const SCRAMBLE_KEY = [
+  0x53, 0x4d, 0x45, 0x32, 0x30, 0x32, 0x36, 0xaa, 0xbb, 0xcc,
+];
 
 // Global in-memory blob cache so each image is only fetched & decrypted once
 const memoryBlobCache = new Map<string, string>();
@@ -51,7 +53,12 @@ function fetchAndDecryptImage(src: string): Promise<string> {
 
       // Determine mime type from extension
       const ext = src.split(".").pop()?.toLowerCase() || "webp";
-      const mime = ext === "png" ? "image/png" : ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/webp";
+      const mime =
+        ext === "png"
+          ? "image/png"
+          : ext === "jpg" || ext === "jpeg"
+            ? "image/jpeg"
+            : "image/webp";
 
       const blob = new Blob([uint8], { type: mime });
       const blobUrl = URL.createObjectURL(blob);

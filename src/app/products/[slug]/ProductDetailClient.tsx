@@ -145,9 +145,9 @@ export function ProductDetailClient({
   const [zoomScaleDisplay, setZoomScaleDisplay] = useState(2.2);
   const imageContainerRef = React.useRef<HTMLDivElement>(null);
   const zoomTargetRef = React.useRef<HTMLDivElement>(null);
-  const zoomStateRef = React.useRef({ x: 50, y: 50, scale: 2.2, isZoomed: false });
+  const zoomStateRef = React.useRef({ x: 50, y: 50, scale: 1.0, isZoomed: false });
 
-  // Native non-passive wheel listener for smooth scroll zooming on exact cursor spot
+  // Native non-passive wheel listener for smooth scroll zooming on desktop
   React.useEffect(() => {
     const container = imageContainerRef.current;
     if (!container) return;
@@ -158,8 +158,10 @@ export function ProductDetailClient({
 
       e.preventDefault();
       const delta = -e.deltaY * 0.0035;
-      const newScale = Math.min(5.0, Math.max(1.3, zoomStateRef.current.scale + delta));
+      const newScale = Math.min(5.0, Math.max(1.0, zoomStateRef.current.scale + delta));
       zoomStateRef.current.scale = newScale;
+      zoomStateRef.current.isZoomed = newScale > 1.05;
+      setIsZoomed(newScale > 1.05);
       setZoomScaleDisplay(Math.round(newScale * 10) / 10);
 
       if (zoomTargetRef.current) {
@@ -170,6 +172,145 @@ export function ProductDetailClient({
     container.addEventListener("wheel", handleWheel, { passive: false });
     return () => {
       container.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
+  // Mobile Touch Gestures: Pinch to Zoom, Double Tap, and Drag to Pan
+  React.useEffect(() => {
+    const container = imageContainerRef.current;
+    if (!container) return;
+
+    let initialDist = 0;
+    let initialScale = 1;
+    let initialMidX = 50;
+    let initialMidY = 50;
+    let lastTapTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let currentPanX = 0;
+    let currentPanY = 0;
+    let initialPanX = 0;
+    let initialPanY = 0;
+
+    const getDistance = (t1: Touch, t2: Touch) => {
+      return Math.hypot(t1.clientX - t2.clientX, t1.clientY - t2.clientY);
+    };
+
+    const getMidpoint = (t1: Touch, t2: Touch) => {
+      return {
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2,
+      };
+    };
+
+    const applyTransform = (scale: number, panX = 0, panY = 0, originX = 50, originY = 50, smooth = false) => {
+      if (!zoomTargetRef.current) return;
+      zoomStateRef.current.scale = scale;
+      const isCurrentlyZoomed = scale > 1.05;
+      zoomStateRef.current.isZoomed = isCurrentlyZoomed;
+      setIsZoomed(isCurrentlyZoomed);
+      setZoomScaleDisplay(Math.round(scale * 10) / 10);
+
+      zoomTargetRef.current.style.transition = smooth ? "transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)" : "none";
+      zoomTargetRef.current.style.transformOrigin = `${originX}% ${originY}%`;
+      zoomTargetRef.current.style.transform = `scale(${scale}) translate(${panX / scale}px, ${panY / scale}px)`;
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const isOverControls = !!(e.target as HTMLElement)?.closest?.('[data-no-zoom="true"]');
+      if (isOverControls) return;
+
+      if (e.touches.length === 2) {
+        // Pinch start with 2 fingers
+        e.preventDefault();
+        initialDist = getDistance(e.touches[0], e.touches[1]);
+        initialScale = zoomStateRef.current.scale;
+        const rect = container.getBoundingClientRect();
+        const mid = getMidpoint(e.touches[0], e.touches[1]);
+        initialMidX = Math.max(0, Math.min(100, ((mid.x - rect.left) / rect.width) * 100));
+        initialMidY = Math.max(0, Math.min(100, ((mid.y - rect.top) / rect.height) * 100));
+      } else if (e.touches.length === 1) {
+        const now = Date.now();
+        const rect = container.getBoundingClientRect();
+        const tapX = Math.max(0, Math.min(100, ((e.touches[0].clientX - rect.left) / rect.width) * 100));
+        const tapY = Math.max(0, Math.min(100, ((e.touches[0].clientY - rect.top) / rect.height) * 100));
+
+        // Double tap detection (< 300ms)
+        if (now - lastTapTime < 300) {
+          e.preventDefault();
+          if (zoomStateRef.current.scale > 1.1) {
+            // Zoom out back to 1.0
+            currentPanX = 0;
+            currentPanY = 0;
+            applyTransform(1, 0, 0, 50, 50, true);
+          } else {
+            // Zoom in to 2.5x at double-tap location
+            currentPanX = 0;
+            currentPanY = 0;
+            applyTransform(2.5, 0, 0, tapX, tapY, true);
+          }
+          lastTapTime = 0;
+          return;
+        }
+        lastTapTime = now;
+
+        // 1 finger touch: prepare pan if zoomed
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        initialPanX = currentPanX;
+        initialPanY = currentPanY;
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const isOverControls = !!(e.target as HTMLElement)?.closest?.('[data-no-zoom="true"]');
+      if (isOverControls) return;
+
+      if (e.touches.length === 2 && initialDist > 0) {
+        // Pinch zoom in action
+        e.preventDefault();
+        const dist = getDistance(e.touches[0], e.touches[1]);
+        const scaleFactor = dist / initialDist;
+        const newScale = Math.min(5.0, Math.max(0.9, initialScale * scaleFactor));
+        applyTransform(newScale, currentPanX, currentPanY, initialMidX, initialMidY, false);
+      } else if (e.touches.length === 1 && zoomStateRef.current.scale > 1.05) {
+        // Panning across zoomed image
+        e.preventDefault();
+        const deltaX = e.touches[0].clientX - touchStartX;
+        const deltaY = e.touches[0].clientY - touchStartY;
+        currentPanX = initialPanX + deltaX;
+        currentPanY = initialPanY + deltaY;
+        applyTransform(zoomStateRef.current.scale, currentPanX, currentPanY, initialMidX, initialMidY, false);
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length === 0) {
+        if (zoomStateRef.current.scale < 1.05) {
+          // Snap smoothly back to normal scale
+          currentPanX = 0;
+          currentPanY = 0;
+          applyTransform(1, 0, 0, 50, 50, true);
+        }
+      } else if (e.touches.length === 1) {
+        // Continue panning seamlessly with remaining finger
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        initialPanX = currentPanX;
+        initialPanY = currentPanY;
+      }
+    };
+
+    container.addEventListener("touchstart", handleTouchStart, { passive: false });
+    container.addEventListener("touchmove", handleTouchMove, { passive: false });
+    container.addEventListener("touchend", handleTouchEnd, { passive: false });
+    container.addEventListener("touchcancel", handleTouchEnd, { passive: false });
+
+    return () => {
+      container.removeEventListener("touchstart", handleTouchStart);
+      container.removeEventListener("touchmove", handleTouchMove);
+      container.removeEventListener("touchend", handleTouchEnd);
+      container.removeEventListener("touchcancel", handleTouchEnd);
     };
   }, []);
 
@@ -194,8 +335,9 @@ export function ProductDetailClient({
     zoomStateRef.current.y = y;
 
     // Direct hardware-accelerated style update without triggering React re-renders
+    zoomTargetRef.current.style.transition = "none";
     zoomTargetRef.current.style.transformOrigin = `${x}% ${y}%`;
-    zoomTargetRef.current.style.transform = `scale(${zoomStateRef.current.scale})`;
+    zoomTargetRef.current.style.transform = `scale(${Math.max(2.2, zoomStateRef.current.scale)})`;
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -214,6 +356,9 @@ export function ProductDetailClient({
     const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
     zoomStateRef.current.x = x;
     zoomStateRef.current.y = y;
+    zoomStateRef.current.scale = 2.2;
+    setZoomScaleDisplay(2.2);
+    zoomTargetRef.current.style.transition = "none";
     zoomTargetRef.current.style.transformOrigin = `${x}% ${y}%`;
     zoomTargetRef.current.style.transform = `scale(${zoomStateRef.current.scale})`;
   };
@@ -221,9 +366,10 @@ export function ProductDetailClient({
   const handleMouseLeave = () => {
     setIsZoomed(false);
     zoomStateRef.current.isZoomed = false;
-    zoomStateRef.current.scale = 2.2;
+    zoomStateRef.current.scale = 1.0;
     setZoomScaleDisplay(2.2);
     if (zoomTargetRef.current) {
+      zoomTargetRef.current.style.transition = "transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1)";
       zoomTargetRef.current.style.transform = "scale(1)";
       zoomTargetRef.current.style.transformOrigin = "50% 50%";
     }
@@ -319,14 +465,14 @@ export function ProductDetailClient({
   return (
     <main 
       data-lenis-prevent
-      className="flex-1 min-w-0 lg:h-[calc(100vh-140px)] lg:overflow-y-auto pr-2 relative"
+      className="flex-1 w-full max-w-full min-w-0 lg:h-[calc(100vh-140px)] lg:overflow-y-auto px-1 sm:px-2 lg:px-2 lg:pr-6 relative"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       {/* Main Grid Container: Gallery & Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start py-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-10 items-start py-2 w-full max-w-full">
         {/* Left Side: Product Gallery */}
-        <FadeIn direction="left" duration={0.6} className="w-full lg:sticky lg:top-2">
-          <div className="w-full min-w-0">
+        <FadeIn direction="left" duration={0.6} className="w-full max-w-full lg:sticky lg:top-2">
+          <div className="w-full max-w-full min-w-0">
             <div
               ref={imageContainerRef}
               onMouseEnter={handleMouseEnter}
@@ -371,7 +517,17 @@ export function ProductDetailClient({
               >
                 <ZoomIn className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                 <span>
-                  {isZoomed ? `${zoomScaleDisplay}x (Scroll to adjust)` : "Hover to zoom • Scroll to adjust"}
+                  {isZoomed ? (
+                    <>
+                      <span className="sm:hidden">{zoomScaleDisplay}x • Double tap to reset</span>
+                      <span className="hidden sm:inline">{zoomScaleDisplay}x (Scroll to adjust)</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="sm:hidden">Pinch / double tap to zoom</span>
+                      <span className="hidden sm:inline">Hover to zoom • Scroll to adjust</span>
+                    </>
+                  )}
                 </span>
               </div>
 
@@ -463,10 +619,10 @@ export function ProductDetailClient({
         </FadeIn>
 
         {/* Right Side: Product Details & Actions */}
-        <FadeIn direction="right" duration={0.6} delay={0.15}>
-          <div className="flex flex-col justify-between h-full space-y-6 min-w-0">
-            <div className="space-y-6">
-              <div className="space-y-4">
+        <FadeIn direction="right" duration={0.6} delay={0.15} className="w-full max-w-full min-w-0">
+          <div className="flex flex-col justify-between h-full space-y-6 w-full max-w-full min-w-0 lg:pr-4">
+            <div className="space-y-6 w-full max-w-full">
+              <div className="space-y-4 w-full max-w-full">
                 <div className="space-y-1.5 text-left">
                   <div className="inline-flex items-center gap-2 text-base font-black tracking-wider text-[#0B3C83] uppercase font-montserrat">
                     <Bed className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
@@ -475,7 +631,7 @@ export function ProductDetailClient({
                   <div className="w-16 h-[3px] bg-[#E87325] rounded-full" />
                 </div>
                 
-                <h1 className="text-2xl md:text-[2rem] lg:text-[2.25rem] font-bold text-[#0B3C83] font-montserrat tracking-tight leading-tight">
+                <h1 className="text-2xl md:text-[2rem] lg:text-[2.25rem] font-bold text-[#0B3C83] font-montserrat tracking-tight leading-tight break-words">
                   {product.name}
                   {activeSpec && (
                     <span className="text-lg md:text-xl lg:text-2xl font-semibold text-slate-500 ml-2 font-montserrat inline-block">
@@ -486,9 +642,9 @@ export function ProductDetailClient({
 
                 {/* Product Code Tag: Multi-Code if distinct codes exist, Single Code otherwise */}
                 {hasMultipleProductCodes ? (
-                  <div className="flex items-center pt-0.5">
-                    <div className="inline-flex items-stretch rounded-md border border-slate-200 bg-white overflow-hidden shadow-2xs text-xs font-mono">
-                      <span className="bg-white text-slate-500 px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center border-r border-slate-200">
+                  <div className="flex flex-wrap items-center pt-0.5 max-w-full">
+                    <div className="inline-flex flex-wrap items-stretch rounded-md border border-slate-200 bg-white overflow-hidden shadow-2xs text-xs font-mono max-w-full">
+                      <span className="bg-white text-slate-500 px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center border-r border-slate-200 shrink-0">
                         PRODUCT CODE
                       </span>
                       {parsedGalleryItems.map((item, idx) => {
@@ -521,9 +677,9 @@ export function ProductDetailClient({
                   </div>
                 ) : (
                   (product.modelNumber || uniqueModelCodes[0]) && (
-                    <div className="flex items-center pt-0.5">
-                      <div className="inline-flex items-stretch rounded-md border border-slate-200 bg-white overflow-hidden shadow-2xs text-xs font-mono">
-                        <span className="bg-[#0B3C83] text-white px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center">
+                    <div className="flex items-center pt-0.5 max-w-full">
+                      <div className="inline-flex items-stretch rounded-md border border-slate-200 bg-white overflow-hidden shadow-2xs text-xs font-mono max-w-full">
+                        <span className="bg-[#0B3C83] text-white px-2.5 py-1 text-[10px] font-bold font-sans tracking-widest uppercase flex items-center shrink-0">
                           PRODUCT CODE
                         </span>
                         <span className="px-3 py-1 font-bold text-[#0B3C83] tracking-wider text-xs bg-slate-50 flex items-center border-l border-slate-200">
@@ -542,14 +698,12 @@ export function ProductDetailClient({
                 )}
               </div>
 
-
-
               {/* Product Overview Description */}
-              <div className="space-y-3">
+              <div className="space-y-3 w-full max-w-full">
                 <span className="text-sm font-bold text-[#E87325] uppercase tracking-wider block">
                   Product Overview
                 </span>
-                <div className="space-y-5 text-slate-600 text-base md:text-[15px] leading-relaxed max-w-2xl font-medium">
+                <div className="space-y-4 text-slate-600 text-sm sm:text-base md:text-[15px] leading-relaxed max-w-full break-words font-medium">
                   {product.description ? (
                     product.description.split('\n').filter(p => p.trim() !== "").map((para, idx) => (
                       <p key={idx}>{para}</p>
@@ -569,7 +723,7 @@ export function ProductDetailClient({
 
               {/* Functions Section inside Right Column */}
               {product.functions && product.functions.length > 0 && (
-                <div className="space-y-3 pt-4 border-t border-slate-100 font-montserrat">
+                <div className="space-y-3 pt-4 border-t border-slate-100 font-montserrat w-full max-w-full">
                   <div className="space-y-1 text-left">
                     <div className="flex items-center gap-2">
                       <Settings className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
@@ -580,7 +734,7 @@ export function ProductDetailClient({
                     <div className="w-12 h-[2.5px] bg-[#E87325] rounded-full" />
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 items-start pt-1">
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 items-start pt-1 w-full">
                     {product.functions.map((funcStr, idx) => {
                       const parts = funcStr.split("—").map((p) => p.trim());
                       const titlePart = parts[0] || funcStr;
@@ -622,41 +776,39 @@ export function ProductDetailClient({
               )}
             </div>
 
-          {/* Action buttons row */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-slate-100">
-            <button
-              onClick={() => openInquiryModal(product)}
-              className="flex-1 bg-[#0B3C83] hover:bg-[#092D62] text-white py-3.5 px-6 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase"
-            >
-              <FileText className="w-4 h-4 text-white" />
-              REQUEST A QUOTE
-            </button>
-            <a
-              href="https://wa.me/919842212345"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1"
-            >
-              <button className="w-full bg-[#25D366] hover:bg-[#1ebd59] text-white py-3.5 px-6 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase">
-                <svg
-                  className="w-4 h-4 fill-white shrink-0"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-                WHATSAPP ENQUIRY
+            {/* Action buttons row */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100 w-full max-w-full">
+              <button
+                onClick={() => openInquiryModal(product)}
+                className="w-full sm:flex-1 bg-[#0B3C83] hover:bg-[#092D62] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider"
+              >
+                <FileText className="w-4 h-4 text-white shrink-0" />
+                <span>REQUEST A QUOTE</span>
               </button>
-            </a>
+              <a
+                href="https://wa.me/919842212345"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:flex-1 block"
+              >
+                <button className="w-full bg-[#25D366] hover:bg-[#1ebd59] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider">
+                  <svg
+                    className="w-4 h-4 fill-white shrink-0"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                  <span>WHATSAPP ENQUIRY</span>
+                </button>
+              </a>
+            </div>
           </div>
-        </div>
-      </FadeIn>
-    </div>
-
-
+        </FadeIn>
+      </div>
 
       {/* Key Features Section */}
       {features.length > 0 && (
-        <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat">
+        <div className="space-y-6 pt-8 border-t border-slate-100 font-montserrat w-full max-w-full">
           <FadeIn direction="up" duration={0.6}>
             <div className="space-y-2 text-left">
             <div className="flex flex-col gap-1">
@@ -682,7 +834,7 @@ export function ProductDetailClient({
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 w-full">
             {features.map((item, idx) => {
               return (
                 <FadeIn key={idx} direction="up" delay={idx * 0.04} duration={0.4}>
@@ -705,11 +857,11 @@ export function ProductDetailClient({
 
       {/* Specifications & Configurations Section */}
       {(specList.length > 0 || configs.length > 0) && (
-        <div className={`grid grid-cols-1 ${configs.length > 0 && specList.length > 0 ? "lg:grid-cols-2" : "lg:grid-cols-1 max-w-4xl"} gap-8 pt-8 border-t border-slate-100 font-montserrat pb-8`}>
+        <div className={`grid grid-cols-1 ${configs.length > 0 && specList.length > 0 ? "lg:grid-cols-2" : "lg:grid-cols-1 max-w-4xl"} gap-6 sm:gap-8 pt-8 border-t border-slate-100 font-montserrat pb-8 w-full max-w-full`}>
           {/* Technical Specifications */}
           {specList.length > 0 && (
-            <FadeIn direction="up" duration={0.6} delay={0.05} className="h-full">
-              <div className="flex flex-col h-full space-y-4">
+            <FadeIn direction="up" duration={0.6} delay={0.05} className="h-full w-full max-w-full min-w-0">
+              <div className="flex flex-col h-full space-y-4 w-full max-w-full">
                 <div className="space-y-2 text-left shrink-0">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
@@ -726,34 +878,36 @@ export function ProductDetailClient({
                   </p>
                 </div>
 
-                <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-                  <table className="w-full h-full border-collapse">
-                    <thead>
-                      <tr className="bg-[#092347] text-white">
-                        <th className="py-4 px-6 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[30%]">
-                          Specification
-                        </th>
-                        <th className="py-4 px-6 text-left text-xs font-black tracking-wider uppercase">
-                          Details
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {specList.map(([key, val]) => (
-                        <tr
-                          key={key}
-                          className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
-                        >
-                          <td className="py-3.5 px-6 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
-                            {key}
-                          </td>
-                          <td className="py-3.5 px-6 text-slate-600 font-medium text-xs md:text-sm">
-                            {val}
-                          </td>
+                <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs w-full">
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full border-collapse min-w-full">
+                      <thead>
+                        <tr className="bg-[#092347] text-white">
+                          <th className="py-3 px-4 sm:py-4 sm:px-6 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[35%] sm:w-[30%]">
+                            Specification
+                          </th>
+                          <th className="py-3 px-4 sm:py-4 sm:px-6 text-left text-xs font-black tracking-wider uppercase">
+                            Details
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {specList.map(([key, val]) => (
+                          <tr
+                            key={key}
+                            className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
+                          >
+                            <td className="py-2.5 px-4 sm:py-3.5 sm:px-6 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
+                              {key}
+                            </td>
+                            <td className="py-2.5 px-4 sm:py-3.5 sm:px-6 text-slate-600 font-medium text-xs md:text-sm">
+                              {val}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </FadeIn>
@@ -761,8 +915,8 @@ export function ProductDetailClient({
 
           {/* Configurations Options */}
           {configs.length > 0 && (
-            <FadeIn direction="up" duration={0.6} delay={0.15} className="h-full">
-              <div className="flex flex-col h-full space-y-4">
+            <FadeIn direction="up" duration={0.6} delay={0.15} className="h-full w-full max-w-full min-w-0">
+              <div className="flex flex-col h-full space-y-4 w-full max-w-full">
                 <div className="space-y-2 text-left shrink-0">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
@@ -779,34 +933,36 @@ export function ProductDetailClient({
                   </p>
                 </div>
 
-                <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs">
-                  <table className="w-full h-full border-collapse">
-                    <thead>
-                      <tr className="bg-[#092347] text-white">
-                        <th className="py-5 px-8 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[28%]">
-                          Component
-                        </th>
-                        <th className="py-5 px-8 text-left text-xs font-black tracking-wider uppercase">
-                          Available Options
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {configs.map((cfg, idx) => (
-                        <tr
-                          key={idx}
-                          className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
-                        >
-                          <td className="py-5 px-8 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
-                            {cfg.component}
-                          </td>
-                          <td className="py-5 px-8 text-slate-600 font-medium text-xs md:text-sm">
-                            {cfg.options}
-                          </td>
+                <div className="flex-1 border border-slate-200 rounded-2xl overflow-hidden shadow-2xs w-full">
+                  <div className="w-full overflow-x-auto">
+                    <table className="w-full border-collapse min-w-full">
+                      <thead>
+                        <tr className="bg-[#092347] text-white">
+                          <th className="py-3 px-4 sm:py-5 sm:px-8 text-left text-xs font-black tracking-wider uppercase border-r border-white/20 w-[35%] sm:w-[28%]">
+                            Component
+                          </th>
+                          <th className="py-3 px-4 sm:py-5 sm:px-8 text-left text-xs font-black tracking-wider uppercase">
+                            Available Options
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {configs.map((cfg, idx) => (
+                          <tr
+                            key={idx}
+                            className="border-b border-slate-200 last:border-b-0 even:bg-blue-50 hover:bg-blue-50/50 transition-colors"
+                          >
+                            <td className="py-2.5 px-4 sm:py-5 sm:px-8 text-[#092347] font-bold text-xs md:text-sm border-r border-slate-200/80">
+                              {cfg.component}
+                            </td>
+                            <td className="py-2.5 px-4 sm:py-5 sm:px-8 text-slate-600 font-medium text-xs md:text-sm">
+                              {cfg.options}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </FadeIn>
@@ -926,7 +1082,7 @@ export function ProductDetailClient({
       {/* Reliable Bottom SVG Banner Section */}
       <FadeIn direction="up" duration={0.7} delay={0.2}>
         <div
-          className="mt-8"
+          className="mt-10 mb-8 sm:mt-12 sm:mb-10"
           onWheel={(e) => {
             // Always pass scroll through to the page so the user can reach the footer
             window.scrollBy({ top: e.deltaY, behavior: "auto" });
@@ -954,22 +1110,15 @@ export function ProductDetailClient({
 
             {/* Mobile Text Contents with AOS */}
             <div className="relative z-10 space-y-3.5 text-left">
-              <FadeIn direction="down" delay={0.1}>
-                <div className="inline-flex items-center gap-2 text-[11px] font-bold text-[#E87325] tracking-widest uppercase">
-                  <span className="w-2 h-2 rounded-full bg-[#E87325] animate-pulse" />
-                  PREMIUM HEALTHCARE
-                </div>
-              </FadeIn>
-
               {/* Top Title */}
-              <FadeIn direction="up" delay={0.2}>
+              <FadeIn direction="up" delay={0.15}>
                 <h2 className="text-white text-lg font-black tracking-tight leading-snug">
                   Looking for a Reliable {product.category} For Your Healthcare Facility?
                 </h2>
               </FadeIn>
 
               {/* Below lines fade in one by one */}
-              <FadeIn direction="up" delay={0.35}>
+              <FadeIn direction="up" delay={0.25}>
                 <p className="text-slate-300 text-xs font-medium leading-relaxed">
                   Our team of specialists is ready to assist you with product selection, customization options, pricing, and project requirements.
                 </p>
@@ -977,7 +1126,7 @@ export function ProductDetailClient({
 
               {/* Mobile Interactive Buttons: One from left, one from right, only buttons scale on hover */}
               <div className="flex flex-col gap-2.5 pt-2">
-                <FadeIn direction="left" delay={0.5}>
+                <FadeIn direction="left" delay={0.35}>
                   <button
                     onClick={() => openInquiryModal(product)}
                     className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white py-3 px-5 rounded-xl font-bold text-xs shadow-md transition-transform duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider"
@@ -986,7 +1135,7 @@ export function ProductDetailClient({
                     REQUEST A QUOTE
                   </button>
                 </FadeIn>
-                <FadeIn direction="right" delay={0.5}>
+                <FadeIn direction="right" delay={0.35}>
                   <a
                     href="https://wa.me/919842212345"
                     target="_blank"

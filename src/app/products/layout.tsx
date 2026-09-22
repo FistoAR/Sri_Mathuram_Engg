@@ -442,7 +442,7 @@ function ProductsLayoutContent({
       </div>
 
       {/* Main Layout Flex Container */}
-      <div className="flex flex-col lg:flex-row gap-6 items-start m-[1.5vh] relative">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start px-3 sm:px-4 lg:px-[2.25vw] lg:my-[1.5vh] relative w-full max-w-full">
         
         {/* Left Sidebar Category Panel */}
         <aside

@@ -19,30 +19,6 @@ export function FadeIn({
   className = '',
   ...props
 }: FadeInProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [hasAnimated, setHasAnimated] = React.useState(false);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Play animation when scrolling into view
-          setHasAnimated(true);
-        } else if (entry.boundingClientRect.top > window.innerHeight) {
-          // Reset animation state ONLY when element is below the screen (user scrolled back up to top)
-          setHasAnimated(false);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
   const directionOffset = {
     up: { y: 35, x: 0 },
     down: { y: -35, x: 0 },
@@ -53,9 +29,9 @@ export function FadeIn({
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, ...directionOffset[direction] }}
-      animate={hasAnimated ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, ...directionOffset[direction] }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, amount: 0 }}
       transition={{
         duration,
         delay,

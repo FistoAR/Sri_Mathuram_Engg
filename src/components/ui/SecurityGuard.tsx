@@ -74,7 +74,11 @@ export function SecurityGuard() {
       }
 
       // Windows Snipping Tool (Win + Shift + S)
-      if (e.shiftKey && (e.key === "s" || e.key === "S") && (e.metaKey || e.ctrlKey)) {
+      if (
+        e.shiftKey &&
+        (e.key === "s" || e.key === "S") &&
+        (e.metaKey || e.ctrlKey)
+      ) {
         triggerBlankShield();
       }
 
@@ -93,8 +97,21 @@ export function SecurityGuard() {
 
         // Inspect / DevTools: Ctrl+Shift+I / Cmd+Option+I
         if (
-          (e.shiftKey && (e.key === "i" || e.key === "I" || e.key === "c" || e.key === "C" || e.key === "j" || e.key === "J")) ||
-          (isMac && e.altKey && (e.key === "i" || e.key === "I" || e.key === "j" || e.key === "J" || e.key === "c" || e.key === "C"))
+          (e.shiftKey &&
+            (e.key === "i" ||
+              e.key === "I" ||
+              e.key === "c" ||
+              e.key === "C" ||
+              e.key === "j" ||
+              e.key === "J")) ||
+          (isMac &&
+            e.altKey &&
+            (e.key === "i" ||
+              e.key === "I" ||
+              e.key === "j" ||
+              e.key === "J" ||
+              e.key === "c" ||
+              e.key === "C"))
         ) {
           e.preventDefault();
           return false;
@@ -132,7 +149,9 @@ export function SecurityGuard() {
     };
 
     // Attach Listeners
-    document.addEventListener("contextmenu", handleContextMenu, { capture: true });
+    document.addEventListener("contextmenu", handleContextMenu, {
+      capture: true,
+    });
     document.addEventListener("dragstart", handleDragStart, { capture: true });
     document.addEventListener("keydown", handleKeyDown, { capture: true });
     document.addEventListener("keyup", handleKeyUp, { capture: true });
@@ -142,8 +161,12 @@ export function SecurityGuard() {
 
     // Clean Up
     return () => {
-      document.removeEventListener("contextmenu", handleContextMenu, { capture: true });
-      document.removeEventListener("dragstart", handleDragStart, { capture: true });
+      document.removeEventListener("contextmenu", handleContextMenu, {
+        capture: true,
+      });
+      document.removeEventListener("dragstart", handleDragStart, {
+        capture: true,
+      });
       document.removeEventListener("keydown", handleKeyDown, { capture: true });
       document.removeEventListener("keyup", handleKeyUp, { capture: true });
       window.removeEventListener("blur", handleWindowBlur);
