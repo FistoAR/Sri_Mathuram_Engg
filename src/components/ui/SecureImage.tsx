@@ -36,7 +36,8 @@ function fetchAndDecryptImage(src: string): Promise<string> {
   const promise = (async () => {
     try {
       const token = encodeToToken(src);
-      const res = await fetch(`/api/assets/secure?t=${token}`, {
+      const res = await fetch(`/api/assets/secure?t=${token}&v=2`, {
+        cache: "no-cache",
         headers: {
           "x-shield-auth": "app-internal",
         },
