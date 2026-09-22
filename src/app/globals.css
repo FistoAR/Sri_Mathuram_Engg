@@ -190,7 +190,6 @@ body.screen-protect-active img,
 body.screen-protect-active canvas,
 body.screen-protect-active [data-secure-img] {
   opacity: 0 !important;
-  filter: blur(40px) brightness(0) !important;
   visibility: hidden !important;
   transition: opacity 0.05s ease !important;
 }

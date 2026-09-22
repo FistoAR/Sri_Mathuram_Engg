@@ -148,6 +148,11 @@ export function SecurityGuard() {
       }
     };
 
+    const isTouchDevice =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      (window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+
     // Attach Listeners
     document.addEventListener("contextmenu", handleContextMenu, {
       capture: true,
@@ -155,8 +160,11 @@ export function SecurityGuard() {
     document.addEventListener("dragstart", handleDragStart, { capture: true });
     document.addEventListener("keydown", handleKeyDown, { capture: true });
     document.addEventListener("keyup", handleKeyUp, { capture: true });
-    window.addEventListener("blur", handleWindowBlur);
-    window.addEventListener("focus", handleWindowFocus);
+    
+    if (!isTouchDevice) {
+      window.addEventListener("blur", handleWindowBlur);
+      window.addEventListener("focus", handleWindowFocus);
+    }
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     // Clean Up
@@ -169,8 +177,10 @@ export function SecurityGuard() {
       });
       document.removeEventListener("keydown", handleKeyDown, { capture: true });
       document.removeEventListener("keyup", handleKeyUp, { capture: true });
-      window.removeEventListener("blur", handleWindowBlur);
-      window.removeEventListener("focus", handleWindowFocus);
+      if (!isTouchDevice) {
+        window.removeEventListener("blur", handleWindowBlur);
+        window.removeEventListener("focus", handleWindowFocus);
+      }
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);

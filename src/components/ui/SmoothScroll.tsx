@@ -8,7 +8,18 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis with refined fluid physics
+    // Check if device is a touch screen (iPhone, iPad, Android)
+    const isTouch =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        (window.matchMedia && window.matchMedia("(pointer: coarse)").matches));
+
+    if (isTouch) {
+      return;
+    }
+
+    // Initialize Lenis with refined fluid physics for desktop mice/trackpads
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -16,7 +27,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       gestureOrientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 1.8,
+      touchMultiplier: 0,
       infinite: false,
     });
 
