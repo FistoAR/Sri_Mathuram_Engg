@@ -2875,7 +2875,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "Labour Table",
     "category": "Labour & Maternity",
     "description": "The Mathurams Labour Table is designed for labour, delivery and maternity procedures. Its V-cut tabletop provides convenient access during procedures, while the lithotomy support and basin arrangement assist in patient positioning and clinical use.",
-    "image": "/images/Product Assets/productsImage/MF74 – LABOUR TABLE.webp",
+    "image": "/images/Product Assets/productsImage/MF74 – Labour Table.webp",
     "features": [
       "V-cut tabletop design",
       "Full stainless-steel construction",
@@ -4153,7 +4153,7 @@ export const PRODUCTS: MedicalProduct[] = [
     "name": "MS Plain Side Rails",
     "category": "Accessories",
     "description": "The Mathurams MS Plain Side Rails are designed for hospital cots and beds to provide reliable patient fall protection. Manufactured from sturdy mild steel with an epoxy powder-coated finish.",
-    "image": "/images/Product Assets/productsImage/MF158 – MS PLAIN SIDE RAILS.webp",
+    "image": "/images/Product Assets/productsImage/MF158 – MS Plain Side Rails.webp",
     "features": [
       "Strong and durable MS construction",
       "Provides dependable side protection for patients",
