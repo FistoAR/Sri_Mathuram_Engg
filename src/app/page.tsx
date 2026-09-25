@@ -1894,15 +1894,7 @@ export default function HomePage() {
             {/* Buttons Row */}
             <div className="flex flex-wrap gap-4 pt-6">
               <button
-                onClick={() =>
-                  openInquiryModal({
-                    name: "Complete Hospital Furniture Solutions Inquiry",
-                    category: "Hospital Furniture",
-                    image:
-                      "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
-                    isGeneral: true,
-                  })
-                }
+                onClick={() => openInquiryModal()}
                 className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
               >
                 <span className="relative w-6 h-6 flex-shrink-0">

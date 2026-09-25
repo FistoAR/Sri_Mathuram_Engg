@@ -161,15 +161,7 @@ export default function ContactPage() {
           {/* Buttons — left slides from left, right slides from right */}
           <div className="flex flex-wrap items-center justify-center gap-4 pt-6 mt-2">
             <button
-              onClick={() =>
-                openInquiryModal({
-                  name: "Contact Page Top Inquiry",
-                  category: "Hospital Furniture",
-                  image:
-                    "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
-                  isGeneral: true,
-                })
-              }
+              onClick={() => openInquiryModal()}
               className="hero-btn-left bg-white hover:bg-slate-50 text-[#2B5074] font-bold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2.5 uppercase border border-slate-100"
             >
               <span className="relative w-5 h-5 flex-shrink-0">
@@ -612,15 +604,7 @@ export default function ContactPage() {
               style={{ "--ci": 3 } as React.CSSProperties}
             >
               <button
-                onClick={() =>
-                  openInquiryModal({
-                    name: "Contact Page Bottom Solutions Inquiry",
-                    category: "Hospital Furniture",
-                    image:
-                      "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
-                    isGeneral: true,
-                  })
-                }
+                onClick={() => openInquiryModal()}
                 className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
               >
                 <span className="relative w-6 h-6 flex-shrink-0">

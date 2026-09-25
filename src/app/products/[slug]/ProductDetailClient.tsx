@@ -27,7 +27,7 @@ import {
   Share2,
   Check,
 } from "lucide-react";
-import { MedicalProduct, PRODUCTS, CATEGORIES } from "@/lib/data";
+import { MedicalProduct, PRODUCTS, CATEGORIES, getProductVariants } from "@/lib/data";
 import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -496,9 +496,22 @@ export function ProductDetailClient({
     ).length;
   });
 
+  const productVariants = React.useMemo(() => {
+    return getProductVariants(product);
+  }, [product]);
+
   const parsedGalleryItems = React.useMemo(() => {
+    if (productVariants.length > 0) {
+      return productVariants.map((v) => ({
+        code: v.code,
+        spec: v.spec || "",
+        title: v.title,
+        name: v.name,
+        full: v.full,
+      }));
+    }
     if (!product.galleryLabels || product.galleryLabels.length === 0) {
-      return product.modelNumber ? [{ code: product.modelNumber, spec: "" }] : [];
+      return product.modelNumber ? [{ code: product.modelNumber, spec: "", title: product.name, name: product.name, full: product.name }] : [];
     }
     return product.galleryLabels.map((lbl) => {
       const dashMatch = lbl.match(/^([A-Za-z0-9\s]+?)\s*-\s*(.+)$/);
@@ -506,18 +519,18 @@ export function ProductDetailClient({
         const code = dashMatch[1].trim();
         let spec = dashMatch[2].trim();
         spec = spec.replace(/\s*\((Primary|Secondary)\)\s*$/i, "").trim();
-        return { code, spec };
+        return { code, spec, title: `${product.name} – ${spec}`, name: `${code} – ${product.name} – ${spec}`, full: `${code} – ${product.name} (${spec})` };
       }
       const parenMatch = lbl.match(/^([A-Za-z0-9\s]+?)\s*\((.+)\)$/);
       if (parenMatch) {
         const code = parenMatch[1].trim();
         let spec = parenMatch[2].trim();
         spec = spec.replace(/\s*\((Primary|Secondary)\)\s*$/i, "").trim();
-        return { code, spec };
+        return { code, spec, title: `${product.name} – ${spec}`, name: `${code} – ${product.name} – ${spec}`, full: `${code} – ${product.name} (${spec})` };
       }
-      return { code: lbl.trim(), spec: "" };
+      return { code: lbl.trim(), spec: "", title: product.name, name: product.name, full: product.name };
     });
-  }, [product.galleryLabels, product.modelNumber]);
+  }, [productVariants, product.galleryLabels, product.modelNumber, product.name]);
 
   const uniqueModelCodes = React.useMemo(() => {
     const codes = parsedGalleryItems.map((item) => item.code).filter(Boolean);
@@ -951,7 +964,13 @@ export function ProductDetailClient({
             {/* Action buttons row */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-100 w-full max-w-full">
               <button
-                onClick={() => openInquiryModal(product)}
+                onClick={() => {
+                  const activeItem = parsedGalleryItems[activeImageIndex] || parsedGalleryItems[0];
+                  openInquiryModal({
+                    ...product,
+                    name: activeItem?.full || activeItem?.name || product.name,
+                  });
+                }}
                 className="w-full sm:flex-1 bg-[#0B3C83] hover:bg-[#092D62] text-white py-3.5 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider cursor-pointer"
               >
                 <FileText className="w-4 h-4 text-white shrink-0" />
@@ -1278,7 +1297,13 @@ export function ProductDetailClient({
         >
           {/* Desktop & Tablet View (Exact SVG Banner with native button scaling and zero misalignment) */}
           <ProductBottomBanner
-            onQuoteClick={() => openInquiryModal(product)}
+            onQuoteClick={() => {
+              const activeItem = parsedGalleryItems[activeImageIndex] || parsedGalleryItems[0];
+              openInquiryModal({
+                ...product,
+                name: activeItem?.full || activeItem?.name || product.name,
+              });
+            }}
             className="hidden sm:block"
           />
 
@@ -1316,7 +1341,13 @@ export function ProductDetailClient({
               <div className="flex flex-col gap-2.5 pt-2">
                 <FadeIn direction="left" delay={0.35}>
                   <button
-                    onClick={() => openInquiryModal(product)}
+                    onClick={() => {
+                      const activeItem = parsedGalleryItems[activeImageIndex] || parsedGalleryItems[0];
+                      openInquiryModal({
+                        ...product,
+                        name: activeItem?.full || activeItem?.name || product.name,
+                      });
+                    }}
                     className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white py-3 px-5 rounded-xl font-bold text-xs shadow-md transition-transform duration-200 hover:scale-105 active:scale-95 flex items-center justify-center gap-2 uppercase tracking-wider"
                   >
                     <FileText className="w-4 h-4 text-white" />

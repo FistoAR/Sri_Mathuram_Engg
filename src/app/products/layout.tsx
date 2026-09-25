@@ -13,7 +13,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-import { PRODUCTS, CATEGORIES, getCategoryTheme, matchesProductSearch } from "@/lib/data";
+import { PRODUCTS, CATEGORIES, getCategoryTheme, matchesProductSearch, getProductVariants } from "@/lib/data";
 
 export default function ProductsLayout({
   children,
@@ -745,7 +745,10 @@ function ProductsLayoutContent({
                                       : undefined
                                 }
                               >
-                                {prod.modelNumber}
+                                {(() => {
+                                  const v = getProductVariants(prod);
+                                  return v.length > 1 ? v.map((x) => x.code).join(" / ") : prod.modelNumber;
+                                })()}
                               </span>
                               <span className={`flex-1 whitespace-normal break-words ${isProductDimmed ? "opacity-50" : ""}`}>{prod.name}</span>
                             </Link>

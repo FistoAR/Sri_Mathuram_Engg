@@ -102,12 +102,7 @@ export function Header() {
           {/* Right Action Button & Mobile Hamburger Menu Button */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
-              onClick={() => openInquiryModal({
-                name: "General Inquiry / Custom Order",
-                category: "Hospital Furniture",
-                image: "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
-                isGeneral: true
-              })}
+              onClick={() => openInquiryModal()}
               className="hidden sm:inline-flex group relative items-center gap-1.5 sm:gap-2 bg-orange-500 text-white text-xs sm:text-sm lg:text-[0.85vw] font-semibold px-3 sm:px-4 lg:px-[1.2vw] py-2 sm:py-2.5 lg:py-[1vh] rounded-lg sm:rounded-xl lg:rounded-[0.6vw] shadow-md shadow-orange-500/20 hover:bg-orange-600 hover:shadow-orange-500/35 hover:shadow-lg active:scale-95 transition-all duration-300 border border-orange-400 overflow-hidden shrink-0"
             >
               {/* Silver running shine beam effect */}
@@ -226,12 +221,7 @@ export function Header() {
               <button
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  openInquiryModal({
-                    name: "General Inquiry / Custom Order",
-                    category: "Hospital Furniture",
-                    image: "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
-                    isGeneral: true
-                  });
+                  openInquiryModal();
                 }}
                 className="w-full bg-[#0B3C83] hover:bg-[#092D62] text-white py-3 px-4 rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 uppercase tracking-wider"
               >

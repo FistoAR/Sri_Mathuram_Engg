@@ -594,16 +594,7 @@ export function Hero() {
                 style={{ animationDelay: isTextVisible ? "0.55s" : "0.15s" }}
               >
                 <button
-                  onClick={() =>
-                    openInquiryModal({
-                      name:
-                        activeItem.titleOrange +
-                        (activeItem.tagline ? " - " + activeItem.tagline : ""),
-                      category: activeItem.category,
-                      image: activeItem.image,
-                      isGeneral: true,
-                    })
-                  }
+                  onClick={() => openInquiryModal()}
                   className="bg-[#0B2545] hover:bg-[#134074] text-white font-bold text-xs sm:text-sm lg:text-[0.85vw] px-4 sm:px-6 lg:px-[1.4vw] py-2.5 sm:py-3 lg:py-[1.3vh] rounded-md uppercase shadow-md hover:shadow-lg transition-all flex items-center gap-2 lg:gap-[0.5vw]"
                 >
                   REQUEST A QUOTE{" "}

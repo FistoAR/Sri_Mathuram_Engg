@@ -251,7 +251,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Globe className="w-4 h-4 text-[#E86D24] shrink-0" />
-                <a href="https://www.srimathuramsindia.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.srimathuramsindia.com</a>
+                <a href="https://www.srimathuramsindia.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.mathuramsindia.com</a>
               </li>
             </ul>
           </div>

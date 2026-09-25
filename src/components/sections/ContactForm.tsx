@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileText, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
-import { PRODUCTS } from '@/lib/data';
+import { FileText, CheckCircle2, AlertCircle, Loader2, Layers, Check } from 'lucide-react';
+import { PRODUCTS, MedicalProduct, getProductVariants, getProductDropdownLabel, ProductModelVariant } from '@/lib/data';
 
 import { sendContactForm } from '@/lib/api';
 
@@ -45,6 +45,7 @@ export function ContactForm() {
     message: '',
   });
 
+  const [selectedVariant, setSelectedVariant] = useState<string>('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -56,6 +57,7 @@ export function ContactForm() {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCat = e.target.value;
+    setSelectedVariant('');
     setFormData((prev) => ({
       ...prev,
       category: selectedCat,
@@ -74,6 +76,46 @@ export function ContactForm() {
         )
       : [];
 
+  const currentProductObj = filteredProducts.find(
+    (p) =>
+      `${p.modelNumber ? p.modelNumber + ' – ' : ''}${p.name}` === formData.product ||
+      `${p.modelNumber ? p.modelNumber + ' - ' : ''}${p.name}` === formData.product ||
+      p.name === formData.product ||
+      (formData.product && p.modelNumber && formData.product.startsWith(p.modelNumber))
+  );
+
+  const productVariants = currentProductObj ? getProductVariants(currentProductObj) : [];
+
+  const handleProductSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const rawVal = e.target.value;
+    const prod = filteredProducts.find(
+      (p) => `${p.modelNumber ? p.modelNumber + ' – ' : ''}${p.name}` === rawVal || p.id === rawVal
+    );
+    if (prod) {
+      const vars = getProductVariants(prod);
+      const baseName = `${prod.modelNumber ? prod.modelNumber + ' – ' : ''}${prod.name}`;
+      if (vars.length > 1) {
+        setSelectedVariant(vars[0].full || vars[0].name);
+      } else {
+        setSelectedVariant('');
+      }
+      setFormData((prev) => ({
+        ...prev,
+        product: baseName,
+      }));
+    } else {
+      setSelectedVariant('');
+      setFormData((prev) => ({
+        ...prev,
+        product: rawVal,
+      }));
+    }
+  };
+
+  const handleVariantSelect = (variant: ProductModelVariant) => {
+    setSelectedVariant(variant.full || variant.name);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
@@ -82,10 +124,18 @@ export function ContactForm() {
       !formData.city ||
       !formData.phone ||
       !formData.email ||
+      !formData.category ||
+      !formData.product ||
       !formData.message
     ) {
       setStatus('error');
-      setErrorMessage('Please fill out all required fields.');
+      if (!formData.category) {
+        setErrorMessage('Please select a product category.');
+      } else if (!formData.product) {
+        setErrorMessage('Please select a product code / name.');
+      } else {
+        setErrorMessage('Please fill out all required fields marked with *.');
+      }
       return;
     }
 
@@ -93,7 +143,14 @@ export function ContactForm() {
     setErrorMessage('');
 
     try {
-      await sendContactForm(formData);
+      const finalProduct = selectedVariant
+        ? `${formData.product} (Model: ${selectedVariant})`
+        : formData.product;
+
+      await sendContactForm({
+        ...formData,
+        product: finalProduct,
+      });
       setStatus('success');
       setFormData({
         name: '',
@@ -106,6 +163,7 @@ export function ContactForm() {
         quantity: '',
         message: '',
       });
+      setSelectedVariant('');
     } catch (err: any) {
       setStatus('error');
       setErrorMessage(
@@ -220,11 +278,12 @@ export function ContactForm() {
         <div className="sc-child grid grid-cols-1 sm:grid-cols-2 gap-4" style={{"--i":7} as React.CSSProperties}>
           <select
             name="category"
+            required
             value={formData.category}
             onChange={handleCategoryChange}
             className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat cursor-pointer"
           >
-            <option value="">Select Category</option>
+            <option value="">Select Category *</option>
             {CATEGORY_OPTIONS.map((cat) => (
               <option key={cat.label} value={cat.label} className="text-slate-900">
                 {cat.label}
@@ -234,17 +293,18 @@ export function ContactForm() {
 
           <select
             name="product"
+            required
             value={formData.product}
-            onChange={handleChange}
+            onChange={handleProductSelect}
             disabled={!formData.category || (formData.category !== 'Custom/Other Requirement' && filteredProducts.length === 0)}
             className="w-full px-4 py-3 rounded-lg bg-white border border-slate-400 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600 focus:border-transparent transition-all appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748B%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22/%3E%3C/svg%3E')] bg-[length:0.7em_auto] bg-[right_1rem_center] bg-no-repeat cursor-pointer disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed"
           >
             <option value="">
               {!formData.category
-                ? 'Select Category First'
+                ? 'Select Category First *'
                 : formData.category === 'Custom/Other Requirement'
                 ? 'Custom / Other Requirement'
-                : 'Select Product Code / Name'}
+                : 'Select Product Code / Name *'}
             </option>
             {formData.category === 'Custom/Other Requirement' ? (
               <option value="Custom / Other Requirement" className="text-slate-900">
@@ -252,13 +312,66 @@ export function ContactForm() {
               </option>
             ) : (
               filteredProducts.map((prod) => (
-                <option key={prod.id} value={`${prod.modelNumber ? prod.modelNumber + ' - ' : ''}${prod.name}`} className="text-slate-900">
-                  {prod.modelNumber ? `${prod.modelNumber} – ` : ''}{prod.name}
+                <option key={prod.id} value={`${prod.modelNumber ? prod.modelNumber + ' – ' : ''}${prod.name}`} className="text-slate-900">
+                  {getProductDropdownLabel(prod)}
                 </option>
               ))
             )}
           </select>
         </div>
+
+        {/* Secondary Model & Specification Variant Selector Box */}
+        {productVariants.length > 1 && (
+          <div className="sc-child bg-blue-50/80 border border-blue-200/90 rounded-xl p-3.5 space-y-2.5 animate-fade-in" style={{"--i":7.5} as React.CSSProperties}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-[#0B3C83] font-bold text-xs">
+                <Layers className="w-3.5 h-3.5 text-orange-500" />
+                <span>Available Product Models & Specifications:</span>
+              </div>
+              <span className="text-[10px] text-blue-800 font-bold bg-blue-100 px-2 py-0.5 rounded-full">
+                {productVariants.length} Models
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {productVariants.map((v) => {
+                const isSelected = selectedVariant === (v.full || v.name);
+                return (
+                  <button
+                    type="button"
+                    key={v.code}
+                    onClick={() => handleVariantSelect(v)}
+                    className={`text-left p-2.5 rounded-lg border transition-all flex flex-col justify-between cursor-pointer ${
+                      isSelected
+                        ? 'bg-white border-[#0B3C83] shadow-xs ring-2 ring-[#0B3C83]/20'
+                        : 'bg-white/70 border-slate-200 hover:bg-white hover:border-slate-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between w-full mb-1">
+                      <span className="font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                        <span className={`w-2 h-2 rounded-full ${isSelected ? 'bg-orange-500' : 'bg-slate-300'}`} />
+                        {v.code}
+                        {v.isPrimary ? (
+                          <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">Primary Model</span>
+                        ) : (
+                          <span className="text-[9px] bg-blue-100 text-blue-800 font-bold px-1.5 py-0.5 rounded">Secondary Model</span>
+                        )}
+                      </span>
+                      {isSelected && <Check className="w-3.5 h-3.5 text-emerald-600 font-bold" />}
+                    </div>
+                    <p className="text-[11px] sm:text-xs text-[#0B3C83] font-bold leading-tight">
+                      {v.title}
+                    </p>
+                    {v.spec && (
+                      <p className="text-[10px] text-slate-600 mt-1 pt-1 border-t border-slate-100">
+                        <strong className="text-slate-700">Specification:</strong> {v.spec}
+                      </p>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Quantity */}
         <div className="sc-child" style={{"--i":8} as React.CSSProperties}>

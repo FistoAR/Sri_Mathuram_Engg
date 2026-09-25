@@ -1,5 +1,6 @@
 import { ContactFormData, ModalInquiryData } from './api';
 
+
 /**
  * 1. Contact Form Email UI (Orange Accent, Clean Title Case Badge)
  * Badge: "Contact submission from website" in elegant orange
@@ -21,21 +22,21 @@ export function getContactFormEmailHtml(data: ContactFormData): string {
         <td align="center">
           <table width="560" cellpadding="0" cellspacing="0" style="background-color: #FFFFFF; border-radius: 14px; border: 1px solid #E2E8F0; overflow: hidden; max-width: 100%; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
             
-            <!-- Clean Header with Orange Badge -->
+            <!-- Clean Header with Brand Name & Orange Badge -->
             <tr>
-              <td style="padding: 24px 30px 18px 30px; border-bottom: 1px solid #F1F5F9;">
+              <td style="padding: 22px 28px 18px 28px; border-bottom: 1px solid #F1F5F9;">
                 <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="left">
-                      <div style="font-size: 16px; font-weight: 800; color: #0F2D4A; letter-spacing: 0.3px;">
+                    <td align="left" valign="middle">
+                      <div style="font-size: 17px; font-weight: 800; color: #0B3C83; letter-spacing: 0.5px; line-height: 1.2; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                         Sri Mathurams
                       </div>
-                      <div style="font-size: 12px; color: #64748B; margin-top: 1px;">
+                      <div style="font-size: 10.5px; font-weight: 700; color: #E86D24; letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                         Medical Engineering
                       </div>
                     </td>
-                    <td align="right">
-                      <span style="display: inline-block; background-color: #FFF7ED; border: 1px solid #FFEDD5; color: #EA580C; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;">
+                    <td align="right" valign="middle">
+                      <span style="display: inline-block; background-color: #FFF7ED; border: 1px solid #FFEDD5; color: #EA580C; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; white-space: nowrap;">
                         Enquiry from website
                       </span>
                     </td>
@@ -115,19 +116,31 @@ export function getContactFormEmailHtml(data: ContactFormData): string {
                 </div>
                 ` : ''}
 
-                <!-- Action Buttons -->
+                <!-- Action Buttons: Exact Matching Equal Height -->
                 <div style="padding-top: 10px; border-top: 1px solid #F1F5F9;">
-                  <table width="100%" cellpadding="0" cellspacing="0">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
                     <tr>
-                      <td align="left" style="width: 50%; padding-right: 6px;">
-                        <a href="tel:+91${cleanPhone}" style="display: block; text-align: center; background-color: #0F2D4A; color: #FFFFFF; text-decoration: none; padding: 11px 16px; border-radius: 6px; font-weight: 600; font-size: 13px;">
-                          Call Customer
-                        </a>
+                      <td align="left" valign="top" style="width: 50%; padding-right: 6px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0F2D4A; border-radius: 6px; height: 46px; border-collapse: separate;">
+                          <tr>
+                            <td align="center" valign="middle" height="46" style="height: 46px; padding: 4px 10px; text-align: center;">
+                              <a href="tel:+91${cleanPhone}" style="display: block; width: 100%; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 13px; line-height: 1.3;">
+                                Call Customer
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
-                      <td align="right" style="width: 50%; padding-left: 6px;">
-                        <a href="https://wa.me/91${cleanPhone}" target="_blank" style="display: block; text-align: center; background-color: #16A34A; color: #FFFFFF; text-decoration: none; padding: 11px 16px; border-radius: 6px; font-weight: 600; font-size: 13px;">
-                          WhatsApp
-                        </a>
+                      <td align="right" valign="top" style="width: 50%; padding-left: 6px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #16A34A; border-radius: 6px; height: 46px; border-collapse: separate;">
+                          <tr>
+                            <td align="center" valign="middle" height="46" style="height: 46px; padding: 4px 10px; text-align: center;">
+                              <a href="https://wa.me/91${cleanPhone}" target="_blank" style="display: block; width: 100%; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 13px; line-height: 1.3;">
+                                WhatsApp
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
                     </tr>
                   </table>
@@ -173,21 +186,21 @@ export function getModalInquiryEmailHtml(data: ModalInquiryData): string {
         <td align="center">
           <table width="560" cellpadding="0" cellspacing="0" style="background-color: #FFFFFF; border-radius: 14px; border: 1px solid #E2E8F0; overflow: hidden; max-width: 100%; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
             
-            <!-- Clean Header with Blue Badge -->
+            <!-- Clean Header with Brand Name & Blue Badge -->
             <tr>
-              <td style="padding: 24px 30px 18px 30px; border-bottom: 1px solid #F1F5F9;">
+              <td style="padding: 22px 28px 18px 28px; border-bottom: 1px solid #F1F5F9;">
                 <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
-                    <td align="left">
-                      <div style="font-size: 16px; font-weight: 800; color: #0F2D4A; letter-spacing: 0.3px;">
+                    <td align="left" valign="middle">
+                      <div style="font-size: 17px; font-weight: 800; color: #0B3C83; letter-spacing: 0.5px; line-height: 1.2; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                         Sri Mathurams
                       </div>
-                      <div style="font-size: 12px; color: #64748B; margin-top: 1px;">
+                      <div style="font-size: 10.5px; font-weight: 700; color: #E86D24; letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                         Medical Engineering
                       </div>
                     </td>
-                    <td align="right">
-                      <span style="display: inline-block; background-color: #EFF6FF; border: 1px solid #DBEAFE; color: #0284C7; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;">
+                    <td align="right" valign="middle">
+                      <span style="display: inline-block; background-color: #EFF6FF; border: 1px solid #DBEAFE; color: #0284C7; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; white-space: nowrap;">
                         Request for quotation
                       </span>
                     </td>
@@ -231,7 +244,17 @@ export function getModalInquiryEmailHtml(data: ModalInquiryData): string {
                   
                   <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 13px; border: 1px solid #F1F5F9; border-radius: 8px; overflow: hidden;">
                     <tr style="background-color: #FFFFFF; border-bottom: 1px solid #F1F5F9;">
-                      <td style="padding: 10px 14px; color: #64748B; width: 36%; font-weight: 500;">Mobile Number</td>
+                      <td style="padding: 10px 14px; color: #64748B; width: 36%; font-weight: 500;">Customer Name</td>
+                      <td style="padding: 10px 14px; color: #0F172A; font-weight: 600;">${data.customerName || '—'}</td>
+                    </tr>
+                    <tr style="background-color: #FAFBFC; border-bottom: 1px solid #F1F5F9;">
+                      <td style="padding: 10px 14px; color: #64748B; font-weight: 500;">Email Address</td>
+                      <td style="padding: 10px 14px;">
+                        ${data.email ? `<a href="mailto:${data.email}" style="color: #0284C7; font-weight: 600; text-decoration: none;">${data.email}</a>` : '—'}
+                      </td>
+                    </tr>
+                    <tr style="background-color: #FFFFFF; border-bottom: 1px solid #F1F5F9;">
+                      <td style="padding: 10px 14px; color: #64748B; font-weight: 500;">Mobile Number</td>
                       <td style="padding: 10px 14px;">
                         <a href="tel:${data.countryCode || '+91'}${cleanPhone}" style="color: #0284C7; font-weight: 700; font-size: 14px; text-decoration: none;">
                           ${data.countryCode || '+91'} ${data.mobileNumber}
@@ -261,19 +284,31 @@ export function getModalInquiryEmailHtml(data: ModalInquiryData): string {
                 </div>
                 ` : ''}
 
-                <!-- Action Buttons -->
+                <!-- Action Buttons: Exact Matching Equal Height -->
                 <div style="padding-top: 10px; border-top: 1px solid #F1F5F9;">
-                  <table width="100%" cellpadding="0" cellspacing="0">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
                     <tr>
-                      <td align="left" style="width: 50%; padding-right: 6px;">
-                        <a href="tel:${data.countryCode || '+91'}${cleanPhone}" style="display: block; text-align: center; background-color: #0F2D4A; color: #FFFFFF; text-decoration: none; padding: 11px 16px; border-radius: 6px; font-weight: 600; font-size: 13px;">
-                          Call Customer
-                        </a>
+                      <td align="left" valign="top" style="width: 50%; padding-right: 6px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0F2D4A; border-radius: 6px; height: 46px; border-collapse: separate;">
+                          <tr>
+                            <td align="center" valign="middle" height="46" style="height: 46px; padding: 4px 10px; text-align: center;">
+                              <a href="tel:${data.countryCode || '+91'}${cleanPhone}" style="display: block; width: 100%; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 13px; line-height: 1.3;">
+                                Call Customer
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
-                      <td align="right" style="width: 50%; padding-left: 6px;">
-                        <a href="https://wa.me/${(data.countryCode || '91').replace('+', '')}${cleanPhone}" target="_blank" style="display: block; text-align: center; background-color: #16A34A; color: #FFFFFF; text-decoration: none; padding: 11px 16px; border-radius: 6px; font-weight: 600; font-size: 13px;">
-                          WhatsApp
-                        </a>
+                      <td align="right" valign="top" style="width: 50%; padding-left: 6px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #16A34A; border-radius: 6px; height: 46px; border-collapse: separate;">
+                          <tr>
+                            <td align="center" valign="middle" height="46" style="height: 46px; padding: 4px 10px; text-align: center;">
+                              <a href="https://wa.me/${(data.countryCode || '91').replace('+', '')}${cleanPhone}" target="_blank" style="display: block; width: 100%; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 13px; line-height: 1.3;">
+                                WhatsApp
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
                     </tr>
                   </table>
@@ -299,7 +334,7 @@ export function getModalInquiryEmailHtml(data: ModalInquiryData): string {
 }
 
 /**
- * 3. Customer Reply Confirmation Email UI (No Tag, Clean Title, Dual Call & WhatsApp Buttons)
+ * 3. Customer Reply Confirmation Email UI (Brand Logo, Clean Title, Dual Call & WhatsApp Equal-Height Buttons)
  */
 export function getCustomerReplyEmailHtml(name: string, product?: string): string {
   return `
@@ -316,13 +351,13 @@ export function getCustomerReplyEmailHtml(name: string, product?: string): strin
         <td align="center">
           <table width="560" cellpadding="0" cellspacing="0" style="background-color: #FFFFFF; border-radius: 14px; border: 1px solid #E2E8F0; overflow: hidden; max-width: 100%; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
             
-            <!-- Clean Header without Tag -->
+            <!-- Clean Header with Brand Name -->
             <tr>
-              <td style="padding: 24px 30px 18px 30px; border-bottom: 1px solid #F1F5F9;">
-                <div style="font-size: 16px; font-weight: 800; color: #0F2D4A; letter-spacing: 0.3px;">
+              <td style="padding: 22px 28px 18px 28px; border-bottom: 1px solid #F1F5F9;">
+                <div style="font-size: 17px; font-weight: 800; color: #0B3C83; letter-spacing: 0.5px; line-height: 1.2; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                   Sri Mathurams
                 </div>
-                <div style="font-size: 12px; color: #64748B; margin-top: 1px;">
+                <div style="font-size: 10.5px; font-weight: 700; color: #E86D24; letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                   Medical Engineering
                 </div>
               </td>
@@ -355,19 +390,31 @@ export function getCustomerReplyEmailHtml(name: string, product?: string): strin
                   </div>
                 </div>
 
-                <!-- Dual Action Buttons: Call Sales Desk & WhatsApp -->
+                <!-- Dual Action Buttons: Guaranteed Equal Height across All Email Clients -->
                 <div style="padding-top: 6px;">
-                  <table width="100%" cellpadding="0" cellspacing="0">
+                  <table width="100%" cellpadding="0" cellspacing="0" style="table-layout: fixed;">
                     <tr>
-                      <td align="left" style="width: 50%; padding-right: 6px;">
-                        <a href="tel:+919842204966" style="display: block; text-align: center; background-color: #0F2D4A; color: #FFFFFF; text-decoration: none; padding: 11px 16px; border-radius: 6px; font-weight: 600; font-size: 13px;">
-                          Call Sales Desk
-                        </a>
+                      <td align="left" valign="top" style="width: 50%; padding-right: 6px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #0F2D4A; border-radius: 6px; height: 48px; border-collapse: separate;">
+                          <tr>
+                            <td align="center" valign="middle" height="48" style="height: 48px; padding: 4px 10px; text-align: center;">
+                              <a href="tel:+919842204966" style="display: block; width: 100%; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 13px; line-height: 1.3;">
+                                Call Sales Desk
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
-                      <td align="right" style="width: 50%; padding-left: 6px;">
-                        <a href="https://wa.me/919842204966" target="_blank" style="display: block; text-align: center; background-color: #16A34A; color: #FFFFFF; text-decoration: none; padding: 11px 16px; border-radius: 6px; font-weight: 600; font-size: 13px;">
-                          Chat on WhatsApp
-                        </a>
+                      <td align="right" valign="top" style="width: 50%; padding-left: 6px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #16A34A; border-radius: 6px; height: 48px; border-collapse: separate;">
+                          <tr>
+                            <td align="center" valign="middle" height="48" style="height: 48px; padding: 4px 10px; text-align: center;">
+                              <a href="https://wa.me/919842204966" target="_blank" style="display: block; width: 100%; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 13px; line-height: 1.3;">
+                                Chat on WhatsApp
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
                       </td>
                     </tr>
                   </table>

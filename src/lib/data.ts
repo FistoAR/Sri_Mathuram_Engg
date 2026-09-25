@@ -27,6 +27,159 @@ export interface MedicalProduct extends Product {
   specificationVariants?: Array<{ name: string; specs: Record<string, string> }>;
 }
 
+export interface ProductModelVariant {
+  code: string;
+  title: string;
+  name: string;
+  full: string;
+  spec?: string;
+  isPrimary?: boolean;
+}
+
+function expandSpec(spec: string): string {
+  let s = spec.replace(/\s*\((Primary|Secondary)\)\s*/gi, '').trim();
+  if (s.toLowerCase() === 'ss') return 'SS (Stainless Steel)';
+  if (s.toLowerCase() === 'ms') return 'MS (Mild Steel)';
+  if (s.toLowerCase() === 'single') return 'Single Screen';
+  if (s.toLowerCase() === 'double') return 'Double Screen';
+  return s;
+}
+
+export function getProductVariants(product: MedicalProduct): ProductModelVariant[] {
+  const pName = product.name;
+
+  if (product.specifications && product.specifications['Primary Model'] && product.specifications['Secondary Model']) {
+    const primary = product.specifications['Primary Model'];
+    const secondary = product.specifications['Secondary Model'];
+    const pCode = primary.split(' - ')[0].trim();
+    const pSpec = expandSpec(primary.split(' - ')[1]?.trim() || primary);
+    const sCode = secondary.split(' - ')[0].trim();
+    const sSpec = expandSpec(secondary.split(' - ')[1]?.trim() || secondary);
+    return [
+      {
+        code: pCode,
+        title: `${pName} – ${pSpec}`,
+        name: `${pCode} – ${pName} – ${pSpec}`,
+        full: `${pCode} – ${pName} (${pSpec})`,
+        spec: pSpec,
+        isPrimary: true,
+      },
+      {
+        code: sCode,
+        title: `${pName} – ${sSpec}`,
+        name: `${sCode} – ${pName} – ${sSpec}`,
+        full: `${sCode} – ${pName} (${sSpec})`,
+        spec: sSpec,
+        isPrimary: false,
+      },
+    ];
+  }
+
+  if (product.specificationVariants && product.specificationVariants.length > 1) {
+    return product.specificationVariants.map((v, i) => {
+      const code = v.specs?.Model || (i === 0 ? product.modelNumber : '') || `Model ${i + 1}`;
+      const cleanName = expandSpec(v.name);
+      return {
+        code,
+        title: `${pName} – ${cleanName}`,
+        name: `${code} – ${pName} – ${cleanName}`,
+        full: `${code} – ${pName} (${cleanName})`,
+        spec: cleanName,
+        isPrimary: i === 0,
+      };
+    });
+  }
+
+  if (product.galleryLabels && product.galleryLabels.length > 1) {
+    const unique = Array.from(new Set(product.galleryLabels));
+    if (unique.length > 1) {
+      return unique.map((lbl, i) => {
+        const dashMatch = lbl.match(/^([A-Za-z0-9\s]+?)\s*-\s*(.+)$/);
+        if (dashMatch) {
+          const code = dashMatch[1].trim();
+          const spec = expandSpec(dashMatch[2]);
+          return {
+            code,
+            title: `${pName} – ${spec}`,
+            name: `${code} – ${pName} – ${spec}`,
+            full: `${code} – ${pName} (${spec})`,
+            spec,
+            isPrimary: i === 0,
+          };
+        }
+        return {
+          code: lbl.trim(),
+          title: `${lbl.trim()} – ${pName}`,
+          name: `${lbl.trim()} – ${pName}`,
+          full: `${lbl.trim()} – ${pName}`,
+          spec: '',
+          isPrimary: i === 0,
+        };
+      });
+    }
+  }
+
+  if (product.specifications && product.specifications.Models) {
+    const parts = product.specifications.Models.split(/\s*\/\s*/);
+    if (parts.length > 1) {
+      return parts.map((part, i) => {
+        const dashMatch = part.match(/^([A-Za-z0-9\s]+?)\s*-\s*(.+)$/);
+        if (dashMatch) {
+          const code = dashMatch[1].trim();
+          const spec = expandSpec(dashMatch[2]);
+          return {
+            code,
+            title: `${pName} – ${spec}`,
+            name: `${code} – ${pName} – ${spec}`,
+            full: `${code} – ${pName} (${spec})`,
+            spec,
+            isPrimary: i === 0,
+          };
+        }
+        return {
+          code: part.trim(),
+          title: `${part.trim()} – ${pName}`,
+          name: `${part.trim()} – ${pName}`,
+          full: `${part.trim()} – ${pName}`,
+          spec: '',
+          isPrimary: i === 0,
+        };
+      });
+    }
+  }
+
+  if (product.detailedSpec && product.detailedSpec['Viewing Option Models']) {
+    const parts = product.detailedSpec['Viewing Option Models'].split(/\s*\/\s*/);
+    return parts.map((part, i) => {
+      const dashMatch = part.match(/^([A-Za-z0-9\s]+?)\s*-\s*(.+)$/);
+      const code = dashMatch ? dashMatch[1].trim() : part.trim();
+      const spec = dashMatch ? expandSpec(dashMatch[2]) : '';
+      return {
+        code,
+        title: `${pName} – ${spec}`,
+        name: `${code} – ${pName} – ${spec}`,
+        full: `${code} – ${pName} (${spec})`,
+        spec,
+        isPrimary: i === 0,
+      };
+    });
+  }
+
+  return [];
+}
+
+export function getProductDropdownLabel(product: MedicalProduct): string {
+  const base = `${product.modelNumber ? product.modelNumber + ' – ' : ''}${product.name}`;
+  const variants = getProductVariants(product);
+  if (variants.length > 1) {
+    const varSummary = variants
+      .map((v) => `${v.code} (${v.spec || v.code})`)
+      .join(' / ');
+    return `${base} [${varSummary}]`;
+  }
+  return base;
+}
+
 export const COMPANY_INFO = {
   name: 'Sri Mathurams Medical Engineering',
   legalName: 'Sri Mathurams Medical Engineering Pvt. Ltd.',
@@ -1115,8 +1268,8 @@ export const PRODUCTS: MedicalProduct[] = [
       "/images/Product Assets/productsImage/MF 99 3 FOLD SCREEN (2).webp"
     ],
     "galleryLabels": [
-      "MF99",
-      "MF99"
+      "MF99 - MS (Mild Steel)",
+      "MF100 - SS (Stainless Steel)"
     ],
     "features": [
       "Three fold privacy screen",
@@ -2463,8 +2616,8 @@ export const PRODUCTS: MedicalProduct[] = [
       "/images/Product Assets/productsImage/MF 119 X-RAY VIEW BOX (2).webp"
     ],
     "galleryLabels": [
-      "MF119",
-      "MF119"
+      "MF119 - Single",
+      "MF110 - Double"
     ],
     "features": [
       "Designed for viewing X-ray films",
@@ -2475,6 +2628,8 @@ export const PRODUCTS: MedicalProduct[] = [
       "Durable and easy-to-maintain construction"
     ],
     "specifications": {
+      "Primary Model": "MF119 - Single",
+      "Secondary Model": "MF110 - Double",
       "Application": "X-Ray Film Viewing",
       "Illumination": "Uniform Backlit Viewing"
     },
@@ -4554,24 +4709,31 @@ export function matchesProductSearch(product: MedicalProduct, rawQuery: string):
   const model = product.modelNumber || '';
   const cleanModel = model.toLowerCase().replace(/[\s\-_]+/g, '');
 
-  // 1. Direct model code match (e.g. "mf72", "mf 72", "72", "mf-72")
-  if (cleanModel) {
-    if (cleanModel === cleanQuery || cleanModel.includes(cleanQuery) || cleanQuery.includes(cleanModel)) {
+  const variants = getProductVariants(product);
+  const variantCodes = variants.map((v) => v.code.toLowerCase().replace(/[\s\-_]+/g, ''));
+  const allModelCodes = Array.from(new Set([cleanModel, ...variantCodes].filter(Boolean)));
+
+  // 1. Direct model code match (e.g. "mf72", "mf 72", "72", "mf-72", "110", "mf110")
+  for (const mCode of allModelCodes) {
+    if (mCode === cleanQuery || mCode.includes(cleanQuery) || cleanQuery.includes(mCode)) {
       return true;
     }
-    // If the query is purely digits e.g. "72", match "MF72"
-    if (/^\d+$/.test(cleanQuery) && cleanModel.endsWith(cleanQuery)) {
+    // If the query is purely digits e.g. "72" or "110", match "MF72" or "MF110"
+    if (/^\d+$/.test(cleanQuery) && mCode.endsWith(cleanQuery)) {
       return true;
     }
   }
 
-  // 2. Multi-token text matching across all fields
+  // 2. Multi-token text matching across all fields including variants
   const tokens = query.split(/\s+/).filter(Boolean);
-  const searchableText = `${product.name} ${model} ${product.category} ${product.description} ${(product.features || []).join(' ')} ${(product.modelSpecifications || []).join(' ')}`.toLowerCase();
+  const variantText = variants.map((v) => `${v.code} ${v.title} ${v.name} ${v.spec}`).join(' ');
+  const specText = product.specifications ? Object.entries(product.specifications).map(([k, v]) => `${k} ${v}`).join(' ') : '';
+  const detailedText = product.detailedSpec ? Object.entries(product.detailedSpec).map(([k, v]) => `${k} ${v}`).join(' ') : '';
+  const searchableText = `${product.name} ${model} ${variantText} ${specText} ${detailedText} ${product.category} ${product.description} ${(product.features || []).join(' ')} ${(product.modelSpecifications || []).join(' ')}`.toLowerCase();
 
   return tokens.every((token) => {
     const cleanToken = token.replace(/[\s\-_]+/g, '');
-    if (cleanModel && cleanModel.includes(cleanToken)) return true;
+    if (allModelCodes.some((mCode) => mCode && mCode.includes(cleanToken))) return true;
     // Allow alternate spelling for anesthesia / anaesthesia
     if (token.includes('anaesth') || token.includes('anesth')) {
       return searchableText.includes('anaesth') || searchableText.includes('anesth');

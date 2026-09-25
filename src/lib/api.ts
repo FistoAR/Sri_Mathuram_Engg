@@ -26,6 +26,8 @@ export interface ModalInquiryData {
   category: string;
   quantity: string;
   unit: string;
+  customerName?: string;
+  email: string;
   hospitalName?: string;
   location?: string;
   countryCode: string;
@@ -71,8 +73,9 @@ export async function sendContactForm(data: ContactFormData) {
  * Submit Quick Product Inquiry data with Custom Branded HTML UI to PHP SMTP Mailer
  */
 export async function sendModalInquiry(data: ModalInquiryData) {
-  const subject = `[Request for quotation] ${data.productName} (${data.quantity} ${data.unit}) - ${data.mobileNumber}`;
+  const subject = `[Request for quotation] ${data.productName} (${data.quantity} ${data.unit}) - ${data.customerName ? data.customerName + ' - ' : ''}${data.mobileNumber}`;
   const htmlContent = getModalInquiryEmailHtml(data);
+  const autoReplyHtml = data.email ? getCustomerReplyEmailHtml(data.customerName || 'Valued Customer', data.productName) : undefined;
 
   const response = await fetch(PHP_MAIL_URL, {
     method: 'POST',
@@ -84,6 +87,11 @@ export async function sendModalInquiry(data: ModalInquiryData) {
       subject,
       message: htmlContent,
       isHtml: true,
+      customerEmail: data.email || undefined,
+      customerName: data.customerName || undefined,
+      product: data.productName || undefined,
+      replyTo: data.email || undefined,
+      autoReplyHtml,
     }),
   });
 

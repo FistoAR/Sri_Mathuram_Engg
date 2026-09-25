@@ -2071,15 +2071,7 @@ export default function AboutPage() {
               style={{ "--cta-i": 3 } as React.CSSProperties}
             >
               <button
-                onClick={() =>
-                  openInquiryModal({
-                    name: "About Page Custom Quote Inquiry",
-                    category: "Hospital Furniture",
-                    image:
-                      "/images/Product Assets/productsImage/MF 01\u00a0 PLAIN BEDSIDE LOCKER\u00a0.webp",
-                    isGeneral: true,
-                  })
-                }
+                onClick={() => openInquiryModal()}
                 className="bg-[#E86D24] hover:bg-[#EE7D22] text-white font-bold text-xs px-5 py-3.5 rounded-xl uppercase shadow-lg hover:shadow-xl transition-all inline-flex items-center gap-2"
               >
                 <span className="relative w-6 h-6 flex-shrink-0">
