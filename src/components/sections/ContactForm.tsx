@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { FileText, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { PRODUCTS } from '@/lib/data';
 
+import { sendContactForm } from '@/lib/api';
+
 const CATEGORY_OPTIONS = [
   { label: 'ICU Beds & Critical Care', matchKey: 'ICU & Critical Care' },
   { label: 'Ward Furniture', matchKey: 'Ward Furniture' },
@@ -72,7 +74,7 @@ export function ContactForm() {
         )
       : [];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       !formData.name ||
@@ -88,9 +90,10 @@ export function ContactForm() {
     }
 
     setStatus('loading');
+    setErrorMessage('');
 
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      await sendContactForm(formData);
       setStatus('success');
       setFormData({
         name: '',
@@ -103,7 +106,12 @@ export function ContactForm() {
         quantity: '',
         message: '',
       });
-    }, 1500);
+    } catch (err: any) {
+      setStatus('error');
+      setErrorMessage(
+        err.message || 'Failed to send enquiry email. Please try again or contact us directly.'
+      );
+    }
   };
 
   const cities = [

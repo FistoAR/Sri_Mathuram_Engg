@@ -2,9 +2,10 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import Image from 'next/image';
-import { X, Send, CheckCircle2, ShieldCheck, PhoneCall, Building2 } from 'lucide-react';
+import { X, Send, CheckCircle2, ShieldCheck, PhoneCall, Building2, Loader2, AlertCircle } from 'lucide-react';
 import { MedicalProduct, PRODUCTS } from '@/lib/data';
 import { SecureImage } from '@/components/ui/SecureImage';
+import { sendModalInquiry } from '@/lib/api';
 
 const CATEGORY_OPTIONS = [
   { label: 'ICU Beds & Critical Care', matchKey: 'ICU & Critical Care' },
@@ -49,6 +50,8 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
   const [hospitalName, setHospitalName] = useState('');
   const [location, setLocation] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const openInquiryModal = (product?: InquiryModalProduct) => {
     if (product && !product.isGeneral) {
@@ -75,6 +78,8 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
     setHospitalName('');
     setLocation('');
     setIsSubmitted(false);
+    setIsLoading(false);
+    setErrorMessage('');
     setIsOpen(true);
   };
 
@@ -82,15 +87,43 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
     setIsOpen(false);
     setSelectedProduct(null);
     setSelectedCategory('');
+    setIsLoading(false);
+    setErrorMessage('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      closeInquiryModal();
-    }, 2800);
+    if (!mobileNumber) {
+      setErrorMessage('Please provide a mobile number.');
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try {
+      await sendModalInquiry({
+        productName: selectedProduct?.name || 'General Inquiry',
+        category: selectedProduct?.category || selectedCategory || 'Hospital Furniture',
+        quantity,
+        unit,
+        hospitalName,
+        location,
+        countryCode,
+        mobileNumber,
+        additionalDetails,
+      });
+
+      setIsLoading(false);
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        closeInquiryModal();
+      }, 2800);
+    } catch (err: any) {
+      setIsLoading(false);
+      setErrorMessage(err.message || 'Failed to submit inquiry. Please try again.');
+    }
   };
 
   const currentCategoryConfig = CATEGORY_OPTIONS.find(
@@ -333,13 +366,31 @@ export function InquiryModalProvider({ children }: { children: React.ReactNode }
                     </div>
                   </div>
 
+                  {/* Error Message */}
+                  {errorMessage && (
+                    <div className="p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 flex items-center gap-2 text-xs font-medium">
+                      <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 hover:from-orange-700 hover:to-orange-700 text-white font-bold text-xs sm:text-sm md:text-[0.95vw] py-3 px-4 md:py-[1.2vh] md:px-[1.2vw] rounded-lg md:rounded-[0.7vw] transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 md:gap-[0.5vw] mt-4 cursor-pointer"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-orange-600 via-orange-500 to-orange-600 hover:from-orange-700 hover:to-orange-700 text-white font-bold text-xs sm:text-sm md:text-[0.95vw] py-3 px-4 md:py-[1.2vh] md:px-[1.2vw] rounded-lg md:rounded-[0.7vw] transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.99] flex items-center justify-center gap-2 md:gap-[0.5vw] mt-4 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed"
                   >
-                    <span>Submit Request</span>
-                    <Send className="w-4 h-4 md:w-[1vw] md:h-[1vw]" />
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 md:w-[1vw] md:h-[1vw] animate-spin" />
+                        <span>Sending Request...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Request</span>
+                        <Send className="w-4 h-4 md:w-[1vw] md:h-[1vw]" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
