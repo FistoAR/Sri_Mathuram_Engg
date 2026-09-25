@@ -24,7 +24,7 @@ function encodeToToken(str: string): string {
   }
 }
 
-function fetchAndDecryptImage(src: string): Promise<string> {
+export function fetchAndDecryptImage(src: string): Promise<string> {
   if (memoryBlobCache.has(src)) {
     return Promise.resolve(memoryBlobCache.get(src)!);
   }
@@ -64,6 +64,16 @@ function fetchAndDecryptImage(src: string): Promise<string> {
       const blob = new Blob([uint8], { type: mime });
       const blobUrl = URL.createObjectURL(blob);
       memoryBlobCache.set(src, blobUrl);
+
+      // Pre-decode into browser memory
+      if (typeof window !== "undefined") {
+        const preImg = new window.Image();
+        preImg.src = blobUrl;
+        if (preImg.decode) {
+          preImg.decode().catch(() => {});
+        }
+      }
+
       return blobUrl;
     } catch (err) {
       // Return empty or fallback
@@ -75,6 +85,12 @@ function fetchAndDecryptImage(src: string): Promise<string> {
 
   pendingPromises.set(src, promise);
   return promise;
+}
+
+export function preloadSecureImages(srcs: string[]): void {
+  srcs.forEach((src) => {
+    if (src) fetchAndDecryptImage(src);
+  });
 }
 
 interface SecureImageProps {
@@ -174,7 +190,7 @@ export function SecureImage({
           priority={priority}
           unoptimized={true}
           draggable={false}
-          className={`pointer-events-none select-none transition-all duration-300 ${className}`}
+          className={`pointer-events-none select-none ${className}`}
         />
       ) : (
         // Skeleton loader while decrypting stream

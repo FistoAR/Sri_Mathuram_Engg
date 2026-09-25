@@ -333,12 +333,12 @@ export default function ContactPage() {
                 <div className="flex items-center gap-3">
                   {[
                     {
-                      href: "https://instagram.com",
+                      href: "https://www.instagram.com/mathurams_medical_engineering?stkn=ZWQ2bzUzbTNkZ2xz",
                       src: "/images/ContactPage/instagram.webp",
                       alt: "Instagram",
                     },
                     {
-                      href: "https://facebook.com",
+                      href: "https://www.facebook.com/share/18FXAqSwNt/",
                       src: "/images/ContactPage/facebook.webp",
                       alt: "Facebook",
                     },
@@ -348,7 +348,7 @@ export default function ContactPage() {
                       alt: "Twitter",
                     },
                     {
-                      href: "https://linkedin.com",
+                      href: "https://www.linkedin.com/company/mathurams-medical-engineering/",
                       src: "/images/ContactPage/inkedin.webp",
                       alt: "LinkedIn",
                     },

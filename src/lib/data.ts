@@ -2177,7 +2177,7 @@ export const PRODUCTS: MedicalProduct[] = [
     },
     "needsDetails": false,
     "functions": [
-      "① Backrest Rise — Adjustable"
+      "① Head Rise — Adjustable"
     ]
   },
   {
@@ -2230,7 +2230,7 @@ export const PRODUCTS: MedicalProduct[] = [
     },
     "needsDetails": false,
     "functions": [
-      "① Backrest Rise — Adjustable"
+      "① Head Rise — Adjustable"
     ]
   },
   {
@@ -2403,7 +2403,7 @@ export const PRODUCTS: MedicalProduct[] = [
     },
     "needsDetails": false,
     "functions": [
-      "① Backrest Rise — Adjustable",
+      "① Head Rise — Adjustable",
       "② Height Adjustment — 24\"–32\""
     ],
     "detailedSpec": {
@@ -2808,7 +2808,7 @@ export const PRODUCTS: MedicalProduct[] = [
     },
     "needsDetails": false,
     "functions": [
-      "① Head Section Rise — 0°–30°",
+      "① Trendelenburg",
       "② Body Section Rise — 0°–70°",
       "③ Height Adjustment — 26\"–30\"",
       "④ Leg Section — Retractable"
@@ -2865,7 +2865,7 @@ export const PRODUCTS: MedicalProduct[] = [
     },
     "needsDetails": false,
     "functions": [
-      "① Head Section Rise — 0°–30°",
+      "① Trendelenburg",
       "② Body Section Rise — 0°–70°",
       "③ Leg Section — Retractable"
     ]
@@ -2998,10 +2998,7 @@ export const PRODUCTS: MedicalProduct[] = [
       "Lithotomy Leg Support": "Provided with Belts / Pads",
       "Colours": "Coffee Brown / Chocolate Brown / Light Blue / Dark Blue / Reliance Green / Pista Green / Parrot Green / DA Grey / Basalt Grey / Orange / Lemon Yellow / Black / Violet / Beige"
     },
-    "needsDetails": false,
-    "functions": [
-      "① Backrest Rise — Adjustable"
-    ]
+    "needsDetails": false
   },
   {
     "id": "mf95-gynec-examination-table",
@@ -3036,6 +3033,9 @@ export const PRODUCTS: MedicalProduct[] = [
       "brand": "Sri Mathurams"
     },
     "needsDetails": false,
+    "functions": [
+      "① Head Raise"
+    ],
     "detailedSpec": {
       "Material": "MS / SS",
       "Finish": "Epoxy Powder Coating / SS Finish",
@@ -3088,7 +3088,8 @@ export const PRODUCTS: MedicalProduct[] = [
     "needsDetails": false,
     "functions": [
       "① Backrest Rise — Adjustable",
-      "② Height Adjustment — Available"
+      "② Knee/Leg Rise — Adjustable",
+      "③ Height Adjustment — Available"
     ]
   },
   {
@@ -3143,7 +3144,10 @@ export const PRODUCTS: MedicalProduct[] = [
       "Optional Accessories": "Pillow & Safety Bumpers",
       "Colours": "Coffee Brown / Chocolate Brown / Light Blue / Dark Blue / Reliance Green / Pista Green / Parrot Green / DA Grey / Basalt Grey / Orange / Lemon Yellow / Black / Violet / Beige"
     },
-    "needsDetails": false
+    "needsDetails": false,
+    "functions": [
+      "① Backrest Rise — Adjustable"
+    ]
   },
   {
     "id": "mf45-hi-low-stretcher",
@@ -3362,7 +3366,10 @@ export const PRODUCTS: MedicalProduct[] = [
       "Optional Accessories": "IV Provision, Cylinder Provision, Pillow & Safety Bumpers",
       "Colours": "Coffee Brown / Chocolate Brown / Light Blue / Dark Blue / Reliance Green / Pista Green / Parrot Green / DA Grey / Basalt Grey / Orange / Lemon Yellow / Black / Violet / Beige"
     },
-    "needsDetails": false
+    "needsDetails": false,
+    "functions": [
+      "① Backrest Rise"
+    ]
   },
   {
     "id": "mf68-hi-low-transfer-trolley",
@@ -3410,7 +3417,8 @@ export const PRODUCTS: MedicalProduct[] = [
     },
     "needsDetails": false,
     "functions": [
-      "① Height Adjustment — Hi-Lo"
+      "① Backrest Rise",
+      "② Height Adjustment — Hi-Lo"
     ]
   },
   {

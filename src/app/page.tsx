@@ -433,7 +433,7 @@ export default function HomePage() {
         <Hero />
 
         {/* STATS BANNER (Overlaps 50% Hero Image & 50% Section Below) */}
-        <div className="w-full px-4 sm:px-6 lg:px-8 relative z-30 -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-24">
+        <div className="w-full px-4 sm:px-6 lg:px-8 relative z-30 -mt-10 sm:-mt-12 md:-mt-14 lg:-mt-20">
           <style>{`
             html:not(.preloader-done) .home-stat-item {
               opacity: 0;

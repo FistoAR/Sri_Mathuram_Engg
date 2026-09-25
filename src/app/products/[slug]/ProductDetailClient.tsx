@@ -32,7 +32,7 @@ import { useInquiryModal } from "@/components/ui/InquiryModalContext";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { ProductBottomBanner } from "@/components/products/ProductBottomBanner";
-import { SecureImage } from "@/components/ui/SecureImage";
+import { SecureImage, preloadSecureImages } from "@/components/ui/SecureImage";
 
 const getFunctionIconPath = (funcTitle: string): string => {
   const lower = funcTitle.toLowerCase();
@@ -46,13 +46,13 @@ const getFunctionIconPath = (funcTitle: string): string => {
   if (lower.includes("crutch") || lower.includes("lithotomy")) {
     return "/images/ProductDetails/Functions/Adjustable Knee Crutches.svg";
   }
-  if (lower.includes("head rise") || lower.includes("head raise")) {
+  if (lower.includes("head rise") || lower.includes("head raise") || lower.includes("head section") || lower.includes("head")) {
     return "/images/ProductDetails/Functions/Head Raise .svg";
   }
   if (lower.includes("knee") || lower.includes("leg rise") || lower.includes("leg raise")) {
     return "/images/ProductDetails/Functions/KneeLeg Raise.svg";
   }
-  if (lower.includes("retractable leg")) {
+  if (lower.includes("retractable") || lower.includes("leg section")) {
     return "/images/ProductDetails/Functions/Retractable Leg Section.svg";
   }
   if (lower.includes("height") || lower.includes("hi-lo")) {
@@ -170,6 +170,13 @@ export function ProductDetailClient({
   };
 
   const mainRef = React.useRef<HTMLElement>(null);
+
+  // Preload all product images into memory cache so zoom and image switching are instant and crystal-clear
+  React.useEffect(() => {
+    if (images && images.length > 0) {
+      preloadSecureImages(images);
+    }
+  }, [images]);
 
   // Reset active image index and ensure scroll starts at 0 whenever product changes (especially critical on mobile)
   React.useEffect(() => {
@@ -610,35 +617,72 @@ export function ProductDetailClient({
                 </div>
               )}
 
-              {/* Zoom hint badge */}
-              <div
-                className={`absolute bottom-3.5 right-3.5 z-20 pointer-events-none flex items-center gap-1.5 bg-slate-900/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm transition-all duration-300 ${
-                  isZoomed ? "opacity-90 bg-slate-900/85 text-orange-300 border border-orange-500/30" : "opacity-80"
-                }`}
-              >
-                <ZoomIn className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-                <span>
-                  {isZoomed ? (
-                    <>
-                      <span className="sm:hidden">{zoomScaleDisplay}x • Double tap to reset</span>
-                      <span className="hidden sm:inline">{zoomScaleDisplay}x (Scroll to adjust)</span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="sm:hidden">Pinch / double tap to zoom</span>
-                      <span className="hidden sm:inline">Hover to zoom • Scroll to adjust</span>
-                    </>
-                  )}
-                </span>
+              {/* Bottom Card Controls: Carousel Dots & Zoom Hint - Auto-aligned across all viewport widths */}
+              <div className="absolute bottom-3 sm:bottom-3.5 inset-x-3 sm:inset-x-3.5 z-30 flex items-center justify-between pointer-events-none gap-2">
+                {/* Carousel Indicator Dots (Left) */}
+                {images.length > 1 ? (
+                  <div
+                    data-no-zoom="true"
+                    onMouseEnter={() => {
+                      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
+                      setIsZoomed(false);
+                    }}
+                    className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 bg-slate-900/60 backdrop-blur-md px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/10 shadow-sm shrink-0"
+                  >
+                    {images.map((_, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        data-no-zoom="true"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveImageIndex(idx);
+                        }}
+                        className={`transition-all duration-300 rounded-full cursor-pointer ${
+                          idx === activeImageIndex
+                            ? "w-4 sm:w-5 h-2 bg-[#E87325]"
+                            : "w-2 h-2 bg-white/60 hover:bg-white"
+                        }`}
+                        aria-label={`Go to slide ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div />
+                )}
+
+                {/* Zoom hint badge (Right) */}
+                <div
+                  className={`pointer-events-none flex items-center gap-1.5 bg-slate-900/70 backdrop-blur-md text-white px-2.5 py-1 rounded-full text-[10px] font-medium tracking-wide shadow-sm transition-all duration-300 border border-white/10 shrink-0 ml-auto ${
+                    isZoomed ? "opacity-90 bg-slate-900/85 text-orange-300 border-orange-500/30" : "opacity-80"
+                  }`}
+                >
+                  <ZoomIn className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                  <span className="whitespace-nowrap">
+                    {isZoomed ? (
+                      <>
+                        <span className="sm:hidden">{zoomScaleDisplay}x</span>
+                        <span className="hidden sm:inline">{zoomScaleDisplay}x (Scroll to adjust)</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="sm:hidden">Zoom</span>
+                        <span className="hidden sm:inline md:hidden">Hover to zoom</span>
+                        <span className="hidden md:inline">Hover to zoom • Scroll to adjust</span>
+                      </>
+                    )}
+                  </span>
+                </div>
               </div>
 
               {/* Magnifier Scalable Product Image Box */}
               <div
                 ref={zoomTargetRef}
-                className="relative w-full h-full pointer-events-none transition-transform duration-75 ease-out will-change-transform"
+                className="relative w-full h-full pointer-events-none"
                 style={{
                   transformOrigin: "50% 50%",
                   transform: "scale(1)",
+                  imageRendering: "-webkit-optimize-contrast",
                 }}
               >
                 <SecureImage
@@ -646,7 +690,7 @@ export function ProductDetailClient({
                   alt={product.name}
                   fill
                   priority={true}
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 1200px"
                   className="object-contain p-4 sm:p-6"
                 />
               </div>
@@ -686,37 +730,63 @@ export function ProductDetailClient({
                   >
                     <ArrowRight className="w-6 h-6 stroke-[2]" />
                   </button>
-
-                  {/* Carousel Indicator Dots */}
-                  <div 
-                    data-no-zoom="true"
-                    onMouseEnter={() => {
-                      if (zoomTargetRef.current) zoomTargetRef.current.style.transform = "scale(1)";
-                      setIsZoomed(false);
-                    }}
-                    className="absolute bottom-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-slate-900/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-sm"
-                  >
-                    {images.map((_, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        data-no-zoom="true"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setActiveImageIndex(idx);
-                        }}
-                        className={`transition-all duration-300 rounded-full cursor-pointer ${
-                          idx === activeImageIndex
-                            ? "w-5 h-2 bg-[#E87325]"
-                            : "w-2 h-2 bg-white/60 hover:bg-white"
-                        }`}
-                        aria-label={`Go to slide ${idx + 1}`}
-                      />
-                    ))}
-                  </div>
                 </>
               )}
             </div>
+
+            {/* Functions Section on Desktop below Product Image */}
+            {product.functions && product.functions.length > 0 && (
+              <div className="hidden lg:block space-y-3 pt-5 border-t border-slate-100 font-montserrat w-full">
+                <div className="space-y-1 text-left">
+                  <div className="flex items-center gap-2">
+                    <Settings className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
+                    <span className="text-xs md:text-sm font-black text-[#092347] uppercase tracking-wider">
+                      FUNCTIONS
+                    </span>
+                  </div>
+                  <div className="w-12 h-[2.5px] bg-[#E87325] rounded-full" />
+                </div>
+
+                <div className="flex flex-wrap items-start gap-6 sm:gap-8 pt-1 w-full">
+                  {product.functions.map((funcStr, idx) => {
+                    const parts = funcStr.split("—").map((p) => p.trim());
+                    const titlePart = parts[0] || funcStr;
+                    const valuePart = parts[1] || "";
+                    const cleanTitle = titlePart.replace(/^[①②③④⑤⑥⑦⑧\d\s\.\-]+/, "").trim();
+                    const iconPath = getFunctionIconPath(cleanTitle);
+
+                    return (
+                      <div key={idx} className="flex flex-col items-center text-center group/func min-w-[70px] max-w-[95px]">
+                        {/* SVG Function Illustration Image */}
+                        <div className="relative w-16 h-14 sm:h-16 flex items-center justify-center overflow-hidden">
+                          <Image
+                            src={iconPath}
+                            alt={cleanTitle}
+                            fill
+                            className="object-contain p-0.5 group-hover/func:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+
+                        {/* Small Orange Divider Line */}
+                        <div className="w-4 h-[2px] bg-[#E87325] rounded-full my-1 shrink-0" />
+
+                        {/* Function Text Below Line */}
+                        <div className="text-center w-full px-0.5">
+                          <p className="text-[10px] sm:text-[11px] text-slate-600 font-medium leading-tight">
+                            {cleanTitle}
+                          </p>
+                          {valuePart && (
+                            <p className="font-medium text-[#092347] text-[10px] sm:text-[11px] mt-0.5 leading-tight">
+                              {valuePart}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </FadeIn>
 
@@ -823,9 +893,9 @@ export function ProductDetailClient({
                 </div>
               </div>
 
-              {/* Functions Section inside Right Column */}
+              {/* Functions Section inside Right Column (Mobile/Tablet only) */}
               {product.functions && product.functions.length > 0 && (
-                <div className="space-y-3 pt-4 border-t border-slate-100 font-montserrat w-full max-w-full">
+                <div className="lg:hidden space-y-3 pt-4 border-t border-slate-100 font-montserrat w-full max-w-full">
                   <div className="space-y-1 text-left">
                     <div className="flex items-center gap-2">
                       <Settings className="w-4 h-4 text-[#E87325] stroke-[2.5]" />
@@ -1137,11 +1207,11 @@ export function ProductDetailClient({
               window.scrollBy({ top: e.deltaY, behavior: "auto" });
             }
           }}
-          className="flex gap-6 overflow-x-auto py-2 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full"
+          className="flex items-stretch gap-5 overflow-x-auto py-3 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full"
         >
           {duplicatedProducts.map((p, idx) => (
-            <div key={`${p.id}-dup-${idx}`} className="w-[280px] shrink-0 h-full">
-              <div className="group/related bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3.5 h-[400px]">
+            <div key={`${p.id}-dup-${idx}`} className="w-[260px] sm:w-[270px] shrink-0 flex flex-col">
+              <div className="group/related bg-white border border-slate-200 rounded-2xl shadow-2xs hover:shadow-md hover:-translate-y-1 hover:border-[#E87325]/30 transition-all duration-300 flex flex-col justify-between p-3 h-full">
                 <Link
                   href={`/products/${p.slug}`}
                   onClick={() => {
@@ -1149,27 +1219,27 @@ export function ProductDetailClient({
                       window.scrollTo(0, 0);
                     }
                   }}
-                  className="space-y-3 flex-1 block group/link cursor-pointer"
+                  className="flex flex-col block group/link cursor-pointer"
                 >
-                  <div className="relative aspect-[1.3/1] w-full bg-white rounded-xl overflow-hidden mb-3.5 border border-slate-100">
+                  <div className="relative aspect-[4/3] w-full bg-white rounded-xl overflow-hidden mb-2.5 border border-slate-100">
                     <SecureImage
                       src={p.image}
                       alt={p.name}
                       fill
-                      sizes="240px"
+                      sizes="270px"
                       className="object-cover transition-transform duration-500 group-hover/related:scale-105"
                     />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-[#092347] font-black text-sm md:text-base leading-tight whitespace-normal break-words group-hover/link:text-[#0B3C83] transition-colors">
+                    <h3 className="text-[#092347] font-bold text-sm leading-snug whitespace-normal break-words group-hover/link:text-[#0B3C83] transition-colors">
                       {p.name}
                     </h3>
-                    <p className="text-slate-500 text-[11px] font-medium leading-normal line-clamp-3">
+                    <p className="text-slate-500 text-[11px] font-medium leading-relaxed line-clamp-2">
                       {p.description || "Designed for patient comfort, safety, and efficient caregiving with a durable and ergonomic structure."}
                     </p>
                   </div>
                 </Link>
-                <div className="flex flex-col gap-2 pt-3 border-t border-slate-100 mt-3.5 w-full">
+                <div className="flex flex-col gap-1.5 pt-2.5 border-t border-slate-100 mt-2.5 w-full">
                   <Link
                     href={`/products/${p.slug}`}
                     onClick={() => {
@@ -1179,16 +1249,16 @@ export function ProductDetailClient({
                     }}
                     className="w-full"
                   >
-                    <button className="w-full border border-[#0B3C83] text-[#0B3C83] hover:bg-[#0B3C83]/5 rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center whitespace-nowrap cursor-pointer">
+                    <button className="w-full border border-[#0B3C83] text-[#0B3C83] hover:bg-[#0B3C83]/5 rounded-lg py-1.5 px-2 text-xs font-bold transition-all text-center whitespace-nowrap cursor-pointer">
                       View Details
                     </button>
                   </Link>
                   <button
                     onClick={() => openInquiryModal(p)}
-                    className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white rounded-lg py-2 px-1 text-[10px] md:text-xs font-bold transition-all text-center flex items-center justify-center gap-1 active:scale-95 whitespace-nowrap cursor-pointer"
+                    className="w-full bg-[#E87325] hover:bg-[#D0621B] text-white rounded-lg py-1.5 px-2 text-xs font-bold transition-all text-center flex items-center justify-center gap-1 active:scale-95 whitespace-nowrap cursor-pointer shadow-xs"
                   >
                     <span>Send Enquiry</span>
-                    <ChevronRight className="w-3 h-3 text-white shrink-0" />
+                    <ChevronRight className="w-3.5 h-3.5 text-white shrink-0" />
                   </button>
                 </div>
               </div>

@@ -394,73 +394,36 @@ export function Hero() {
         }
         .slider .list .item:nth-child(1) { z-index: 1; }
 
-        /* Hardware-Accelerated Mobile Slide Animations (No layout thrashing) */
-        @media (max-width: 767px) {
-          .slider.next .list .item:nth-child(1) img,
-          .slider.prev .list .item:nth-child(1) img {
-            animation: mobileSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+        /* Hardware-Accelerated Seamless Slide Animations (Zero Layout Reflow, Consistent Across All Screens) */
+        .slider.next .list .item:nth-child(1) img {
+          animation: slideNextImage 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1 forwards;
+        }
+        .slider.prev .list .item:nth-child(1) img {
+          animation: slidePrevImage 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1 forwards;
+        }
+
+        @keyframes slideNextImage {
+          0% {
+            opacity: 0;
+            transform: scale(1.05) translateZ(0);
           }
-          @keyframes mobileSlideIn {
-            from { opacity: 0; transform: scale(1.04) translateZ(0); }
-            to   { opacity: 1; transform: scale(1) translateZ(0); }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
           }
         }
 
-        /* Desktop Media Query (min-width: 1024px) */
-        @media (min-width: 1024px) {
-          .slider.next .list .item:nth-child(1) img {
-            width: 13.5vw; height: 14vh; position: absolute; bottom: 13vh; left: 48vw; right: auto; border-radius: 0.9vw;
-            animation: showImage 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+        @keyframes slidePrevImage {
+          0% {
+            opacity: 0;
+            transform: scale(0.97) translateZ(0);
           }
-          @keyframes showImage {
-            from { bottom: 13vh; left: 48vw; right: auto; width: 13.5vw; height: 14vh; border-radius: 0.9vw; }
-            to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
+          100% {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
           }
-          .slider.prev .list .item:nth-child(2) img {
-            animation: outFrame 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-            position: absolute; bottom: 0; left: 0; right: auto;
-          }
-          @keyframes outFrame { to { width: 13.5vw; height: 14vh; bottom: 13vh; left: 48vw; right: auto; border-radius: 0.9vw; } }
         }
 
-        /* Tablet Media Query (min-width: 768px and max-width: 1023px) */
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .slider.next .list .item:nth-child(1) img {
-            width: 22vw; height: 11vh; position: absolute; bottom: 11vh; left: 45vw; right: auto; border-radius: 10px;
-            animation: showImageTablet 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-          }
-          @keyframes showImageTablet {
-            from { bottom: 11vh; left: 45vw; right: auto; width: 22vw; height: 11vh; border-radius: 10px; }
-            to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
-          }
-          .slider.prev .list .item:nth-child(2) img {
-            animation: outFrameTablet 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-            position: absolute; bottom: 0; left: 0; right: auto;
-          }
-          @keyframes outFrameTablet { to { width: 22vw; height: 11vh; bottom: 11vh; left: 45vw; right: auto; border-radius: 10px; } }
-        }
-        @media (min-width: 1024px) and (max-height: 720px) {
-          .thumbnail {
-            bottom: 14vh !important;
-          }
-          .nextPrevArrows {
-            bottom: calc(14vh + 14vh + 18px) !important;
-          }
-          .slider.next .list .item:nth-child(1) img {
-            bottom: 14vh !important;
-            animation: showImageShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-          }
-          .slider.prev .list .item:nth-child(2) img {
-            animation: outFrameShortHeight 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-          }
-          @keyframes showImageShortHeight {
-            from { bottom: 14vh; left: 48vw; right: auto; width: 13.5vw; height: 14vh; border-radius: 0.9vw; }
-            to { bottom: 0; left: 0; right: auto; width: 100%; height: 100%; border-radius: 0; }
-          }
-          @keyframes outFrameShortHeight {
-            to { width: 13.5vw; height: 14vh; bottom: 14vh; left: 48vw; right: auto; border-radius: 0.9vw; }
-          }
-        }
         .slider.next .nextPrevArrows button, .slider.prev .nextPrevArrows button { pointer-events: none; }
         
         .line-reveal {
@@ -538,18 +501,9 @@ export function Hero() {
           to   { opacity: 1;   transform: translate3d(0, 0, 0) scale(1); }
         }
 
-        /* Main background image cross-fade on slide change */
+        /* Main background item stacking */
         .slider .list .item:nth-child(1) {
           z-index: 1;
-          transition: opacity 0.4s ease;
-        }
-        .slider.next .list .item:nth-child(1),
-        .slider.prev .list .item:nth-child(1) {
-          animation: bgFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-        @keyframes bgFadeIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
         }
       `}</style>
 
@@ -675,95 +629,98 @@ export function Hero() {
             </div>
           </div>
         </div>
-        {/* Top of Preview Container: Left & Right Navigation Buttons (Single Glass Container at Right End) */}
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="nextPrevArrows absolute z-30 bottom-[calc(11vh+9.5vh+18px)] md:bottom-[calc(11vh+11vh+18px)] lg:bottom-[calc(13vh+14vh+20px)] right-2 md:right-4 flex items-center gap-1.5 p-1.5 rounded-full bg-white/70 hover:bg-white/85 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto"
-        >
-          <button
-            onClick={() => moveSlider("prev")}
-            aria-label="Previous Slide"
-            className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+        {/* Bottom-Right Interactive Preview & Navigation Controls (Elevated above bottom stats banner) */}
+        <div className="absolute z-20 bottom-16 sm:bottom-20 md:bottom-24 lg:bottom-28 xl:bottom-32 left-[30vw] sm:left-[36vw] md:left-[44vw] lg:left-[47vw] right-0 flex flex-col items-end gap-2 sm:gap-2.5 pointer-events-none pr-3 sm:pr-4 md:pr-6">
+          {/* Left & Right Navigation Buttons (Always sits above the preview cards) */}
+          <div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="nextPrevArrows flex items-center gap-1.5 p-1.5 rounded-full bg-white/75 hover:bg-white/90 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(0,0,0,0.12)] transition-all pointer-events-auto shrink-0"
           >
-            <ChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5] -translate-x-[1px]" />
-          </button>
-          <button
-            onClick={() => moveSlider("next")}
-            aria-label="Next Slide"
-            className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+            <button
+              onClick={() => moveSlider("prev")}
+              aria-label="Previous Slide"
+              className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+            >
+              <ChevronLeft className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5] -translate-x-[1px]" />
+            </button>
+            <button
+              onClick={() => moveSlider("next")}
+              aria-label="Next Slide"
+              className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-white/80 hover:bg-[#E86D24] text-slate-800 hover:text-white backdrop-blur-sm border border-slate-200/60 shadow-xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 group cursor-pointer"
+            >
+              <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5] translate-x-[1px]" />
+            </button>
+          </div>
+
+          {/* Thumbnail Preview Slider Container */}
+          <div
+            ref={thumbnailRef}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="thumbnail w-full flex items-center gap-2.5 sm:gap-3 md:gap-[1vw] lg:gap-[0.7vw] overflow-x-auto max-w-full py-2 px-1 pointer-events-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
-            <ChevronRight className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5] translate-x-[1px]" />
-          </button>
-        </div>
+            {thumbnailsData.map((item) => {
+              const isCurrent = item.id === slideData[currentSlide].id;
+              const itemTheme = getCategoryTheme(item.category);
+              const itemColor =
+                CATEGORY_TITLE_COLORS[item.category] || itemTheme.bg;
+              return (
+                <div
+                  key={item.id}
+                  data-id={item.id}
+                  onClick={() => handleThumbnailClick(item.id)}
+                  className={`item group relative cursor-pointer flex-shrink-0 w-[42vw] sm:w-[30vw] md:w-[20vw] lg:w-[13.5vw] min-w-[150px] md:min-w-[170px] lg:min-w-[185px] h-[75px] sm:h-[85px] md:h-[105px] lg:h-[120px] rounded-lg md:rounded-[0.9vw] overflow-hidden border shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] bg-white will-change-transform select-none outline-none ${
+                    isCurrent
+                      ? "shadow-xl scale-[1.02]"
+                      : "border-white/80 hover:shadow-xl opacity-90 hover:opacity-100"
+                  }`}
+                  style={
+                    isCurrent
+                      ? {
+                          borderColor: itemColor,
+                          boxShadow: `0 0 0 2.5px ${itemColor}, 0 20px 25px -5px rgba(0, 0, 0, 0.25)`,
+                        }
+                      : undefined
+                  }
+                >
+                  <img
+                    src={item.image}
+                    alt={item.category}
+                    className="w-full h-full object-cover"
+                  />
 
-        <div
-          ref={thumbnailRef}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="thumbnail absolute z-20 bottom-[11vh] md:bottom-[11vh] lg:bottom-[13vh] left-[35vw] md:left-[45vw] lg:left-[48vw] right-0 flex items-center gap-[2.5vw] md:gap-[1vw] lg:gap-[0.7vw] overflow-x-auto max-w-full py-3 px-2"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          {thumbnailsData.map((item) => {
-            const isCurrent = item.id === slideData[currentSlide].id;
-            const itemTheme = getCategoryTheme(item.category);
-            const itemColor =
-              CATEGORY_TITLE_COLORS[item.category] || itemTheme.bg;
-            return (
-              <div
-                key={item.id}
-                data-id={item.id}
-                onClick={() => handleThumbnailClick(item.id)}
-                className={`item group relative cursor-pointer flex-shrink-0 w-[42vw] sm:w-[32vw] md:w-[20vw] lg:w-[13.5vw] min-w-[155px] md:min-w-[170px] lg:min-w-[190px] h-[9.5vh] md:h-[11vh] lg:h-[14vh] min-h-[70px] md:min-h-[90px] lg:min-h-[110px] rounded-lg md:rounded-[0.9vw] overflow-hidden border shadow-lg transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] bg-white will-change-transform select-none outline-none ${
-                  isCurrent
-                    ? "shadow-xl scale-[1.02]"
-                    : "border-white/80 hover:shadow-xl opacity-90 hover:opacity-100"
-                }`}
-                style={
-                  isCurrent
-                    ? {
-                        borderColor: itemColor,
-                        boxShadow: `0 0 0 2.5px ${itemColor}, 0 20px 25px -5px rgba(0, 0, 0, 0.25)`,
-                      }
-                    : undefined
-                }
-              >
-                <img
-                  src={item.image}
-                  alt={item.category}
-                  className="w-full h-full object-cover"
-                />
-
-                {/* Bottom Category Label */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent px-2.5 py-2 sm:px-3 sm:py-2.5 md:px-[0.75vw] md:py-[0.65vw] flex flex-col justify-end pointer-events-none">
-                  <h4
-                    className={`text-[2.8vw] sm:text-[2vw] md:text-[0.82vw] lg:text-[0.78vw] leading-tight transition-colors line-clamp-1 text-white ${
-                      isCurrent
-                        ? "font-extrabold"
-                        : "font-bold group-hover:text-slate-200"
-                    }`}
-                  >
-                    {item.category}
-                  </h4>
-                </div>
-
-                {/* Autoplay loading bar on the selected background preview card */}
-                {isCurrent && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/40 z-30 overflow-hidden">
-                    <div
-                      key={slideIndex}
-                      className="h-full rounded-r-full shadow-sm"
-                      style={{
-                        backgroundColor: itemColor,
-                        animation: "progressFill 6s linear forwards",
-                        animationPlayState: isHovered ? "paused" : "running",
-                      }}
-                    />
+                  {/* Bottom Category Label */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent px-2.5 py-2 sm:px-3 sm:py-2.5 md:px-[0.75vw] md:py-[0.65vw] flex flex-col justify-end pointer-events-none">
+                    <h4
+                      className={`text-xs sm:text-sm md:text-[0.82vw] lg:text-[0.78vw] leading-tight transition-colors line-clamp-1 text-white ${
+                        isCurrent
+                          ? "font-extrabold"
+                          : "font-bold group-hover:text-slate-200"
+                      }`}
+                    >
+                      {item.category}
+                    </h4>
                   </div>
-                )}
-              </div>
-            );
-          })}
+
+                  {/* Autoplay loading bar on the selected background preview card */}
+                  {isCurrent && (
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/40 z-30 overflow-hidden">
+                      <div
+                        key={slideIndex}
+                        className="h-full rounded-r-full shadow-sm"
+                        style={{
+                          backgroundColor: itemColor,
+                          animation: "progressFill 6s linear forwards",
+                          animationPlayState: isHovered ? "paused" : "running",
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -69,10 +69,42 @@ export function Footer() {
               Manufacturing high-quality, durable, and reliable hospital furniture for healthcare facilities across India.
             </p>
             <div className="flex items-center space-x-2.5 pt-2">
-              <a href="#" aria-label="Facebook" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"><Facebook className="w-4 h-4" /></a>
-              <a href="#" aria-label="LinkedIn" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"><Linkedin className="w-4 h-4" /></a>
-              <a href="#" aria-label="Instagram" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"><Instagram className="w-4 h-4" /></a>
-              <a href="#" aria-label="YouTube" className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"><Youtube className="w-4 h-4" /></a>
+              <a
+                href="https://www.facebook.com/share/18FXAqSwNt/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.instagram.com/mathurams_medical_engineering?stkn=ZWQ2bzUzbTNkZ2xz"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.youtube.com/@srimathuramsmedicalengineering?si=vmIV_HU60XRpsX2i"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"
+              >
+                <Youtube className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/mathurams-medical-engineering/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="w-9 h-9 rounded-full bg-slate-900/90 hover:bg-[#E86D24] text-white flex items-center justify-center transition-colors border border-white hover:border-[#E86D24]"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
@@ -197,7 +229,14 @@ export function Footer() {
             <ul className="space-y-3 text-[14px] sm:text-[15px] font-medium text-slate-300 font-inter">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#E86D24] shrink-0 mt-0.5" />
-                <span className="leading-snug">404/2B3, Cheran Industrial Estate, Vadavalli to Kanuvai Road, Somayampalayam, Coimbatore - 641108, Tamil Nadu, India.</span>
+                <a
+                  href="https://maps.google.com/?q=404/2B3,+Cheran+Industrial+Estate,+Vadavalli+to+Kanuvai+Road,+Somayampalayam,+Coimbatore+-+641108"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="leading-snug hover:text-white transition-colors cursor-pointer"
+                >
+                  404/2B3, Cheran Industrial Estate, Vadavalli to Kanuvai Road, Somayampalayam, Coimbatore - 641108, Tamil Nadu, India.
+                </a>
               </li>
               <li className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-[#E86D24] shrink-0 mt-0.5" />
@@ -212,7 +251,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Globe className="w-4 h-4 text-[#E86D24] shrink-0" />
-                <a href="https://www.srimathurams.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.srimathurams.com</a>
+                <a href="https://www.srimathuramsindia.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.srimathuramsindia.com</a>
               </li>
             </ul>
           </div>
