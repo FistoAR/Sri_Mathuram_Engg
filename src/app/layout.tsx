@@ -27,16 +27,71 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: `${COMPANY_INFO.name} | Hospital Furniture & Medical Equipment`,
+    default: `${COMPANY_INFO.name} | Hospital Furniture & Medical Equipment Manufacturer`,
     template: `%s | ${COMPANY_INFO.name}`,
   },
   description: COMPANY_INFO.description,
+  keywords: [
+    "Hospital Furniture Manufacturer",
+    "Medical Equipment Coimbatore",
+    "ICU Bed Manufacturer",
+    "Electric ICU Beds Tamil Nadu",
+    "Fowler Cots & Semi Fowler Beds",
+    "Hospital Plain Cots",
+    "Labour Cots & Delivery Tables",
+    "Stretcher Trolley Manufacturer",
+    "Patient Transfer Trolley",
+    "Emergency Crash Carts",
+    "Instrument & Dressing Trolleys",
+    "Overbed Tables & Bedside Lockers",
+    "Hospital Wheelchairs",
+    "Attender Cots",
+    "Examination Couches",
+    "Stainless Steel Hospital Furniture",
+    "OT Equipment Manufacturer",
+    "Sri Mathurams Medical Engineering",
+    "Hospital Furniture Supplier India",
+    "Coimbatore Medical Devices"
+  ],
+  authors: [{ name: COMPANY_INFO.name, url: COMPANY_INFO.url }],
+  creator: COMPANY_INFO.name,
+  publisher: COMPANY_INFO.name,
   metadataBase: new URL(COMPANY_INFO.url),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: COMPANY_INFO.url,
+    title: `${COMPANY_INFO.name} | Hospital Furniture & Medical Equipment Manufacturer`,
+    description: COMPANY_INFO.description,
     siteName: COMPANY_INFO.name,
+    images: [
+      {
+        url: "/images/og-default.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${COMPANY_INFO.name} - Hospital Furniture & Medical Equipment`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${COMPANY_INFO.name} | Hospital Furniture & Medical Equipment Manufacturer`,
+    description: COMPANY_INFO.description,
+    images: ["/images/og-default.jpg"],
   },
   icons: {
     icon: "/images/logo.webp",

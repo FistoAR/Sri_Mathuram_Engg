@@ -13,7 +13,7 @@ export function getContactFormEmailHtml(data: ContactFormData): string {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact submission from website - Sri Mathurams</title>
+    <title>Enquiry from website - Sri Mathurams</title>
   </head>
   <body style="margin: 0; padding: 0; background-color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0F172A; -webkit-font-smoothing: antialiased;">
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F8FAFC; padding: 36px 16px;">
@@ -36,7 +36,7 @@ export function getContactFormEmailHtml(data: ContactFormData): string {
                     </td>
                     <td align="right">
                       <span style="display: inline-block; background-color: #FFF7ED; border: 1px solid #FFEDD5; color: #EA580C; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;">
-                        Contact submission from website
+                        Enquiry from website
                       </span>
                     </td>
                   </tr>
@@ -165,7 +165,7 @@ export function getModalInquiryEmailHtml(data: ModalInquiryData): string {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote request from website - Sri Mathurams</title>
+    <title>Request for quotation - Sri Mathurams</title>
   </head>
   <body style="margin: 0; padding: 0; background-color: #F8FAFC; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #0F172A; -webkit-font-smoothing: antialiased;">
     <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F8FAFC; padding: 36px 16px;">
@@ -188,7 +188,7 @@ export function getModalInquiryEmailHtml(data: ModalInquiryData): string {
                     </td>
                     <td align="right">
                       <span style="display: inline-block; background-color: #EFF6FF; border: 1px solid #DBEAFE; color: #0284C7; font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px;">
-                        Quote request from website
+                        Request for quotation
                       </span>
                     </td>
                   </tr>

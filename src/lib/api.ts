@@ -37,7 +37,7 @@ export interface ModalInquiryData {
  * Submit Contact Form data with Custom Branded HTML UI to PHP SMTP Mailer
  */
 export async function sendContactForm(data: ContactFormData) {
-  const subject = `[Website Inquiry] ${data.name} - ${data.hospital || data.city || 'Lead'}`;
+  const subject = `[Enquiry from website] ${data.name} - ${data.hospital || data.city || 'Lead'}`;
   const htmlContent = getContactFormEmailHtml(data);
   const autoReplyHtml = data.email ? getCustomerReplyEmailHtml(data.name, data.product) : undefined;
 
@@ -71,7 +71,7 @@ export async function sendContactForm(data: ContactFormData) {
  * Submit Quick Product Inquiry data with Custom Branded HTML UI to PHP SMTP Mailer
  */
 export async function sendModalInquiry(data: ModalInquiryData) {
-  const subject = `[Quick Quote] ${data.productName} (${data.quantity} ${data.unit}) - ${data.mobileNumber}`;
+  const subject = `[Request for quotation] ${data.productName} (${data.quantity} ${data.unit}) - ${data.mobileNumber}`;
   const htmlContent = getModalInquiryEmailHtml(data);
 
   const response = await fetch(PHP_MAIL_URL, {
